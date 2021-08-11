@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/woowa-techcamp-2021/store-2#readme",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prestart": "export NODE_ENV=development",
     "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
     "predeploy": "export NODE_ENV=production && eslint",
@@ -49,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-node": "^11.1.0",
