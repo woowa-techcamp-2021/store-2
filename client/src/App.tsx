@@ -1,13 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Div = styled.div`
-  color: var(--body);
-  background: blue;
-`;
+import CounterContainer from './containers/counter-container';
 
 const App: React.FC = () => {
-  return <Div>안녕</Div>;
+  return (
+    <>
+      <CounterContainer />
+    </>
+  );
 };
 
 export default App;
