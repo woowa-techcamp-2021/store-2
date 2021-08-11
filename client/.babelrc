@@ -8,6 +8,7 @@
         "useBuiltIns": "usage",
         "corejs": { "version": "3.16" }
       }
-    ]
+    ],
+    "@babel/preset-react"
   ]
 }
