@@ -11,7 +11,7 @@ export interface ItemAttribures {
   is_green: number;
 }
 
-interface ItemCreationAttributes
+export interface ItemCreationAttributes
   extends Optional<ItemAttribures, 'id' | 'amount'> {}
 
 const DEFAULT_AMOUNT = 1;

@@ -5,7 +5,7 @@ export interface CategoryAttribures {
   name: string;
 }
 
-interface CategoryCreationAttributes
+export interface CategoryCreationAttributes
   extends Optional<CategoryAttribures, 'id'> {}
 
 const categorySchema = (

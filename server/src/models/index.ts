@@ -28,13 +28,7 @@ const Category = categorySchema(sequelize);
 const Order = orderSchema(sequelize);
 const Review = reviewSchema(sequelize);
 
-// Associations
-User.hasMany(Address);
-User.belongsToMany(Item, { through: Like });
-Item.belongsToMany(User, { through: Like });
-User.hasMany(Order);
-Item.hasMany(Category);
-Item.hasMany(Review);
+
 
 export const db = {
   User,

@@ -7,7 +7,8 @@ export interface AddressAttribures {
   receiver: string;
 }
 
-interface AddressCreationAttributes extends Optional<AddressAttribures, 'id'> {}
+export interface AddressCreationAttributes
+  extends Optional<AddressAttribures, 'id'> {}
 
 const addressSchema = (
   sequelize: Sequelize,

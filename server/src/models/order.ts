@@ -7,7 +7,7 @@ export interface OrderAttributes {
   quantity: number;
 }
 
-interface OrderCreationAttributes extends Optional<OrderAttributes, 'id'> {}
+export interface OrderCreationAttributes extends Optional<OrderAttributes, 'id'> {}
 
 const orderSchema = (
   sequelize: Sequelize,
