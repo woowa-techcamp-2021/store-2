@@ -20,6 +20,20 @@ export default {
         test: /\.(js|ts)$/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-typescript',
+              [
+                '@babel/preset-env',
+                {
+                  targets: '> 1%, not dead',
+                  useBuiltIns: 'usage',
+                  corejs: { version: '3.16' },
+                },
+              ],
+              '@babel/preset-react',
+            ],
+          },
         },
         exclude: /(node_modules)/,
       },
@@ -44,7 +58,7 @@ export default {
     modules: ['node_modules'],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '*': path.resolve(__dirname, 'src'),
     },
   },
 };
