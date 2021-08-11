@@ -1,7 +1,7 @@
 import express from 'express';
 
-import loadApp from './loaders';
 import './utils/env';
+import loadApp from './loaders';
 
 import { DEFAULT_PORT } from 'config/constants';
 
