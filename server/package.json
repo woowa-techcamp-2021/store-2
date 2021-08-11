@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/woowa-techcamp-2021/store-2#readme",
   "scripts": {
+    "prestart": "export NODE_ENV=development",
     "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
     "predeploy": "export NODE_ENV=production && eslint",
     "deploy": "tsc && ts-node -r tsconfig-paths/register dist/app.js"
