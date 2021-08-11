@@ -1,5 +1,7 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
+import { MAX_SCORE } from 'config/constants';
+
 export interface ReviewAttribures {
   id: string;
   score: number;
@@ -8,9 +10,7 @@ export interface ReviewAttribures {
   img_url: string;
 }
 
-interface ReviewCreationAttributes extends Optional<ReviewAttribures, 'id'> {}
-
-const MAX_SCORE = 5;
+export interface ReviewCreationAttributes extends Optional<ReviewAttribures, 'id'> {}
 
 const reviewSchema = (
   sequelize: Sequelize,
