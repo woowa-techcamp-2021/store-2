@@ -25,24 +25,7 @@ export default {
       },
       { test: /\.tsx?$/, loader: 'ts-loader' },
       {
-        test: /\.(ico|png|jpe?g|gif)$/,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(ttf|otf|svg)$/,
-        type: 'asset/inline',
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'assets/[name].[ext]?[hash]',
-          },
-        },
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(ico|png|jpe?g|gif|jpeg|svg|woff|woff2|eot|ttf|otf)$/,
         type: 'asset/resource',
       },
     ],
