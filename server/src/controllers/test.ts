@@ -1,11 +1,17 @@
 import { Request, Response } from 'express';
 
-export const getTest = (req: Request, res: Response) => {
+import { testService } from 'services/test';
+import { testValidation } from 'validation/test';
+
+import errorHandler from 'utils/error/error-handler';
+
+export const getTest = async (req: Request, res: Response) => {
   try {
-    // validation
-    // service
-    res.status(200).json('test');
+    testValidation(req);
+    const testData = await testService(req.body);
+    res.status(200).json(testData);
   } catch (err) {
-    res.status(500).json('fail');
+    const { statusCode, errorMessage } = errorHandler(err.code);
+    res.status(statusCode).json(errorMessage);
   }
 };
