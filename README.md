@@ -113,7 +113,7 @@ $ cd client && yarn run build
 $ cd server && yarn start
 
 # Production
-$ cd server && yarn run build
+$ cd server && yarn deploy
 ```
 
 ## See also
