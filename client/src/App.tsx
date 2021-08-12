@@ -3,8 +3,6 @@ import { BrowserRouter, Switch, Route } from './lib/router';
 import { MainPage, UserPage, NotFoundPage } from './pages';
 
 const App: React.FC = () => {
-  const [{ name }, onChange, reset] = useInputs({ name: '' });
-
   return (
     <BrowserRouter>
       <Switch>
