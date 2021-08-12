@@ -5,12 +5,12 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "eslint:recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "parserOptions": {
-    "project": "tsconfig.json"
+    "project": ["server/tsconfig.json"]
   },
   "rules": {
     "no-console": "off",

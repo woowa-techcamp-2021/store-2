@@ -13,8 +13,8 @@
   "author": "woowa-techcamp-store-2",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json'",
+    "lint:fix": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json' --fix",
     "prestart": "export NODE_ENV=development",
     "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
     "predeploy": "export NODE_ENV=production && eslint",
