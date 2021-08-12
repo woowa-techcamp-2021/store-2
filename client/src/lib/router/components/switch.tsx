@@ -13,12 +13,11 @@ const Switch: FC = ({ children }) => {
 
   for (let i = 0; i < routes.length; i += 1) {
     const { path, exact } = routes[i].props as { path: string; exact: boolean };
-    if (
-      (exact && checkPathValidation(currentPath, path, exactPathValidation)) ||
-      checkPathValidation(currentPath, path, pathValidation)
-    ) {
+    if (exact) {
+      if (checkPathValidation(currentPath, path, exactPathValidation))
+        return routes[i];
+    } else if (checkPathValidation(currentPath, path, pathValidation))
       return routes[i];
-    }
   }
 
   return null;

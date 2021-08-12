@@ -8,7 +8,7 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/user" component={UserPage} />
-        <Route path="/" component={NotFoundPage} />
+        <Route path="" component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );
