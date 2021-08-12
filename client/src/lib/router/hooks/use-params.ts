@@ -1,7 +1,8 @@
 import { useContext } from 'react';
+import { IRouteContext, RouteContext } from '../context/route-context';
 
-import { RouteContext } from '../context/route-context';
-
-export const useParams = () => {
+const useParams = (): IRouteContext => {
   return useContext(RouteContext);
 };
+
+export default useParams;

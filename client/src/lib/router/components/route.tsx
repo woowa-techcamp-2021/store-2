@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { useHistory, RouteContext } from '../index';
+import useHistory from '../hooks/use-history';
+import { RouteContext } from '../context/route-context';
 import {
   checkPathValidation,
   exactPathValidation,
@@ -12,7 +13,7 @@ interface IRoute {
   exact?: boolean;
 }
 
-export const Route: FC<IRoute> = ({ component, path, exact }) => {
+const Route: FC<IRoute> = ({ component, path, exact }) => {
   const { currentPath } = useHistory();
 
   // TODO: 좀 더 세련된 방법으로
@@ -33,10 +34,8 @@ export const Route: FC<IRoute> = ({ component, path, exact }) => {
     if (!checkPathValidation(currentPath, path, exactPathValidation)) {
       return null;
     }
-  } else {
-    if (!checkPathValidation(currentPath, path, pathValidation)) {
-      return null;
-    }
+  } else if (!checkPathValidation(currentPath, path, pathValidation)) {
+    return null;
   }
 
   return (
@@ -45,3 +44,5 @@ export const Route: FC<IRoute> = ({ component, path, exact }) => {
     </RouteContext.Provider>
   );
 };
+
+export default Route;

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface IRouterContext {
+export interface IRouterContext {
   currentPath: string;
   push: (pathname: string) => void;
   replace: (pathname: string) => void;

@@ -1,18 +1,18 @@
 import React, { FC, ReactElement } from 'react';
-import { useHistory } from '../index';
+import useHistory from '../hooks/use-history';
 import {
   checkPathValidation,
   exactPathValidation,
   pathValidation,
 } from '../path-validation';
 
-export const Switch: FC = ({ children }) => {
+const Switch: FC = ({ children }) => {
   const routes = React.Children.toArray(children) as ReactElement[];
 
   const { currentPath } = useHistory();
 
-  for (let i = 0; i < routes.length; i++) {
-    const { path, exact } = routes[i].props;
+  for (let i = 0; i < routes.length; i += 1) {
+    const { path, exact } = routes[i].props as { path: string; exact: boolean };
     if (
       (exact && checkPathValidation(currentPath, path, exactPathValidation)) ||
       checkPathValidation(currentPath, path, pathValidation)
@@ -23,3 +23,5 @@ export const Switch: FC = ({ children }) => {
 
   return null;
 };
+
+export default Switch;

@@ -1,7 +1,7 @@
 export const checkPathValidation = (
   currentPath: string,
   path: string,
-  validatePath: Function,
+  validatePath: (pathSplit: string[], currentPathSplit: string[]) => boolean,
 ): boolean => {
   const pathSplit = path.split('/');
   const currentPathSplit = currentPath.split('/');
@@ -21,13 +21,13 @@ export const checkPathValidation = (
 export const exactPathValidation = (
   pathSplit: string[],
   currentPathSplit: string[],
-) => {
+): boolean => {
   return pathSplit.length === currentPathSplit.length;
 };
 
 export const pathValidation = (
   pathSplit: string[],
   currentPathSplit: string[],
-) => {
+): boolean => {
   return pathSplit.length <= currentPathSplit.length;
 };

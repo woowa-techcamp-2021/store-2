@@ -1,7 +1,8 @@
 import { useContext } from 'react';
+import { IRouterContext, RouterContext } from '../context/router-context';
 
-import { RouterContext } from '../context/router-context';
-
-export const useHistory = () => {
+const useHistory = (): IRouterContext => {
   return useContext(RouterContext);
 };
+
+export default useHistory;

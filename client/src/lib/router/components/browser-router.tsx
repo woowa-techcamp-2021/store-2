@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import { RouterContext } from '../context/router-context';
 
-export const BrowserRouter: FC = ({ children }) => {
+const BrowserRouter: FC = ({ children }) => {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   const handlePopState = useCallback(() => {
@@ -10,7 +10,7 @@ export const BrowserRouter: FC = ({ children }) => {
 
   useEffect(() => {
     window.addEventListener('popstate', handlePopState);
-  }, []);
+  }, [handlePopState]);
 
   const push = useCallback((pathname: string) => {
     window.history.pushState(null, '', pathname);
@@ -37,3 +37,5 @@ export const BrowserRouter: FC = ({ children }) => {
     <RouterContext.Provider value={value}>{children}</RouterContext.Provider>
   );
 };
+
+export default BrowserRouter;
