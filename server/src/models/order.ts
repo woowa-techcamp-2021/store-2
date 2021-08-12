@@ -1,6 +1,4 @@
-import {
-  Sequelize, DataTypes, ModelCtor, Model, Optional,
-} from 'sequelize';
+import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
 export interface OrderAttributes {
   id: number;
