@@ -100,20 +100,20 @@
 
 ```bash
 # Development
-$ cd client && npm run start
+$ cd client && yarn start
 
 # Production
-$ cd client && npm run build
+$ cd client && yarn run build
 ```
 
 ### API 서버
 
 ```bash
 # Development
-$ cd server && npm run start
+$ cd server && yarn start
 
 # Production
-$ cd server && npm run build
+$ cd server && yarn run build
 ```
 
 ## See also
