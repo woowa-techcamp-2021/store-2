@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 
 interface CounterProps {
@@ -18,14 +18,18 @@ const Button = styled.button`
   margin: 5px;
 `;
 
-function Counter(props: CounterProps) {
+function Counter(props: CounterProps): ReactElement {
   const { number, onIncrease, onDecrease } = props;
 
   return (
     <div>
       <H1>{number}</H1>
-      <Button onClick={onIncrease}>+1</Button>
-      <Button onClick={onDecrease}>-1</Button>
+      <Button type="button" onClick={onIncrease}>
+        +1
+      </Button>
+      <Button type="button" onClick={onDecrease}>
+        -1
+      </Button>
     </div>
   );
 }

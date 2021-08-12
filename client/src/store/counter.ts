@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { delay, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { delay, put, takeLatest } from 'redux-saga/effects';
 
 const counterSlice = createSlice({
   name: 'counter',
@@ -26,7 +26,7 @@ function* decreaseSaga() {
   yield put(decrement());
 }
 
-export function* counterSaga() {
+export function* counterSaga(): Generator {
   yield takeLatest(increaseAsync, increaseSaga);
   yield takeLatest(decreaseAsync, decreaseSaga);
 }

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
-import rootReducer, { rootSaga } from './store';
 import { configureStore } from '@reduxjs/toolkit';
+import rootReducer, { rootSaga } from './store';
 
 import './styles/variables.css';
 import './styles/reset.css';
