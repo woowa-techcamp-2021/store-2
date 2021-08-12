@@ -4,7 +4,9 @@ export const checkPathValidation = (
   validatePath: (pathSplit: string[], currentPathSplit: string[]) => boolean,
 ): boolean => {
   const pathSplit = path.split('/');
-  const currentPathSplit = currentPath.replace(/\/$/, '').split('/');
+  const currentPathSplit = /^\/$/.test(currentPath)
+    ? currentPath.split('/')
+    : currentPath.replace(/\/$/, '').split('/');
 
   if (!validatePath(pathSplit, currentPathSplit)) return false;
 
