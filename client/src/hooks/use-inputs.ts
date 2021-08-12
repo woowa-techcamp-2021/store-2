@@ -9,9 +9,7 @@ interface InputEventTarget extends EventTarget {
   value: string;
 }
 
-function useInputs(
-  initialForm: Record<string, string>,
-): [Form, OnChange, Reset] {
+function useInputs(initialForm: Form): [Form, OnChange, Reset] {
   const [form, setForm] = useState(initialForm);
 
   const onChange = useCallback(
