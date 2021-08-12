@@ -1,5 +1,6 @@
 import React from 'react';
 import useInputs from './hooks/use-inputs';
+import CounterContainer from './containers/counter-container';
 
 const App: React.FC = () => {
   const [{ name }, onChange, reset] = useInputs({ name: '' });
