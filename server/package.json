@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "description": "배민문구사 API 서버",
   "main": "app.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/woowa-techcamp-2021/store-2.git"
-  },
+  "repository": "https://github.com/woowa-techcamp-2021/store-2.git",
   "keywords": [
     "woowahan",
     "typescript",
@@ -15,10 +12,6 @@
   ],
   "author": "woowa-techcamp-store-2",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/woowa-techcamp-2021/store-2.git/issues"
-  },
-  "homepage": "https://github.com/woowa-techcamp-2021/store-2#readme",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
