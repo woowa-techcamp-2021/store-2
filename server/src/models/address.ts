@@ -1,4 +1,6 @@
-import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
+import {
+  Sequelize, DataTypes, ModelCtor, Model, Optional,
+} from 'sequelize';
 
 export interface AddressAttribures {
   id: string;
@@ -7,8 +9,7 @@ export interface AddressAttribures {
   receiver: string;
 }
 
-export interface AddressCreationAttributes
-  extends Optional<AddressAttribures, 'id'> {}
+export type AddressCreationAttributes = Optional<AddressAttribures, 'id'>;
 
 const addressSchema = (
   sequelize: Sequelize,

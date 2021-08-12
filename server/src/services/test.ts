@@ -1,9 +1,11 @@
-import { createTestUser } from 'repositories/test';
+import createTestUser from 'repositories/test';
+import { Model } from 'sequelize';
+import { UserAttribures, UserCreationAttributes } from 'models/user';
 
-export const testService = async (data: any) => {
-  // data processing
-  const processedData = data;
-  const result: any = await createTestUser({
+const testService = async (): Promise<
+  Model<UserAttribures, UserCreationAttributes>
+> => {
+  const result = await createTestUser({
     user_id: 'test_user_id',
     password: 'test_password',
     provider: 'test_provider',
@@ -12,3 +14,5 @@ export const testService = async (data: any) => {
 
   return result;
 };
+
+export default testService;

@@ -1,12 +1,13 @@
-import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
+import {
+  Sequelize, DataTypes, ModelCtor, Model, Optional,
+} from 'sequelize';
 
 export interface CategoryAttribures {
   id: string;
   name: string;
 }
 
-export interface CategoryCreationAttributes
-  extends Optional<CategoryAttribures, 'id'> {}
+export type CategoryCreationAttributes = Optional<CategoryAttribures, 'id'>;
 
 const categorySchema = (
   sequelize: Sequelize,

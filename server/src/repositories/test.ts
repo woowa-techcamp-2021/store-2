@@ -1,16 +1,21 @@
 import { db } from 'models';
+import { Model } from 'sequelize';
 
-import { UserCreationAttributes } from 'models/user';
+import { UserAttribures, UserCreationAttributes } from 'models/user';
 
-export const createTestUser = async ({
+const createTestUser = async ({
   user_id,
   password,
   provider,
   phone,
-}: UserCreationAttributes) =>
-  await db.User.create({
+}: UserCreationAttributes): Promise<
+  Model<UserAttribures, UserCreationAttributes>
+> =>
+  db.User.create({
     user_id,
     password,
     provider,
     phone,
   });
+
+export default createTestUser;

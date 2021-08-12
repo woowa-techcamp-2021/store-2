@@ -28,8 +28,6 @@ const Category = categorySchema(sequelize);
 const Order = orderSchema(sequelize);
 const Review = reviewSchema(sequelize);
 
-
-
 export const db = {
   User,
   Item,

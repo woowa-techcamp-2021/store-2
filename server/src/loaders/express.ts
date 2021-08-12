@@ -1,13 +1,14 @@
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import corsOptions from 'config/cors';
 import routes from 'routes';
 
-import morgan from 'morgan';
+import errorHandler from 'utils/error/error-handler';
 
-export default (app: Application) => {
+export default (app: Application): void => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
@@ -17,7 +18,9 @@ export default (app: Application) => {
 
   app.use('/api', routes);
 
-  app.all('*', (req, res, next) => {
+  app.all('*', (req, res, _next) => {
     res.status(404).send('404');
   });
+
+  app.use(errorHandler);
 };

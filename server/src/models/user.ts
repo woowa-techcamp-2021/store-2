@@ -8,8 +8,7 @@ export interface UserAttribures {
   phone: string;
 }
 
-export interface UserCreationAttributes
-  extends Optional<UserAttribures, 'id'> {}
+export type UserCreationAttributes = Optional<UserAttribures, 'id'>;
 
 const userSchema = (
   sequelize: Sequelize,

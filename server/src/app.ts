@@ -1,19 +1,19 @@
-import express from 'express';
+import express, { Application } from 'express';
 
 import './utils/env';
+import { PORT } from 'config/constants';
 import loadApp from './loaders';
 
-import { DEFAULT_PORT } from 'config/constants';
-
-const PORT: number = Number(process.env.PORT) || DEFAULT_PORT;
-
-async function startServer() {
-  const app = express();
+async function startServer(): Promise<void> {
+  const app: Application = express();
 
   await loadApp(app);
-  app.listen(PORT, () => {
-    console.log(`Server Run on ${PORT}`);
-  });
+  app.listen(PORT);
 }
 
-startServer();
+startServer()
+  .then(() => console.log(`Server Run on ${PORT}`))
+  .catch(() => {
+    console.error('Server Run Failed');
+    process.exit(1);
+  });

@@ -1,4 +1,6 @@
-import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
+import {
+  Sequelize, DataTypes, ModelCtor, Model, Optional,
+} from 'sequelize';
 
 export interface OrderAttributes {
   id: number;
@@ -7,7 +9,7 @@ export interface OrderAttributes {
   quantity: number;
 }
 
-export interface OrderCreationAttributes extends Optional<OrderAttributes, 'id'> {}
+export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
 
 const orderSchema = (
   sequelize: Sequelize,
