@@ -5,12 +5,15 @@ const App: React.FC = () => {
   const [{ name }, onChange, reset] = useInputs({ name: '' });
 
   return (
-    <div className="app">
-      <input type="text" name="name" value={name} onChange={onChange} />
-      <button type="button" onClick={reset}>
-        Reset
-      </button>
-    </div>
+    <>
+      <div className="app">
+        <input type="text" name="name" value={name} onChange={onChange} />
+        <button type="button" onClick={reset}>
+          Reset
+        </button>
+      </div>
+      <CounterContainer />
+    </>
   );
 };
 
