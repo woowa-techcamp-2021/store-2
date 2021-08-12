@@ -1,13 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Div = styled.div`
-  color: var(--body);
-  background: blue;
-`;
+import useInputs from './hooks/use-inputs';
 
 const App: React.FC = () => {
-  return <Div>안녕</Div>;
+  const [{ name }, onChange, reset] = useInputs({ name: '' });
+
+  return (
+    <div className="app">
+      <input type="text" name="name" value={name} onChange={onChange} />
+      <button type="button" onClick={reset}>
+        Reset
+      </button>
+    </div>
+  );
 };
 
 export default App;
