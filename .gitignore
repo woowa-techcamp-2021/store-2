@@ -1,2 +1,12 @@
+# node
 node_modules
+
+#env
+.env
+.env.dev
+
+# build
 dist
+
+# yarn
+yarn-error.log

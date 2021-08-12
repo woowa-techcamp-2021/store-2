@@ -3,13 +3,18 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
-    "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "types": [
+      "node"
+    ],
     "baseUrl": "./src",
+    "paths": {
+      "/*": ["/*"]
+    },
   },
-  "include": ["./src"],
-  "exclude": ["./dist", "./node_modules"]
+  "exclude": ["**/dist/**", "**/node_modules/**"],
 }
