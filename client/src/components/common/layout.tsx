@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-function Layout() {
+const Layout = (): ReactElement => {
   return (
     <div>
       <h1>layout</h1>
       <div>
-        <button>+1</button>
-        <button>-1</button>
+        <button type="button">+1</button>
+        <button type="button">-1</button>
       </div>
     </div>
   );
-}
+};
 
 export default Layout;
