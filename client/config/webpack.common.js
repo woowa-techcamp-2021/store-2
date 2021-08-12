@@ -2,6 +2,7 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 const __dirname = path.resolve();
 
 export default {
@@ -13,6 +14,9 @@ export default {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.ts', '.tsx'],
+    alias: {
+      '*': path.resolve(__dirname, 'src'),
+    },
   },
   module: {
     rules: [
@@ -54,11 +58,4 @@ export default {
       filename: '[name].css',
     }),
   ],
-  resolve: {
-    modules: ['node_modules'],
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
-    alias: {
-      '*': path.resolve(__dirname, 'src'),
-    },
-  },
 };

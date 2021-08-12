@@ -1,6 +1,7 @@
+import path from 'path';
 import { merge } from 'webpack-merge';
 import common from './webpack.common.js';
-import path from 'path';
+
 const __dirname = path.resolve();
 
 export default merge(common, {
@@ -16,7 +17,7 @@ export default merge(common, {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname + '/dist'),
+    contentBase: path.resolve(__dirname, '/dist'),
     index: 'index.html',
     port: 9000,
     writeToDisk: true,
