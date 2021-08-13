@@ -8,7 +8,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src"
+    "baseUrl": "./",
+    "paths": {
+      "Root/*": ["src/*"]
+    }
   },
   "include": ["./src"],
   "exclude": ["./dist", "./node_modules"]
