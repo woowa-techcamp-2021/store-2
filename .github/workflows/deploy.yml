@@ -45,7 +45,7 @@ jobs:
           yarn build
 
       - name: zip distributions
-        run: zip -r STORE_2.zip ./client/dist ./server/dist ./server/package.json .server/yarn.lock ./appspec.yml
+        run: zip -r STORE_2.zip ./client/dist ./server/dist ./server/package.json .server/yarn.lock ./appspec.yml ./scripts
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1
