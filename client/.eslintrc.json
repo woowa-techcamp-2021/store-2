@@ -14,12 +14,16 @@
   },
   "rules": {
     "react/prop-types": "off",
-    "@typescript-eslint/no-empty-interface": "off"
+    "@typescript-eslint/no-empty-interface": "off",
+    "import/no-unresolved": "off"
   },
   "ignorePatterns": ["webpack.*.js", "jest.config.js", "setup-tests.ts"],
   "overrides": [
     {
-      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
       "extends": ["plugin:testing-library/react"]
     }
   ]
