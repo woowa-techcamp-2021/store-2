@@ -6,4 +6,4 @@ mv client/dist/* ../client
 
 cd server
 yarn install
-node app.js
+node dist/app.js
