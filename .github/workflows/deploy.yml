@@ -56,3 +56,6 @@ jobs:
 
       - name: upload to S3
         run: aws s3 cp --region ap-northeast-2 ./STORE_2.zip s3://store-2/public/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment --application-name store-2 --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name store2-codedeploy --s3-location bucket=store-2,bundleType=zip,key=public/STORE_2.zip
