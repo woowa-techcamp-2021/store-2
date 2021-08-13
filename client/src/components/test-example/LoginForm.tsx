@@ -24,7 +24,12 @@ const LoginForm: FC<ILoginForm> = ({ onSubmit }) => {
         </label>
         <label htmlFor="id2">
           비밀번호
-          <input type="password" value={password} onChange={({ target: { value } }) => setPassword(value)} id="id2" />
+          <input
+            type="password"
+            value={password}
+            onChange={({ target: { value } }) => setPassword(value)}
+            id="id2"
+          />
         </label>
         <button type="submit" disabled={!email || !password}>
           로그인
