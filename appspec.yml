@@ -12,10 +12,11 @@ permissions:
     group: ubuntu
 
 hooks:
-  ApplicationStart:
+  BeforeInstall:
     - location: scripts/before-deploy.sh
       timeout: 180
       runas: ubuntu
+  AfterInstall:
     - location: scripts/after-deploy.sh
       timeout: 180
       runas: ubuntu
