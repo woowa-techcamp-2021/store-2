@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/proj
+    destination: /home/ubuntu/store-2
     overwrite: yes
 
 permissions:
@@ -10,3 +10,12 @@ permissions:
     pattern: '**'
     owner: ubuntu
     group: ubuntu
+
+hooks:
+  ApplicationStart:
+    - location: scripts/before-deploy.sh
+      timeout: 180
+      runas: ubuntu
+    - location: scripts/after-deploy.sh
+      timeout: 180
+      runas: ubuntu
