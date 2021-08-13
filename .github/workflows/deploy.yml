@@ -1,0 +1,60 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: deploy
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: create env file
+        working-directory: ./server
+        run: |
+          touch .env
+          cat << EOF >> .env
+          ${{ secrets.ENV }}
+
+      - name: build client files
+        working-directory: ./client
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
+      - name: build server files
+        working-directory: ./server
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
+      - name: zip distributions
+        run: zip -r STORE_2.zip ./client/dist ./server/dist
+
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: $({ secrets.AWS_ACCESS_KEY_ID })
+          aws-secret-access-key: $({ secrets.AWS_SECRET_ACCESS_KEY })
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        working-directory: ./client
+        run: aws s3 cp --region ap-northeast-2 ./STORE_2.zip s3://store-2/$public/
