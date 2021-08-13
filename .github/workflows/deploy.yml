@@ -38,14 +38,8 @@ jobs:
           yarn install --frozen-lockfile
           yarn build
 
-      - name: build server files
-        working-directory: ./server
-        run: |
-          yarn install --frozen-lockfile
-          yarn build
-
       - name: zip distributions
-        run: zip -r STORE_2.zip ./client/dist ./server/dist ./server/package.json ./server/yarn.lock ./server/tsconfig.json ./appspec.yml ./scripts
+        run: zip -r STORE_2.zip ./client/dist ./server ./appspec.yml ./scripts
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1

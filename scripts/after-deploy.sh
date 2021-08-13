@@ -6,4 +6,5 @@ mv client/dist/* ../client
 
 cd server
 yarn install
+yarn build
 yarn deploy
