@@ -9,7 +9,7 @@ export default merge(common, {
   module: {
     rules: [
       {
-        test: /\.s[ac]ss|css$/,
+        test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
         exclude: /node_modules/,
       },
