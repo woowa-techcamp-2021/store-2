@@ -1,0 +1,57 @@
+{
+  "name": "store-2-api",
+  "version": "0.1.0",
+  "description": "배민문구사 API 서버",
+  "main": "app.ts",
+  "repository": "https://github.com/woowa-techcamp-2021/store-2.git",
+  "keywords": [
+    "woowahan",
+    "typescript",
+    "express",
+    "sequelize"
+  ],
+  "author": "woowa-techcamp-store-2",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json'",
+    "lint:fix": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json' --fix",
+    "prestart": "export NODE_ENV=development",
+    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
+    "predeploy": "export NODE_ENV=production && eslint",
+    "deploy": "tsc && ts-node -r tsconfig-paths/register dist/app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.6.5",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.4.13",
+    "@types/sequelize": "^4.28.10",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "prettier": "^2.3.2",
+    "sequelize-cli": "^6.2.0",
+    "tsconfig-paths": "^3.10.1"
+  }
+}

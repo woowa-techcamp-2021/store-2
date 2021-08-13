@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "project": ["client/tsconfig.json"]
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "@typescript-eslint/no-empty-interface": "off"
+  }
+}
