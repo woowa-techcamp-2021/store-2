@@ -7,4 +7,4 @@ mv client/dist/* ../client
 cd server
 yarn install
 yarn build
-pm2 start yarn --name api -- deploy
+pm2 reload api
