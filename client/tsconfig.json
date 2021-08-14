@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
-    "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
+    "paths": {
+      "/*": ["/*"]
+    }
   },
   "include": ["./src"],
   "exclude": ["./dist", "./node_modules"]

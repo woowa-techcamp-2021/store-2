@@ -10,3 +10,6 @@ dist
 
 # yarn
 yarn-error.log
+
+# test snapshots
+__snapshots__

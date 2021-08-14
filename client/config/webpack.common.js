@@ -1,6 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const __dirname = path.resolve();
 
@@ -14,9 +15,7 @@ export default {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.ts', '.tsx'],
-    alias: {
-      '*': path.resolve(__dirname, 'src'),
-    },
+    plugins: [new TsconfigPathsPlugin()],
   },
   module: {
     rules: [
