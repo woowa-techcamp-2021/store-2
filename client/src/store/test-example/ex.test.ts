@@ -8,7 +8,5 @@ it('fetches users', () => {
     getUsers: () => users,
   };
 
-  return expectSaga(fetchUsersSaga, api)
-    .put({ type: 'FETCH_USERS_SUCCESS', payload: users })
-    .run();
+  return expectSaga(fetchUsersSaga, api).put({ type: 'FETCH_USERS_SUCCESS', payload: users }).run();
 });

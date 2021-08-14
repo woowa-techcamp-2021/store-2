@@ -7,8 +7,6 @@ interface IId {
 function fetchUser(id: number) {
   return new Promise(resolve => {
     setTimeout(() => {
-      console.log('wait 0.1 sec.');
-
       const user: IId = {
         id,
         name: `User${id}`,

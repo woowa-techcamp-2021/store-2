@@ -1,4 +1,4 @@
-import { call, delay } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import { expectSaga } from 'redux-saga-test-plan';
 import api from './api';
 import watchFetchUserSaga from './ex3';

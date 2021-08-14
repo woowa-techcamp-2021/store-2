@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'lib/router';
-import Theme from './styles/theme';
 import { MainPage, UserPage, NotFoundPage, SagaCounterPage, TestPage } from 'pages';
+import Theme from './styles/theme';
 
 const App: React.FC = () => {
   return (
