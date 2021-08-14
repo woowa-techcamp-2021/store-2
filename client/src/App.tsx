@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from './lib/router';
+import { BrowserRouter, Switch, Route } from 'lib/router';
 import {
   MainPage,
   UserPage,
   NotFoundPage,
   SagaCounterPage,
   TestPage,
-} from './pages';
+} from 'pages';
 
 const App: React.FC = () => {
   return (

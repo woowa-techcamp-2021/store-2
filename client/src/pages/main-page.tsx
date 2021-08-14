@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Link } from 'Root/lib/router';
+import { Link } from 'lib/router';
 
 const MainPage = (): ReactElement => {
   return (
