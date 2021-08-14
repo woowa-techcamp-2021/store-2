@@ -7,7 +7,11 @@ const rootReducer = combineReducers({ counter: counterReducer });
 export type RootState = ReturnType<typeof rootReducer>;
 
 export function* rootSaga(): Generator {
-  yield all([counterSaga()]);
+  try {
+    yield all([counterSaga()]);
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 export default rootReducer;
