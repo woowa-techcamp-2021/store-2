@@ -1,6 +1,5 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __dirname = path.resolve();
@@ -10,6 +9,7 @@ export default {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   resolve: {
     modules: ['node_modules'],
@@ -53,7 +53,6 @@ export default {
       template: './public/index.html',
       favicon: './public/favicon.ico',
     }),
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),

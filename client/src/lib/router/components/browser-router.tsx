@@ -33,9 +33,7 @@ const BrowserRouter: FC = ({ children }) => {
     goBack,
   };
 
-  return (
-    <RouterContext.Provider value={value}>{children}</RouterContext.Provider>
-  );
+  return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 };
 
 export default BrowserRouter;
