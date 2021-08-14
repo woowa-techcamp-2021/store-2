@@ -10,9 +10,8 @@ describe('<LoginForm />', () => {
   });
 
   it('password input has not value', () => {
-    const { getByLabelText } = render(<LoginForm onSubmit={() => null} />);
-    // eslint-disable-next-line
-    const password = getByLabelText('비밀번호');
+    render(<LoginForm onSubmit={() => null} />);
+    const password = screen.getByLabelText('비밀번호');
     expect(password).toHaveValue('');
     // render(<LoginForm onSubmit={() => null} />);
     // const password = screen.getByLabelText('비밀번호');
@@ -20,13 +19,11 @@ describe('<LoginForm />', () => {
   });
 
   it('enables button when both email and password are entered', () => {
-    const { getByLabelText } = render(<LoginForm onSubmit={() => null} />);
+    render(<LoginForm onSubmit={() => null} />);
 
     const button = screen.getByText('로그인');
-    // eslint-disable-next-line
-    const email = getByLabelText('이메일');
-    // eslint-disable-next-line
-    const password = getByLabelText('비밀번호');
+    const email = screen.getByLabelText('이메일');
+    const password = screen.getByLabelText('비밀번호');
 
     expect(button).toBeDisabled();
 
@@ -37,17 +34,15 @@ describe('<LoginForm />', () => {
   });
 
   it('submits form when buttion is clicked', () => {
-    const handleSubmit = jest.fn().mockImplementation(e => {
-      // eslint-disable-next-line
+    const handleSubmit = jest.fn().mockImplementation((e: Event) => {
       e.preventDefault();
     });
-    const { getByLabelText } = render(<LoginForm onSubmit={handleSubmit} />);
+    render(<LoginForm onSubmit={handleSubmit} />);
 
     const button = screen.getByText('로그인');
-    // eslint-disable-next-line
-    const email = getByLabelText('이메일');
-    // eslint-disable-next-line
-    const password = getByLabelText('비밀번호');
+
+    const email = screen.getByLabelText('이메일');
+    const password = screen.getByLabelText('비밀번호');
 
     fireEvent.change(email, { target: { value: 'user@test.com' } });
     fireEvent.change(password, { target: { value: 'Test1234' } });

@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { delay, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
 const counterSlice = createSlice({
   name: 'counter',
@@ -7,6 +7,7 @@ const counterSlice = createSlice({
   reducers: {
     increment: state => state + 1,
     decrement: state => state - 1,
+    hello: state => state + 10,
   },
 });
 
@@ -17,16 +18,33 @@ export const increaseAsync = createAction('INCREMENT_ASYNC');
 export const decreaseAsync = createAction('DECREMENT_ASYNC');
 
 function* increaseSaga() {
-  yield delay(1000);
-  yield put(increment());
+  try {
+    yield delay(1000);
+    yield put(increment());
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 function* decreaseSaga() {
-  yield delay(1000);
-  yield put(decrement());
+  try {
+    yield delay(1000);
+    yield put(decrement());
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+function* helloSaga() {
+  try {
+    yield put(actions.hello());
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 export function* counterSaga(): Generator {
   yield takeLatest(increaseAsync, increaseSaga);
   yield takeLatest(decreaseAsync, decreaseSaga);
+  yield takeLatest(actions.hello.toString(), helloSaga);
 }

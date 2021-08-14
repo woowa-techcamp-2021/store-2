@@ -9,19 +9,17 @@ interface IAction {
   payload: number;
 }
 
-interface IApi {
-  getUsers: () => string[];
-}
-
-function* fetchUserSaga(action: IAction) {
-  const id: number = action.payload;
-  // eslint-disable-next-line
-  const user: string = yield call(api.getUser, id);
-  yield put({ type: 'FETCH_USER_SUCCESS', payload: user });
+function* fetchUserSaga(action: IAction): Generator {
+  try {
+    const id: number = action.payload;
+    const user = yield call(api.getUser, id);
+    yield put({ type: 'FETCH_USER_SUCCESS', payload: user });
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 function* watchFetchUserSaga(): Generator {
-  // eslint-disable-next-line
   yield takeLatest<TaskAction>('FETCH_USER_REQUEST', fetchUserSaga);
 }
 

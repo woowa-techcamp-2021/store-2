@@ -1,6 +1,6 @@
 export interface IApi {
-  getUser(id: number): string;
   getUsers: () => string[];
+  getUser: (id: number) => string;
 }
 
 const api: IApi = {

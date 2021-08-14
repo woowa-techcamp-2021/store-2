@@ -1,4 +1,4 @@
-import { call } from 'redux-saga/effects';
+import { call, delay } from 'redux-saga/effects';
 import { expectSaga } from 'redux-saga-test-plan';
 import api from './api';
 import watchFetchUserSaga from './ex3';
@@ -6,15 +6,15 @@ import watchFetchUserSaga from './ex3';
 it('fetches a user', () => {
   const id = 42;
   const user = { id, name: 'Jeremy' };
-
-  return (
-    expectSaga(watchFetchUserSaga)
-      // eslint-disable-next-line
+  try {
+    return expectSaga(watchFetchUserSaga)
       .provide([[call(api.getUser, id), user]])
       .put({ type: 'FETCH_USER_SUCCESS', payload: user })
       .dispatch({ type: 'FETCH_USER_REQUEST', payload: id })
-      .silentRun()
-  );
+      .silentRun();
+  } catch (e) {
+    throw new Error(e);
+  }
 });
 
 /*

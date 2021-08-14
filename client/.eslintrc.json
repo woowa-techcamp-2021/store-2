@@ -5,10 +5,16 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:redux-saga/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier", "testing-library"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "testing-library",
+    "redux-saga"
+  ],
   "parserOptions": {
     "project": ["client/tsconfig.json"]
   },
