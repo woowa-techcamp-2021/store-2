@@ -8,9 +8,6 @@ const theme: DefaultTheme = {
   mobile: '(max-width: 480px)',
   tablet: '(max-width: 960px)',
   laptop: '(max-width: 1440px)',
-
-  NORMAL_SIZE: '16px',
-  SMALL_SIZE: '12px',
 };
 
 const GlobalStyle = createGlobalStyle`

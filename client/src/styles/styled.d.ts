@@ -7,8 +7,5 @@ declare module 'styled-components' {
     mobile: string;
     tablet: string;
     laptop: string;
-
-    NORMAL_SIZE: string;
-    SMALL_SIZE: string;
   }
 }
