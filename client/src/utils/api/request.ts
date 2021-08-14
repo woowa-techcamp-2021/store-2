@@ -8,11 +8,7 @@ const client: AxiosInstance = axios.create();
 client.defaults.baseURL = `http://${window.location.hostname}:3000`;
 client.defaults.withCredentials = true;
 
-async function request(
-  method: Method,
-  url: string,
-  body?: RequestData,
-): Promise<ResponseData | Error | null> {
+async function request(method: Method, url: string, body?: RequestData): Promise<ResponseData | Error | null> {
   try {
     const accessToken = window.localStorage.getItem(ACCESS_TOKEN_KEY) || '';
 

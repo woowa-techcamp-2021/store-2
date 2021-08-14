@@ -20,16 +20,10 @@ export const checkPathValidation = (
   return result;
 };
 
-export const exactPathValidation = (
-  pathSplit: string[],
-  currentPathSplit: string[],
-): boolean => {
+export const exactPathValidation = (pathSplit: string[], currentPathSplit: string[]): boolean => {
   return pathSplit.length === currentPathSplit.length;
 };
 
-export const pathValidation = (
-  pathSplit: string[],
-  currentPathSplit: string[],
-): boolean => {
+export const pathValidation = (pathSplit: string[], currentPathSplit: string[]): boolean => {
   return pathSplit.length <= currentPathSplit.length;
 };

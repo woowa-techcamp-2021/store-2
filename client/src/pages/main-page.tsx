@@ -1,6 +1,14 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'lib/router';
 
+import styled from 'styled-components';
+
+const Div = styled.div`
+  padding: 12px;
+  background-color: #a1e0ff;
+  color: ${props => props.theme.bodyColor};
+`;
+
 const MainPage = (): ReactElement => {
   return (
     <div>

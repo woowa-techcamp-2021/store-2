@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
 import useHistory from '../hooks/use-history';
 import { RouteContext } from '../context/route-context';
-import {
-  checkPathValidation,
-  exactPathValidation,
-  pathValidation,
-} from '../path-validation';
+import { checkPathValidation, exactPathValidation, pathValidation } from '../path-validation';
 
 interface IRoute {
   path: string;
@@ -38,11 +34,7 @@ const Route: FC<IRoute> = ({ component, path, exact }) => {
     return null;
   }
 
-  return (
-    <RouteContext.Provider value={params}>
-      {React.createElement(component)}
-    </RouteContext.Provider>
-  );
+  return <RouteContext.Provider value={params}>{React.createElement(component)}</RouteContext.Provider>;
 };
 
 export default Route;

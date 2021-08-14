@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'lib/router';
+import Theme from './styles/theme';
 import {
   MainPage,
   UserPage,
@@ -10,15 +11,17 @@ import {
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/user" component={UserPage} />
-        <Route exact path="/test" component={TestPage} />
-        <Route exact path="/counter" component={SagaCounterPage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-    </BrowserRouter>
+    <Theme>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/user" component={UserPage} />
+          <Route exact path="/test" component={TestPage} />
+          <Route exact path="/counter" component={SagaCounterPage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+      </BrowserRouter>
+    </Theme>
   );
 };
 
