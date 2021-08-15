@@ -10,7 +10,7 @@ interface ParamType {
   code: string;
 }
 
-class CustomError extends Error {
+export class CustomError extends Error {
   code: string;
 
   constructor(code: string, message: string) {
