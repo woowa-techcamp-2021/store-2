@@ -7,6 +7,10 @@ const Wrapper = styled.div`
   position: relative;
   min-height: 100%;
   background-color: ${props => props.theme.colorBg};
+
+  main {
+    padding: 0 10%;
+  }
 `;
 
 const Layout: FC = ({ children }) => {

@@ -34,6 +34,7 @@ declare module 'styled-components' {
     colorPointRed: string;
     colorPointAqua: string;
 
+    colorGreyDark: string;
     colorGreyMid: string;
     colorGreyLight: string;
 

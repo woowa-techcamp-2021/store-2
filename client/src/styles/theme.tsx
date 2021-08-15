@@ -39,6 +39,7 @@ const theme: DefaultTheme = {
   colorPointRed: '#9D3622',
   colorPointAqua: '#34C6CF',
 
+  colorGreyDark: '#717171',
   colorGreyMid: '#AEAEAE',
   colorGreyLight: '#D6D6D6',
 
