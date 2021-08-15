@@ -3,14 +3,17 @@
  * @param {string} errCode - 개발자를 위한 에러 코드
  * @return {ErrorType} statusCode: HTTP 응답 상태 코드, errorMessage: 클라이언트를 위한 메세지
  */
+import { CustomError } from './error-generator';
 
 interface ErrorType {
   statusCode: number;
   errorMessage: string;
 }
 
-function errorHandler(errCode: string): ErrorType {
-  switch (errCode) {
+function errorHandler(err: CustomError): ErrorType {
+  const code = err.code;
+
+  switch (code) {
     case 'req/invalid-body':
       return { statusCode: 400, errorMessage: '잘못된 요청입니다.' };
     case 'req/invalid-query':
