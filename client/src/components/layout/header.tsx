@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
+import { Logo } from 'components';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
-import Logo from './logo';
 
 const Wrapper = styled.header`
   width: 100%;
