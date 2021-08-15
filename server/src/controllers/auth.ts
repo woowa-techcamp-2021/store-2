@@ -74,12 +74,14 @@ export const handleGithubAuth = async (req: Request, res: Response): Promise<voi
 
     if (isUserExists) {
       const { accessToken, refreshToken } = await authService.signIn(userId, true, '');
-      res.status(200).json({ accessToken, refreshToken });
+      res.cookie(REFRESH_TOKEN_NAME, refreshToken, { httpOnly: true });
+      res.status(200).json({ accessToken });
       return;
     }
 
     const { accessToken, refreshToken } = await userService.signUp(userId, true, '');
-    res.status(200).json({ accessToken, refreshToken });
+    res.cookie(REFRESH_TOKEN_NAME, refreshToken, { httpOnly: true });
+    res.status(200).json({ accessToken });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
