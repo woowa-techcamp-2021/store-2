@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Header from './header';
 import Footer from './footer';
 
+interface LayoutProps {
+  displayMain?: boolean;
+}
+
 const Wrapper = styled.div`
   min-height: 100%;
   background-color: ${props => props.theme.colorBg};
@@ -16,10 +20,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const Layout: FC = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children, displayMain = false }) => {
   return (
     <Wrapper>
-      <Header />
+      <Header displayMain={displayMain} />
       <main>{children}</main>
       <Footer />
     </Wrapper>

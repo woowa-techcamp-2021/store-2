@@ -2,8 +2,12 @@ import React, { FC } from 'react';
 import { Link } from 'lib/router';
 import styled from 'styled-components';
 
-const Wrapper = styled.nav`
-  background-color: ${props => props.theme.colorWhite};
+interface NavbarProps {
+  white?: boolean;
+}
+
+const Wrapper = styled.nav<NavbarProps>`
+  background-color: ${props => (props.white ? props.theme.colorWhite : props.theme.colorBg)};
   border-bottom: 1px solid ${props => props.theme.colorLineLight};
   padding: 10px 10%;
   display: flex;
@@ -22,9 +26,9 @@ const Wrapper = styled.nav`
   }
 `;
 
-const Navbar: FC = () => {
+const Navbar: FC<NavbarProps> = ({ white = false }) => {
   return (
-    <Wrapper>
+    <Wrapper white={white}>
       <Link className="nav-link" to="/login">
         로그인
       </Link>

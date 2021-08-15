@@ -5,6 +5,10 @@ import { Logo, Navbar } from 'components';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
 
+interface HeaderProps {
+  displayMain?: boolean;
+}
+
 const Wrapper = styled.header`
   width: 100%;
 `;
@@ -28,14 +32,28 @@ const Tent = styled.div`
   background-repeat: repeat-x;
 `;
 
-const Header: FC = () => {
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+`;
+
+const Header: FC<HeaderProps> = ({ displayMain }) => {
   return (
     <Wrapper>
-      <Navbar />
-      <Brick>
-        <Logo className="header-logo" />
-      </Brick>
-      <Tent />
+      <Navbar white={displayMain} />
+      {displayMain ? (
+        <>
+          <Brick>
+            <Logo className="header-logo" />
+          </Brick>
+          <Tent />
+        </>
+      ) : (
+        <LogoWrapper>
+          <Logo className="header-logo" width="200px" />
+        </LogoWrapper>
+      )}
     </Wrapper>
   );
 };
