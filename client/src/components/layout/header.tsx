@@ -31,6 +31,10 @@ const Tent = styled.div`
   height: 80px;
   background-image: url(${TentBg});
   background-repeat: repeat-x;
+
+  ${props => props.theme.mobile} {
+    margin-top: -15px;
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -41,6 +45,10 @@ const LogoWrapper = styled.div`
 
 const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
   const renderLogo = () => {
+    if (isMobile) {
+      if (displayMain) return <Tent />;
+      return null;
+    }
     if (displayMain) {
       return (
         <>
@@ -61,7 +69,7 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
   return (
     <Wrapper>
       <Navbar white={displayMain} mobile={isMobile} />
-      {!isMobile && renderLogo()}
+      {renderLogo()}
     </Wrapper>
   );
 };

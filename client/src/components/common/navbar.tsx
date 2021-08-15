@@ -22,6 +22,7 @@ const Wrapper = styled.nav<WrapperStyleProps>`
   padding: 10px 10%;
   display: flex;
   justify-content: flex-end;
+  position: relative;
 
   .nav-link {
     font-size: 12px;
@@ -52,11 +53,7 @@ const Wrapper = styled.nav<WrapperStyleProps>`
 const Navbar: FC<NavbarProps> = ({ white = false, mobile = false }) => {
   return (
     <Wrapper white={white}>
-      {mobile && (
-        <div>
-          <Logo width="130px" mobile />
-        </div>
-      )}
+      {mobile && <Logo width="130px" mobile />}
       <div>
         <Link className="nav-link" to="/user">
           {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
