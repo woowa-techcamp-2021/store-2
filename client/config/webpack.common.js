@@ -11,6 +11,7 @@ export default {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    assetModuleFilename: 'assets/[hash].[ext]?[query]',
   },
   resolve: {
     modules: ['node_modules'],
