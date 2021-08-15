@@ -3,31 +3,25 @@ import { Model } from 'sequelize';
 
 import { UserAttribures, UserCreationAttributes } from 'models/user';
 
-import errorGenerator from 'utils/error/error-generator';
-
-export const checkUserExists = async (user_id: string): Promise<void> => {
+export const checkUserExists = async (user_id: string): Promise<boolean> => {
   const userCount = await db.User.count({
     where: {
       user_id,
     },
   });
 
-  if (userCount > 0) {
-    throw errorGenerator({
-      message: 'POST /api/user - account already exists',
-      code: 'auth/existing-user',
-    });
-  }
+  return !!userCount;
 };
 
-export const createUser = async (
-  user_id: string,
-  password: string,
-): Promise<Model<UserAttribures, UserCreationAttributes>> => {
+export const createUser = async ({
+  user_id,
+  provider,
+  password,
+}: UserCreationAttributes): Promise<Model<UserAttribures, UserCreationAttributes>> => {
   const user = await db.User.create({
     user_id,
+    provider,
     password,
-    provider: 'local',
   });
 
   return user;
