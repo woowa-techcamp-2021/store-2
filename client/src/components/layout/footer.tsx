@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { Logo } from 'components';
 
 const Wrapper = styled.footer`
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: 200px;
   background-color: ${props => props.theme.colorFooter};

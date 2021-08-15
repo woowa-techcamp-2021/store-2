@@ -4,11 +4,13 @@ import Header from './header';
 import Footer from './footer';
 
 const Wrapper = styled.div`
-  position: relative;
   min-height: 100%;
   background-color: ${props => props.theme.colorBg};
+  display: flex;
+  flex-direction: column;
 
   main {
+    flex: 1;
     padding: 0 10%;
   }
 `;
