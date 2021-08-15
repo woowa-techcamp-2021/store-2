@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import LoginForm from './LoginForm';
+import LoginForm from '../LoginForm';
 
 describe('<LoginForm />', () => {
   it('renders email input', () => {
@@ -13,9 +13,6 @@ describe('<LoginForm />', () => {
     render(<LoginForm onSubmit={() => null} />);
     const password = screen.getByLabelText('비밀번호');
     expect(password).toHaveValue('');
-    // render(<LoginForm onSubmit={() => null} />);
-    // const password = screen.getByLabelText('비밀번호');
-    // expect(password).toHaveValue('');
   });
 
   it('enables button when both email and password are entered', () => {

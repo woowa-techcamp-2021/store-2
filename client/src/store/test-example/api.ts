@@ -5,7 +5,7 @@ export interface IApi {
 
 const api: IApi = {
   getUsers: () => ['Jeremy', 'Tucker'],
-  getUser: id => 'Jeremy',
+  getUser: id => id.toString(),
 };
 
 export default api;
