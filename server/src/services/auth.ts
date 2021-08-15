@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { getUser } from 'repositories/auth';
-import { checkUserExists } from 'repositories/user';
+import { checkUserExists, getUserId } from 'repositories/user';
 
 import errorGenerator from 'utils/error/error-generator';
 import { checkTokenExpiration, decodeToken, createToken } from 'utils/jwt';
@@ -15,6 +15,7 @@ interface IToken {
 interface ICheckAuth {
   isAccessTokenExpired: boolean;
   newAccessToken: string;
+  userId: string;
 }
 
 interface IHandleGithubAuth {
@@ -75,7 +76,11 @@ async function checkAuth(accessToken: string, refreshToken: string): Promise<ICh
   const { uid } = decodeToken('refresh', refreshToken) as { uid: string };
   const newAccessToken = createToken('access', { uid });
 
-  return { newAccessToken, isAccessTokenExpired };
+  const userSnapshot = await getUserId(uid);
+
+  const userId = userSnapshot.getDataValue('user_id');
+
+  return { newAccessToken, isAccessTokenExpired, userId };
 }
 
 const GITHUB_AT_URL = 'https://github.com/login/oauth/access_token';

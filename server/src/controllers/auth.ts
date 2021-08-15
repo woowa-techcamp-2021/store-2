@@ -24,7 +24,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
     const { accessToken, refreshToken } = await authService.signIn(id, false, password);
 
     res.cookie(REFRESH_TOKEN_NAME, refreshToken, { httpOnly: true });
-    res.status(200).json({ accessToken });
+    res.status(200).json({ accessToken, userId: id });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -39,14 +39,14 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
     const accessToken = getAccessToken(req.headers.authorization);
     const refreshToken = getRefreshToken(req.cookies);
 
-    const { newAccessToken, isAccessTokenExpired } = await authService.checkAuth(accessToken, refreshToken);
+    const { newAccessToken, isAccessTokenExpired, userId } = await authService.checkAuth(accessToken, refreshToken);
 
     if (redirect) {
       res.status(200).json({ requestAgain: true, newAccessToken });
       return;
     }
 
-    const result = isAccessTokenExpired ? { newAccessToken } : {};
+    const result = isAccessTokenExpired ? { newAccessToken } : { userId };
     res.status(200).json(result);
   } catch (err) {
     console.log(err);
@@ -81,7 +81,7 @@ export const handleGithubAuth = async (req: Request, res: Response): Promise<voi
 
     const { accessToken, refreshToken } = await userService.signUp(userId, true, '');
     res.cookie(REFRESH_TOKEN_NAME, refreshToken, { httpOnly: true });
-    res.status(200).json({ accessToken });
+    res.status(200).json({ accessToken, userId });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);

@@ -4,12 +4,13 @@ import { createToken } from 'utils/jwt';
 import { hashPassword } from 'utils/crypto';
 import errorGenerator from 'utils/error/error-generator';
 
-interface IToken {
+interface ISignUp {
   accessToken: string;
   refreshToken: string;
+  userId: string;
 }
 
-async function signUp(user_id: string, isOAuth: boolean, password: string): Promise<IToken> {
+async function signUp(user_id: string, isOAuth: boolean, password: string): Promise<ISignUp> {
   const isUserExists = await checkUserExists(user_id);
 
   if (isUserExists) {
@@ -32,11 +33,12 @@ async function signUp(user_id: string, isOAuth: boolean, password: string): Prom
   const user = await createUser(createUserArgs);
 
   const uid = user.getDataValue('id');
+  const userId = user.getDataValue('user_id');
 
   const accessToken = createToken('access', { uid });
   const refreshToken = createToken('refresh', { uid });
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, userId };
 }
 
 export default { signUp };

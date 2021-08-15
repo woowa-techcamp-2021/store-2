@@ -15,10 +15,10 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id, password } = req.body as IReqBody;
 
-    const { accessToken, refreshToken } = await userService.signUp(id, false, password);
+    const { accessToken, refreshToken, userId } = await userService.signUp(id, false, password);
 
     res.cookie(REFRESH_TOKEN_NAME, refreshToken, { httpOnly: true });
-    res.status(201).json({ accessToken });
+    res.status(201).json({ accessToken, userId });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
