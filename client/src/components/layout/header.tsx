@@ -6,7 +6,8 @@ import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
 
 interface HeaderProps {
-  displayMain?: boolean;
+  displayMain: boolean;
+  isMobile: boolean;
 }
 
 const Wrapper = styled.header`
@@ -38,22 +39,29 @@ const LogoWrapper = styled.div`
   padding: 25px 0;
 `;
 
-const Header: FC<HeaderProps> = ({ displayMain }) => {
-  return (
-    <Wrapper>
-      <Navbar white={displayMain} />
-      {displayMain ? (
+const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
+  const renderLogo = () => {
+    if (displayMain) {
+      return (
         <>
           <Brick>
             <Logo className="header-logo" />
           </Brick>
           <Tent />
         </>
-      ) : (
-        <LogoWrapper>
-          <Logo className="header-logo" width="200px" />
-        </LogoWrapper>
-      )}
+      );
+    }
+    return (
+      <LogoWrapper>
+        <Logo className="header-logo" width="200px" />
+      </LogoWrapper>
+    );
+  };
+
+  return (
+    <Wrapper>
+      <Navbar white={displayMain} mobile={isMobile} />
+      {!isMobile && renderLogo()}
     </Wrapper>
   );
 };

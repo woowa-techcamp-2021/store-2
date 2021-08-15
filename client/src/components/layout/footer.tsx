@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
 import { Logo } from 'components';
-import useWindowSize from 'hooks/use-window-size';
+
+interface FooterProps {
+  isMobile: boolean;
+}
 
 const Wrapper = styled.footer`
   width: 100%;
@@ -15,6 +17,7 @@ const Wrapper = styled.footer`
   ${props => props.theme.mobile} {
     display: flex;
     flex-direction: column;
+    padding: 30px 2%;
   }
 `;
 
@@ -94,10 +97,7 @@ const Info = styled.div`
   }
 `;
 
-const Footer: FC = () => {
-  const { width } = useWindowSize();
-  const isMobile = width <= 480;
-
+const Footer: FC<FooterProps> = ({ isMobile }) => {
   return (
     <Wrapper>
       <Left>

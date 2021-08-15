@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import useWindowSize from 'hooks/use-window-size';
 import Header from './header';
 import Footer from './footer';
 
@@ -16,16 +17,17 @@ const Wrapper = styled.div`
   main {
     flex: 1;
     padding: 0 10%;
-    background-color: ${props => props.theme.colorPointBeige};
   }
 `;
 
 const Layout: FC<LayoutProps> = ({ children, displayMain = false }) => {
+  const { width } = useWindowSize();
+
   return (
     <Wrapper>
-      <Header displayMain={displayMain} />
+      <Header displayMain={displayMain} isMobile={width <= 480} />
       <main>{children}</main>
-      <Footer />
+      <Footer isMobile={width <= 480} />
     </Wrapper>
   );
 };
