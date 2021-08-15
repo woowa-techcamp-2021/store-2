@@ -21,6 +21,7 @@ const theme: DefaultTheme = {
   colorPlaceholder: '#7E7E7E',
   colorError: '#F45452',
 
+  colorInputLine: '#c0c0c0',
   colorLine: '#9F927F',
   colorLineLight: '#BAA482',
   colorLineDark: '#665946',
@@ -44,6 +45,7 @@ const theme: DefaultTheme = {
   colorGreyLight: '#D6D6D6',
 
   colorGithub: '#404040',
+  colorSignup: '#C8BBA8',
 
   fontBasic: '"Noto Sans KR", sans-serif',
   fontEuljiro: '"BMEULJIRO", sans-serif',
