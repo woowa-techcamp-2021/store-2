@@ -33,10 +33,10 @@ export const decodeToken = (type: TokenType, token: string): JwtPayload => {
   const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
   const decoded = jwt.verify(token, secret);
 
-  if (typeof decoded === 'string') {
+  if (typeof decoded === 'string' || !decoded.uid) {
     throw errorGenerator({
       code: 'auth/invalid-token',
-      message: 'Invalid token',
+      message: 'jwt - invalid token',
     });
   }
 
@@ -55,6 +55,11 @@ export const getAccessToken = (authorization: string | void): string => {
   return authorization.split('Bearer ')[1];
 };
 
+export const getRefreshToken = (cookies: { rteofkreensh: string }): string => {
+  if (!cookies.rteofkreensh) return '';
+  return cookies.rteofkreensh;
+};
+
 export const checkTokenExpiration = (type: TokenType, token: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
@@ -65,7 +70,7 @@ export const checkTokenExpiration = (type: TokenType, token: string): Promise<bo
       if (err) {
         const error = errorGenerator({
           code: 'auth/invalid-token',
-          message: 'Invalid token',
+          message: 'jwt - invalid token',
         });
         reject(error);
       }
@@ -77,17 +82,10 @@ export const checkTokenExpiration = (type: TokenType, token: string): Promise<bo
 export const getUIDFromToken = (token: string): string => {
   const decoded = jwt.decode(token);
 
-  if (!decoded) {
+  if (!decoded || typeof decoded === 'string') {
     throw errorGenerator({
       code: 'auth/invalid-token',
-      message: 'Invalid token',
-    });
-  }
-
-  if (typeof decoded === 'string') {
-    throw errorGenerator({
-      code: 'auth/invalid-token',
-      message: 'Invalid token',
+      message: 'jwt - invalid token',
     });
   }
 
