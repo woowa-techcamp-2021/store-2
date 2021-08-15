@@ -6,8 +6,6 @@ import morgan from 'morgan';
 import corsOptions from 'config/cors';
 import routes from 'routes';
 
-import errorHandler from 'utils/error/error-handler';
-
 export default (app: Application): void => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -21,6 +19,4 @@ export default (app: Application): void => {
   app.all('*', (req, res, _next) => {
     res.status(404).send('404');
   });
-
-  app.use(errorHandler);
 };

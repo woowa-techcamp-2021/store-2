@@ -9,9 +9,7 @@ export interface OrderAttributes {
 
 export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
 
-const orderSchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<OrderAttributes, OrderCreationAttributes>> => {
+const orderSchema = (sequelize: Sequelize): ModelCtor<Model<OrderAttributes, OrderCreationAttributes>> => {
   const Order = sequelize.define('Order', {
     id: {
       type: DataTypes.INTEGER,

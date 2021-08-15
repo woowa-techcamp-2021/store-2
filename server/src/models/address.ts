@@ -9,9 +9,7 @@ export interface AddressAttribures {
 
 export type AddressCreationAttributes = Optional<AddressAttribures, 'id'>;
 
-const addressSchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<AddressAttribures, AddressCreationAttributes>> => {
+const addressSchema = (sequelize: Sequelize): ModelCtor<Model<AddressAttribures, AddressCreationAttributes>> => {
   const Address = sequelize.define('Address', {
     id: {
       type: DataTypes.INTEGER,
