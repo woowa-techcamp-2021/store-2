@@ -1,5 +1,7 @@
 export const PORT = Number(process.env.PORT) || 3000;
 
+export const REFRESH_TOKEN_NAME = 'rteofkreensh';
+
 export const MAX_SCORE = 5;
 
 export const USER = {
