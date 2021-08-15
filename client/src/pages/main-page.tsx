@@ -7,7 +7,6 @@ const Div = styled.div`
   background-color: #a1e0ff;
   color: ${props => props.theme.colorBlack};
   font-family: ${props => props.theme.fontEuljiro};
-  font-size: ${props => props.theme.size30};
 `;
 
 const MainPage = (): ReactElement => {
