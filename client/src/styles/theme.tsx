@@ -7,9 +7,9 @@ import BMHANNA from '../assets/fonts/BMHANNA11years.otf';
 import BMHANNAAir from '../assets/fonts/BMHANNAAir.otf';
 
 const theme: DefaultTheme = {
-  mobile: '(max-width: 480px)',
-  tablet: '(max-width: 960px)',
-  laptop: '(max-width: 1440px)',
+  mobile: '@media all and (max-width: 480px)',
+  tablet: '@media all and (min-width:480px) and (max-width:1200px)',
+  laptop: '@media all and (min-width: 1200px)',
 
   colorWhite: '#FFFFFF',
   colorOffWhite: '#FCFCFC',
@@ -20,6 +20,7 @@ const theme: DefaultTheme = {
   colorPlaceholder: '#7E7E7E',
   colorError: '#F45452',
 
+  colorInputLine: '#c0c0c0',
   colorLine: '#9F927F',
   colorLineLight: '#BAA482',
   colorLineDark: '#665946',
@@ -42,6 +43,7 @@ const theme: DefaultTheme = {
   colorGreyLight: '#D6D6D6',
 
   colorGithub: '#404040',
+  colorSignup: '#C8BBA8',
 
   fontBasic: '"Noto Sans KR", sans-serif',
   fontEuljiro: '"BMEULJIRO", sans-serif',
