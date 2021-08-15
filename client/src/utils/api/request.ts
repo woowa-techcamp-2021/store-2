@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import client from './client';
 import { Method, RequestData, ResponseData } from './types';
 
