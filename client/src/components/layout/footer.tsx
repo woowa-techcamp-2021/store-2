@@ -101,7 +101,7 @@ const Footer: FC<FooterProps> = ({ isMobile }) => {
   return (
     <Wrapper>
       <Left>
-        <Logo width="130px" full mobile={isMobile} />
+        <Logo width="130px" full mobile={isMobile} goMain={false} />
       </Left>
       <Right>
         <Links>
