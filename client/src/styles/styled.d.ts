@@ -12,6 +12,7 @@ declare module 'styled-components' {
     colorSoftBlack: string;
 
     colorBg: string;
+    colorFooter: string;
     colorPlaceholder: string;
     colorError: string;
 

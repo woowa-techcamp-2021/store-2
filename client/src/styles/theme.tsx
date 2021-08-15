@@ -17,6 +17,7 @@ const theme: DefaultTheme = {
   colorSoftBlack: '#333333',
 
   colorBg: '#EBDFCD',
+  colorFooter: '#DFD3C0',
   colorPlaceholder: '#7E7E7E',
   colorError: '#F45452',
 
@@ -56,6 +57,12 @@ const theme: DefaultTheme = {
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  #root {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
   
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
