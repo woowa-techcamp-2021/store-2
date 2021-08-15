@@ -23,7 +23,7 @@
     "@typescript-eslint/no-empty-interface": "off",
     "import/no-unresolved": "off"
   },
-  "ignorePatterns": ["webpack.*.js", "jest.config.js", "setup-tests.ts"],
+  "ignorePatterns": ["webpack.*.js", "jest.config.js", "setup-tests.ts", "file-transformer.js"],
   "overrides": [
     {
       "files": [
