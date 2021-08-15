@@ -6,7 +6,7 @@ import errorHandler from 'utils/error/error-handler';
 
 import { USER } from 'config/constants';
 
-export const signInValidateion = (req: Request, res: Response, next: NextFunction): void => {
+export const signInValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
       id: Joi.string().min(USER.ID_MIN_LENGTH).max(USER.ID_MAX_LENGTH).required(),

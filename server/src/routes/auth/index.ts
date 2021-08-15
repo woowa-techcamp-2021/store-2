@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { signin } from 'controllers/auth';
-import { signInValidateion } from 'validation/auth';
+import { signIn } from 'controllers/auth';
+import { signInValidation } from 'validation/auth';
 
 const router = Router();
 
-router.post('/', signInValidateion, signin);
+router.post('/', signInValidation, signIn);
 
 export default router;

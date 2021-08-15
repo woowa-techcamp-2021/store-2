@@ -9,7 +9,7 @@ interface IReqBody {
   password: string;
 }
 
-export const signin = async (req: Request, res: Response): Promise<void> => {
+export const signIn = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id, password } = req.body as IReqBody;
 
