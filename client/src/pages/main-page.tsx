@@ -5,7 +5,8 @@ import { Link } from 'lib/router';
 const Div = styled.div`
   padding: 12px;
   background-color: #a1e0ff;
-  color: ${props => props.theme.bodyColor};
+  color: ${props => props.theme.colorBlack};
+  font-family: ${props => props.theme.fontEuljiro};
 `;
 
 const MainPage = (): ReactElement => {
