@@ -10,9 +10,7 @@ export interface UserAttribures {
 
 export type UserCreationAttributes = Optional<UserAttribures, 'id'>;
 
-const userSchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<UserAttribures, UserCreationAttributes>> => {
+const userSchema = (sequelize: Sequelize): ModelCtor<Model<UserAttribures, UserCreationAttributes>> => {
   const User = sequelize.define('User', {
     id: {
       type: DataTypes.UUID,
@@ -22,6 +20,7 @@ const userSchema = (
     user_id: {
       type: DataTypes.STRING(20),
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING(60),
