@@ -1,6 +1,10 @@
 import React, { FC } from 'react';
 import { ThemeProvider, createGlobalStyle, DefaultTheme } from 'styled-components';
 import reset from 'styled-reset';
+import BMEULJIRO from '../assets/fonts/BMEULJIRO.otf';
+import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.otf';
+import BMHANNA from '../assets/fonts/BMHANNA11years.otf';
+import BMHANNAAir from '../assets/fonts/BMHANNAAir.otf';
 
 const theme: DefaultTheme = {
   mobile: '(max-width: 480px)',
@@ -38,12 +42,58 @@ const theme: DefaultTheme = {
   colorGreyLight: '#D6D6D6',
 
   colorGithub: '#404040',
+
+  fontBasic: '"Noto Sans KR", sans-serif',
+  fontEuljiro: '"BMEULJIRO", sans-serif',
+  fontEuljiro10: '"BMEULJIRO10", sans-serif',
+  fontHanna: '"BMHANNA", sans-serif',
+  fontHannaAir: '"BMHANNAAir", sans-serif',
+
+  size12: '12px',
+  size14: '14px',
+  size16: '16px',
+  size18: '18px',
+  size20: '20px',
+  size22: '22px',
+  size24: '24px',
+  size26: '26px',
+  size28: '28px',
+  size30: '30px',
+  size36: '36px',
+  size50: '50px',
+  size144: '144px',
+
+  weightReg: '400',
+  weightMid: '500',
+  weightBold: '700',
 };
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+  
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
-  /* global styles here */
+  @font-face {
+    font-family: 'BMEULJIRO';
+    src: url(${BMEULJIRO}) format('otf');
+  }
+  
+  @font-face {
+    font-family: 'BMEULJIRO10';
+    src: url(${BMEULJIRO10years}) format('otf');
+  }
+
+  @font-face {
+    font-family: 'BMHANNA';
+    src: url(${BMHANNA}) format('otf');
+  }
+
+  @font-face {
+    font-family: 'BMHANNAAir';
+    src: url(${BMHANNAAir}) format('otf');
+  }
+
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 
 const Theme: FC = ({ children }) => {
