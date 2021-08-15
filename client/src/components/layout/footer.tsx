@@ -38,6 +38,7 @@ const Links = styled.div`
   ul li a {
     color: ${props => props.theme.colorSoftBlack};
     font-weight: ${props => props.theme.weightBold};
+    font-size: 14px;
     text-decoration: none;
   }
 `;
