@@ -5,7 +5,7 @@ import { Logo } from 'components';
 
 const Wrapper = styled.footer`
   width: 100%;
-  height: 200px;
+  min-height: 200px;
   background-color: ${props => props.theme.colorFooter};
   box-sizing: border-box;
   display: flex;
