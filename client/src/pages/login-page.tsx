@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import LoginForm from 'components/auth/login-form';
+import LoginContainer from 'containers/login-container';
 
 const Div = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const LoginPage = (): ReactElement => {
   return (
     <Div>
       헤더
-      <LoginForm />
+      <LoginContainer />
       푸터
     </Div>
   );

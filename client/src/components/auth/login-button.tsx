@@ -1,7 +1,5 @@
-import { Link } from 'lib/router';
 import React from 'react';
-import styled, { css } from 'styled-components';
-import Theme from 'styles/theme';
+import styled from 'styled-components';
 
 const LoginButton = styled.button<{ login?: boolean; github?: boolean; signup?: boolean }>`
   ${({ theme }) => theme.mobile} {
