@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Logo } from 'components';
+import { Logo, Navbar } from 'components';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
 
@@ -31,6 +31,7 @@ const Tent = styled.div`
 const Header: FC = () => {
   return (
     <Wrapper>
+      <Navbar />
       <Brick>
         <Logo className="header-logo" />
       </Brick>

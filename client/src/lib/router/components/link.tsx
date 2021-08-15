@@ -2,11 +2,12 @@ import React, { FC, MouseEvent } from 'react';
 import useHistory from '../hooks/use-history';
 
 interface ILink {
+  className?: string;
   to: string;
   replace?: boolean;
 }
 
-const Link: FC<ILink> = ({ children, to, replace: isReplace }) => {
+const Link: FC<ILink> = ({ children, className = '', to, replace: isReplace }) => {
   const { push, replace } = useHistory();
 
   const onClick = (e: MouseEvent) => {
@@ -19,7 +20,7 @@ const Link: FC<ILink> = ({ children, to, replace: isReplace }) => {
   };
 
   return (
-    <a href={to} onClick={onClick}>
+    <a className={className} href={to} onClick={onClick}>
       {children}
     </a>
   );

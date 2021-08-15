@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   main {
     flex: 1;
     padding: 0 10%;
+    background-color: ${props => props.theme.colorPointBeige};
   }
 `;
 
