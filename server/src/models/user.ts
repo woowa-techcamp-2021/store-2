@@ -10,7 +10,7 @@ export interface UserAttribures {
   phone: string;
 }
 
-export type UserCreationAttributes = Optional<UserAttribures, 'id'>;
+export type UserCreationAttributes = Optional<UserAttribures, 'id' | 'phone'>;
 
 const HASHED_PASSWORD_LENGTH = 60;
 
