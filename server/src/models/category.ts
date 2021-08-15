@@ -7,9 +7,7 @@ export interface CategoryAttribures {
 
 export type CategoryCreationAttributes = Optional<CategoryAttribures, 'id'>;
 
-const categorySchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<CategoryAttribures, CategoryCreationAttributes>> => {
+const categorySchema = (sequelize: Sequelize): ModelCtor<Model<CategoryAttribures, CategoryCreationAttributes>> => {
   const Category = sequelize.define('Category', {
     id: {
       type: DataTypes.INTEGER,

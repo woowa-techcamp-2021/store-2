@@ -13,11 +13,9 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
 
 export const createToken = (type: TokenType, option: OptionType): string => {
   const ACCESS_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 30;
-  const REFRESH_TOKEN_EXPIRE_DATE =
-    Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
+  const REFRESH_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
 
-  const expireDate =
-    type === 'access' ? ACCESS_TOKEN_EXPIRE_DATE : REFRESH_TOKEN_EXPIRE_DATE;
+  const expireDate = type === 'access' ? ACCESS_TOKEN_EXPIRE_DATE : REFRESH_TOKEN_EXPIRE_DATE;
   const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
 
   const token = jwt.sign(
@@ -45,11 +43,7 @@ export const decodeToken = (type: TokenType, token: string): JwtPayload => {
   return decoded;
 };
 
-export const verifyToken = (
-  type: TokenType,
-  token: string,
-  errCallback: (err: VerifyErrors | null) => void,
-): void => {
+export const verifyToken = (type: TokenType, token: string, errCallback: (err: VerifyErrors | null) => void): void => {
   const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
   jwt.verify(token, secret, err => {
     errCallback(err);
@@ -61,13 +55,9 @@ export const getAccessToken = (authorization: string | void): string => {
   return authorization.split('Bearer ')[1];
 };
 
-export const checkTokenExpiration = (
-  type: TokenType,
-  token: string,
-): Promise<boolean> => {
+export const checkTokenExpiration = (type: TokenType, token: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    const secret =
-      type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
+    const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
     jwt.verify(token, secret, (err: VerifyErrors | null) => {
       if (err?.name === 'TokenExpiredError') {
         resolve(true);
@@ -87,6 +77,13 @@ export const checkTokenExpiration = (
 export const getUIDFromToken = (token: string): string => {
   const decoded = jwt.decode(token);
 
+  if (!decoded) {
+    throw errorGenerator({
+      code: 'auth/invalid-token',
+      message: 'Invalid token',
+    });
+  }
+
   if (typeof decoded === 'string') {
     throw errorGenerator({
       code: 'auth/invalid-token',
@@ -94,17 +91,13 @@ export const getUIDFromToken = (token: string): string => {
     });
   }
 
-  const uid = decoded?.uid;
+  const { uid } = decoded as OptionType;
   return uid;
 };
 
-export const checkTokenValidity = (
-  type: TokenType,
-  token: string,
-): Promise<boolean> => {
+export const checkTokenValidity = (type: TokenType, token: string): Promise<boolean> => {
   return new Promise(resolve => {
-    const secret =
-      type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
+    const secret = type === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
     jwt.verify(token, secret, (err: VerifyErrors | null) => {
       if (!err) {
         resolve(true);

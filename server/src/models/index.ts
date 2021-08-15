@@ -13,12 +13,7 @@ import configFile from '../config/db';
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
 
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config,
-);
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 const User = userSchema(sequelize);
 const Item = itemSchema(sequelize);

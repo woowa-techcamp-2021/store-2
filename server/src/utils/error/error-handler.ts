@@ -11,9 +11,7 @@ interface ErrorType {
 }
 
 function errorHandler(err: CustomError): ErrorType {
-  const code = err.code;
-
-  switch (code) {
+  switch (err.code) {
     case 'req/invalid-body':
       return { statusCode: 400, errorMessage: '잘못된 요청입니다.' };
     case 'req/invalid-query':
