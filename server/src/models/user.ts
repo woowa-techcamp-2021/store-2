@@ -1,5 +1,7 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
+import { USER } from 'config/constants';
+
 export interface UserAttribures {
   id: string;
   user_id: string;
@@ -10,6 +12,8 @@ export interface UserAttribures {
 
 export type UserCreationAttributes = Optional<UserAttribures, 'id'>;
 
+const HASHED_PASSWORD_LENGTH = 60;
+
 const userSchema = (sequelize: Sequelize): ModelCtor<Model<UserAttribures, UserCreationAttributes>> => {
   const User = sequelize.define('User', {
     id: {
@@ -18,19 +22,19 @@ const userSchema = (sequelize: Sequelize): ModelCtor<Model<UserAttribures, UserC
       defaultValue: DataTypes.UUIDV4,
     },
     user_id: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(USER.ID_MAX_LENGTH),
       allowNull: false,
       unique: true,
     },
     password: {
-      type: DataTypes.STRING(60),
+      type: DataTypes.STRING(HASHED_PASSWORD_LENGTH),
     },
     provider: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.STRING(USER.PROVIDER_LENGTH),
       allowNull: false,
     },
     phone: {
-      type: DataTypes.STRING(12),
+      type: DataTypes.STRING(USER.PHONE_LENGTH),
     },
   });
 

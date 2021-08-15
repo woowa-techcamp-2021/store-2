@@ -1,18 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 
 import errorGenerator from 'utils/error/error-generator';
 import errorHandler from 'utils/error/error-handler';
 
-interface IReqBody {
-  id: string;
-  password: string;
-}
+import { USER } from 'config/constants';
 
 export const signInValidateion = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    const { id, password } = req.body as IReqBody;
+    const schema = Joi.object({
+      id: Joi.string().min(USER.ID_MIN_LENGTH).max(USER.ID_MAX_LENGTH).required(),
+      password: Joi.string().max(USER.PASSWORD_MAX_LENGTH).min(USER.PASSWORD_MIN_LENGTH).required(),
+    });
 
-    if (!id || !password) {
+    const validationResult = schema.validate(req.body);
+
+    if (validationResult.error) {
       throw errorGenerator({
         message: 'POST /api/auth - invalid body',
         code: 'req/invalid-body',
