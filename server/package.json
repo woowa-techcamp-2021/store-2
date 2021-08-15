@@ -15,10 +15,9 @@
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json'",
     "lint:fix": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json' --fix",
-    "prestart": "export NODE_ENV=development",
-    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
-    "prebuild": "export NODE_ENV=production && eslint",
-    "build": "tsc",
+    "start": "export NODE_ENV=development && nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
+    "prebuild": "eslint",
+    "build": "export NODE_ENV=production && tsc",
     "predeploy": "export NODE_ENV=production",
     "deploy": "ts-node -r tsconfig-paths/register dist/app.js"
   },
