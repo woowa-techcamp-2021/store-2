@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const LoginButton = styled.button<{ login?: boolean; github?: boolean; signup?: boolean }>`
