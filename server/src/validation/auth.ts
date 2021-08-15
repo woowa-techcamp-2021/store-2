@@ -32,7 +32,6 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
     const validationResult = schema.validate(req.body);
 
     if (validationResult.error) {
-      console.log(validationResult.error.message);
       throw errorGenerator({
         message: 'validation/auth - invalid request body',
         code: 'req/invalid-body',
