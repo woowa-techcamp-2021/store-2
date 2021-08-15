@@ -27,6 +27,7 @@ const Right = styled.div`
 `;
 
 const Links = styled.div`
+  margin-top: 5px;
   margin-bottom: 20px;
 
   ul li {
@@ -53,7 +54,7 @@ const Footer: FC = () => {
   return (
     <Wrapper>
       <Left>
-        <Logo width="150px" />
+        <Logo width="130px" full />
       </Left>
       <Right>
         <Links>
