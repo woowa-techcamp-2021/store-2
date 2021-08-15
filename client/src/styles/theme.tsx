@@ -7,9 +7,9 @@ import BMHANNA from '../assets/fonts/BMHANNA11years.otf';
 import BMHANNAAir from '../assets/fonts/BMHANNAAir.otf';
 
 const theme: DefaultTheme = {
-  mobile: '(max-width: 480px)',
-  tablet: '(max-width: 960px)',
-  laptop: '(max-width: 1440px)',
+  mobile: '@media all and (max-width: 480px)',
+  tablet: '@media all and (min-width:480px) and (max-width:768px)',
+  laptop: '@media all and (min-width: 1200px)',
 
   colorWhite: '#FFFFFF',
   colorOffWhite: '#FCFCFC',
