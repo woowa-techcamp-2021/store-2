@@ -6,7 +6,7 @@ import { useHistory } from 'lib/router';
 import LoginButton from './login-button';
 import LoginInput from './login-input';
 
-const Form = styled.form`
+const Div = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -21,6 +21,11 @@ const Form = styled.form`
   ${({ theme }) => theme.laptop} {
     width: 380px;
   }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Image = styled.img`
@@ -59,22 +64,24 @@ const LoginForm: FC<LoginProps> = ({ id, password, onChange, onSubmit, error, lo
   }, [history]);
 
   return (
-    <Form onSubmit={onSubmit}>
-      {loading && <div>로딩중~~</div>}
-      <LoginInput type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
-      <LoginInput
-        type="password"
-        placeholder="비밀번호"
-        value={password}
-        name="password"
-        onChange={onChange}
-        maxLength={14}
-      />
-      <Error>{error}</Error>
-      <LoginButton type="submit" login>
-        <Image src={baedal} alt="배달이" />
-        로그인
-      </LoginButton>
+    <Div>
+      <Form onSubmit={onSubmit}>
+        {loading && <div>로딩중~~</div>}
+        <LoginInput type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
+        <LoginInput
+          type="password"
+          placeholder="비밀번호"
+          value={password}
+          name="password"
+          onChange={onChange}
+          maxLength={14}
+        />
+        <Error>{error}</Error>
+        <LoginButton type="submit" login>
+          <Image src={baedal} alt="배달이" />
+          로그인
+        </LoginButton>
+      </Form>
       <LoginButton type="button" github>
         <Image src={github} alt="배달이" />
         깃-헙으로 로그인
@@ -83,7 +90,7 @@ const LoginForm: FC<LoginProps> = ({ id, password, onChange, onSubmit, error, lo
         <Image src={baedal} alt="배달이" />
         배민문구사로 회원가입
       </LoginButton>
-    </Form>
+    </Div>
   );
 };
 
