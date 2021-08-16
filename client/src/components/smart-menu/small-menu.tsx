@@ -17,9 +17,9 @@ const SmallItem = styled.div`
   font-family: ${({ theme }) => theme.fontHannaAir};
   font-size: 26px;
   background-color: ${({ theme }) => theme.colorBg};
+
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
   padding: 10px;
-
   ${({ theme }) => theme.mobile} {
     width: 110px;
     font-size: 16px;

@@ -3,9 +3,9 @@ import React, { useState, FC } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
-import LargeMenu from './LargeMenu';
-import MediumMenu from './MediumMenu';
-import SmallMenu from './SmallMenu';
+import LargeMenu from './large-menu';
+import MediumMenu from './medium-menu';
+import SmallMenu from './small-menu';
 
 const MenuDiv = styled.div`
   cursor: pointer;
@@ -42,7 +42,7 @@ const MenuTitle = styled.div`
   }
 `;
 
-interface SmartMenuProps {
+interface ISmartMenuProps {
   currentMenu: string;
   menu: IMenu;
 }
@@ -55,7 +55,7 @@ const isSmall = (width: number) => {
   return width <= SMART_MENU_SMALL_WIDTH;
 };
 
-const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
+const SmartMenu: FC<ISmartMenuProps> = ({ currentMenu, menu }) => {
   const [isOpen, setOpenStatus] = useState(false);
   const [selectedLargeId, setLargeId] = useState('');
   const [selectedMediumId, setMediumId] = useState('');

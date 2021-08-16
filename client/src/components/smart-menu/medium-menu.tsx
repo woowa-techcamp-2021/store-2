@@ -22,9 +22,9 @@ const MediumItem = styled.ul<IMediumItem>`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
+
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
   padding: 10px;
-
   ${({ theme }) => theme.mobile} {
     width: 110px;
     font-size: 16px;
