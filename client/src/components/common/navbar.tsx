@@ -53,7 +53,11 @@ const Wrapper = styled.nav<WrapperStyleProps>`
 const Navbar: FC<NavbarProps> = ({ white = false, mobile = false }) => {
   return (
     <Wrapper white={white}>
-      {mobile && <Logo width="130px" mobile />}
+      {mobile && (
+        <Link to="/">
+          <Logo width="130px" mobile />
+        </Link>
+      )}
       <div>
         <Link className="nav-link" to="/user">
           {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}

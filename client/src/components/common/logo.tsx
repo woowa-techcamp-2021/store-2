@@ -10,32 +10,21 @@ interface LogoProps {
   width?: string;
   full?: boolean;
   mobile?: boolean;
-  goMain?: boolean;
 }
 
-interface WrapperStyleProps {
-  canClick: boolean;
-}
-
-const Wrapper = styled.div<WrapperStyleProps>`
+const Wrapper = styled.div`
   width: fit-content;
-  cursor: ${props => (props.canClick ? 'pointer' : 'default')};
 `;
 
-const Logo: FC<LogoProps> = ({ className = '', width = '350px', full = false, mobile = false, goMain = true }) => {
+const Logo: FC<LogoProps> = ({ className = '', width = '350px', full = false, mobile = false }) => {
   const getLogoSrc = (): string => {
     if (mobile) return LogoMobile;
     if (full) return LogoTentImg;
     return LogoImg;
   };
 
-  const onClickHandler = () => {
-    if (!goMain) return;
-    window.location.href = '/';
-  };
-
   return (
-    <Wrapper className={className} onClick={onClickHandler} canClick={goMain}>
+    <Wrapper className={className}>
       <img src={getLogoSrc()} alt="logo" width={width} />
     </Wrapper>
   );

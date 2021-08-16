@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
+import { Link } from 'lib/router';
 import { Logo, Navbar } from 'components';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
@@ -61,7 +61,9 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
     }
     return (
       <LogoWrapper>
-        <Logo className="header-logo" width="200px" />
+        <Link to="/">
+          <Logo className="header-logo" width="200px" />
+        </Link>
       </LogoWrapper>
     );
   };
