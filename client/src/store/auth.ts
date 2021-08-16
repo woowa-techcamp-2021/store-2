@@ -13,6 +13,11 @@ export interface IReceiveServer {
   userId: string;
 }
 
+export interface ICheckUser {
+  newAccessToken?: string;
+  userId: string;
+}
+
 interface IAuth {
   loading: boolean;
   error: null | string;
@@ -28,6 +33,7 @@ interface StateProps {
   login: IAuth;
   signup: IAuth;
   user: IUser;
+  logout: IAuth;
 }
 
 interface IError {
@@ -45,6 +51,10 @@ const initialState: StateProps = {
   },
   user: {
     userId: undefined,
+    loading: false,
+    error: null,
+  },
+  logout: {
     loading: false,
     error: null,
   },
@@ -120,12 +130,50 @@ const counterSlice = createSlice({
         error: action.payload,
       },
     }),
+    logout: state => ({
+      ...state,
+      logout: {
+        loading: true,
+        error: null,
+      },
+    }),
+    logoutSuccess: state => ({
+      ...state,
+      user: {
+        ...state.user,
+        userId: null,
+      },
+      logout: {
+        loading: true,
+        error: null,
+      },
+    }),
+    logoutFail: (state, action: PayloadAction<string>) => ({
+      ...state,
+      logout: {
+        loading: true,
+        error: action.payload,
+      },
+    }),
   },
 });
 
 export const { actions, reducer: authReducer } = counterSlice;
-const { getLogin, getLoginSuccess, getLoginFail, getSignup, getSignupSuccess, getSignupFail, getUserSuccess } = actions;
-export { getLogin, getSignup };
+const {
+  getLogin,
+  getLoginSuccess,
+  getLoginFail,
+  getSignup,
+  getSignupSuccess,
+  getSignupFail,
+  getUser,
+  getUserSuccess,
+  getUserFail,
+  logout,
+  logoutSuccess,
+  logoutFail,
+} = actions;
+export { getLogin, getSignup, getUser, logout };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
@@ -176,7 +224,45 @@ function* signupSaga(action: PayloadAction): Generator {
   }
 }
 
+function* checkAuth(): Generator {
+  try {
+    const {
+      data: { newAccessToken, userId },
+    } = (yield call(authAPI.checkAuth)) as AxiosResponse<ICheckUser>;
+
+    if (newAccessToken) localStorage.setItem('user', newAccessToken);
+
+    yield put({ type: getUserSuccess.type, payload: userId });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      localStorage.removeItem('user');
+      const { errorMessage } = e.response?.data as IError;
+      yield put({ type: getUserFail.type, payload: errorMessage });
+    } else {
+      throw new Error(e);
+    }
+  }
+}
+
+function* logoutSaga(): Generator {
+  try {
+    (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
+    localStorage.removeItem('user');
+    yield put({ type: logoutSuccess.type });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      localStorage.removeItem('user');
+      const { errorMessage } = e.response?.data as IError;
+      yield put({ type: logoutFail.type, payload: errorMessage });
+    } else {
+      throw new Error(e);
+    }
+  }
+}
+
 export function* authSaga(): Generator {
   yield takeLatest(getLogin, loginSaga);
   yield takeLatest(getSignup, signupSaga);
+  yield takeLatest(getUser, checkAuth);
+  yield takeLatest(logout, logoutSaga);
 }
