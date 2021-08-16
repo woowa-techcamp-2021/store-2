@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import LoginContainer from 'containers/login-container';
+import { Layout } from 'components';
 
 const Div = styled.div`
   display: flex;
@@ -11,11 +12,11 @@ const Div = styled.div`
 
 const LoginPage = (): ReactElement => {
   return (
-    <Div>
-      헤더
-      <LoginContainer />
-      푸터
-    </Div>
+    <Layout>
+      <Div>
+        <LoginContainer />
+      </Div>
+    </Layout>
   );
 };
 

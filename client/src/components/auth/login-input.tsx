@@ -7,6 +7,7 @@ const LoginInput = styled.input`
   border-bottom: 1px solid ${({ theme }) => theme.colorInputLine};
   color: ${({ theme }) => theme.colorSoftBlack};
   text-indent: 5px;
+  background-color: transparent;
   &::placeholder {
     color: ${({ theme }) => theme.colorPlaceholder};
   }
