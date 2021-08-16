@@ -13,9 +13,6 @@ interface IRedux {
   userId: string | null | undefined;
 }
 
-const ID_ERROR = '아이디를 입력하세요';
-const PWD_ERROR = '비밀번호를 입력하세요';
-
 const LoginContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });

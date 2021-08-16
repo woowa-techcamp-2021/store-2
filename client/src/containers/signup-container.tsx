@@ -33,12 +33,11 @@ const SignupContainer: FC = () => {
 
   useEffect(() => {
     if (userId) {
-      console.log('회원가입 성공하고 모달 띄우기');
       setModal(true);
-
-      // setTimeout(() => {
-      //   history.push('/');
-      // }, 1000);
+      setTimeout(() => {
+        setModal(false);
+        history.push('/');
+      }, 1000);
     }
   }, [userId, history]);
 
@@ -66,7 +65,7 @@ const SignupContainer: FC = () => {
         check={check}
         onCheckChange={onCheckChange}
       />
-      {modal && <AuthSuccessModal />}
+      {modal && <AuthSuccessModal userId={userId} />}
     </>
   );
 };
