@@ -107,16 +107,28 @@ const Footer: FC<FooterProps> = ({ isMobile }) => {
         <Links>
           <ul>
             <li>
-              <a href="https://store.baemin.com/board/list.php?bdId=notice">공지사항</a>
+              <a target="_blank" rel="noreferrer" href="https://store.baemin.com/board/list.php?bdId=notice">
+                공지사항
+              </a>
             </li>
             <li>
-              <a href="https://store.baemin.com/service/agreement.php">이용약관</a>
+              <a target="_blank" rel="noreferrer" href="https://store.baemin.com/service/agreement.php">
+                이용약관
+              </a>
             </li>
             <li>
-              <a href="https://store.baemin.com/service/private.php">개인정보처리방침</a>
+              <a target="_blank" rel="noreferrer" href="https://store.baemin.com/service/private.php">
+                개인정보처리방침
+              </a>
             </li>
             <li>
-              <a href="https://store.baemin.com/main/html.php?htmid=proc/sales_introduce.html">판매처 안내</a>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://store.baemin.com/main/html.php?htmid=proc/sales_introduce.html"
+              >
+                판매처 안내
+              </a>
             </li>
           </ul>
         </Links>

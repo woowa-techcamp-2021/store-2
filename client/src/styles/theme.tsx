@@ -28,6 +28,7 @@ const theme: DefaultTheme = {
 
   colorTextBrown: '#665946',
   colorTextBrownLight: '#F7EAD7',
+  colorTextBeige: '#C2B39C',
 
   colorPrimary: '#2AC1BC',
   colorPrimaryLight: '#A0E1E0',
