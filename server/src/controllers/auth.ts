@@ -46,7 +46,7 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const result = isAccessTokenExpired ? { newAccessToken } : { userId };
+    const result = isAccessTokenExpired ? { newAccessToken, userId } : { newAccessToken: '', userId };
     res.status(200).json(result);
   } catch (err) {
     console.log(err);
@@ -87,4 +87,9 @@ export const handleGithubAuth = async (req: Request, res: Response): Promise<voi
     const { statusCode, errorMessage } = errorHandler(err);
     res.status(statusCode).json({ errorMessage });
   }
+};
+
+export const signOut = (req: Request, res: Response): void => {
+  res.clearCookie(REFRESH_TOKEN_NAME);
+  res.status(200).json({});
 };
