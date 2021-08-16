@@ -15,7 +15,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
 
     const { accessToken, refreshToken } = await userService.signUp(id, password);
 
-    res.cookie('_rt', refreshToken, { httpOnly: true });
+    res.cookie('rteofkreensh', refreshToken, { httpOnly: true });
     res.status(201).json({ accessToken });
   } catch (err) {
     console.log(err);
