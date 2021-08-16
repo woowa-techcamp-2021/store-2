@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.4",
+    "@types/node-fetch": "^2.5.12",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -32,6 +33,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12",
     "sequelize": "^6.6.5",
     "ts-node": "^10.2.0",

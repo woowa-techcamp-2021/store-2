@@ -2,6 +2,8 @@ import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 
 import errorGenerator from 'utils/error/error-generator';
 
+import { REFRESH_TOKEN_NAME } from 'config/constants';
+
 interface OptionType {
   uid: string;
 }
@@ -55,9 +57,9 @@ export const getAccessToken = (authorization: string | void): string => {
   return authorization.split('Bearer ')[1];
 };
 
-export const getRefreshToken = (cookies: { rteofkreensh: string }): string => {
-  if (!cookies.rteofkreensh) return '';
-  return cookies.rteofkreensh;
+export const getRefreshToken = (cookies: { [REFRESH_TOKEN_NAME]: string }): string => {
+  if (!cookies[REFRESH_TOKEN_NAME]) return '';
+  return cookies[REFRESH_TOKEN_NAME];
 };
 
 export const checkTokenExpiration = (type: TokenType, token: string): Promise<boolean> => {
