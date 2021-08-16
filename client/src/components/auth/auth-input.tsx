@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginInput = styled.input`
+const AuthInput = styled.input`
   font-family: ${props => props.theme.fontHannaAir};
   line-height: 1.5;
   border: 0;
@@ -25,4 +25,4 @@ const LoginInput = styled.input`
   }
 `;
 
-export default LoginInput;
+export default AuthInput;

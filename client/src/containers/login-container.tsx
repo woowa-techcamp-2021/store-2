@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import LoginForm from 'components/auth/login-form';
+import AuthForm from 'components/auth/auth-form';
 import useInputs from 'hooks/use-inputs';
 import { getLogin } from 'store/auth';
 import { useHistory } from 'lib/router';
@@ -47,14 +47,7 @@ const LoginContainer: FC = () => {
   };
 
   return (
-    <LoginForm
-      id={id}
-      password={password}
-      onChange={onChange}
-      onSubmit={onSubmit}
-      error={authError}
-      loading={loading}
-    />
+    <AuthForm id={id} password={password} onChange={onChange} onSubmit={onSubmit} error={authError} loading={loading} />
   );
 };
 

@@ -5,3 +5,4 @@ export { default as TestPage } from './test-page';
 export { default as SagaCounterPage } from './saga-counter-page';
 export { default as SagaAxiosPage } from './saga-axios-page';
 export { default as LoginPage } from './login-page';
+export { default as SignupPage } from './signup-page';

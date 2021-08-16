@@ -4,9 +4,10 @@ interface Inf {
   login?: boolean;
   github?: boolean;
   signup?: boolean;
+  back?: boolean;
 }
 
-const LoginButton = styled.button<Inf>`
+const AuthButton = styled.button<Inf>`
   ${({ theme }) => theme.mobile} {
     height: 66px;
     font-size: 20px;
@@ -40,6 +41,7 @@ const LoginButton = styled.button<Inf>`
   background: ${props => props.login && props.theme.colorLine};
   background: ${props => props.github && props.theme.colorGithub};
   background: ${props => props.signup && props.theme.colorSignup};
+  background: ${props => props.back && props.theme.colorSoftBlack};
 `;
 
-export default LoginButton;
+export default AuthButton;
