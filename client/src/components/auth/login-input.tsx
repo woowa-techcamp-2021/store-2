@@ -18,10 +18,10 @@ const LoginInput = styled.input`
     font-size: 20px;
   }
   ${({ theme }) => theme.tablet} {
-    font-size: 26px;
+    font-size: 23px;
   }
   ${({ theme }) => theme.laptop} {
-    font-size: 32px;
+    font-size: 26px;
   }
 `;
 

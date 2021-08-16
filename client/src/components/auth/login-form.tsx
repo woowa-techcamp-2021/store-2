@@ -16,10 +16,10 @@ const Form = styled.form`
   }
   ${({ theme }) => theme.tablet} {
     margin: 15px;
-    max-width: 460px;
+    max-width: 380px;
   }
   ${({ theme }) => theme.laptop} {
-    width: 460px;
+    width: 380px;
   }
 `;
 
