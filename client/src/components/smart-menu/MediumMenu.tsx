@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { IMenu } from 'types/types';
+import { IMenu } from 'types';
 
 interface IMediumMenuProps {
   menu: IMenu;

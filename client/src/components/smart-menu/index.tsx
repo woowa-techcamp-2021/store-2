@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, FC } from 'react';
 import useWindowSize from 'hooks/use-window-size';
-import { IMenu } from 'types/types';
+import { IMenu } from 'types';
 import LargeMenu from './LargeMenu';
 import MediumMenu from './MediumMenu';
 import SmallMenu from './SmallMenu';
