@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ILoginState, IToken } from 'store/auth';
+import { ILoginState, IReceiveServer } from 'store/auth';
 import { IUser } from 'store/axios';
 import client from './client';
 // import request from './request';
@@ -23,4 +23,4 @@ import client from './client';
 export const check = (): Promise<AxiosResponse> => client.get<IUser>('/api/test/check');
 
 export const login = ({ id, password }: ILoginState): Promise<AxiosResponse> =>
-  client.post<IToken>('/api/auth', { id, password });
+  client.post<IReceiveServer>('/api/auth', { id, password });

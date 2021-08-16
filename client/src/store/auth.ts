@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as authAPI from 'utils/api/auth';
+import { getUserSuccess } from './axios';
 
 export interface ILoginState {
   id: string;
   password: string;
 }
 
-export interface IToken {
+export interface IReceiveServer {
   accessToken: string;
+  userId: string;
 }
 
 interface ILogin {
@@ -17,8 +19,15 @@ interface ILogin {
   error: null | string;
 }
 
-export interface StateProps {
+interface IUser {
+  userId: string | undefined | null;
+  loading: boolean;
+  error: null | string;
+}
+
+interface StateProps {
   login: ILogin;
+  user: IUser;
 }
 
 interface IError {
@@ -27,6 +36,11 @@ interface IError {
 
 const initialState: StateProps = {
   login: {
+    loading: false,
+    error: null,
+  },
+  user: {
+    userId: undefined,
     loading: false,
     error: null,
   },
@@ -57,21 +71,50 @@ const counterSlice = createSlice({
         error: action.payload,
       },
     }),
+    getUser: state => ({
+      ...state,
+      user: {
+        userId: undefined,
+        loading: true,
+        error: null,
+      },
+    }),
+    getUserSuccess: (state, action: PayloadAction<string>) => ({
+      ...state,
+      user: {
+        userId: action.payload,
+        loading: false,
+        error: null,
+      },
+    }),
+    getUserFail: (state, action: PayloadAction<string>) => ({
+      ...state,
+      user: {
+        userId: null,
+        loading: false,
+        error: action.payload,
+      },
+    }),
   },
 });
 
 export const { actions, reducer: authReducer } = counterSlice;
-export const { getLogin, getLoginSuccess, getLoginFail } = actions;
+const { getLogin, getLoginSuccess, getLoginFail } = actions;
+export { getLogin };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
     const {
-      data: { accessToken },
-    } = (yield call(authAPI.login, action.payload as unknown as ILoginState)) as AxiosResponse<IToken>;
+      data: { accessToken, userId },
+    } = (yield call(authAPI.login, action.payload as unknown as ILoginState)) as AxiosResponse<IReceiveServer>;
     yield put({
       type: getLoginSuccess.type,
     });
     localStorage.setItem('user', accessToken);
+    yield put({
+      type: getUserSuccess.type,
+      payload: userId,
+    });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
