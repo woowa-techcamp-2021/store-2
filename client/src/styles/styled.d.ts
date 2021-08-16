@@ -23,6 +23,7 @@ declare module 'styled-components' {
 
     colorTextBrown: string;
     colorTextBrownLight: string;
+    colorTextBeige: string;
 
     colorPrimary: string;
     colorPrimaryLight: string;
