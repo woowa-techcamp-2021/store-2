@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import AuthForm from 'components/auth/auth-form';
 import useInputs from 'hooks/use-inputs';
-import { getLogin } from 'store/auth';
+import { getSignup } from 'store/auth';
 import { useHistory } from 'lib/router';
+import AuthSuccessModal from 'components/auth/auth-success-modal';
+import authValidation from 'utils/validation/auth-validation';
 
 interface IRedux {
   loading: boolean;
@@ -12,31 +14,33 @@ interface IRedux {
   userId: string | null | undefined;
 }
 
-const ID_ERROR = '아이디를 입력하세요';
-const PWD_ERROR = '비밀번호를 입력하세요';
-const CHECK_ERROR = '약관을 동의해주세요';
-
 const SignupContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
-  // const { loading, error, userId }: IRedux = useSelector(({ auth }: RootState) => ({
-  //   loading: auth.login.loading,
-  //   error: auth.login.error,
-  //   userId: auth.user.userId,
-  // }));
+  const [modal, setModal] = useState(false);
+  const { loading, error, userId }: IRedux = useSelector(({ auth }: RootState) => ({
+    loading: auth.signup.loading,
+    error: auth.signup.error,
+    userId: auth.user.userId,
+  }));
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   setAuthError(error);
-  // }, [error]);
+  useEffect(() => {
+    setAuthError(error);
+  }, [error]);
 
-  // useEffect(() => {
-  //   if (userId) {
-  //     history.push('/');
-  //   }
-  // }, [userId, history]);
+  useEffect(() => {
+    if (userId) {
+      console.log('회원가입 성공하고 모달 띄우기');
+      setModal(true);
+
+      // setTimeout(() => {
+      //   history.push('/');
+      // }, 1000);
+    }
+  }, [userId, history]);
 
   const onCheckChange = useCallback(() => {
     setCheck(!check);
@@ -44,28 +48,26 @@ const SignupContainer: FC = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id) setAuthError(ID_ERROR);
-    else if (!password) setAuthError(PWD_ERROR);
-    else if (!check) setAuthError(CHECK_ERROR);
-    else {
-      // dispatch({ type: getLogin.type, payload: { id, password } });
-    }
+    const validation: string | boolean = authValidation({ id, password, check });
+    if (validation !== true) setAuthError(validation as string);
+    else dispatch({ type: getSignup.type, payload: { id, password } });
   };
 
-  // temp
-  const loading = false;
   return (
-    <AuthForm
-      id={id}
-      password={password}
-      onChange={onChange}
-      onSubmit={onSubmit}
-      error={authError}
-      loading={loading}
-      isSignup
-      check={check}
-      onCheckChange={onCheckChange}
-    />
+    <>
+      <AuthForm
+        id={id}
+        password={password}
+        onChange={onChange}
+        onSubmit={onSubmit}
+        error={authError}
+        loading={loading}
+        isSignup
+        check={check}
+        onCheckChange={onCheckChange}
+      />
+      {modal && <AuthSuccessModal />}
+    </>
   );
 };
 
