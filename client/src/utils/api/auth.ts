@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ILoginState, IReceiveServer } from 'store/auth';
+import { IAuthState, IReceiveServer } from 'store/auth';
 import { IUser } from 'store/axios';
 import client from './client';
 // import request from './request';
@@ -22,5 +22,8 @@ import client from './client';
 
 export const check = (): Promise<AxiosResponse> => client.get<IUser>('/api/test/check');
 
-export const login = ({ id, password }: ILoginState): Promise<AxiosResponse> =>
+export const login = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
   client.post<IReceiveServer>('/api/auth', { id, password });
+
+export const signup = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
+  client.post<IReceiveServer>('/api/user', { id, password });

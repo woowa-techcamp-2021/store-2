@@ -2,9 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as authAPI from 'utils/api/auth';
-import { getUserSuccess } from './axios';
 
-export interface ILoginState {
+export interface IAuthState {
   id: string;
   password: string;
 }
@@ -14,7 +13,7 @@ export interface IReceiveServer {
   userId: string;
 }
 
-interface ILogin {
+interface IAuth {
   loading: boolean;
   error: null | string;
 }
@@ -26,7 +25,8 @@ interface IUser {
 }
 
 interface StateProps {
-  login: ILogin;
+  login: IAuth;
+  signup: IAuth;
   user: IUser;
 }
 
@@ -36,6 +36,10 @@ interface IError {
 
 const initialState: StateProps = {
   login: {
+    loading: false,
+    error: null,
+  },
+  signup: {
     loading: false,
     error: null,
   },
@@ -71,6 +75,27 @@ const counterSlice = createSlice({
         error: action.payload,
       },
     }),
+    getSignup: state => ({
+      ...state,
+      signup: {
+        loading: true,
+        error: null,
+      },
+    }),
+    getSignupSuccess: state => ({
+      ...state,
+      signup: {
+        loading: false,
+        error: null,
+      },
+    }),
+    getSignupFail: (state, action: PayloadAction<string>) => ({
+      ...state,
+      signup: {
+        loading: false,
+        error: action.payload,
+      },
+    }),
     getUser: state => ({
       ...state,
       user: {
@@ -99,14 +124,14 @@ const counterSlice = createSlice({
 });
 
 export const { actions, reducer: authReducer } = counterSlice;
-const { getLogin, getLoginSuccess, getLoginFail } = actions;
-export { getLogin };
+const { getLogin, getLoginSuccess, getLoginFail, getSignup, getSignupSuccess, getSignupFail, getUserSuccess } = actions;
+export { getLogin, getSignup };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
     const {
       data: { accessToken, userId },
-    } = (yield call(authAPI.login, action.payload as unknown as ILoginState)) as AxiosResponse<IReceiveServer>;
+    } = (yield call(authAPI.login, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
     yield put({
       type: getLoginSuccess.type,
     });
@@ -123,11 +148,35 @@ function* loginSaga(action: PayloadAction): Generator {
         payload: errorMessage,
       });
     } else {
-      throw new Error('axios saga code error');
+      throw new Error(e);
+    }
+  }
+}
+
+function* signupSaga(action: PayloadAction): Generator {
+  try {
+    const {
+      data: { accessToken, userId },
+    } = (yield call(authAPI.signup, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
+    yield put({
+      type: getSignupSuccess.type,
+    });
+    localStorage.setItem('user', accessToken);
+    yield put({ type: getUserSuccess.type, payload: userId });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const { errorMessage } = e.response?.data as IError;
+      yield put({
+        type: getSignupFail.type,
+        payload: errorMessage,
+      });
+    } else {
+      throw new Error(e);
     }
   }
 }
 
 export function* authSaga(): Generator {
   yield takeLatest(getLogin, loginSaga);
+  yield takeLatest(getSignup, signupSaga);
 }

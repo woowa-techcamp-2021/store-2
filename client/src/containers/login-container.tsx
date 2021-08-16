@@ -5,6 +5,7 @@ import AuthForm from 'components/auth/auth-form';
 import useInputs from 'hooks/use-inputs';
 import { getLogin } from 'store/auth';
 import { useHistory } from 'lib/router';
+import authValidation from 'utils/validation/auth-validation';
 
 interface IRedux {
   loading: boolean;
@@ -39,11 +40,9 @@ const LoginContainer: FC = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id) setAuthError(ID_ERROR);
-    else if (!password) setAuthError(PWD_ERROR);
-    else {
-      dispatch({ type: getLogin.type, payload: { id, password } });
-    }
+    const validation: string | boolean = authValidation({ id, password });
+    if (validation !== true) setAuthError(validation as string);
+    else dispatch({ type: getLogin.type, payload: { id, password } });
   };
 
   return (
