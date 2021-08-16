@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     }
   }
   ${props => props.theme.laptop} {
+    align-items: center;
     main {
       padding: 0;
       width: 1000px;
