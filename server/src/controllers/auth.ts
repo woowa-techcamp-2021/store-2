@@ -62,8 +62,7 @@ const REDIRECT_URL = process.env.REDIRECT_URL || '';
 
 export const signInGithub = (req: Request, res: Response): void => {
   const url = `${GITHUB_LOGIN_URL}?client_id=${CLIENT_ID}&redirect_url=${REDIRECT_URL}&scope=read:user`;
-
-  res.status(200).json({ url });
+  res.redirect(url);
 };
 
 export const handleGithubAuth = async (req: Request, res: Response): Promise<void> => {
