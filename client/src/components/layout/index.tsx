@@ -24,6 +24,15 @@ const Wrapper = styled.div`
       padding: 0 12px;
     }
   }
+
+  ${props => props.theme.laptop} {
+    align-items: center;
+
+    main {
+      padding: 0;
+      width: 1000px;
+    }
+  }
 `;
 
 const Layout: FC<LayoutProps> = ({ children, displayMain = false }) => {
