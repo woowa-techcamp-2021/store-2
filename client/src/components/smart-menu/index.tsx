@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useState, FC } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types';
+import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
 import LargeMenu from './LargeMenu';
 import MediumMenu from './MediumMenu';
 import SmallMenu from './SmallMenu';
@@ -47,11 +48,11 @@ interface SmartMenuProps {
 }
 
 const isLaptop = (width: number) => {
-  return width >= 1200;
+  return width >= SMART_MENU_LARGE_WIDTH;
 };
 
 const isSmall = (width: number) => {
-  return width <= 600;
+  return width <= SMART_MENU_SMALL_WIDTH;
 };
 
 const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
@@ -71,7 +72,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
         setMediumId('');
         setTimeout(() => {
           setLargeId('');
-        }, 100);
+        }, SMART_MENU_BLOCK_DELAY);
       }}
     >
       {isOpen && (

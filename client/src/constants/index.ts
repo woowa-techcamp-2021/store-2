@@ -1,0 +1,3 @@
+export const SMART_MENU_LARGE_WIDTH = 1200;
+export const SMART_MENU_SMALL_WIDTH = 600;
+export const SMART_MENU_BLOCK_DELAY = 100;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
 import { IMenu } from 'types';
+import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
 interface IMediumMenuProps {
   menu: IMenu;
@@ -64,7 +65,7 @@ const LargeMenu: FC<IMediumMenuProps> = ({ menu, position, selectedLargeId, isLa
                     setLargeId(largeId);
                   }
                   setPosition({ x: e.clientX, y: e.clientY });
-                }, 100);
+                }, SMART_MENU_BLOCK_DELAY);
               }
             }}
             onClick={() => {
