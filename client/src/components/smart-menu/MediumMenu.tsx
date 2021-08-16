@@ -5,39 +5,41 @@ import { IMenu } from 'types';
 interface IMediumMenuProps {
   menu: IMenu;
   selectedLargeId: string;
+  selectedMediumId: string;
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface IMediumItem {
+  isSelected: boolean;
 }
 
 const MediumItemDiv = styled.div`
   display: flex;
 `;
 
-const MediumItem = styled.ul`
+const MediumItem = styled.ul<IMediumItem>`
   font-family: ${({ theme }) => theme.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;
-  background-color: ${({ theme }) => theme.colorBg};
+  background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
-  padding: 5px;
-  &:hover {
-    background-color: ${({ theme }) => theme.colorOffWhite};
-  }
+  padding: 10px;
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: 18px;
+    font-size: 16px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: 20px;
+    font-size: 18px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: 26px;
+    font-size: 22px;
   }
 `;
 
-const MediumMenu: FC<IMediumMenuProps> = ({ menu, selectedLargeId, setMediumId }) => {
+const MediumMenu: FC<IMediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
   return (
     <MediumItemDiv>
       {menu.data.map(large => {
@@ -51,10 +53,7 @@ const MediumMenu: FC<IMediumMenuProps> = ({ menu, selectedLargeId, setMediumId }
                   setMediumId(mediumId);
                   e.stopPropagation();
                 }}
-                onMouseLeave={e => {
-                  setMediumId('');
-                  e.stopPropagation();
-                }}
+                isSelected={selectedMediumId === mediumId}
               >
                 {medium.name}
               </MediumItem>

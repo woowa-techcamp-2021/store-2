@@ -10,11 +10,11 @@ const MenuDiv = styled.div`
   cursor: pointer;
   position: fixed;
   top: 200px;
-  left: -17px;
+  left: -27px;
   display: inline-block;
   writing-mode: vertical-lr;
   text-orientation: upright;
-  padding: 12px;
+  padding: 24px 12px;
   background-color: ${({ theme }) => theme.colorBg};
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -23,7 +23,7 @@ const MenuDiv = styled.div`
 `;
 
 const MenuTitle = styled.div`
-  padding-left: 10px;
+  padding-left: 20px;
   color: ${({ theme }) => theme.colorLineDark};
   font-family: ${({ theme }) => theme.fontHanna};
 
@@ -51,7 +51,7 @@ const isLaptop = (width: number) => {
 };
 
 const isSmall = (width: number) => {
-  return width <= 550;
+  return width <= 600;
 };
 
 const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
@@ -84,7 +84,14 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setPosition={setPosition}
         />
       )}
-      {selectedLargeId !== '' && <MediumMenu menu={menu} selectedLargeId={selectedLargeId} setMediumId={setMediumId} />}
+      {selectedLargeId !== '' && (
+        <MediumMenu
+          menu={menu}
+          selectedLargeId={selectedLargeId}
+          selectedMediumId={selectedMediumId}
+          setMediumId={setMediumId}
+        />
+      )}
       {!isSmall(width) && selectedMediumId !== '' && (
         <SmallMenu menu={menu} selectedLargeId={selectedLargeId} selectedMediumId={selectedMediumId} />
       )}

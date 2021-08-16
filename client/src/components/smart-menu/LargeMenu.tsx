@@ -21,7 +21,7 @@ const LargeItemDiv = styled.ul`
   text-orientation: sideways;
   background-color: ${({ theme }) => theme.colorBg};
   border-radius: 20px;
-  padding-left: 12px;
+  padding-left: 32px;
 `;
 
 const LargeItem = styled.li<LargeItemProps>`
@@ -29,19 +29,19 @@ const LargeItem = styled.li<LargeItemProps>`
   display: flex;
   background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
-  padding: 5px;
+  padding: 10px;
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: 18px;
+    font-size: 16px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: 20px;
+    font-size: 18px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: 26px;
+    font-size: 22px;
   }
 `;
 

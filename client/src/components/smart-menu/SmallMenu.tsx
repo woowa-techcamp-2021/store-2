@@ -18,20 +18,21 @@ const SmallItem = styled.div`
   font-size: 26px;
   background-color: ${({ theme }) => theme.colorBg};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
-  padding: 5px;
+  padding: 10px;
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: 18px;
+    font-size: 16px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: 20px;
+    font-size: 18px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: 26px;
+    font-size: 22px;
   }
+  cursor: default;
 `;
 
 const SmallMenu: FC<ISmallMenuProps> = ({ menu, selectedLargeId, selectedMediumId }) => {
