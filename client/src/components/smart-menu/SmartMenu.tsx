@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, FC } from 'react';
+import useWindowSize from 'hooks/use-window-size';
 
 const MenuContainer = styled.div`
   cursor: pointer;
@@ -13,16 +14,27 @@ const MenuContainer = styled.div`
   background-color: ${({ theme }) => theme.colorBg};
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  color: ${props => props.theme.colorBlack};
+  color: ${({ theme }) => theme.colorBlack};
   border: 3px solid ${({ theme }) => theme.colorLineDark};
 `;
 
 const MenuTitle = styled.div`
   padding-left: 10px;
   color: ${({ theme }) => theme.colorLineDark};
-  transform: translate(0px, -17px);
-  font-family: ${props => props.theme.fontHanna};
-  font-size: ${props => props.theme.size30};
+  font-family: ${({ theme }) => theme.fontHanna};
+
+  ${({ theme }) => theme.mobile} {
+    font-size: ${({ theme }) => theme.size18};
+    transform: translate(0px, -13px);
+  }
+  ${({ theme }) => theme.tablet} {
+    font-size: ${({ theme }) => theme.size20};
+    transform: translate(0px, -15px);
+  }
+  ${({ theme }) => theme.laptop} {
+    font-size: ${({ theme }) => theme.size26};
+    transform: translate(0px, -17px);
+  }
 `;
 
 const Menu = styled.ul`
@@ -34,13 +46,24 @@ const Menu = styled.ul`
 `;
 
 const LargeItem = styled.li<LargeItemProps>`
-  font-family: ${props => props.theme.fontHannaAir};
-  font-size: ${props => props.theme.size26};
-  width: 200px;
+  font-family: ${({ theme }) => theme.fontHannaAir};
   display: flex;
-  background-color: ${props => (props.isSelected ? ({ theme }) => theme.colorOffWhite : ({ theme }) => theme.colorBg)};
+  background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
   padding: 5px;
+
+  ${({ theme }) => theme.mobile} {
+    width: 110px;
+    font-size: ${({ theme }) => theme.size18};
+  }
+  ${({ theme }) => theme.tablet} {
+    width: 150px;
+    font-size: ${({ theme }) => theme.size20};
+  }
+  ${({ theme }) => theme.laptop} {
+    width: 200px;
+    font-size: ${({ theme }) => theme.size26};
+  }
 `;
 
 const MediumItemDiv = styled.div`
@@ -48,9 +71,7 @@ const MediumItemDiv = styled.div`
 `;
 
 const MediumItem = styled.ul`
-  font-family: ${props => props.theme.fontHannaAir};
-  font-size: ${props => props.theme.size26};
-  width: 200px;
+  font-family: ${({ theme }) => theme.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${({ theme }) => theme.colorBg};
@@ -59,14 +80,40 @@ const MediumItem = styled.ul`
   &:hover {
     background-color: ${({ theme }) => theme.colorOffWhite};
   }
+
+  ${({ theme }) => theme.mobile} {
+    width: 110px;
+    font-size: ${({ theme }) => theme.size18};
+  }
+  ${({ theme }) => theme.tablet} {
+    width: 150px;
+    font-size: ${({ theme }) => theme.size20};
+  }
+  ${({ theme }) => theme.laptop} {
+    width: 200px;
+    font-size: ${({ theme }) => theme.size26};
+  }
 `;
 
 const SmallItem = styled.div`
-  font-family: ${props => props.theme.fontHannaAir};
-  font-size: ${props => props.theme.size26};
+  font-family: ${({ theme }) => theme.fontHannaAir};
+  font-size: ${({ theme }) => theme.size26};
   background-color: ${({ theme }) => theme.colorBg};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
   padding: 5px;
+
+  ${({ theme }) => theme.mobile} {
+    width: 110px;
+    font-size: ${({ theme }) => theme.size18};
+  }
+  ${({ theme }) => theme.tablet} {
+    width: 150px;
+    font-size: ${({ theme }) => theme.size20};
+  }
+  ${({ theme }) => theme.laptop} {
+    width: 200px;
+    font-size: ${({ theme }) => theme.size26};
+  }
 `;
 
 const SmallItemDiv = styled.div`
@@ -95,6 +142,10 @@ interface IMenuChild {
 interface ICategory {
   name: string;
   code: string;
+}
+
+interface SmartMenuProps {
+  currentMenu: string;
 }
 
 // 카테고리 더미 데이터 api연동 시 삭제 예정
@@ -161,9 +212,13 @@ const generateMenu = () => {
   return dataJson;
 };
 
-interface SmartMenuProps {
-  currentMenu: string;
-}
+const isLaptop = (width: number) => {
+  return width >= 1200;
+};
+
+const isSmall = (width: number) => {
+  return width <= 550;
+};
 
 const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
   const [isOpen, setOpenStatus] = useState(false);
@@ -171,7 +226,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
   const [selectedMediumId, setMediumId] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const menu = generateMenu();
-
+  const { width } = useWindowSize();
   return (
     <MenuContainer
       onMouseEnter={() => {
@@ -194,12 +249,19 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
               <LargeItem
                 key={largeId}
                 onMouseMove={e => {
-                  setTimeout(() => {
-                    if (e.clientX < position.x + 10) {
-                      setLargeId(largeId);
-                    }
-                    setPosition({ x: e.clientX, y: e.clientY });
-                  }, 100);
+                  if (isLaptop(width)) {
+                    setTimeout(() => {
+                      if (e.clientX < position.x + 10) {
+                        setLargeId(largeId);
+                      }
+                      setPosition({ x: e.clientX, y: e.clientY });
+                    }, 100);
+                  }
+                }}
+                onClick={e => {
+                  if (!isLaptop(width)) {
+                    setLargeId(largeId);
+                  }
                 }}
                 isSelected={selectedLargeId === largeId}
               >
@@ -236,7 +298,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
           })}
         </MediumItemDiv>
       )}
-      {selectedMediumId !== '' && (
+      {!isSmall(width) && selectedMediumId !== '' && (
         <SmallItemDiv>
           {menu.data.map(large => {
             if (large.code.slice(0, 2) === selectedLargeId) {
@@ -254,7 +316,19 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
           })}
         </SmallItemDiv>
       )}
-      <MenuTitle>{currentMenu}</MenuTitle>
+      <MenuTitle
+        onClick={() => {
+          if (!isLaptop(width) && isOpen) {
+            setOpenStatus(false);
+            setLargeId('');
+            setMediumId('');
+          } else {
+            setOpenStatus(true);
+          }
+        }}
+      >
+        {currentMenu}
+      </MenuTitle>
     </MenuContainer>
   );
 };
