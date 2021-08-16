@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { ThemeProvider, createGlobalStyle, DefaultTheme } from 'styled-components';
 import reset from 'styled-reset';
-import BMEULJIRO from '../assets/fonts/BMEULJIRO.otf';
-import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.otf';
-import BMHANNA from '../assets/fonts/BMHANNA11years.otf';
-import BMHANNAAir from '../assets/fonts/BMHANNAAir.otf';
+import BMEULJIRO from '../assets/fonts/BMEULJIRO.woff';
+import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.woff';
+import BMHANNA from '../assets/fonts/BMHANNA11years.woff';
+import BMHANNAAir from '../assets/fonts/BMHANNAAir.woff';
 
 const theme: DefaultTheme = {
   mobile: '@media all and (max-width: 480px)',
@@ -70,22 +70,22 @@ const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: 'BMEULJIRO';
-    src: url(${BMEULJIRO}) format('otf');
+    src: url(${BMEULJIRO}) format('woff');
   }
   
   @font-face {
     font-family: 'BMEULJIRO10';
-    src: url(${BMEULJIRO10years}) format('otf');
+    src: url(${BMEULJIRO10years}) format('woff');
   }
 
   @font-face {
     font-family: 'BMHANNA';
-    src: url(${BMHANNA}) format('otf');
+    src: url(${BMHANNA}) format('woff');
   }
 
   @font-face {
     font-family: 'BMHANNAAir';
-    src: url(${BMHANNAAir}) format('otf');
+    src: url(${BMHANNAAir}) format('woff');
   }
 
   font-family: 'Noto Sans KR', sans-serif;
