@@ -258,7 +258,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu }) => {
                     }, 100);
                   }
                 }}
-                onClick={e => {
+                onClick={() => {
                   if (!isLaptop(width)) {
                     setLargeId(largeId);
                   }
