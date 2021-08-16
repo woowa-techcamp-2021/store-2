@@ -15,9 +15,7 @@ export type ItemCreationAttributes = Optional<ItemAttribures, 'id' | 'amount'>;
 
 const DEFAULT_AMOUNT = 1;
 
-const itemSchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<ItemAttribures, ItemCreationAttributes>> => {
+const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttribures, ItemCreationAttributes>> => {
   const Item = sequelize.define('Item', {
     id: {
       type: DataTypes.INTEGER,

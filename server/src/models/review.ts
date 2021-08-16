@@ -12,9 +12,7 @@ export interface ReviewAttribures {
 
 export type ReviewCreationAttributes = Optional<ReviewAttribures, 'id'>;
 
-const reviewSchema = (
-  sequelize: Sequelize,
-): ModelCtor<Model<ReviewAttribures, ReviewCreationAttributes>> => {
+const reviewSchema = (sequelize: Sequelize): ModelCtor<Model<ReviewAttribures, ReviewCreationAttributes>> => {
   const Review = sequelize.define('Review', {
     id: {
       type: DataTypes.INTEGER,

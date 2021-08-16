@@ -15,19 +15,23 @@
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json'",
     "lint:fix": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json' --fix",
-    "prestart": "export NODE_ENV=development",
-    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
-    "predeploy": "export NODE_ENV=production && eslint",
-    "deploy": "tsc && ts-node -r tsconfig-paths/register dist/app.js"
+    "start": "export NODE_ENV=development && nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
+    "build": "export NODE_ENV=production && eslint && tsc",
+    "deploy": "export NODE_ENV=production && ts-node -r tsconfig-paths/register dist/app.js"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/node-fetch": "^2.5.12",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12",
     "sequelize": "^6.6.5",
     "ts-node": "^10.2.0",

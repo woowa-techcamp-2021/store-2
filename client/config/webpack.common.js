@@ -1,7 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const __dirname = path.resolve();
 
@@ -10,13 +10,13 @@ export default {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
+    assetModuleFilename: 'assets/[hash].[ext]?[query]',
   },
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.ts', '.tsx'],
-    alias: {
-      '*': path.resolve(__dirname, 'src'),
-    },
+    plugins: [new TsconfigPathsPlugin()],
   },
   module: {
     rules: [
@@ -51,9 +51,8 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      favicon: './public/favicon.ico',
+      favicon: './public/favicon.png',
     }),
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),

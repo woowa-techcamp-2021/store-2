@@ -10,3 +10,8 @@ dist
 
 # yarn
 yarn-error.log
+
+# test snapshots
+__snapshots__
+
+.DS_Store
