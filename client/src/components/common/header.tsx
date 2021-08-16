@@ -8,6 +8,8 @@ import TentBg from 'assets/images/tent.png';
 interface HeaderProps {
   displayMain: boolean;
   isMobile: boolean;
+  userId: string | null | undefined;
+  onLogout: () => void;
 }
 
 const Wrapper = styled.header`
@@ -43,7 +45,7 @@ const LogoWrapper = styled.div`
   padding: 25px 0;
 `;
 
-const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
+const Header: FC<HeaderProps> = ({ displayMain, isMobile, userId, onLogout }) => {
   const renderLogo = () => {
     if (isMobile) {
       if (displayMain) return <Tent />;
@@ -70,7 +72,7 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
 
   return (
     <Wrapper>
-      <Navbar white={displayMain} mobile={isMobile} />
+      <Navbar white={displayMain} mobile={isMobile} userId={userId} onLogout={onLogout} />
       {renderLogo()}
     </Wrapper>
   );
