@@ -43,8 +43,3 @@ const LoginButton = styled.button<Inf>`
 `;
 
 export default LoginButton;
-// ${(props) =>
-//   props.radius &&
-//   css`
-//     border-radius: 1rem;
-//   `}
