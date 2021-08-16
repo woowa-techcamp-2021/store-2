@@ -1,13 +1,13 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
-export interface CategoryAttribures {
+export interface CategoryAttributes {
   id: string;
   name: string;
 }
 
-export type CategoryCreationAttributes = Optional<CategoryAttribures, 'id'>;
+export type CategoryCreationAttributes = Optional<CategoryAttributes, 'id'>;
 
-const categorySchema = (sequelize: Sequelize): ModelCtor<Model<CategoryAttribures, CategoryCreationAttributes>> => {
+const categorySchema = (sequelize: Sequelize): ModelCtor<Model<CategoryAttributes, CategoryCreationAttributes>> => {
   const Category = sequelize.define(
     'Category',
     {
