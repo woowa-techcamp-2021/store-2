@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'styled-components';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
@@ -77,6 +77,9 @@ interface LoginProps {
 
 const LoginForm: FC<LoginProps> = ({ id, password, onChange, onSubmit, error, loading }) => {
   const history = useHistory();
+  const onClick = useCallback(() => {
+    history.push('/signup');
+  }, [history]);
 
   return (
     <Form onSubmit={onSubmit}>
@@ -99,7 +102,7 @@ const LoginForm: FC<LoginProps> = ({ id, password, onChange, onSubmit, error, lo
         <Image src={github} alt="배달이" />
         깃-헙으로 로그인
       </LoginButton>
-      <LoginButton type="button" signup onClick={() => history.push('/signup')}>
+      <LoginButton type="button" signup onClick={onClick}>
         <Image src={baedal} alt="배달이" />
         배민문구사로 회원가입
       </LoginButton>
