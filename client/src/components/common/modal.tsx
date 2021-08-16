@@ -98,7 +98,37 @@ const ModalBody = styled.div`
   }
 `;
 
-const ModalFooter = styled.div``;
+const ModalFooter = styled.div`
+  margin-top: 10px;
+
+  button {
+    cursor: pointer;
+    color: ${props => props.theme.colorWhite};
+    font-family: ${props => props.theme.fontEuljiro};
+    font-size: 20px;
+    width: 80px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+
+    :first-child {
+      margin-right: 16px;
+      background-color: ${props => props.theme.colorGreyLight};
+
+      &:hover {
+        background-color: ${props => props.theme.colorGreyMid};
+      }
+    }
+
+    :last-child {
+      background-color: ${props => props.theme.colorPrimaryLight};
+
+      &:hover {
+        background-color: ${props => props.theme.colorPrimary};
+      }
+    }
+  }
+`;
 
 const Modal: FC<ModalProps> = ({ type, header, body }) => {
   return (
@@ -111,7 +141,12 @@ const Modal: FC<ModalProps> = ({ type, header, body }) => {
         <ModalBody>
           <div>{body}</div>
         </ModalBody>
-        {type === 'confirm' && <ModalFooter>buttons</ModalFooter>}
+        {type === 'confirm' && (
+          <ModalFooter>
+            <button type="button">아니오</button>
+            <button type="button">네</button>
+          </ModalFooter>
+        )}
       </Inner>
     </ModalBlock>
   );
