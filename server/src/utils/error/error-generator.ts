@@ -8,12 +8,15 @@
 interface ParamType {
   message: string;
   code: string;
+  customMessage?: string;
 }
 
 export class CustomError extends Error {
   code: string;
 
-  constructor(code: string, message: string) {
+  customMessage?: string;
+
+  constructor(code: string, message: string, customMessage?: string) {
     super(message);
 
     if (Error.captureStackTrace) {
@@ -21,11 +24,12 @@ export class CustomError extends Error {
     }
 
     this.code = code;
+    this.customMessage = customMessage;
   }
 }
 
-function errorGenerator({ message, code }: ParamType): CustomError {
-  return new CustomError(code, message);
+function errorGenerator({ message, code, customMessage }: ParamType): CustomError {
+  return new CustomError(code, message, customMessage);
 }
 
 export default errorGenerator;
