@@ -4,6 +4,7 @@ import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
 import { useHistory } from 'lib/router';
 import LoginButton from './login-button';
+import LoginInput from './login-input';
 
 const Form = styled.form`
   display: flex;
@@ -19,30 +20,6 @@ const Form = styled.form`
   }
   ${({ theme }) => theme.laptop} {
     width: 460px;
-  }
-`;
-
-const Input = styled.input`
-  font-family: ${props => props.theme.fontHannaAir};
-  line-height: 1.5;
-  border: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colorInputLine};
-  color: ${({ theme }) => theme.colorSoftBlack};
-  text-indent: 5px;
-  &::placeholder {
-    color: ${({ theme }) => theme.colorPlaceholder};
-  }
-  &:not(:first-child) {
-    margin-top: 20px;
-  }
-  ${({ theme }) => theme.mobile} {
-    font-size: 20px;
-  }
-  ${({ theme }) => theme.tablet} {
-    font-size: 26px;
-  }
-  ${({ theme }) => theme.laptop} {
-    font-size: 32px;
   }
 `;
 
@@ -64,6 +41,7 @@ const Error = styled.div`
   margin-top: 20px;
   display: flex;
   text-indent: 5px;
+  width: 16px;
 `;
 
 interface LoginProps {
@@ -84,8 +62,8 @@ const LoginForm: FC<LoginProps> = ({ id, password, onChange, onSubmit, error, lo
   return (
     <Form onSubmit={onSubmit}>
       {loading && <div>로딩중~~</div>}
-      <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
-      <Input
+      <LoginInput type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
+      <LoginInput
         type="password"
         placeholder="비밀번호"
         value={password}
