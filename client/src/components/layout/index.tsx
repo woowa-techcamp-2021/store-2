@@ -18,6 +18,12 @@ const Wrapper = styled.div`
     flex: 1;
     padding: 0 10%;
   }
+
+  ${props => props.theme.mobile} {
+    main {
+      padding: 0 12px;
+    }
+  }
 `;
 
 const Layout: FC<LayoutProps> = ({ children, displayMain = false }) => {
