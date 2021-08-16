@@ -12,6 +12,7 @@ declare module 'styled-components' {
     colorSoftBlack: string;
 
     colorBg: string;
+    colorFooter: string;
     colorPlaceholder: string;
     colorError: string;
 
@@ -33,6 +34,7 @@ declare module 'styled-components' {
     colorPointRed: string;
     colorPointAqua: string;
 
+    colorGreyDark: string;
     colorGreyMid: string;
     colorGreyLight: string;
 
