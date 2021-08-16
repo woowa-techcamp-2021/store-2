@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const LoginButton = styled.button<{ login?: boolean; github?: boolean; signup?: boolean }>`
+interface Inf {
+  login?: boolean;
+  github?: boolean;
+  signup?: boolean;
+}
+
+const LoginButton = styled.button<Inf>`
   ${({ theme }) => theme.mobile} {
     height: 66px;
     font-size: 20px;
