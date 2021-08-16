@@ -41,7 +41,6 @@ const Error = styled.div`
   margin-top: 20px;
   display: flex;
   text-indent: 5px;
-  width: 16px;
 `;
 
 interface LoginProps {
