@@ -24,15 +24,15 @@ const MenuTitle = styled.div`
   font-family: ${({ theme }) => theme.fontHanna};
 
   ${({ theme }) => theme.mobile} {
-    font-size: ${({ theme }) => theme.size18};
+    font-size: 18px;
     transform: translate(0px, -13px);
   }
   ${({ theme }) => theme.tablet} {
-    font-size: ${({ theme }) => theme.size20};
+    font-size: 20px;
     transform: translate(0px, -15px);
   }
   ${({ theme }) => theme.laptop} {
-    font-size: ${({ theme }) => theme.size26};
+    font-size: 26px;
     transform: translate(0px, -17px);
   }
 `;
@@ -54,15 +54,15 @@ const LargeItem = styled.li<LargeItemProps>`
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: ${({ theme }) => theme.size18};
+    font-size: 18px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: ${({ theme }) => theme.size20};
+    font-size: 20px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: ${({ theme }) => theme.size26};
+    font-size: 26px;
   }
 `;
 
@@ -83,36 +83,36 @@ const MediumItem = styled.ul`
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: ${({ theme }) => theme.size18};
+    font-size: 18px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: ${({ theme }) => theme.size20};
+    font-size: 20px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: ${({ theme }) => theme.size26};
+    font-size: 26px;
   }
 `;
 
 const SmallItem = styled.div`
   font-family: ${({ theme }) => theme.fontHannaAir};
-  font-size: ${({ theme }) => theme.size26};
+  font-size: 26px;
   background-color: ${({ theme }) => theme.colorBg};
   border: 1px solid ${({ theme }) => theme.colorOffWhite};
   padding: 5px;
 
   ${({ theme }) => theme.mobile} {
     width: 110px;
-    font-size: ${({ theme }) => theme.size18};
+    font-size: 18px;
   }
   ${({ theme }) => theme.tablet} {
     width: 150px;
-    font-size: ${({ theme }) => theme.size20};
+    font-size: 20px;
   }
   ${({ theme }) => theme.laptop} {
     width: 200px;
-    font-size: ${({ theme }) => theme.size26};
+    font-size: 26px;
   }
 `;
 
