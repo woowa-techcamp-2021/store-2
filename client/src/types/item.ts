@@ -3,4 +3,8 @@ export interface IItem {
   thumbnail: string;
   title: string;
   price: number;
+  isBest?: boolean;
+  isGreen?: boolean;
+  isNew?: boolean;
+  isSale?: boolean;
 }
