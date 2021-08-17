@@ -4,15 +4,15 @@ import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { getUser } from 'store/auth';
+import logger from 'redux-logger';
 import rootReducer, { rootSaga } from './store';
-
 import App from './App';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [sagaMiddleware],
+  middleware: [sagaMiddleware, logger],
 });
 
 sagaMiddleware.run(rootSaga);
