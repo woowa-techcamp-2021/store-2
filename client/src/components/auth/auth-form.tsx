@@ -11,8 +11,10 @@ const Div = styled.div`
   flex-direction: column;
 
   ${({ theme }) => theme.mobile} {
-    width: 100%;
-    box-sizing: border-box;
+    > * {
+      width: 100%;
+      max-width: 380px;
+    }
   }
   ${({ theme }) => theme.tablet} {
     margin: 15px;
@@ -24,8 +26,9 @@ const Div = styled.div`
 `;
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  > * {
+    width: 100%;
+  }
 `;
 
 const Image = styled.img`
@@ -83,9 +86,15 @@ const AuthForm: FC<AuthProps> = ({
   onCheckChange,
 }) => {
   const history = useHistory();
-  const onClick = useCallback(() => {
+  const goSignup = useCallback(() => {
     history.push('/signup');
   }, [history]);
+  const goLogin = useCallback(() => {
+    history.push('/login');
+  }, [history]);
+  const goGithub = () => {
+    window.location.href = `http://${window.location.hostname}:3000/api/auth/github`;
+  };
   const TEXT = isSignup ? '회원가입' : '로그인';
 
   return (
@@ -116,17 +125,17 @@ const AuthForm: FC<AuthProps> = ({
       </Form>
 
       {isSignup ? (
-        <AuthButton type="button" back>
+        <AuthButton type="button" back onClick={goLogin}>
           <Image src={baedal} alt="배달이" />
           로그인 하러가기
         </AuthButton>
       ) : (
         <>
-          <AuthButton type="button" github>
+          <AuthButton type="button" github onClick={goGithub}>
             <Image src={github} alt="배달이" />
             깃-헙으로 로그인
           </AuthButton>
-          <AuthButton type="button" signup onClick={onClick}>
+          <AuthButton type="button" signup onClick={goSignup}>
             <Image src={baedal} alt="배달이" />
             배민문구사로 회원가입
           </AuthButton>
