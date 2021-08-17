@@ -54,7 +54,7 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
         return (
           <LargeItem
             key={largeId}
-            onMouseMove={e => {
+            onMouseMove={(e: React.MouseEvent) => {
               if (isLaptop) {
                 setTimeout(() => {
                   if (e.clientX < position.x + 10) {

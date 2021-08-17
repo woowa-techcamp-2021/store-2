@@ -45,7 +45,7 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
             return (
               <MediumItem
                 key={selectedLargeId + mediumId}
-                onMouseEnter={e => {
+                onMouseEnter={(e: React.MouseEvent) => {
                   setMediumId(mediumId);
                   e.stopPropagation();
                 }}
