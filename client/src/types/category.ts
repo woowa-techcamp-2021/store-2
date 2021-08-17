@@ -11,3 +11,8 @@ export interface IMenuChild {
   code: string;
   child?: Array<{ name: string; code: string }>;
 }
+
+export interface ICategory {
+  name: string;
+  code: string;
+}

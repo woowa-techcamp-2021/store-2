@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import Layout from 'components/common/layout';
+import useWindowSize from 'hooks/use-window-size';
 import SignupContainer from 'containers/signup-container';
 import HeaderContainer from 'containers/header-container';
-import Footer from 'components/common/footer';
-import useWindowSize from 'hooks/use-window-size';
+import { Layout, Footer } from 'components';
 
 const Div = styled.div`
   display: flex;
@@ -16,6 +15,7 @@ const Div = styled.div`
 const SignupPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
+
   return (
     <Layout>
       <HeaderContainer displayMain isMobile={isMobile} />

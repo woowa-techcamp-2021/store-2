@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import React, { useState, FC } from 'react';
 import useWindowSize from 'hooks/use-window-size';
-import { IMenu } from 'types';
+import { IMenu } from 'types/category';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
 import LargeMenu from './large-menu';
 import MediumMenu from './medium-menu';
 import SmallMenu from './small-menu';
+
+interface SmartMenuProps {
+  currentMenu: string;
+  menu: IMenu;
+}
 
 const MenuDiv = styled.div`
   cursor: pointer;
@@ -42,11 +47,6 @@ const MenuTitle = styled.div`
   }
 `;
 
-interface ISmartMenuProps {
-  currentMenu: string;
-  menu: IMenu;
-}
-
 const isLaptop = (width: number) => {
   return width >= SMART_MENU_LARGE_WIDTH;
 };
@@ -55,12 +55,13 @@ const isSmall = (width: number) => {
   return width <= SMART_MENU_SMALL_WIDTH;
 };
 
-const SmartMenu: FC<ISmartMenuProps> = ({ currentMenu, menu }) => {
+const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [isOpen, setOpenStatus] = useState(false);
   const [selectedLargeId, setLargeId] = useState('');
   const [selectedMediumId, setMediumId] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { width } = useWindowSize();
+
   return (
     <MenuDiv
       onMouseEnter={() => {

@@ -1,10 +1,21 @@
 import React, { FC, useCallback } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'lib/router';
+import { Input, Button } from 'components';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
-import { useHistory } from 'lib/router';
-import AuthButton from './auth-button';
-import AuthInput from './auth-input';
+
+interface AuthFormProps {
+  id: string;
+  password: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  error: string | null;
+  loading: boolean;
+  isSignup?: boolean;
+  check?: boolean;
+  onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const Div = styled.div`
   display: flex;
@@ -62,19 +73,7 @@ const CheckDiv = styled.div`
   }
 `;
 
-interface AuthProps {
-  id: string;
-  password: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent) => void;
-  error: string | null;
-  loading: boolean;
-  isSignup?: boolean;
-  check?: boolean;
-  onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const AuthForm: FC<AuthProps> = ({
+const AuthForm: FC<AuthFormProps> = ({
   id,
   password,
   onChange,
@@ -101,8 +100,8 @@ const AuthForm: FC<AuthProps> = ({
     <Div>
       <Form onSubmit={onSubmit}>
         {loading && <div>로딩중~~</div>}
-        <AuthInput type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
-        <AuthInput
+        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
+        <Input
           type="password"
           placeholder="비밀번호"
           value={password}
@@ -118,27 +117,27 @@ const AuthForm: FC<AuthProps> = ({
         )}
 
         <Error>{error}</Error>
-        <AuthButton type="submit" login>
+        <Button type="submit" login>
           <Image src={baedal} alt="배달이" />
           {TEXT}
-        </AuthButton>
+        </Button>
       </Form>
 
       {isSignup ? (
-        <AuthButton type="button" back onClick={goLogin}>
+        <Button type="button" back onClick={goLogin}>
           <Image src={baedal} alt="배달이" />
           로그인 하러가기
-        </AuthButton>
+        </Button>
       ) : (
         <>
-          <AuthButton type="button" github onClick={goGithub}>
+          <Button type="button" github onClick={goGithub}>
             <Image src={github} alt="배달이" />
             깃-헙으로 로그인
-          </AuthButton>
-          <AuthButton type="button" signup onClick={goSignup}>
+          </Button>
+          <Button type="button" signup onClick={goSignup}>
             <Image src={baedal} alt="배달이" />
             배민문구사로 회원가입
-          </AuthButton>
+          </Button>
         </>
       )}
     </Div>

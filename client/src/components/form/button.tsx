@@ -1,33 +1,13 @@
 import styled from 'styled-components';
 
-interface Inf {
+interface ButtonProps {
   login?: boolean;
   github?: boolean;
   signup?: boolean;
   back?: boolean;
 }
 
-const AuthButton = styled.button<Inf>`
-  ${({ theme }) => theme.mobile} {
-    height: 66px;
-    font-size: 20px;
-  }
-  ${({ theme }) => theme.tablet} {
-    height: 75px;
-    font-size: 23px;
-  }
-  ${({ theme }) => theme.laptop} {
-    height: 85px;
-    font-size: 26px;
-  }
-  &:not(:first-child) {
-    margin-top: 10px;
-  }
-  &:hover {
-    opacity: 1;
-    font-weight: 600;
-    transform: translateY(-5px);
-  }
+const Button = styled.button<ButtonProps>`
   cursor: pointer;
   border: 0;
   display: flex;
@@ -40,6 +20,31 @@ const AuthButton = styled.button<Inf>`
   background: ${props => props.github && props.theme.colorGithub};
   background: ${props => props.signup && props.theme.colorSignup};
   background: ${props => props.back && props.theme.colorSoftBlack};
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  &:hover {
+    opacity: 1;
+    font-weight: 600;
+    transform: translateY(-5px);
+  }
+
+  ${({ theme }) => theme.mobile} {
+    height: 66px;
+    font-size: 20px;
+  }
+
+  ${({ theme }) => theme.tablet} {
+    height: 75px;
+    font-size: 23px;
+  }
+
+  ${({ theme }) => theme.laptop} {
+    height: 85px;
+    font-size: 26px;
+  }
 `;
 
-export default AuthButton;
+export default Button;

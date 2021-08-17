@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { IMenu } from 'types';
+import { IMenu } from 'types/category';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
-interface IMediumMenuProps {
+interface LargeMenuProps {
   menu: IMenu;
   position: { x: number; y: number };
   selectedLargeId: string;
@@ -15,6 +15,10 @@ interface IMediumMenuProps {
       y: number;
     }>
   >;
+}
+
+interface LargeItemProps {
+  isSelected: boolean;
 }
 
 const LargeItemDiv = styled.ul`
@@ -46,11 +50,7 @@ const LargeItem = styled.li<LargeItemProps>`
   }
 `;
 
-interface LargeItemProps {
-  isSelected: boolean;
-}
-
-const LargeMenu: FC<IMediumMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
+const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
   return (
     <LargeItemDiv>
       {menu.data.map(large => {

@@ -6,17 +6,20 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.colorBg};
   display: flex;
   flex-direction: column;
+
   main {
     flex: 1;
     padding: 0 10%;
     display: flex;
     justify-content: center;
   }
+
   ${props => props.theme.mobile} {
     main {
       padding: 0 12px;
     }
   }
+
   ${props => props.theme.laptop} {
     align-items: center;
     main {

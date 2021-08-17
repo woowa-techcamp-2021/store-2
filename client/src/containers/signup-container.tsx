@@ -1,19 +1,13 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import AuthForm from 'components/auth/auth-form';
-import useInputs from 'hooks/use-inputs';
 import { getSignup } from 'store/auth';
-import { useHistory } from 'lib/router';
-import AuthSuccessModal from 'components/auth/auth-success-modal';
+import useInputs from 'hooks/use-inputs';
+import AuthForm from 'components/auth/form';
+import AuthSuccessModal from 'components/auth/success-modal';
 import authValidation from 'utils/validation/auth-validation';
-
-interface IRedux {
-  loading: boolean;
-  error: null | string;
-  userId: string | null | undefined;
-  userLoading: boolean;
-}
+import { IAuth } from 'types/auth';
 
 const SignupContainer: FC = () => {
   const history = useHistory();
@@ -21,7 +15,7 @@ const SignupContainer: FC = () => {
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
   const [modal, setModal] = useState(false);
-  const { loading, error, userId, userLoading }: IRedux = useSelector(({ auth }: RootState) => ({
+  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth }: RootState) => ({
     loading: auth.signup.loading,
     error: auth.signup.error,
     userId: auth.user.userId,

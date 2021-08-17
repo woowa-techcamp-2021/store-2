@@ -15,11 +15,11 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-interface WrapperStyleProps {
+interface WrapperProps {
   white: boolean;
 }
 
-const Wrapper = styled.nav<WrapperStyleProps>`
+const Wrapper = styled.nav<WrapperProps>`
   background-color: ${props => (props.white ? props.theme.colorWhite : props.theme.colorBg)};
   border-bottom: 1px solid ${props => props.theme.colorLineLight};
   padding: 10px 10%;

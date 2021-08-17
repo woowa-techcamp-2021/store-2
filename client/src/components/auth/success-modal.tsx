@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Modal } from 'components';
+import { IUserId } from 'types/auth';
 
 interface AuthSuccessModalProps {
-  userId: string | null | undefined;
+  userId: IUserId;
 }
 
 const Title = styled.h2`
@@ -37,7 +38,7 @@ const AuthSuccessModal: FC<AuthSuccessModalProps> = ({ userId }) => {
       body={
         <Info>
           <p>
-            <span>{userId || 'guest'}</span>님의 회원가입을 축하합니다.
+            <span>{userId}</span>님의 회원가입을 축하합니다.
           </p>
           <p>알차고 실속있는 서비스로 찾아뵙겠습니다.</p>
         </Info>

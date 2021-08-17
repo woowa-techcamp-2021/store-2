@@ -1,22 +1,17 @@
 import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import Header from 'components/common/header';
 import { logout } from 'store/auth';
+import { Header } from 'components';
+import { IUser } from 'types/auth';
 
-type IUserId = string | null | undefined;
-
-interface HedaerProps {
+interface HeaderProps {
   displayMain?: boolean;
   isMobile: boolean;
 }
 
-interface IRedux {
-  userId: IUserId;
-}
-
-const HeaderContainer: FC<HedaerProps> = ({ displayMain = false, isMobile }) => {
-  const { userId }: IRedux = useSelector(({ auth }: RootState) => ({
+const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => {
+  const { userId }: IUser = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
   }));
   const dispatch = useDispatch();

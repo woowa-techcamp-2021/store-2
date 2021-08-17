@@ -1,6 +1,8 @@
-import Layout from 'components/common/layout';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+import useWindowSize from 'hooks/use-window-size';
+import HeaderContainer from 'containers/header-container';
+import { Layout, Footer } from 'components';
 
 const Text = styled.div`
   flex: 1;
@@ -34,12 +36,19 @@ const Text = styled.div`
 `;
 
 const NotFoundPage = (): ReactElement => {
+  const { width } = useWindowSize();
+  const isMobile = width <= 480;
+
   return (
     <Layout>
-      <Text>
-        <span>404</span>
-        <span>낫 파운드</span>
-      </Text>
+      <HeaderContainer displayMain isMobile={isMobile} />
+      <main>
+        <Text>
+          <span>404</span>
+          <span>낫 파운드</span>
+        </Text>
+      </main>
+      <Footer isMobile={isMobile} />
     </Layout>
   );
 };
