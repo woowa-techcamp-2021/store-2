@@ -1,26 +1,13 @@
 import { AxiosResponse } from 'axios';
-import { ILoginState, IReceiveServer } from 'store/auth';
-import { IUser } from 'store/axios';
+import { IAuthState, IReceiveServer, ICheckUser } from 'store/auth';
 import client from './client';
-// import request from './request';
-// import { ResponseType } from './types';
 
-// interface IReqUserInfo {
-//   username: string;
-//   password: string;
-// }
-
-// data넘겨줄때는 객체로 넘겨주기   -- 나중에 주석삭제할게요
-
-// export const register = (data: IReqUserInfo): ResponseType => request('POST', '/api/users', data);
-
-// export const login = (data: IReqUserInfo): ResponseType => request('POST', '/api/auth', data);
-
-// export const logout = (): ResponseType => request('DELETE', '/api/auth');
-
-// 회원가입 pr때 주석 전부 삭제할게요 테스트 참고할게 많아서...
-
-export const check = (): Promise<AxiosResponse> => client.get<IUser>('/api/test/check');
-
-export const login = ({ id, password }: ILoginState): Promise<AxiosResponse> =>
+export const login = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
   client.post<IReceiveServer>('/api/auth', { id, password });
+
+export const signup = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
+  client.post<IReceiveServer>('/api/users', { id, password });
+
+export const logout = (): Promise<AxiosResponse> => client.delete('/api/auth');
+
+export const checkAuth = (): Promise<AxiosResponse> => client.get<ICheckUser>('/api/auth');

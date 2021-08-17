@@ -1,12 +1,5 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import useWindowSize from 'hooks/use-window-size';
-import Header from './header';
-import Footer from './footer';
-
-interface LayoutProps {
-  displayMain?: boolean;
-}
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -18,6 +11,7 @@ const Wrapper = styled.div`
     flex: 1;
     padding: 0 10%;
     display: flex;
+    justify-content: center;
   }
 
   ${props => props.theme.mobile} {
@@ -28,7 +22,6 @@ const Wrapper = styled.div`
 
   ${props => props.theme.laptop} {
     align-items: center;
-
     main {
       padding: 0;
       width: 1000px;
@@ -36,16 +29,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const Layout: FC<LayoutProps> = ({ children, displayMain = false }) => {
-  const { width } = useWindowSize();
-
-  return (
-    <Wrapper>
-      <Header displayMain={displayMain} isMobile={width <= 480} />
-      <main>{children}</main>
-      <Footer isMobile={width <= 480} />
-    </Wrapper>
-  );
+const Layout: FC = ({ children }) => {
+  return <Wrapper>{children}</Wrapper>;
 };
 
 export default Layout;

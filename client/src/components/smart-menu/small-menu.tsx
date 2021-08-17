@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { IMenu } from 'types';
+import { IMenu } from 'types/category';
 
-interface ISmallMenuProps {
+interface SmallMenuProps {
   menu: IMenu;
   selectedLargeId: string;
   selectedMediumId: string;
@@ -35,7 +35,7 @@ const SmallItem = styled.div`
   cursor: default;
 `;
 
-const SmallMenu: FC<ISmallMenuProps> = ({ menu, selectedLargeId, selectedMediumId }) => {
+const SmallMenu: FC<SmallMenuProps> = ({ menu, selectedLargeId, selectedMediumId }) => {
   return (
     <SmallItemDiv>
       {menu.data.map(large => {

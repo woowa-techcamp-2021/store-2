@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Layout from '../index';
+import Layout from '../layout';
 
 describe('<Layout />', () => {
   it('matches snapshot', () => {
@@ -9,7 +9,7 @@ describe('<Layout />', () => {
   });
 
   it('matches snapshot main', () => {
-    const { container } = render(<Layout displayMain>test layout main</Layout>);
+    const { container } = render(<Layout>test layout main</Layout>);
     expect(container).toMatchSnapshot();
   });
 });
