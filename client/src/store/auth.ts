@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as authAPI from 'utils/api/auth';
+import { startLoading, finishLoading } from 'store/loading';
 
 export interface IAuthState {
   id: string;
@@ -19,13 +20,11 @@ export interface ICheckUser {
 }
 
 interface IAuth {
-  loading: boolean;
   error: null | string;
 }
 
 interface IUser {
   userId: string | null;
-  loading: boolean;
   error: null | string;
 }
 
@@ -42,20 +41,16 @@ interface IError {
 
 const initialState: StateProps = {
   login: {
-    loading: false,
     error: null,
   },
   signup: {
-    loading: false,
     error: null,
   },
   user: {
     userId: null,
-    loading: false,
     error: null,
   },
   logout: {
-    loading: false,
     error: null,
   },
 };
@@ -64,115 +59,65 @@ const counterSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    getLogin: state => ({
-      ...state,
-      login: {
-        loading: true,
-        error: null,
-      },
-    }),
-    getLoginSuccess: state => ({
-      ...state,
-      login: {
-        loading: false,
-        error: null,
-      },
-    }),
-    getLoginFail: (state, action: PayloadAction<string>) => ({
-      ...state,
-      login: {
-        loading: false,
-        error: action.payload,
-      },
-    }),
-    getSignup: state => ({
-      ...state,
-      signup: {
-        loading: true,
-        error: null,
-      },
-    }),
-    getSignupSuccess: state => ({
-      ...state,
-      signup: {
-        loading: false,
-        error: null,
-      },
-    }),
-    getSignupFail: (state, action: PayloadAction<string>) => ({
-      ...state,
-      signup: {
-        loading: false,
-        error: action.payload,
-      },
-    }),
-    getUser: state => ({
-      ...state,
-      user: {
-        userId: null,
-        loading: true,
-        error: null,
-      },
-    }),
-    getUserSuccess: (state, action: PayloadAction<string>) => ({
-      ...state,
-      user: {
-        userId: action.payload,
-        loading: false,
-        error: null,
-      },
-    }),
-    getUserFail: (state, action: PayloadAction<string>) => ({
-      ...state,
-      user: {
-        userId: null,
-        loading: false,
-        error: action.payload,
-      },
-    }),
-    logout: state => ({
-      ...state,
-      logout: {
-        loading: true,
-        error: null,
-      },
-    }),
-    logoutSuccess: state => ({
-      ...state,
-      user: {
-        ...state.user,
-        userId: null,
-      },
-      logout: {
-        loading: true,
-        error: null,
-      },
-    }),
-    logoutFail: (state, action: PayloadAction<string>) => ({
-      ...state,
-      logout: {
-        loading: true,
-        error: action.payload,
-      },
-    }),
-    getLoginRest: state => ({
-      ...state,
-      login: {
-        ...state.login,
-        error: null,
-      },
-    }),
-    getSignupRest: state => ({
-      ...state,
-      signup: {
-        ...state.signup,
-        error: null,
-      },
-    }),
+    getLogin: state => state,
+    getLoginSuccess: state => state,
+    getLoginFail: (state, action: PayloadAction<string>) => {
+      state.login.error = action.payload;
+      return state;
+    },
+    // ({
+    //   ...state,
+    //   login: {
+    //     error: action.payload,
+    //   },
+    // }),
+    getSignup: state => state,
+    getSignupSuccess: state => state,
+    getSignupFail: (state, action: PayloadAction<string>) => {
+      state.signup.error = action.payload;
+      return state;
+    },
+    getUser: state => state,
+    getUserSuccess: (state, action: PayloadAction<string>) => {
+      state.user.userId = action.payload;
+      return state;
+    },
+    //   ...state,
+    //   user: {
+    //     userId: action.payload,
+    //     error: null,
+    //   },
+    // }),
+    getUserFail: (state, action: PayloadAction<string>) => {
+      state.user.error = action.payload;
+      return state;
+    },
+    // ({
+    //   ...state,
+    //   user: {
+    //     userId: null,
+    //     error: action.payload,
+    //   },
+    // }),
+    logout: state => state,
+    logoutSuccess: state => {
+      state.user.userId = null;
+      return state;
+    },
+    logoutFail: (state, action: PayloadAction<string>) => {
+      state.logout.error = action.payload;
+      return state;
+    },
+    // ({
+    //   ...state,
+    //   logout: {
+    //     error: action.payload,
+    //   },
+    // }),
   },
 });
 
-export const { actions, reducer: authReducer } = counterSlice;
+const { actions, reducer: authReducer } = counterSlice;
 const {
   getLogin,
   getLoginSuccess,
@@ -189,10 +134,11 @@ const {
   getLoginRest,
   getSignupRest,
 } = actions;
-export { getLogin, getSignup, getUser, logout, getLoginRest, getSignupRest };
+export { authReducer, getLogin, getSignup, getUser, logout };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
+    yield put(startLoading(getLogin.type));
     const {
       data: { accessToken, userId },
     } = (yield call(authAPI.login, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
@@ -214,11 +160,14 @@ function* loginSaga(action: PayloadAction): Generator {
     } else {
       throw new Error(e);
     }
+  } finally {
+    yield put(finishLoading(getLogin.type));
   }
 }
 
 function* signupSaga(action: PayloadAction): Generator {
   try {
+    yield put(startLoading(getSignup.type));
     const {
       data: { accessToken, userId },
     } = (yield call(authAPI.signup, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
@@ -237,15 +186,17 @@ function* signupSaga(action: PayloadAction): Generator {
     } else {
       throw new Error(e);
     }
+  } finally {
+    yield put(finishLoading(getSignup.type));
   }
 }
 
 function* checkAuth(): Generator {
   try {
+    yield put(startLoading(getUser.type));
     const {
       data: { newAccessToken, userId },
     } = (yield call(authAPI.checkAuth)) as AxiosResponse<ICheckUser>;
-
     if (newAccessToken) localStorage.setItem('user', newAccessToken);
 
     yield put({ type: getUserSuccess.type, payload: userId });
@@ -257,11 +208,14 @@ function* checkAuth(): Generator {
     } else {
       throw new Error(e);
     }
+  } finally {
+    yield put(finishLoading(getUser.type));
   }
 }
 
 function* logoutSaga(): Generator {
   try {
+    yield put(startLoading(logout.type));
     (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
     localStorage.removeItem('user');
     yield put({ type: logoutSuccess.type });
@@ -273,6 +227,8 @@ function* logoutSaga(): Generator {
     } else {
       throw new Error(e);
     }
+  } finally {
+    yield put(finishLoading(logout.type));
   }
 }
 
