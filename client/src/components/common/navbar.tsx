@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'lib/router';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import { Logo } from 'components';
 
 import accountIcon from 'assets/icons/account.png';
@@ -15,13 +15,9 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-interface WrapperProps {
-  white: boolean;
-}
-
-const Wrapper = styled.nav<WrapperProps>`
-  background-color: ${props => (props.white ? props.theme.colorWhite : props.theme.colorBg)};
-  border-bottom: 1px solid ${props => props.theme.colorLineLight};
+const Wrapper = woowahan.nav`
+  background-color: ${props => (props.white ? props.theme?.colorWhite : props.theme?.colorBg)};
+  border-bottom: 1px solid ${props => props.theme?.colorLineLight};
   padding: 10px 10%;
   display: flex;
   justify-content: flex-end;
@@ -35,18 +31,18 @@ const Wrapper = styled.nav<WrapperProps>`
 
   .nav-link {
     font-size: 12px;
-    font-weight: ${props => props.theme.weightMid};
-    color: ${props => props.theme.colorGreyDark};
+    font-weight: ${props => props.theme?.weightMid};
+    color: ${props => props.theme?.colorGreyDark};
     text-decoration: none;
     padding: 0 14px;
   }
 
   .nav-link:hover {
-    color: ${props => props.theme.colorGreyMid};
+    color: ${props => props.theme?.colorGreyMid};
   }
 
-  ${props => props.theme.mobile} {
-    background-color: ${props => props.theme.colorWhite};
+  ${props => props.theme?.mobile} {
+    background-color: ${props => props.theme?.colorWhite};
     border: none;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     justify-content: space-between;

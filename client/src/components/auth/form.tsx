@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Input, Button } from 'components';
 import baedal from 'assets/icons/baedalee.png';
@@ -17,83 +17,83 @@ interface AuthFormProps {
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Wrapper = styled.div`
+const Wrapper = woowahan.div`
   display: flex;
   flex-direction: column;
   margin-top: 50px;
 
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     > * {
       width: 100%;
       max-width: 380px;
     }
   }
 
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     margin: 15px;
     max-width: 380px;
   }
 
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 400px;
   }
 `;
 
-const Form = styled.form`
+const Form = woowahan.form`
   > * {
     width: 100%;
   }
 `;
 
-const Image = styled.img`
+const Image = woowahan.img`
   margin-right: 10px;
 
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     width: 26px;
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     width: 30px;
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 34px;
   }
 `;
 
-const CheckBoxLabel = styled.label`
+const CheckBoxLabel = woowahan.label`
   cursor: pointer;
   margin-bottom: 20px;
   display: flex;
   align-items: flex-end;
-  font-family: ${props => props.theme.fontHannaAir};
-  color: ${props => props.theme.colorSoftBlack};
+  font-family: ${props => props.theme?.fontHannaAir};
+  color: ${props => props.theme?.colorSoftBlack};
 
   input[type='checkbox'] {
     margin-right: 10px;
   }
 `;
 
-const Error = styled.div`
-  color: ${props => props.theme.colorError};
-  font-family: ${props => props.theme.fontHannaAir};
+const Error = woowahan.div`
+  color: ${props => props.theme?.colorError};
+  font-family: ${props => props.theme?.fontHannaAir};
   font-size: 14px;
   height: 30px;
   text-indent: 5px;
 `;
 
-const LinkWrapper = styled.div`
+const LinkWrapper = woowahan.div`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  font-family: ${props => props.theme.fontEuljiro};
+  font-family: ${props => props.theme?.fontEuljiro};
   margin-top: 10px;
 
   a {
     font-size: 18px;
-    color: ${props => props.theme.colorTextBeige};
+    color: ${props => props.theme?.colorTextBeige};
 
     :hover {
-      color: ${props => props.theme.colorLine};
+      color: ${props => props.theme?.colorLine};
     }
   }
 `;

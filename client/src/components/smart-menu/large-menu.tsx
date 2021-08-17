@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import React, { FC } from 'react';
 import { IMenu } from 'types/category';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
@@ -17,34 +17,30 @@ interface LargeMenuProps {
   >;
 }
 
-interface LargeItemProps {
-  isSelected: boolean;
-}
-
-const LargeItemDiv = styled.ul`
+const LargeItemDiv = woowahan.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
-  background-color: ${({ theme }) => theme.colorBg};
+  background-color: ${({ theme }) => theme?.colorBg};
   border-radius: 20px;
   padding-left: 32px;
 `;
 
-const LargeItem = styled.li<LargeItemProps>`
-  font-family: ${({ theme }) => theme.fontHannaAir};
+const LargeItem = woowahan.li`
+  font-family: ${({ theme }) => theme?.fontHannaAir};
   display: flex;
-  background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
+  background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
 
-  border: 1px solid ${({ theme }) => theme.colorOffWhite};
+  border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     width: 110px;
     font-size: 16px;
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     width: 150px;
     font-size: 18px;
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 200px;
     font-size: 22px;
   }
