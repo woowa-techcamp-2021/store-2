@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
 import { authReducer, authSaga } from './auth';
+import { loadingReducer } from './loading';
 
-const rootReducer = combineReducers({ auth: authReducer });
+const rootReducer = combineReducers({ auth: authReducer, loading: loadingReducer });
 
 export type RootState = ReturnType<typeof rootReducer>;
 

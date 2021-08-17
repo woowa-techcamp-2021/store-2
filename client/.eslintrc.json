@@ -9,27 +9,21 @@
     "plugin:redux-saga/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "testing-library",
-    "redux-saga"
-  ],
+  "plugins": ["@typescript-eslint", "prettier", "testing-library", "redux-saga"],
   "parserOptions": {
     "project": ["client/tsconfig.json"]
   },
   "rules": {
     "react/prop-types": "off",
     "@typescript-eslint/no-empty-interface": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
   },
   "ignorePatterns": ["webpack.*.js", "jest.config.js", "setup-tests.ts", "file-transformer.js"],
   "overrides": [
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
       "extends": ["plugin:testing-library/react"]
     }
   ]

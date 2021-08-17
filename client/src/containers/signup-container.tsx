@@ -15,11 +15,11 @@ const SignupContainer: FC = () => {
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
   const [modal, setModal] = useState(false);
-  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth }: RootState) => ({
-    loading: auth.signup.loading,
+  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
+    loading: loading['auth/getSignup'],
     error: auth.signup.error,
     userId: auth.user.userId,
-    userLoading: auth.user.loading,
+    userLoading: loading['auth/getUser'],
   }));
   const dispatch = useDispatch();
 

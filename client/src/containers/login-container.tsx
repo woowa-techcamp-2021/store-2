@@ -13,11 +13,11 @@ const LoginContainer: FC = () => {
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
 
-  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth }: RootState) => ({
-    loading: auth.login.loading,
+  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
+    loading: loading['auth/getLogin'],
     error: auth.login.error,
     userId: auth.user.userId,
-    userLoading: auth.user.loading,
+    userLoading: loading['auth/getUser'],
   }));
   const dispatch = useDispatch();
 
