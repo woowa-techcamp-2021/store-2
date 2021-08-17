@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import LoginContainer from 'containers/login-container';
 import { Layout } from 'components';
 
-const Div = styled.div`
+const Div = woowahan.div`
   display: flex;
   flex-direction: column;
   align-items: center;

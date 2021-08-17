@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import Header from './header';
 import Footer from './footer';
@@ -8,9 +8,9 @@ interface LayoutProps {
   displayMain?: boolean;
 }
 
-const Wrapper = styled.div`
+const Wrapper = woowahan.div`
   min-height: 100%;
-  background-color: ${props => props.theme.colorBg};
+  background-color: ${props => props.theme?.colorBg};
   display: flex;
   flex-direction: column;
 
@@ -20,13 +20,13 @@ const Wrapper = styled.div`
     display: flex;
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     main {
       padding: 0 12px;
     }
   }
 
-  ${props => props.theme.laptop} {
+  ${props => props.theme?.laptop} {
     align-items: center;
 
     main {

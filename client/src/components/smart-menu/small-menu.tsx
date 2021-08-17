@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import React, { FC } from 'react';
 import { IMenu } from 'types';
 
@@ -8,27 +8,27 @@ interface ISmallMenuProps {
   selectedMediumId: string;
 }
 
-const SmallItemDiv = styled.div`
+const SmallItemDiv = woowahan.div`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
 `;
 
-const SmallItem = styled.div`
-  font-family: ${({ theme }) => theme.fontHannaAir};
+const SmallItem = woowahan.div`
+  font-family: ${({ theme }) => theme?.fontHannaAir};
   font-size: 26px;
-  background-color: ${({ theme }) => theme.colorBg};
+  background-color: ${({ theme }) => theme?.colorBg};
 
-  border: 1px solid ${({ theme }) => theme.colorOffWhite};
+  border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     width: 110px;
     font-size: 16px;
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     width: 150px;
     font-size: 18px;
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 200px;
     font-size: 22px;
   }

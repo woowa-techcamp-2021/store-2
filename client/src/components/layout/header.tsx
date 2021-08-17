@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Logo, Navbar } from 'components';
 import BrickBg from 'assets/images/brick.png';
@@ -10,11 +10,11 @@ interface HeaderProps {
   isMobile: boolean;
 }
 
-const Wrapper = styled.header`
+const Wrapper = woowahan.header`
   width: 100%;
 `;
 
-const Brick = styled.div`
+const Brick = woowahan.div`
   width: 100%;
   height: 150px;
   background-image: url(${BrickBg});
@@ -26,18 +26,18 @@ const Brick = styled.div`
   }
 `;
 
-const Tent = styled.div`
+const Tent = woowahan.div`
   width: 100%;
   height: 80px;
   background-image: url(${TentBg});
   background-repeat: repeat-x;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     margin-top: -15px;
   }
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = woowahan.div`
   display: flex;
   justify-content: center;
   padding: 25px 0;

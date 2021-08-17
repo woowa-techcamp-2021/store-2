@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 
 interface CounterProps {
   number: number;
@@ -7,12 +7,12 @@ interface CounterProps {
   onDecrease: () => void;
 }
 
-const H1 = styled.h1`
+const H1 = woowahan.h1`
   font-size: 50px;
   margin: 20px;
 `;
 
-const Button = styled.button`
+const Button = woowahan.button`
   cursor: pointer;
   padding: 10px;
   margin: 5px;
