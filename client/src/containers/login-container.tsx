@@ -11,6 +11,7 @@ interface IRedux {
   loading: boolean;
   error: null | string;
   userId: string | null | undefined;
+  userLoading: boolean;
 }
 
 const LoginContainer: FC = () => {
@@ -18,10 +19,11 @@ const LoginContainer: FC = () => {
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
 
-  const { loading, error, userId }: IRedux = useSelector(({ auth }: RootState) => ({
+  const { loading, error, userId, userLoading }: IRedux = useSelector(({ auth }: RootState) => ({
     loading: auth.login.loading,
     error: auth.login.error,
     userId: auth.user.userId,
+    userLoading: auth.user.loading,
   }));
   const dispatch = useDispatch();
 
@@ -30,10 +32,10 @@ const LoginContainer: FC = () => {
   }, [error]);
 
   useEffect(() => {
-    if (userId) {
+    if (userId || userLoading) {
       history.push('/');
     }
-  }, [userId, history]);
+  }, [userId, history, userLoading]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();

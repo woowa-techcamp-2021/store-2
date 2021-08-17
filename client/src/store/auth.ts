@@ -24,7 +24,7 @@ interface IAuth {
 }
 
 interface IUser {
-  userId: string | undefined | null;
+  userId: string | null;
   loading: boolean;
   error: null | string;
 }
@@ -50,7 +50,7 @@ const initialState: StateProps = {
     error: null,
   },
   user: {
-    userId: undefined,
+    userId: null,
     loading: false,
     error: null,
   },
@@ -109,7 +109,7 @@ const counterSlice = createSlice({
     getUser: state => ({
       ...state,
       user: {
-        userId: undefined,
+        userId: null,
         loading: true,
         error: null,
       },

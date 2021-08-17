@@ -12,6 +12,7 @@ interface IRedux {
   loading: boolean;
   error: null | string;
   userId: string | null | undefined;
+  userLoading: boolean;
 }
 
 const SignupContainer: FC = () => {
@@ -20,10 +21,11 @@ const SignupContainer: FC = () => {
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
   const [modal, setModal] = useState(false);
-  const { loading, error, userId }: IRedux = useSelector(({ auth }: RootState) => ({
+  const { loading, error, userId, userLoading }: IRedux = useSelector(({ auth }: RootState) => ({
     loading: auth.signup.loading,
     error: auth.signup.error,
     userId: auth.user.userId,
+    userLoading: auth.user.loading,
   }));
   const dispatch = useDispatch();
 
@@ -32,6 +34,7 @@ const SignupContainer: FC = () => {
   }, [error]);
 
   useEffect(() => {
+    if (userLoading) history.push('/');
     if (userId) {
       setModal(true);
       setTimeout(() => {
@@ -39,7 +42,7 @@ const SignupContainer: FC = () => {
         history.push('/');
       }, 1000);
     }
-  }, [userId, history]);
+  }, [userId, history, userLoading]);
 
   const onCheckChange = useCallback(() => {
     setCheck(!check);
