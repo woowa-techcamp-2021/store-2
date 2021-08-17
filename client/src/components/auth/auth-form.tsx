@@ -21,7 +21,7 @@ const Div = styled.div`
     max-width: 380px;
   }
   ${({ theme }) => theme.laptop} {
-    width: 380px;
+    width: 480px;
   }
 `;
 
