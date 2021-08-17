@@ -34,6 +34,8 @@ function errorHandler(err: CustomError): ErrorType {
       return { statusCode: 409, errorMessage: err.customMessage || '다시 로그인해주세요' };
     case 'auth/need-re-signin':
       return { statusCode: 409, errorMessage: err.customMessage || '다시 로그인해주세요' };
+    case 'categories/categories-not-found':
+      return { statusCode: 500, errorMessage: err.customMessage || '카테고리 데이터가 없습니다.' };
 
     default:
       return { statusCode: 500, errorMessage: '다시 시도해주세요.' };
