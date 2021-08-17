@@ -29,7 +29,7 @@ const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => 
   };
   return (
     <>
-      <Header displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />;
+      <Header displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
       {modal && <AuthLogoutModal onCancel={onCancel} onConfirm={onConfirm} />}
     </>
   );
