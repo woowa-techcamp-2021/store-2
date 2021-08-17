@@ -1,30 +1,12 @@
 import React, { FC } from 'react';
 import SmartMenu from 'components/smart-menu';
+import { IMenu, IMenuChild, ICategory } from 'types/category';
 
-interface IMenu {
-  data: Array<{
-    name: string;
-    code: string;
-    child?: Array<IMenuChild>;
-  }>;
-}
-
-interface IMenuChild {
-  name: string;
-  code: string;
-  child?: Array<{ name: string; code: string }>;
-}
-
-interface ICategory {
-  name: string;
-  code: string;
-}
-
-interface ISmartMenuContainer {
+interface SmartMenuContainerProps {
   currentMenu: string;
 }
 
-// 카테고리 더미 데이터 api연동 시 삭제 예정
+/* TODO: 카테고리 더미 데이터 api 연동 후 삭제 */
 const data = [
   { name: '전체', code: '000000' },
   { name: '문구', code: '080000' },
@@ -88,7 +70,7 @@ const generateMenu = () => {
   return dataJson;
 };
 
-const SmartMenuContainer: FC<ISmartMenuContainer> = ({ currentMenu }) => {
+const SmartMenuContainer: FC<SmartMenuContainerProps> = ({ currentMenu }) => {
   return <SmartMenu currentMenu={currentMenu} menu={generateMenu()} />;
 };
 

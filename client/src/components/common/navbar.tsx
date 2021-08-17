@@ -6,23 +6,32 @@ import { Logo } from 'components';
 import accountIcon from 'assets/icons/account.png';
 import cartIcon from 'assets/icons/cart.png';
 import logoutIcon from 'assets/icons/logout.png';
+import loginIcon from 'assets/icons/login.png';
 
 interface NavbarProps {
   white?: boolean;
   mobile?: boolean;
+  userId: string | null | undefined;
+  onLogout: () => void;
 }
 
-interface WrapperStyleProps {
+interface WrapperProps {
   white: boolean;
 }
 
-const Wrapper = styled.nav<WrapperStyleProps>`
+const Wrapper = styled.nav<WrapperProps>`
   background-color: ${props => (props.white ? props.theme.colorWhite : props.theme.colorBg)};
   border-bottom: 1px solid ${props => props.theme.colorLineLight};
   padding: 10px 10%;
   display: flex;
   justify-content: flex-end;
   position: relative;
+
+  button {
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+  }
 
   .nav-link {
     font-size: 12px;
@@ -50,7 +59,7 @@ const Wrapper = styled.nav<WrapperStyleProps>`
   }
 `;
 
-const Navbar: FC<NavbarProps> = ({ white = false, mobile = false }) => {
+const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogout }) => {
   return (
     <Wrapper white={white}>
       {mobile && (
@@ -59,15 +68,23 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false }) => {
         </Link>
       )}
       <div>
-        <Link className="nav-link" to="/user">
-          {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
-        </Link>
+        {userId && (
+          <Link className="nav-link" to="/user">
+            {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
+          </Link>
+        )}
         <Link className="nav-link" to="/cart">
           {mobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
         </Link>
-        <Link className="nav-link" to="/logout">
-          {mobile ? <img src={logoutIcon} alt="logout" /> : '로그아웃'}
-        </Link>
+        {userId ? (
+          <button type="button" className="nav-link" onClick={onLogout}>
+            {mobile ? <img src={logoutIcon} alt="logout" /> : '로그아웃'}
+          </button>
+        ) : (
+          <Link className="nav-link" to="/login">
+            {mobile ? <img src={loginIcon} alt="logout" /> : '로그인'}
+          </Link>
+        )}
       </div>
     </Wrapper>
   );

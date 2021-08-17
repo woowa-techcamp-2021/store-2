@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { IMenu } from 'types';
+import { IMenu } from 'types/category';
 
-interface IMediumMenuProps {
+interface MediumMenuProps {
   menu: IMenu;
   selectedLargeId: string;
   selectedMediumId: string;
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface IMediumItem {
+interface MediumItemProps {
   isSelected: boolean;
 }
 
@@ -17,7 +17,7 @@ const MediumItemDiv = styled.div`
   display: flex;
 `;
 
-const MediumItem = styled.ul<IMediumItem>`
+const MediumItem = styled.ul<MediumItemProps>`
   font-family: ${({ theme }) => theme.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;
@@ -39,7 +39,7 @@ const MediumItem = styled.ul<IMediumItem>`
   }
 `;
 
-const MediumMenu: FC<IMediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
+const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
   return (
     <MediumItemDiv>
       {menu.data.map(large => {

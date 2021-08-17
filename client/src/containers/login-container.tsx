@@ -1,60 +1,51 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import LoginForm from 'components/auth/login-form';
+import { getLogin, getLoginRest } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
-import { getLogin } from 'store/auth';
-import { useHistory } from 'lib/router';
-
-interface IRedux {
-  loading: boolean;
-  error: null | string;
-  userId: string | null | undefined;
-}
-
-const ID_ERROR = '아이디를 입력하세요';
-const PWD_ERROR = '비밀번호를 입력하세요';
+import AuthForm from 'components/auth/form';
+import authValidation from 'utils/validation/auth-validation';
+import { IAuth } from 'types/auth';
 
 const LoginContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
 
-  const { loading, error, userId }: IRedux = useSelector(({ auth }: RootState) => ({
-    loading: auth.login.loading,
+  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
+    loading: loading['auth/getLogin'],
     error: auth.login.error,
     userId: auth.user.userId,
+    userLoading: loading['auth/getUser'],
   }));
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: getLoginRest });
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     setAuthError(error);
   }, [error]);
 
   useEffect(() => {
-    if (userId) {
+    if (userId || userLoading) {
       history.push('/');
     }
-  }, [userId, history]);
+  }, [userId, history, userLoading]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id) setAuthError(ID_ERROR);
-    else if (!password) setAuthError(PWD_ERROR);
-    else {
-      dispatch({ type: getLogin.type, payload: { id, password } });
-    }
+    const validation: string | boolean = authValidation({ id, password });
+    if (validation !== true) setAuthError(validation as string);
+    else dispatch({ type: getLogin.type, payload: { id, password } });
   };
 
   return (
-    <LoginForm
-      id={id}
-      password={password}
-      onChange={onChange}
-      onSubmit={onSubmit}
-      error={authError}
-      loading={loading}
-    />
+    <AuthForm id={id} password={password} onChange={onChange} onSubmit={onSubmit} error={authError} loading={loading} />
   );
 };
 

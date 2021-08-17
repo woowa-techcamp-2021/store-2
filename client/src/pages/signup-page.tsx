@@ -1,10 +1,18 @@
 import React, { ReactElement } from 'react';
+import styled from 'styled-components';
 import useWindowSize from 'hooks/use-window-size';
-import LoginContainer from 'containers/login-container';
+import SignupContainer from 'containers/signup-container';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
 
-const LoginPage = (): ReactElement => {
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+const SignupPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
@@ -12,11 +20,13 @@ const LoginPage = (): ReactElement => {
     <Layout>
       <HeaderContainer isMobile={isMobile} />
       <main>
-        <LoginContainer />
+        <Div>
+          <SignupContainer />
+        </Div>
       </main>
       <Footer isMobile={isMobile} />
     </Layout>
   );
 };
 
-export default LoginPage;
+export default SignupPage;
