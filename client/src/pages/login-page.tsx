@@ -18,7 +18,7 @@ const LoginPage = (): ReactElement => {
 
   return (
     <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
+      <HeaderContainer isMobile={isMobile} />
       <main>
         <Div>
           <LoginContainer />

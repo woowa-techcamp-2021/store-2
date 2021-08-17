@@ -41,7 +41,7 @@ const NotFoundPage = (): ReactElement => {
 
   return (
     <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
+      <HeaderContainer isMobile={isMobile} />
       <main>
         <Text>
           <span>404</span>

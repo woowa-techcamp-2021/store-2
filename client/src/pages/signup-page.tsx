@@ -18,7 +18,7 @@ const SignupPage = (): ReactElement => {
 
   return (
     <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
+      <HeaderContainer isMobile={isMobile} />
       <main>
         <Div>
           <SignupContainer />

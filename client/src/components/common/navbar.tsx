@@ -68,9 +68,11 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogo
         </Link>
       )}
       <div>
-        <Link className="nav-link" to="/user">
-          {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
-        </Link>
+        {userId && (
+          <Link className="nav-link" to="/user">
+            {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
+          </Link>
+        )}
         <Link className="nav-link" to="/cart">
           {mobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
         </Link>
