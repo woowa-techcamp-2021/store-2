@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'lib/router';
 import { IItem } from 'types/item';
 import Item from 'components/item';
 
@@ -27,6 +28,8 @@ const Wrapper = styled.div`
 `;
 
 const ItemList: FC<ItemListProps> = ({ items }) => {
+  const history = useHistory();
+
   return (
     <Wrapper>
       {items.map(item => {
@@ -42,6 +45,7 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
             isSale={item.isSale}
             salePercent={item.salePercent}
             originalPrice={item.originalPrice}
+            onClick={() => history.push(`/item/${item.id}`)}
           />
         );
       })}

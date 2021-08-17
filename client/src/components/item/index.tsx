@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { formatPrice } from 'utils';
 import likeIcon from 'assets/icons/like.png';
@@ -18,6 +18,7 @@ interface ItemProps {
   isSale?: boolean;
   salePercent?: number;
   originalPrice?: number;
+  onClick: () => void;
 }
 
 interface ContainerProps {
@@ -201,13 +202,19 @@ const Item: FC<ItemProps> = ({
   isSale,
   salePercent,
   originalPrice,
+  onClick,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => setIsLiked(!isLiked);
 
+  const onItemClick = (e: MouseEvent) => {
+    if ((e.target as HTMLDivElement).classList.contains('like')) return;
+    onClick();
+  };
+
   return (
-    <Container bgColor={isSale ? 'red' : 'green'}>
+    <Container bgColor={isSale ? 'red' : 'green'} onClick={onItemClick}>
       <Thumbnail>
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>
@@ -225,7 +232,11 @@ const Item: FC<ItemProps> = ({
         {isSale && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
       <LikeWrapper onClick={toggleLike}>
-        {isLiked ? <img src={likeFilledIcon} alt="like" /> : <img className="like-empty" src={likeIcon} alt="like" />}
+        {isLiked ? (
+          <img className="like like-fill" src={likeFilledIcon} alt="like" />
+        ) : (
+          <img className="like like-empty" src={likeIcon} alt="like" />
+        )}
       </LikeWrapper>
     </Container>
   );
