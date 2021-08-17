@@ -11,7 +11,7 @@ export default async (): Promise<void> => {
   Category.hasMany(Item);
   Item.hasMany(Review);
 
-  await sequelize.sync();
+  await sequelize.sync({ alter: true });
 
   const rows = await Category.findAll();
   if (!rows.length) {
