@@ -13,12 +13,10 @@ const AuthButton = styled.button<Inf>`
     font-size: 20px;
   }
   ${({ theme }) => theme.tablet} {
-    width: 380px;
     height: 75px;
     font-size: 23px;
   }
   ${({ theme }) => theme.laptop} {
-    width: 400px;
     height: 85px;
     font-size: 26px;
   }
