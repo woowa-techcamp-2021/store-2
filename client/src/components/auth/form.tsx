@@ -118,14 +118,14 @@ const AuthForm: FC<AuthFormProps> = ({
     <Wrapper>
       <Form onSubmit={onSubmit}>
         {loading && <div>로딩중~~</div>}
-        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} />
+        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={30} />
         <Input
           type="password"
           placeholder="비밀번호"
           value={password}
           name="password"
           onChange={onChange}
-          maxLength={14}
+          maxLength={20}
         />
         {isSignup && (
           <CheckBoxLabel htmlFor="signup-agree">
