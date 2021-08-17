@@ -8,8 +8,10 @@ const ITEM_DUMMY: IItem[] = [
     thumbnail:
       'https://mblogthumb-phinf.pstatic.net/MjAxODA1MDJfMTk3/MDAxNTI1MjM1MDI1MjM2.qcbRcEwFPkpyaAV_RQ41cmQzmVEZHJSM3fiwzUeNoecg.a9D8oTOx7Jl0MKyCHvd1TnsbRllFwuYV0lvOZTlUwQsg.JPEG.smartbaedal/image_800505831525234558336.jpg?type=w800',
     title: '맥주짠 세트',
-    price: 10900,
+    price: 9810,
     isSale: true,
+    salePercent: 10,
+    originalPrice: 10900,
   },
   {
     id: 2,
@@ -38,8 +40,10 @@ const ITEM_DUMMY: IItem[] = [
     thumbnail:
       'https://mblogthumb-phinf.pstatic.net/MjAxODA1MDJfMTk3/MDAxNTI1MjM1MDI1MjM2.qcbRcEwFPkpyaAV_RQ41cmQzmVEZHJSM3fiwzUeNoecg.a9D8oTOx7Jl0MKyCHvd1TnsbRllFwuYV0lvOZTlUwQsg.JPEG.smartbaedal/image_800505831525234558336.jpg?type=w800',
     title: '맥주짠 세트',
-    price: 10900,
+    price: 9810,
     isSale: true,
+    salePercent: 10,
+    originalPrice: 10900,
   },
   {
     id: 6,

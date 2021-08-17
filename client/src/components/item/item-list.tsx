@@ -40,6 +40,8 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
             isGreen={item.isGreen}
             isNew={item.isNew}
             isSale={item.isSale}
+            salePercent={item.salePercent}
+            originalPrice={item.originalPrice}
           />
         );
       })}

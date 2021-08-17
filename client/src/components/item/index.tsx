@@ -16,6 +16,8 @@ interface ItemProps {
   isGreen?: boolean;
   isNew?: boolean;
   isSale?: boolean;
+  salePercent?: number;
+  originalPrice?: number;
 }
 
 interface ContainerProps {
@@ -101,6 +103,12 @@ const Info = styled.div`
 
   .price {
     font-size: 30px;
+
+    span {
+      font-size: 22px;
+      color: ${props => props.theme.colorGreyMid};
+      text-decoration: line-through;
+    }
   }
 
   ${props => props.theme.mobile} {
@@ -111,6 +119,10 @@ const Info = styled.div`
 
     .price {
       font-size: 22px;
+
+      span {
+        font-size: 14px;
+      }
     }
   }
 
@@ -122,6 +134,38 @@ const Info = styled.div`
 
     .price {
       font-size: 26px;
+
+      span {
+        font-size: 18px;
+      }
+    }
+  }
+`;
+
+const SaleWrapper = styled.div`
+  position: absolute;
+  top: 297px;
+  right: 10px;
+
+  span {
+    font-size: 24px;
+    font-family: ${props => props.theme.fontEuljiro};
+    color: ${props => props.theme.colorWhite};
+  }
+
+  ${props => props.theme.mobile} {
+    top: 217px;
+
+    span {
+      font-size: 20px;
+    }
+  }
+
+  ${props => props.theme.tablet} {
+    top: 247px;
+
+    span {
+      font-size: 22px;
     }
   }
 `;
@@ -147,7 +191,17 @@ const LikeWrapper = styled.div`
   }
 `;
 
-const Item: FC<ItemProps> = ({ thumbnail, title, price, isBest, isGreen, isNew, isSale }) => {
+const Item: FC<ItemProps> = ({
+  thumbnail,
+  title,
+  price,
+  isBest,
+  isGreen,
+  isNew,
+  isSale,
+  salePercent,
+  originalPrice,
+}) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => setIsLiked(!isLiked);
@@ -159,8 +213,11 @@ const Item: FC<ItemProps> = ({ thumbnail, title, price, isBest, isGreen, isNew, 
       </Thumbnail>
       <Info>
         <div className="title">{title}</div>
-        <div className="price">{formatPrice(price)}원</div>
+        <div className="price">
+          {formatPrice(price)}원 {isSale && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
+        </div>
       </Info>
+      <SaleWrapper>{isSale && salePercent && <span>{salePercent}%</span>}</SaleWrapper>
       <BadgeWrapper>
         {isBest && <img src={badgeBestIcon} alt="badge" />}
         {isGreen && <img src={badgeGreenIcon} alt="badge" />}

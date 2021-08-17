@@ -7,4 +7,6 @@ export interface IItem {
   isGreen?: boolean;
   isNew?: boolean;
   isSale?: boolean;
+  salePercent?: number;
+  originalPrice?: number;
 }
