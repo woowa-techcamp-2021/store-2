@@ -57,18 +57,7 @@ const theme: DefaultTheme = {
   weightBold: '700',
 };
 
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-
-  #root {
-    width: 100%;
-    height: 100vh;
-  }
-
-  a {
-    text-decoration: none;
-  }
-  
+const GlobalStyle = createGlobalStyle`  
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
   @font-face {
@@ -91,7 +80,16 @@ const GlobalStyle = createGlobalStyle`
     src: url(${BMHANNAAir}) format('woff');
   }
 
-  font-family: 'Noto Sans KR', sans-serif;
+  ${reset[0]}
+
+  #root {
+    width: 100%;
+    height: 100vh;
+  }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const Theme: FC = ({ children }) => {
