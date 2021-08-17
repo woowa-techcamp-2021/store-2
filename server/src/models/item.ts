@@ -27,7 +27,7 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttribures, ItemC
       allowNull: false,
     },
     thumbnail: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     contents: {
