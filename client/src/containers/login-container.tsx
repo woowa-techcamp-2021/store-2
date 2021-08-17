@@ -8,13 +8,6 @@ import AuthForm from 'components/auth/form';
 import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
 
-interface IRedux {
-  loading: boolean;
-  error: null | string;
-  userId: string | null;
-  userLoading: boolean;
-}
-
 const LoginContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
