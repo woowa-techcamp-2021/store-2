@@ -25,6 +25,7 @@ const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => 
     setModal(false);
   };
   const onConfirm = (): void => {
+    setModal(false);
     dispatch({ type: logout.type });
   };
   return (
