@@ -16,6 +16,14 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(auto-fit, 230px);
   grid-gap: 10px 16px;
   justify-content: center;
+
+  ${props => props.theme.mobile} {
+    grid-template-columns: repeat(auto-fit, 150px);
+  }
+
+  ${props => props.theme.tablet} {
+    grid-template-columns: repeat(auto-fit, 180px);
+  }
 `;
 
 const ItemList: FC<ItemListProps> = ({ items }) => {

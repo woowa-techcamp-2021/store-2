@@ -16,12 +16,30 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  ${props => props.theme.mobile} {
+    width: 150px;
+    height: 280px;
+  }
+
+  ${props => props.theme.tablet} {
+    width: 180px;
+    height: 320px;
+  }
 `;
 
 const Thumbnail = styled.img`
   width: 100%;
   height: 300px;
   object-fit: cover;
+
+  ${props => props.theme.mobile} {
+    height: 220px;
+  }
+
+  ${props => props.theme.tablet} {
+    height: 250px;
+  }
 `;
 
 const Info = styled.div`
@@ -42,6 +60,28 @@ const Info = styled.div`
 
   .price {
     font-size: 30px;
+  }
+
+  ${props => props.theme.mobile} {
+    .title {
+      width: 140px;
+      font-size: 14px;
+    }
+
+    .price {
+      font-size: 22px;
+    }
+  }
+
+  ${props => props.theme.tablet} {
+    .title {
+      width: 170px;
+      font-size: 16px;
+    }
+
+    .price {
+      font-size: 26px;
+    }
   }
 `;
 
