@@ -6,7 +6,7 @@ export const login = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
   client.post<IReceiveServer>('/api/auth', { id, password });
 
 export const signup = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
-  client.post<IReceiveServer>('/api/user', { id, password });
+  client.post<IReceiveServer>('/api/users', { id, password });
 
 export const logout = (): Promise<AxiosResponse> => client.delete('/api/auth');
 

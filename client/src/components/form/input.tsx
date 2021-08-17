@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Input = styled.input`
   border: 0;
-  border-bottom: 2px solid ${props => props.theme.colorInputLine};
+  border-bottom: 2px solid ${props => props.theme.colorGreyMid};
   color: ${props => props.theme.colorSoftBlack};
   background-color: transparent;
   line-height: 1.5;
@@ -17,6 +17,7 @@ const Input = styled.input`
 
   &::placeholder {
     color: ${props => props.theme.colorPlaceholder};
+    font-family: ${props => props.theme.fontHannaAir};
   }
 
   &:focus {

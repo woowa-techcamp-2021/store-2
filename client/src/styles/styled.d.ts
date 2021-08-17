@@ -16,7 +16,6 @@ declare module 'styled-components' {
     colorPlaceholder: string;
     colorError: string;
 
-    colorInputLine: string;
     colorLine: string;
     colorLineLight: string;
     colorLineDark: string;
@@ -41,7 +40,6 @@ declare module 'styled-components' {
     colorGreyLight: string;
 
     colorGithub: string;
-    colorSignup: string;
 
     fontBasic: string;
     fontEuljiro: string;

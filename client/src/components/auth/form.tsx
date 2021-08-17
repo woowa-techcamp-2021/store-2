@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'lib/router';
+import { Link } from 'lib/router';
 import { Input, Button } from 'components';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
@@ -46,6 +46,8 @@ const Form = styled.form`
 `;
 
 const Image = styled.img`
+  margin-right: 10px;
+
   ${({ theme }) => theme.mobile} {
     width: 26px;
   }
@@ -55,24 +57,44 @@ const Image = styled.img`
   ${({ theme }) => theme.laptop} {
     width: 34px;
   }
-  margin-right: 10px;
+`;
+
+const CheckBoxLabel = styled.label`
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  font-family: ${props => props.theme.fontHannaAir};
+  color: ${props => props.theme.colorSoftBlack};
+
+  input[type='checkbox'] {
+    margin-right: 10px;
+  }
 `;
 
 const Error = styled.div`
   color: ${props => props.theme.colorError};
-  margin-top: 20px;
-  margin-bottom: 10px;
-  display: flex;
+  font-family: ${props => props.theme.fontHannaAir};
+  font-size: 14px;
+  height: 30px;
   text-indent: 5px;
 `;
 
-const CheckDiv = styled.div`
-  margin-top: 20px;
+const LinkWrapper = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  font-weight: 600;
-  div {
-    margin-left: 10px;
+  padding: 10px;
+  font-family: ${props => props.theme.fontEuljiro};
+  margin-top: 10px;
+
+  a {
+    font-size: 18px;
+    color: ${props => props.theme.colorTextBeige};
+
+    :hover {
+      color: ${props => props.theme.colorLine};
+    }
   }
 `;
 
@@ -87,17 +109,10 @@ const AuthForm: FC<AuthFormProps> = ({
   check,
   onCheckChange,
 }) => {
-  const history = useHistory();
-  const goSignup = useCallback(() => {
-    history.push('/signup');
-  }, [history]);
-  const goLogin = useCallback(() => {
-    history.push('/login');
-  }, [history]);
   const goGithub = () => {
     window.location.href = `http://${window.location.hostname}:3000/api/auth/github`;
   };
-  const TEXT = isSignup ? '회원가입' : '로그인';
+  const FORM_TEXT = isSignup ? '회원가입' : '로그인';
 
   return (
     <Wrapper>
@@ -113,34 +128,32 @@ const AuthForm: FC<AuthFormProps> = ({
           maxLength={14}
         />
         {isSignup && (
-          <CheckDiv>
-            <input type="checkbox" checked={check} onChange={onCheckChange} />
-            <div>배민문방구 전체 동의</div>
-          </CheckDiv>
+          <CheckBoxLabel htmlFor="signup-agree">
+            <input type="checkbox" checked={check} onChange={onCheckChange} id="signup-agree" />
+            배민문방구 전체 동의
+          </CheckBoxLabel>
         )}
 
         <Error>{error}</Error>
-        <Button type="submit" login>
+        <Button type="submit">
           <Image src={baedal} alt="배달이" />
-          {TEXT}
+          {FORM_TEXT}
         </Button>
       </Form>
 
       {isSignup ? (
-        <Button type="button" back onClick={goLogin}>
-          <Image src={baedal} alt="배달이" />
-          로그인 하러가기
-        </Button>
+        <LinkWrapper>
+          <Link to="/login">계정이 있다면? 로그인하러 가기</Link>
+        </LinkWrapper>
       ) : (
         <>
-          <Button type="button" github onClick={goGithub}>
+          <Button type="button" color="github" onClick={goGithub}>
             <Image src={github} alt="배달이" />
             깃-헙으로 로그인
           </Button>
-          <Button type="button" signup onClick={goSignup}>
-            <Image src={baedal} alt="배달이" />
-            배민문구사로 회원가입
-          </Button>
+          <LinkWrapper>
+            <Link to="/signup">계정이 없다면? 회원가입하러 가기</Link>
+          </LinkWrapper>
         </>
       )}
     </Wrapper>

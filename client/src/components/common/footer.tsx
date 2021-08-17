@@ -56,7 +56,6 @@ const Links = styled.div`
     color: ${props => props.theme.colorSoftBlack};
     font-weight: ${props => props.theme.weightBold};
     font-size: 14px;
-    text-decoration: none;
   }
 
   ${props => props.theme.mobile} {
