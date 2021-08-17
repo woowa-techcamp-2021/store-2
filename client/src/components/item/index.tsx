@@ -9,6 +9,7 @@ interface ItemProps {
 }
 
 const Container = styled.div`
+  cursor: pointer;
   width: 230px;
   height: 380px;
   padding: 5px;
@@ -26,12 +27,25 @@ const Container = styled.div`
     width: 180px;
     height: 320px;
   }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+      transition: 0.5s;
+    }
+  }
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.div`
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   ${props => props.theme.mobile} {
     height: 220px;
@@ -88,7 +102,9 @@ const Info = styled.div`
 const Item: FC<ItemProps> = ({ thumbnail, title, price }) => {
   return (
     <Container>
-      <Thumbnail src={thumbnail} alt="item-thumbnail" />
+      <Thumbnail>
+        <img src={thumbnail} alt="item-thumbnail" />
+      </Thumbnail>
       <Info>
         <div className="title">{title}</div>
         <div className="price">{formatPrice(price)}원</div>
