@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import React, { FC } from 'react';
 import { IMenu } from 'types/category';
 
@@ -9,31 +9,27 @@ interface MediumMenuProps {
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface MediumItemProps {
-  isSelected: boolean;
-}
-
-const MediumItemDiv = styled.div`
+const MediumItemDiv = woowahan.div`
   display: flex;
 `;
 
-const MediumItem = styled.ul<MediumItemProps>`
-  font-family: ${({ theme }) => theme.fontHannaAir};
+const MediumItem = woowahan.ul`
+  font-family: ${({ theme }) => theme?.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;
-  background-color: ${props => (props.isSelected ? props.theme.colorOffWhite : props.theme.colorBg)};
+  background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
 
-  border: 1px solid ${({ theme }) => theme.colorOffWhite};
+  border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     width: 110px;
     font-size: 16px;
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     width: 150px;
     font-size: 18px;
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 200px;
     font-size: 22px;
   }
@@ -49,7 +45,7 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
             return (
               <MediumItem
                 key={selectedLargeId + mediumId}
-                onMouseEnter={e => {
+                onMouseEnter={(e: React.MouseEvent) => {
                   setMediumId(mediumId);
                   e.stopPropagation();
                 }}

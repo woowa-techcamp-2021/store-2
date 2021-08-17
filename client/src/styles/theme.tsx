@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { ThemeProvider, createGlobalStyle, DefaultTheme } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'lib/woowahan-components';
 import reset from 'styled-reset';
 import BMEULJIRO from '../assets/fonts/BMEULJIRO.woff';
 import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.woff';
 import BMHANNA from '../assets/fonts/BMHANNA11years.woff';
 import BMHANNAAir from '../assets/fonts/BMHANNAAir.woff';
 
-const theme: DefaultTheme = {
+const theme = {
   mobile: '@media all and (max-width: 480px)',
   tablet: '@media all and (min-width:480px) and (max-width:1200px)',
   laptop: '@media all and (min-width: 1200px)',
@@ -58,17 +58,6 @@ const theme: DefaultTheme = {
 };
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
-
-  #root {
-    width: 100%;
-    height: 100vh;
-  }
-
-  a {
-    text-decoration: none;
-  }
-  
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
   @font-face {
@@ -91,7 +80,16 @@ const GlobalStyle = createGlobalStyle`
     src: url(${BMHANNAAir}) format('woff');
   }
 
-  font-family: 'Noto Sans KR', sans-serif;
+  ${reset[0] as string}
+
+  #root {
+    width: 100%;
+    height: 100vh;
+  }
+
+  div, input, label, button {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
 `;
 
 const Theme: FC = ({ children }) => {
