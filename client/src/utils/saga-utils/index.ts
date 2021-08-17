@@ -8,8 +8,7 @@ interface IError {
   errorMessage: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const createPromiseSaga = (type: string, promiseCreator: (data: unknown) => Promise<AxiosResponse>) => {
+const createPromiseSaga = (type: string, promiseCreator: (data: unknown) => Promise<AxiosResponse>): unknown => {
   const SUCCESS = `${type}Success`;
   const FAIL = `${type}Success`;
   return function* saga(action: PayloadAction) {
