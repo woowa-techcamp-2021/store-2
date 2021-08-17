@@ -27,23 +27,22 @@ const Button = styled.button<ButtonProps>`
 
   &:hover {
     opacity: 1;
-    font-weight: 600;
-    transform: translateY(-5px);
+    transform: translateY(-2px);
   }
 
   ${({ theme }) => theme.mobile} {
-    height: 66px;
+    height: 50px;
     font-size: 20px;
   }
 
   ${({ theme }) => theme.tablet} {
-    height: 75px;
-    font-size: 23px;
+    height: 56px;
+    font-size: 22px;
   }
 
   ${({ theme }) => theme.laptop} {
-    height: 85px;
-    font-size: 26px;
+    height: 64px;
+    font-size: 24px;
   }
 `;
 

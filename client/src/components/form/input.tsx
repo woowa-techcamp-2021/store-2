@@ -1,23 +1,27 @@
 import styled from 'styled-components';
 
 const Input = styled.input`
-  line-height: 1.5;
   border: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colorInputLine};
-  color: ${({ theme }) => theme.colorSoftBlack};
-  text-indent: 5px;
+  border-bottom: 2px solid ${props => props.theme.colorInputLine};
+  color: ${props => props.theme.colorSoftBlack};
   background-color: transparent;
+  line-height: 1.5;
+  text-indent: 5px;
+  margin-bottom: 20px;
+  padding: 6px 10px;
+  box-sizing: border-box;
 
   &[type='text'] {
     font-family: ${props => props.theme.fontHannaAir};
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colorPlaceholder};
+    color: ${props => props.theme.colorPlaceholder};
   }
 
-  &:not(:first-child) {
-    margin-top: 20px;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid ${props => props.theme.colorLineDark};
   }
 
   ${({ theme }) => theme.mobile} {
@@ -25,11 +29,11 @@ const Input = styled.input`
   }
 
   ${({ theme }) => theme.tablet} {
-    font-size: 23px;
+    font-size: 22px;
   }
 
   ${({ theme }) => theme.laptop} {
-    font-size: 26px;
+    font-size: 24px;
   }
 `;
 

@@ -17,9 +17,10 @@ interface AuthFormProps {
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Div = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 
   ${({ theme }) => theme.mobile} {
     > * {
@@ -27,12 +28,14 @@ const Div = styled.div`
       max-width: 380px;
     }
   }
+
   ${({ theme }) => theme.tablet} {
     margin: 15px;
     max-width: 380px;
   }
+
   ${({ theme }) => theme.laptop} {
-    width: 480px;
+    width: 400px;
   }
 `;
 
@@ -44,13 +47,13 @@ const Form = styled.form`
 
 const Image = styled.img`
   ${({ theme }) => theme.mobile} {
-    width: 40px;
+    width: 26px;
   }
   ${({ theme }) => theme.tablet} {
-    width: 44px;
+    width: 30px;
   }
   ${({ theme }) => theme.laptop} {
-    width: 48px;
+    width: 34px;
   }
   margin-right: 10px;
 `;
@@ -97,10 +100,10 @@ const AuthForm: FC<AuthFormProps> = ({
   const TEXT = isSignup ? '회원가입' : '로그인';
 
   return (
-    <Div>
+    <Wrapper>
       <Form onSubmit={onSubmit}>
         {loading && <div>로딩중~~</div>}
-        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={10} />
+        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} />
         <Input
           type="password"
           placeholder="비밀번호"
@@ -140,7 +143,7 @@ const AuthForm: FC<AuthFormProps> = ({
           </Button>
         </>
       )}
-    </Div>
+    </Wrapper>
   );
 };
 
