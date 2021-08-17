@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
-import { compile, serialize, stringify } from 'stylis';
+import { compile, serialize, stringify, middleware } from 'stylis';
 
 import useTheme from '../hooks/use-theme';
 import generateId from '../utils/generate-id';
 import parseString, { IProps, ExpType } from '../utils/parse-string';
 import { IThemeContext } from './theme-provider';
-import splitStyleString from '../utils/split-style-string';
 
 export type TaggedTemplateType = (styleString: TemplateStringsArray, ...exps: ExpType) => FC<IProps>;
 
@@ -28,19 +27,27 @@ const woowahanComponent = (tag: string): TaggedTemplateType => {
         classMap.set(parsedString, className);
       }
 
-      const preprocessedStyle = serialize(compile(`.${className} {${parsedString}}`), stringify);
-      const styleList = splitStyleString(preprocessedStyle);
+      const nomralisedStyle = serialize(compile(`.${className} {${parsedString}}`), stringify);
+
+      const preprocessedStyle = serialize(
+        compile(nomralisedStyle),
+        middleware([stringify, element => (element.parent === null ? '\n' : '')]),
+      ).trim();
+
+      const styleList = preprocessedStyle.split('\n');
 
       const styleSheet = document.styleSheets[0];
 
       if (!isAlreadyInserted) {
         styleList.forEach(style => {
-          styleSheet.insertRule(style, styleSheet.cssRules.length);
+          if (style) {
+            styleSheet.insertRule(style, styleSheet.cssRules.length);
+          }
         });
       }
 
       const { children } = props;
-      const ReactElement = React.createElement(tag, { className, theme }, children);
+      const ReactElement = React.createElement(tag, { className, theme, ...props }, children);
 
       return ReactElement;
     };
