@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const AuthInput = styled.input`
-  font-family: ${props => props.theme.fontHannaAir};
+  &[type='text'] {
+    font-family: ${props => props.theme.fontHannaAir};
+  }
   line-height: 1.5;
   border: 0;
   border-bottom: 1px solid ${({ theme }) => theme.colorInputLine};

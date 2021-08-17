@@ -1,6 +1,6 @@
+import Layout from 'components/common/layout';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { Layout } from 'components';
 
 const Text = styled.div`
   flex: 1;
