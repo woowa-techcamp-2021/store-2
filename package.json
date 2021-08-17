@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@types/stylis": "^4.0.1",
+    "nanoid": "^3.1.25",
+    "stylis": "^4.0.10"
+  }
+}
