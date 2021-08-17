@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import ItemList from 'components/item/item-list';
-import { IItem } from 'types';
+import { IItem } from 'types/item';
 
 const ITEM_DUMMY: IItem[] = [
   {
