@@ -8,6 +8,8 @@ interface ModalProps {
   type: 'alert' | 'confirm';
   header?: ReactNode;
   body?: ReactNode;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 }
 
 const ModalBlock = styled.div`
@@ -21,6 +23,7 @@ const ModalBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 const Inner = styled.div`
@@ -130,10 +133,10 @@ const ModalFooter = styled.div`
   }
 `;
 
-const Modal: FC<ModalProps> = ({ type, header, body }) => {
+const Modal: FC<ModalProps> = ({ type, header, body, onCancel, onConfirm }) => {
   return (
     <ModalBlock>
-      <Inner>
+      <Inner className="modal-inner">
         <ModalHeader>
           <img src={type === 'alert' ? alertImg : confirmImg} alt="modal-img" />
           <div>{header}</div>
@@ -143,8 +146,12 @@ const Modal: FC<ModalProps> = ({ type, header, body }) => {
         </ModalBody>
         {type === 'confirm' && (
           <ModalFooter>
-            <button type="button">아니오</button>
-            <button type="button">네</button>
+            <button type="button" onClick={onCancel}>
+              아니오
+            </button>
+            <button type="button" onClick={onConfirm}>
+              네
+            </button>
           </ModalFooter>
         )}
       </Inner>

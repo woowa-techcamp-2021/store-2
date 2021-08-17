@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import { getLogin } from 'store/auth';
+import { getLogin, getLoginRest } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import authValidation from 'utils/validation/auth-validation';
@@ -20,6 +20,12 @@ const LoginContainer: FC = () => {
     userLoading: auth.user.loading,
   }));
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: getLoginRest });
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     setAuthError(error);

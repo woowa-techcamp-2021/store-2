@@ -8,7 +8,12 @@ const Title = styled.h2`
   }
 `;
 
-const AuthLogoutModal: FC = () => {
+interface LogoutModalProps {
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
+const AuthLogoutModal: FC<LogoutModalProps> = ({ onCancel, onConfirm }) => {
   return (
     <Modal
       type="confirm"
@@ -18,6 +23,8 @@ const AuthLogoutModal: FC = () => {
         </Title>
       }
       body={<p>나중에 꼭 다시 로그인하러 오세요~</p>}
+      onCancel={onCancel}
+      onConfirm={onConfirm}
     />
   );
 };

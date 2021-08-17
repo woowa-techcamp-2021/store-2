@@ -155,6 +155,20 @@ const counterSlice = createSlice({
         error: action.payload,
       },
     }),
+    getLoginRest: state => ({
+      ...state,
+      login: {
+        ...state.login,
+        error: null,
+      },
+    }),
+    getSignupRest: state => ({
+      ...state,
+      signup: {
+        ...state.signup,
+        error: null,
+      },
+    }),
   },
 });
 
@@ -172,8 +186,10 @@ const {
   logout,
   logoutSuccess,
   logoutFail,
+  getLoginRest,
+  getSignupRest,
 } = actions;
-export { getLogin, getSignup, getUser, logout };
+export { getLogin, getSignup, getUser, logout, getLoginRest, getSignupRest };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {

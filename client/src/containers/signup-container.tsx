@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import { getSignup } from 'store/auth';
+import { getSignup, getSignupRest } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import AuthSuccessModal from 'components/auth/success-modal';
@@ -22,6 +22,12 @@ const SignupContainer: FC = () => {
     userLoading: auth.user.loading,
   }));
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: getSignupRest });
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     setAuthError(error);
