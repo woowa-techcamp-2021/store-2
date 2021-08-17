@@ -14,7 +14,7 @@ const createPromiseSaga = (type: string, promiseCreator: (data: unknown) => Prom
   return function* saga(action: PayloadAction) {
     try {
       yield put(startLoading(type));
-      const { data } = (yield call(promiseCreator, action.payload as unknown)) as AxiosResponse<IData>;
+      const { data } = (yield call(promiseCreator, action.payload)) as AxiosResponse<IData>;
       yield put({ type: SUCCESS, payload: data });
     } catch (e) {
       if (axios.isAxiosError(e)) {
