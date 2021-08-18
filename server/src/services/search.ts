@@ -1,10 +1,10 @@
 import { Request } from 'express';
 import { getAllKeywords } from 'repositories/search';
-import { getRegExp } from 'korean-regexp';
+import { getRegExp, engToKor } from 'korean-regexp';
 
 async function getKeywords(req: Request): Promise<string[]> {
   const regExp = String(
-    getRegExp(req.query.keyword as string, {
+    getRegExp(engToKor(req.query.keyword as string), {
       initialSearch: true,
     }),
   );
