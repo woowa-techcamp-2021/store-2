@@ -29,6 +29,7 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
+    "korean-regexp": "^1.0.9",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "node-fetch": "^2.6.1",
