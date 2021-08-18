@@ -4,11 +4,13 @@ import { CATEGORY_DATA } from 'config/constants';
 const { User, Item, Like, Address, Category, Order, Review } = db;
 
 export default async (): Promise<void> => {
-  User.hasMany(Address);
+  // db안되면 외래키 다시보기
   User.belongsToMany(Item, { through: Like });
-  Item.belongsToMany(User, { through: Like });
+  User.hasMany(Address);
   User.hasMany(Order);
   Category.hasMany(Item);
+  Item.belongsToMany(User, { through: Like });
+  Item.belongsTo(Category);
   Item.hasMany(Review);
 
   await sequelize.sync({ alter: true });
