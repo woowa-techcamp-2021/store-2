@@ -1,21 +1,22 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
-export interface ItemAttribures {
+export interface ItemAttributes {
   id: string;
   title: string;
   thumbnail: string;
   contents: string;
   price: string;
   sale_percent: number;
+  sale_count: number;
   amount: number;
   is_green: number;
 }
 
-export type ItemCreationAttributes = Optional<ItemAttribures, 'id' | 'amount'>;
+export type ItemCreationAttributes = Optional<ItemAttributes, 'id' | 'amount'>;
 
 const DEFAULT_AMOUNT = 1;
 
-const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttribures, ItemCreationAttributes>> => {
+const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemCreationAttributes>> => {
   const Item = sequelize.define('Item', {
     id: {
       type: DataTypes.INTEGER,
@@ -39,6 +40,10 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttribures, ItemC
       allowNull: false,
     },
     sale_percent: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    sale_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
