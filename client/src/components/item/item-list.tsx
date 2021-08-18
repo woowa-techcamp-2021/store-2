@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const ItemList: FC<ItemListProps> = ({ items }) => {
   const history = useHistory();
 
-  const goDetailPage = (id: number) => {
+  const goDetailPage = (id: number) => () => {
     history.push(`/item/${id}`);
   };
 
@@ -49,7 +49,7 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
             isSale={item.isSale}
             salePercent={item.salePercent}
             originalPrice={item.originalPrice}
-            onClick={() => goDetailPage(item.id)}
+            onClick={goDetailPage(item.id)}
           />
         );
       })}
