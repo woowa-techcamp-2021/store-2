@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IItem } from 'types/item';
@@ -30,9 +30,7 @@ const Wrapper = styled.div`
 const ItemList: FC<ItemListProps> = ({ items }) => {
   const history = useHistory();
 
-  const goDetailPage = (id: number) => () => {
-    history.push(`/item/${id}`);
-  };
+  const goDetailPage = useCallback((id: number) => () => history.push(`/item/${id}`), [history]);
 
   return (
     <Wrapper>
