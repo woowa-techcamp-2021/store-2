@@ -28,11 +28,7 @@ function loadUser() {
 }
 
 function loadCategories() {
-  try {
-    store.dispatch({ type: getCategories.type });
-  } catch (e) {
-    throw new Error(e);
-  }
+  store.dispatch({ type: getCategories.type });
 }
 
 loadUser();

@@ -7,18 +7,12 @@ import { ICategory } from 'types/category';
 interface StateProps {
   categories: {
     data: ICategory[];
-    error: null | string;
   };
-}
-
-interface IError {
-  errorMessage: string;
 }
 
 const initialState: StateProps = {
   categories: {
     data: [],
-    error: null,
   },
 };
 
@@ -31,8 +25,8 @@ const categorySlice = createSlice({
       state.categories.data = action.payload;
       return state;
     },
-    getCategoriesFail: (state, action: PayloadAction<string>) => {
-      state.categories.error = action.payload;
+    getCategoriesFail: state => {
+      state.categories.data = [];
       return state;
     },
   },
@@ -50,15 +44,9 @@ function* getCategorySaga(): Generator {
       payload: data,
     });
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const { errorMessage } = e.response?.data as IError;
-      yield put({
-        type: getCategoriesFail.type,
-        payload: errorMessage,
-      });
-    } else {
-      throw new Error(e);
-    }
+    yield put({
+      type: getCategoriesFail.type,
+    });
   }
 }
 
