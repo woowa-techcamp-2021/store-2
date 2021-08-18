@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import HeaderContainer from 'containers/header-container';
-import ItemContainer from 'containers/item-container';
+import MainItemContainer from 'containers/main-item-container';
 import { Layout, Footer } from 'components';
 import SearchBar from 'containers/search-container';
 
@@ -16,7 +16,7 @@ const MainPage = (): ReactElement => {
       <main>
         <SmartMenuContainer currentMenu="캇테고리" />
         <SearchBar />
-        <ItemContainer />
+        <MainItemContainer />
       </main>
       <Footer isMobile={isMobile} />
     </Layout>
