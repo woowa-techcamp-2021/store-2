@@ -10,6 +10,7 @@ export interface ItemAttributes {
   sale_count: number;
   amount: number;
   is_green: number;
+  CategoryId: string;
 }
 
 export type ItemCreationAttributes = Optional<ItemAttributes, 'id' | 'amount'>;
@@ -36,7 +37,7 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
       allowNull: false,
     },
     price: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     sale_percent: {
@@ -46,6 +47,7 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
     sale_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     amount: {
       type: DataTypes.INTEGER,
