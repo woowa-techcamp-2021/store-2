@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import woowahan from 'lib/woowahan-components';
+import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
@@ -29,7 +30,6 @@ const LargeItem = woowahan.li`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   display: flex;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
-
   border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
   ${({ theme }) => theme?.mobile} {
@@ -46,7 +46,27 @@ const LargeItem = woowahan.li`
   }
 `;
 
+const GoCategoryButton = woowahan.div`
+  font-family: ${({ theme }) => theme?.fontHannaAir};
+  visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
+  ${({ theme }) => theme?.mobile} {
+    width: 110px;
+    font-size: 16px;
+  }
+  ${({ theme }) => theme?.tablet} {
+    width: 150px;
+    font-size: 18px;
+  }
+  ${({ theme }) => theme?.laptop} {
+    width: 200px;
+    font-size: 22px;
+  }
+`;
+
 const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
+  const history = useHistory();
+  const goCategoryPage = useCallback((code: string) => () => history.push(`/item/category/${code}`), [history]);
+
   return (
     <LargeItemDiv>
       {menu.data.map(large => {
@@ -72,6 +92,9 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
             isSelected={selectedLargeId === largeId}
           >
             {large.name}
+            <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>
+              이동
+            </GoCategoryButton>
           </LargeItem>
         );
       })}
