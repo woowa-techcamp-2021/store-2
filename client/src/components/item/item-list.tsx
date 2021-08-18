@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IItem } from 'types/item';
 import Item from 'components/item';
@@ -18,11 +18,11 @@ const Wrapper = styled.div`
   grid-gap: 10px 16px;
   justify-content: center;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     grid-template-columns: repeat(auto-fit, 150px);
   }
 
-  ${props => props.theme.tablet} {
+  ${props => props.theme?.tablet} {
     grid-template-columns: repeat(auto-fit, 180px);
   }
 `;

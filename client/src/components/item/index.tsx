@@ -1,5 +1,5 @@
 import React, { FC, useState, MouseEvent } from 'react';
-import styled from 'styled-components';
+import styled from 'lib/woowahan-components';
 import { formatPrice } from 'utils';
 import likeIcon from 'assets/icons/like.png';
 import likeFilledIcon from 'assets/icons/like-filled.png';
@@ -21,31 +21,27 @@ interface ItemProps {
   onClick: () => void;
 }
 
-interface ContainerProps {
-  bgColor?: 'red' | 'beige' | 'green';
-}
-
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   cursor: pointer;
   width: 230px;
   height: 380px;
   padding: 5px;
   background-color: ${props => {
-    if (props.bgColor === 'red') return props.theme.colorPointRed;
-    if (props.bgColor === 'beige') return props.theme.colorPointBeige;
-    return props.theme.colorPointDarkGreen;
+    if (props.bgColor === 'red') return props.theme?.colorPointRed;
+    if (props.bgColor === 'beige') return props.theme?.colorPointBeige;
+    return props.theme?.colorPointDarkGreen;
   }};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     width: 150px;
     height: 280px;
   }
 
-  ${props => props.theme.tablet} {
+  ${props => props.theme?.tablet} {
     width: 180px;
     height: 320px;
   }
@@ -77,11 +73,11 @@ const Thumbnail = styled.div`
     object-fit: cover;
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     height: 220px;
   }
 
-  ${props => props.theme.tablet} {
+  ${props => props.theme?.tablet} {
     height: 250px;
   }
 `;
@@ -89,8 +85,8 @@ const Thumbnail = styled.div`
 const Info = styled.div`
   margin-left: 2px;
   margin-bottom: 6px;
-  font-family: ${props => props.theme.fontEuljiro};
-  color: ${props => props.theme.colorOffWhite};
+  font-family: ${props => props.theme?.fontEuljiro};
+  color: ${props => props.theme?.colorOffWhite};
 
   .title {
     width: 220px;
@@ -107,12 +103,12 @@ const Info = styled.div`
 
     span {
       font-size: 22px;
-      color: ${props => props.theme.colorGreyMid};
+      color: ${props => props.theme?.colorGreyMid};
       text-decoration: line-through;
     }
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     .title {
       width: 140px;
       font-size: 14px;
@@ -127,7 +123,7 @@ const Info = styled.div`
     }
   }
 
-  ${props => props.theme.tablet} {
+  ${props => props.theme?.tablet} {
     .title {
       width: 170px;
       font-size: 16px;
@@ -150,11 +146,11 @@ const SaleWrapper = styled.div`
 
   span {
     font-size: 24px;
-    font-family: ${props => props.theme.fontEuljiro};
-    color: ${props => props.theme.colorWhite};
+    font-family: ${props => props.theme?.fontEuljiro};
+    color: ${props => props.theme?.colorWhite};
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     top: 217px;
 
     span {
@@ -162,7 +158,7 @@ const SaleWrapper = styled.div`
     }
   }
 
-  ${props => props.theme.tablet} {
+  ${props => props.theme?.tablet} {
     top: 247px;
 
     span {
