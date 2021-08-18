@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { ThemeProvider, createGlobalStyle, DefaultTheme } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'lib/woowahan-components';
 import reset from 'styled-reset';
 import BMEULJIRO from '../assets/fonts/BMEULJIRO.woff';
 import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.woff';
 import BMHANNA from '../assets/fonts/BMHANNA11years.woff';
 import BMHANNAAir from '../assets/fonts/BMHANNAAir.woff';
 
-const theme: DefaultTheme = {
+const theme = {
   mobile: '@media all and (max-width: 480px)',
   tablet: '@media all and (min-width:480px) and (max-width:1200px)',
   laptop: '@media all and (min-width: 1200px)',
@@ -80,7 +80,7 @@ const GlobalStyle = createGlobalStyle`
     src: url(${BMHANNAAir}) format('woff');
   }
 
-  ${reset[0]}
+  ${reset[0] as string}
 
   #root {
     width: 100%;
