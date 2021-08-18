@@ -14,10 +14,10 @@ export const getAllKeywords = async (regExp: string): Promise<Model<ItemAttribut
     },
   });
 
-  if (!searchSnapshot || searchSnapshot.length === 0) {
+  if (!searchSnapshot) {
     throw errorGenerator({
-      message: 'GET /search - search not found',
-      code: 'search-not-found',
+      message: 'GET /search - search failed',
+      code: 'search-failed',
     });
   }
 
