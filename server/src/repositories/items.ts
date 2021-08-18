@@ -1,14 +1,14 @@
 import { db } from 'models';
 import { Model, Order, Op } from 'sequelize';
 
-import { ItemAttribures, ItemCreationAttributes } from 'models/item';
+import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 
 import errorGenerator from 'utils/error/error-generator';
 
 const getMainItems = async (
   order: string[][],
   limit: number,
-): Promise<Model<ItemAttribures, ItemCreationAttributes>[]> => {
+): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
   const items = await db.Item.findAll({
     attributes: ['id', 'title', 'thumbnail', 'contents', 'price', 'sale_percent', 'amount', 'is_green'],
     order: order as Order,
@@ -30,7 +30,7 @@ const getCategoryItems = async (
   pageId: number,
   order: string[][],
   categoryReg: string,
-): Promise<Model<ItemAttribures, ItemCreationAttributes>[]> => {
+): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
   const items = await db.Item.findAll({
     attributes: ['id', 'title', 'thumbnail', 'contents', 'price', 'sale_percent', 'amount', 'is_green'],
     order: order as Order,

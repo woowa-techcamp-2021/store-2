@@ -1,9 +1,9 @@
 import itemRepository from 'repositories/items';
-import { ItemAttribures, ItemCreationAttributes } from 'models/item';
+import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 import { Model } from 'sequelize';
 import errorGenerator from 'utils/error/error-generator';
 
-async function mainItems(): Promise<Model<ItemAttribures, ItemCreationAttributes>[][]> {
+async function mainItems(): Promise<Model<ItemAttributes, ItemCreationAttributes>[][]> {
   const items = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
@@ -17,7 +17,7 @@ async function categoryItems(
   categoryId: string,
   pageId = 1,
   type: string,
-): Promise<Model<ItemAttribures, ItemCreationAttributes>[]> {
+): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> {
   console.log(categoryId, pageId, type);
   if (
     !(
