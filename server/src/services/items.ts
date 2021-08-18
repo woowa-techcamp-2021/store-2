@@ -1,4 +1,4 @@
-import itemRepository from 'repositories/item';
+import itemRepository from 'repositories/items';
 import { ItemAttribures, ItemCreationAttributes } from 'models/item';
 import { Model } from 'sequelize';
 import errorGenerator from 'utils/error/error-generator';
@@ -18,7 +18,15 @@ async function categoryItems(
   pageId = 1,
   type: string,
 ): Promise<Model<ItemAttribures, ItemCreationAttributes>[]> {
-  if (!(categoryId && type) && !['recommend', 'popular', 'recent ', 'cheap', 'expensive'].includes(type))
+  console.log(categoryId, pageId, type);
+  if (
+    !(
+      categoryId ||
+      type ||
+      categoryId.length === 6 ||
+      ['recommend', 'popular', 'recent ', 'cheap', 'expensive'].includes(type)
+    )
+  )
     throw errorGenerator({
       message: 'POST /api/item - no exist querystring',
       code: 'item/no-exist-querystring',
@@ -30,7 +38,8 @@ async function categoryItems(
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
   else if (type === 'expensive') order.push(['price', 'DESC']);
-  const items = await itemRepository.getCategoryItems(categoryId, pageId, order);
+  const categoryReg = categoryId.slice(2, 4) === '00' ? categoryId.slice(0, 2) : categoryId.slice(0, 4);
+  const items = await itemRepository.getCategoryItems(pageId, order, categoryReg);
   return items;
 }
 

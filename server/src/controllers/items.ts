@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 
-import itemService from 'services/item';
+import itemService from 'services/items';
 
 import errorHandler from 'utils/error/error-handler';
+
+type IRequest = Request<unknown, unknown, unknown, { categoryId: string; type: string; pageId: number }>;
 
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -14,8 +16,6 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
     res.status(statusCode).json({ errorMessage });
   }
 };
-
-type IRequest = Request<unknown, unknown, unknown, { categoryId: string; type: string; pageId: number }>;
 
 export const getCategoryItems = async (req: IRequest, res: Response): Promise<void> => {
   const { categoryId, pageId, type } = req.query;
