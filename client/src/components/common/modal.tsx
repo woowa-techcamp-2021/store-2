@@ -136,7 +136,7 @@ const ModalFooter = woowahan.div`
 const Modal: FC<ModalProps> = ({ type, header, body, onCancel, onConfirm }) => {
   return (
     <ModalBlock>
-      <Inner>
+      <Inner className="modal-inner">
         <ModalHeader>
           <img src={type === 'alert' ? alertImg : confirmImg} alt="modal-img" />
           <div>{header}</div>
