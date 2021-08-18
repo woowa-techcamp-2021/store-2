@@ -26,6 +26,7 @@ const MenuDiv = woowahan.div`
   border-bottom-right-radius: 20px;
   color: ${({ theme }) => theme?.colorBlack};
   border: 3px solid ${({ theme }) => theme?.colorLineDark};
+  z-index: 1000;
 `;
 
 const MenuTitle = woowahan.div`

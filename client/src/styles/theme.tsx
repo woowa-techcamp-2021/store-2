@@ -32,7 +32,7 @@ const theme = {
   colorPrimaryLight: '#A0E1E0',
   colorPrimaryDark: '#219A95',
 
-  colorPointDarkGreen: '#11403E',
+  colorPointDarkGreen: '#124a48',
   colorPointGreen: '#348011',
   colorPointBeige: '#BAA482',
   colorPointBeigeLight: '#F7EAD7',
