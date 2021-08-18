@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { ThemeProvider, createGlobalStyle } from 'lib/woowahan-components';
-import reset from 'styled-reset';
 import BMEULJIRO from '../assets/fonts/BMEULJIRO.woff';
 import BMEULJIRO10years from '../assets/fonts/BMEULJIRO10yearslater.woff';
 import BMHANNA from '../assets/fonts/BMHANNA11years.woff';
@@ -59,6 +58,8 @@ const theme = {
 
 const GlobalStyle = createGlobalStyle`  
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  @import url('https://meyerweb.com/eric/tools/css/reset/reset.css');
+  @import url('https://unpkg.com/sanitize.css');
 
   @font-face {
     font-family: 'BMEULJIRO';
@@ -79,8 +80,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'BMHANNAAir';
     src: url(${BMHANNAAir}) format('woff');
   }
-
-  ${reset[0] as string}
 
   #root {
     width: 100%;
