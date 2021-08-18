@@ -222,6 +222,7 @@ function* logoutSaga(): Generator {
     (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
     localStorage.removeItem('user');
     yield put({ type: logoutSuccess.type });
+    window.location.href = '/';
   } catch (e) {
     if (axios.isAxiosError(e)) {
       localStorage.removeItem('user');
