@@ -7,6 +7,7 @@ import parseString, { IProps, ExpType } from '../utils/parse-string';
 import { IThemeContext } from './theme-provider';
 
 export type TaggedTemplateType = (styleString: TemplateStringsArray, ...exps: ExpType) => FC<IProps>;
+type ElementProps = { [key: string]: unknown };
 
 const woowahanComponent = (tag: string): TaggedTemplateType => {
   const classMap = new Map<string, string>();
@@ -50,7 +51,18 @@ const woowahanComponent = (tag: string): TaggedTemplateType => {
       if (props.className) {
         className += ` ${props.className}`;
       }
-      const ReactElement = React.createElement(tag, { ...props, className }, children);
+
+      const newProps: ElementProps = {};
+
+      Object.entries(props).forEach(([key, value]) => {
+        if (typeof value === 'boolean') {
+          newProps[key] = (value as boolean).toString();
+        } else {
+          newProps[key] = value;
+        }
+      });
+
+      const ReactElement = React.createElement(tag, { ...newProps, className }, children);
 
       return ReactElement;
     };
