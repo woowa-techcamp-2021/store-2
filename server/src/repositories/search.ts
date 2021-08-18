@@ -17,7 +17,7 @@ export const getAllKeywords = async (regExp: string): Promise<Model<ItemAttribut
   if (!searchSnapshot) {
     throw errorGenerator({
       message: 'GET /search - search failed',
-      code: 'search-failed',
+      code: 'item/search-failed',
     });
   }
 
