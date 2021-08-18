@@ -42,7 +42,6 @@ const SmartMenuContainer: FC<SmartMenuContainerProps> = ({ currentCode }) => {
     data: category.categories.data,
   }));
   const currentName = currentCode ? data.find(category => category.code === currentCode)?.name : '캇테고리';
-  console.log(currentCode, currentName);
   return <SmartMenu currentMenu={currentName || '캇테고리'} menu={generateMenu(data)} />;
 };
 

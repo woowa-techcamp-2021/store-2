@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import woowahan from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
+import arrow from 'assets/icons/arrow_forward.png';
 
 interface MediumMenuProps {
   menu: IMenu;
@@ -19,7 +20,8 @@ const MediumItem = woowahan.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
-
+  display: flex;
+  justify-content: space-between;
   border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
   ${({ theme }) => theme?.mobile} {
@@ -36,20 +38,33 @@ const MediumItem = woowahan.ul`
   }
 `;
 
+const MediumTitle = woowahan.div`
+  padding-top: 3px;
+`;
+
 const GoCategoryButton = woowahan.div`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
   ${({ theme }) => theme?.mobile} {
-    width: 110px;
     font-size: 16px;
   }
   ${({ theme }) => theme?.tablet} {
-    width: 150px;
     font-size: 18px;
   }
   ${({ theme }) => theme?.laptop} {
-    width: 200px;
     font-size: 22px;
+  }
+`;
+
+const Image = woowahan.img`
+  ${({ theme }) => theme?.mobile} {
+    width: 20px;
+  }
+  ${({ theme }) => theme?.tablet} {
+    width: 22px;
+  }
+  ${({ theme }) => theme?.laptop} {
+    width: 24px;
   }
 `;
 
@@ -72,9 +87,9 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
                 }}
                 isSelected={selectedMediumId === mediumId}
               >
-                {medium.name}
+                <MediumTitle>{medium.name}</MediumTitle>
                 <GoCategoryButton isSelected={selectedMediumId === mediumId} onClick={goCategoryPage(medium.code)}>
-                  이동
+                  <Image src={arrow} alt="카테고리 탐색" />
                 </GoCategoryButton>
               </MediumItem>
             );

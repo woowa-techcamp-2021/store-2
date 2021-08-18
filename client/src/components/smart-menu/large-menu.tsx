@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import woowahan from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
+import arrow from 'assets/icons/arrow_forward.png';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
 interface LargeMenuProps {
@@ -32,6 +33,8 @@ const LargeItem = woowahan.li`
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
   border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
+  align-items: center;
+  justify-content: space-between;
   ${({ theme }) => theme?.mobile} {
     width: 110px;
     font-size: 16px;
@@ -46,20 +49,35 @@ const LargeItem = woowahan.li`
   }
 `;
 
+const LargeTitle = woowahan.div`
+  padding-top: 3px; 
+`;
+
 const GoCategoryButton = woowahan.div`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
   ${({ theme }) => theme?.mobile} {
-    width: 110px;
     font-size: 16px;
   }
   ${({ theme }) => theme?.tablet} {
-    width: 150px;
     font-size: 18px;
   }
   ${({ theme }) => theme?.laptop} {
-    width: 200px;
     font-size: 22px;
+  }
+`;
+
+const Image = woowahan.img`
+  ${({ theme }) => theme?.mobile} {
+    width: 20px;
+  }
+  ${({ theme }) => theme?.tablet} {
+    width: 22px;
+  }
+  ${({ theme }) => theme?.laptop} {
+    position: relative;
+    top: -1px;
+    width: 24px;
   }
 `;
 
@@ -91,9 +109,9 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
             }}
             isSelected={selectedLargeId === largeId}
           >
-            {large.name}
+            <LargeTitle>{large.name}</LargeTitle>
             <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>
-              이동
+              <Image src={arrow} alt="카테고리 탐색" />
             </GoCategoryButton>
           </LargeItem>
         );
