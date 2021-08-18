@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import SignupContainer from 'containers/signup-container';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
 
-const Div = styled.div`
+const Div = woowahan.div`
   display: flex;
   flex-direction: column;
   align-items: center;

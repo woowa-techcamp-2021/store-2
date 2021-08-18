@@ -1,49 +1,49 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import woowahan from 'lib/woowahan-components';
 import { Logo } from 'components';
 
 interface FooterProps {
   isMobile: boolean;
 }
 
-const Wrapper = styled.footer`
+const Wrapper = woowahan.footer`
   width: 100%;
   min-height: 200px;
-  background-color: ${props => props.theme.colorFooter};
+  background-color: ${props => props.theme?.colorFooter};
   box-sizing: border-box;
   display: flex;
   padding: 30px 10%;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     display: flex;
     flex-direction: column;
     padding: 30px 2%;
   }
 `;
 
-const Left = styled.div`
+const Left = woowahan.div`
   width: 30%;
   display: flex;
   justify-content: center;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     width: 100%;
     margin-top: 20px;
   }
 `;
 
-const Right = styled.div`
+const Right = woowahan.div`
   width: 70%;
   display: flex;
   flex-direction: column;
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     width: 100%;
     margin-top: 20px;
   }
 `;
 
-const Links = styled.div`
+const Links = woowahan.div`
   margin-top: 5px;
   margin-bottom: 20px;
 
@@ -53,12 +53,12 @@ const Links = styled.div`
   }
 
   ul li a {
-    color: ${props => props.theme.colorSoftBlack};
-    font-weight: ${props => props.theme.weightBold};
+    color: ${props => props.theme?.colorSoftBlack};
+    font-weight: ${props => props.theme?.weightBold};
     font-size: 14px;
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     display: flex;
     justify-content: center;
 
@@ -68,30 +68,30 @@ const Links = styled.div`
     }
 
     ul li:not(:last-child) {
-      border-right: 1px solid ${props => props.theme.colorGreyDark};
+      border-right: 1px solid ${props => props.theme?.colorGreyDark};
     }
 
     ul li a {
-      color: ${props => props.theme.colorGreyDark};
+      color: ${props => props.theme?.colorGreyDark};
     }
   }
 `;
 
-const Info = styled.div`
+const Info = woowahan.div`
   p {
-    color: ${props => props.theme.colorGreyDark};
+    color: ${props => props.theme?.colorGreyDark};
     font-size: 12px;
     line-height: 18px;
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     text-align: center;
     margin-top: 15px;
     margin-bottom: 20px;
 
     p {
-      color: ${props => props.theme.colorPointBeigeLight};
-      font-family: ${props => props.theme.fontEuljiro};
+      color: ${props => props.theme?.colorPointBeigeLight};
+      font-family: ${props => props.theme?.fontEuljiro};
     }
   }
 `;

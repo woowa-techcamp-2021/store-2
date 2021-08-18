@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import React, { useState, FC } from 'react';
+import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types/category';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
@@ -12,7 +12,7 @@ interface SmartMenuProps {
   menu: IMenu;
 }
 
-const MenuDiv = styled.div`
+const MenuDiv = woowahan.div`
   cursor: pointer;
   position: fixed;
   top: 200px;
@@ -21,27 +21,27 @@ const MenuDiv = styled.div`
   writing-mode: vertical-lr;
   text-orientation: upright;
   padding: 24px 12px;
-  background-color: ${({ theme }) => theme.colorBg};
+  background-color: ${({ theme }) => theme?.colorBg};
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  color: ${({ theme }) => theme.colorBlack};
-  border: 3px solid ${({ theme }) => theme.colorLineDark};
+  color: ${({ theme }) => theme?.colorBlack};
+  border: 3px solid ${({ theme }) => theme?.colorLineDark};
 `;
 
-const MenuTitle = styled.div`
+const MenuTitle = woowahan.div`
   padding-left: 20px;
-  color: ${({ theme }) => theme.colorLineDark};
-  font-family: ${({ theme }) => theme.fontHanna};
+  color: ${({ theme }) => theme?.colorLineDark};
+  font-family: ${({ theme }) => theme?.fontHanna};
 
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     font-size: 18px;
     transform: translate(0px, -13px);
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     font-size: 20px;
     transform: translate(0px, -15px);
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     font-size: 26px;
     transform: translate(0px, -17px);
   }
