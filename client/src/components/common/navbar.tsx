@@ -78,7 +78,7 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogo
           </button>
         ) : (
           <Link className="nav-link" to="/login">
-            {mobile ? <img src={loginIcon} alt="logout" /> : '로그인'}
+            {mobile ? <img src={loginIcon} alt="login" /> : '로그인'}
           </Link>
         )}
       </div>

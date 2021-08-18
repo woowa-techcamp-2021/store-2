@@ -1,5 +1,5 @@
-import woowahan from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import woowahan from 'lib/woowahan-components';
 import { IMenu } from 'types/category';
 
 interface MediumMenuProps {

@@ -114,7 +114,7 @@ const ModalFooter = woowahan.div`
     border: none;
     border-radius: 10px;
 
-    :first-child {
+    &:first-child {
       margin-right: 16px;
       background-color: ${props => props.theme?.colorGreyLight};
 
@@ -123,7 +123,7 @@ const ModalFooter = woowahan.div`
       }
     }
 
-    :last-child {
+    &:last-child {
       background-color: ${props => props.theme?.colorPrimaryLight};
 
       &:hover {
@@ -136,7 +136,7 @@ const ModalFooter = woowahan.div`
 const Modal: FC<ModalProps> = ({ type, header, body, onCancel, onConfirm }) => {
   return (
     <ModalBlock>
-      <Inner className="modal-inner">
+      <Inner>
         <ModalHeader>
           <img src={type === 'alert' ? alertImg : confirmImg} alt="modal-img" />
           <div>{header}</div>

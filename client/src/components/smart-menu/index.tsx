@@ -1,5 +1,5 @@
-import woowahan from 'lib/woowahan-components';
 import React, { useState, FC } from 'react';
+import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types/category';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
