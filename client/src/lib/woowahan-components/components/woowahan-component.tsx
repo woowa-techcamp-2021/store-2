@@ -47,7 +47,10 @@ const woowahanComponent = (tag: string): TaggedTemplateType => {
       }
 
       const { children } = props;
-      const ReactElement = React.createElement(tag, { className, theme, ...props }, children);
+      if (props.className) {
+        className += ` ${props.className}`;
+      }
+      const ReactElement = React.createElement(tag, { ...props, className }, children);
 
       return ReactElement;
     };
