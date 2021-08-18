@@ -5,9 +5,9 @@ export const REFRESH_TOKEN_NAME = 'rteofkreensh';
 export const MAX_SCORE = 5;
 
 export const USER = {
-  ID_MAX_LENGTH: 10,
+  ID_MAX_LENGTH: 30,
   ID_MIN_LENGTH: 3,
-  PASSWORD_MAX_LENGTH: 14,
+  PASSWORD_MAX_LENGTH: 20,
   PASSWORD_MIN_LENGTH: 4,
   PROVIDER_LENGTH: 45,
   PHONE_LENGTH: 12,

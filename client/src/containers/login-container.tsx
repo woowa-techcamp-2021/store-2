@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import { getLogin, getLoginRest } from 'store/auth';
+import { getLogin, getLoginReset } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import authValidation from 'utils/validation/auth-validation';
@@ -23,7 +23,7 @@ const LoginContainer: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: getLoginRest });
+      dispatch({ type: getLoginReset });
     };
   }, [dispatch]);
 

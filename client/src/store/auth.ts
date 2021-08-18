@@ -19,6 +19,10 @@ export interface ICheckUser {
   userId: string;
 }
 
+export interface IGithubCode {
+  code: string;
+}
+
 interface IAuth {
   error: null | string;
 }
@@ -33,6 +37,7 @@ interface StateProps {
   signup: IAuth;
   user: IUser;
   logout: IAuth;
+  githubSignup: IAuth;
 }
 
 interface IError {
@@ -53,6 +58,9 @@ const initialState: StateProps = {
   logout: {
     error: null,
   },
+  githubSignup: {
+    error: null,
+  },
 };
 
 const counterSlice = createSlice({
@@ -65,12 +73,6 @@ const counterSlice = createSlice({
       state.login.error = action.payload;
       return state;
     },
-    // ({
-    //   ...state,
-    //   login: {
-    //     error: action.payload,
-    //   },
-    // }),
     getSignup: state => state,
     getSignupSuccess: state => state,
     getSignupFail: (state, action: PayloadAction<string>) => {
@@ -82,23 +84,10 @@ const counterSlice = createSlice({
       state.user.userId = action.payload;
       return state;
     },
-    //   ...state,
-    //   user: {
-    //     userId: action.payload,
-    //     error: null,
-    //   },
-    // }),
     getUserFail: (state, action: PayloadAction<string>) => {
       state.user.error = action.payload;
       return state;
     },
-    // ({
-    //   ...state,
-    //   user: {
-    //     userId: null,
-    //     error: action.payload,
-    //   },
-    // }),
     logout: state => state,
     logoutSuccess: state => {
       state.user.userId = null;
@@ -108,18 +97,21 @@ const counterSlice = createSlice({
       state.logout.error = action.payload;
       return state;
     },
-    // ({
-    //   ...state,
-    //   logout: {
-    //     error: action.payload,
-    //   },
-    // }),
-    getLoginRest: state => {
+    getLoginReset: state => {
       state.login.error = null;
       return state;
     },
-    getSignupRest: state => {
+    getSignupReset: state => {
       state.signup.error = null;
+      return state;
+    },
+    getGithubLogin: state => state,
+    getGithubLoginSuccess: (state, action: PayloadAction<string>) => {
+      state.user.userId = action.payload;
+      return state;
+    },
+    getGithubLoginFail: (state, action: PayloadAction<string>) => {
+      state.signup.error = action.payload;
       return state;
     },
   },
@@ -139,10 +131,13 @@ const {
   logout,
   logoutSuccess,
   logoutFail,
-  getLoginRest,
-  getSignupRest,
+  getLoginReset,
+  getSignupReset,
+  getGithubLogin,
+  getGithubLoginSuccess,
+  getGithubLoginFail,
 } = actions;
-export { authReducer, getLogin, getSignup, getUser, logout, getLoginRest, getSignupRest };
+export { authReducer, getLogin, getSignup, getUser, logout, getLoginReset, getSignupReset, getGithubLogin };
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
@@ -227,6 +222,7 @@ function* logoutSaga(): Generator {
     (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
     localStorage.removeItem('user');
     yield put({ type: logoutSuccess.type });
+    window.location.href = '/';
   } catch (e) {
     if (axios.isAxiosError(e)) {
       localStorage.removeItem('user');
@@ -240,9 +236,36 @@ function* logoutSaga(): Generator {
   }
 }
 
+function* githubLoginSaga(action: PayloadAction): Generator {
+  try {
+    yield put(startLoading(getGithubLogin.type));
+    const {
+      data: { accessToken, userId },
+    } = (yield call(authAPI.githubLogin, action.payload as unknown as IGithubCode)) as AxiosResponse<IReceiveServer>;
+    yield put({
+      type: getGithubLoginSuccess.type,
+    });
+    localStorage.setItem('user', accessToken);
+    yield put({ type: getUserSuccess.type, payload: userId });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const { errorMessage } = e.response?.data as IError;
+      yield put({
+        type: getGithubLoginFail.type,
+        payload: errorMessage,
+      });
+    } else {
+      throw new Error(e);
+    }
+  } finally {
+    yield put(finishLoading(getGithubLogin.type));
+  }
+}
+
 export function* authSaga(): Generator {
   yield takeLatest(getLogin, loginSaga);
   yield takeLatest(getSignup, signupSaga);
   yield takeLatest(getUser, checkAuth);
   yield takeLatest(logout, logoutSaga);
+  yield takeLatest(getGithubLogin, githubLoginSaga);
 }

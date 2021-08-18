@@ -5,6 +5,7 @@ interface DBConfig {
     database: string;
     host: string;
     dialect: 'mysql';
+    timezone: string;
   };
 }
 
@@ -15,6 +16,7 @@ const dbConfig: DBConfig = {
     database: process.env.DB_NAME || '',
     host: process.env.DB_HOST || '',
     dialect: 'mysql',
+    timezone: '+09:00',
   },
   test: {
     username: process.env.DB_USERNAME || '',
@@ -22,6 +24,7 @@ const dbConfig: DBConfig = {
     database: process.env.DB_NAME || '',
     host: process.env.DB_HOST || '',
     dialect: 'mysql',
+    timezone: '+09:00',
   },
   production: {
     username: process.env.DB_USERNAME || '',
@@ -29,6 +32,7 @@ const dbConfig: DBConfig = {
     database: process.env.DB_NAME || '',
     host: process.env.DB_HOST || '',
     dialect: 'mysql',
+    timezone: '+09:00',
   },
 };
 

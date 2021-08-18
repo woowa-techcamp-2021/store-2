@@ -10,9 +10,11 @@ import App from './App';
 
 const sagaMiddleware = createSagaMiddleware();
 
+const middleware = process.env.NODE_ENV === 'development' ? [sagaMiddleware, logger] : [sagaMiddleware];
+
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [sagaMiddleware, logger],
+  middleware,
 });
 
 sagaMiddleware.run(rootSaga);
