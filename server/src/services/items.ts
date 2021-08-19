@@ -18,7 +18,6 @@ async function categoryItems(
   pageId = 1,
   type: string,
 ): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> {
-  console.log(categoryId, pageId, type);
   if (
     !(
       categoryId ||
