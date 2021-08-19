@@ -5,3 +5,4 @@ export { default as Link } from './components/link';
 
 export { default as useParams } from './hooks/use-params';
 export { default as useHistory } from './hooks/use-history';
+export { default as useQuery } from './hooks/use-query';
