@@ -65,7 +65,6 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [menuName, setMenuName] = useState('');
   const { width } = useWindowSize();
   const query = useQuery();
-  console.log(currentMenu, menuName, menu);
   useEffect(() => {
     setOpenStatus(false);
   }, [query]);
