@@ -10,19 +10,6 @@ const searchToQuery = (search: string) => {
   return params;
 };
 
-export interface IQuery {
-  [key: string]: string;
-}
-
-const searchToQuery = (search: string) => {
-  const queries = new URLSearchParams(search);
-  const params: IQuery = {};
-  queries.forEach((value, key) => {
-    params[key] = value;
-  });
-  return params;
-};
-
 const BrowserRouter: FC = ({ children }) => {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [query, setQuery] = useState<IQuery>(searchToQuery(window.location.search));

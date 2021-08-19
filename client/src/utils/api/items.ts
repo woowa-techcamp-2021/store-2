@@ -5,7 +5,7 @@ import client from './client';
 
 export const getMainItems = (): Promise<AxiosResponse> => client.get('/api/items/main');
 
-export const getCategoryItems = ({ categoryId, pageId, type, search }: IItemsState): Promise<AxiosResponse> => {
+export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Promise<AxiosResponse> => {
   let url = '/api/items?';
   const arr = [];
   if (categoryId) arr.push(`categoryId=${categoryId}&`);

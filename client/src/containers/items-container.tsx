@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import Items from 'components/item/items';
-import { useQuery } from 'lib/router/hooks/use-query';
+import { useQuery } from 'lib/router';
 import { getCategoryItems } from 'store/items';
 
 const ItemsContainer: FC = () => {
@@ -13,6 +13,7 @@ const ItemsContainer: FC = () => {
   const dispatch = useDispatch();
   const query = useQuery();
   useEffect(() => {
+    console.log('123123', query);
     const { categoryId, pageId, type, search } = query;
     dispatch({ type: getCategoryItems.type, payload: { categoryId, pageId, type, search } });
   }, [query, dispatch]);

@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import type { IQuery } from '../components/browser-router';
 
 export interface IQuery {
   [key: string]: string;

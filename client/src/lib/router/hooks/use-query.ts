@@ -1,4 +1,6 @@
-import { IQuery } from '../components/browser-router';
+import { IQuery } from '../context/router-context';
 import useHistory from './use-history';
 
-export const useQuery = (): IQuery => useHistory().query;
+const useQuery = (): IQuery => useHistory().query;
+
+export default useQuery;

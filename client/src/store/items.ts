@@ -97,7 +97,7 @@ function* getMainItemsSaga(): Generator {
 function* getCategoryItemsSaga(action: PayloadAction): Generator {
   try {
     yield put(startLoading(getCategoryItems.type));
-    const { data } = (yield call(itemsAPI.getCategoryItems, action.payload as unknown as IItemsState)) as AxiosResponse<
+    const { data } = (yield call(itemsAPI.getItems, action.payload as unknown as IItemsState)) as AxiosResponse<
       IItem[]
     >;
     yield put({ type: getCategoryItemsSuccess.type, payload: data });
