@@ -4,7 +4,7 @@ import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import MainItemContainer from 'containers/main-item-container';
-import SearchBar from 'containers/search-container';
+import SearchContainer from 'containers/search-container';
 import { Layout, Banner } from 'components';
 
 const Wrapper = styled.article`
