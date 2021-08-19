@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
+import { ITEM_LIST_URL } from 'constants/urls';
 import arrow from 'assets/icons/arrow_forward.png';
 
 interface MediumMenuProps {
@@ -71,7 +72,10 @@ const Image = styled.img`
 
 const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
   const history = useHistory();
-  const goCategoryPage = useCallback((code: string) => () => history.push(`/item/category/${code}`), [history]);
+  const goCategoryPage = useCallback(
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?category=${code}`),
+    [history],
+  );
 
   return (
     <MediumItemDiv>

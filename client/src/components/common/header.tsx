@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Logo, Navbar } from 'components';
+import { MAIN_URL } from 'constants/urls';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
 
@@ -63,7 +64,7 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile, userId, onLogout }) =>
     }
     return (
       <LogoWrapper>
-        <Link to="/">
+        <Link to={MAIN_URL}>
           <Logo className="header-logo" width="200px" />
         </Link>
       </LogoWrapper>

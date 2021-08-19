@@ -3,10 +3,10 @@ import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
-import { useParams } from 'lib/router';
+import { useQuery } from 'lib/router';
 
 const ItemListPage = (): ReactElement => {
-  const { code } = useParams() as { code: string };
+  const query = useQuery();
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
@@ -14,7 +14,7 @@ const ItemListPage = (): ReactElement => {
     <Layout>
       <HeaderContainer isMobile={isMobile} />
       <main>
-        <SmartMenuContainer currentCode={code} />
+        <SmartMenuContainer currentCode={query.category} />
         여기는 아이템 리스트 페이지
       </main>
       <Footer isMobile={isMobile} />

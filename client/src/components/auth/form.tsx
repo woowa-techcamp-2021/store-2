@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Input, Button } from 'components';
+import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
 
@@ -143,7 +144,7 @@ const AuthForm: FC<AuthFormProps> = ({
 
       {isSignup ? (
         <LinkWrapper>
-          <Link to="/login">계정이 있다면? 로그인하러 가기</Link>
+          <Link to={SIGNIN_URL}>계정이 있다면? 로그인하러 가기</Link>
         </LinkWrapper>
       ) : (
         <>
@@ -152,7 +153,7 @@ const AuthForm: FC<AuthFormProps> = ({
             깃-헙으로 로그인
           </Button>
           <LinkWrapper>
-            <Link to="/signup">계정이 없다면? 회원가입하러 가기</Link>
+            <Link to={SIGNUP_URL}>계정이 없다면? 회원가입하러 가기</Link>
           </LinkWrapper>
         </>
       )}

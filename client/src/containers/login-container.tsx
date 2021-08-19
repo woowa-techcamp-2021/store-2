@@ -7,6 +7,7 @@ import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
+import { MAIN_URL } from 'constants/urls';
 
 const LoginContainer: FC = () => {
   const history = useHistory();
@@ -33,7 +34,7 @@ const LoginContainer: FC = () => {
 
   useEffect(() => {
     if (userId || userLoading) {
-      history.push('/');
+      history.push(MAIN_URL);
     }
   }, [userId, history, userLoading]);
 

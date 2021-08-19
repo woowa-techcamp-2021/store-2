@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'lib/router';
 import styled from 'lib/woowahan-components';
 import { Logo } from 'components';
+import { MAIN_URL, CART_URL, SIGNIN_URL, ORDER_LIST_URL } from 'constants/urls';
 
 import accountIcon from 'assets/icons/account.png';
 import cartIcon from 'assets/icons/cart.png';
@@ -59,17 +60,17 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogo
   return (
     <Wrapper white={white}>
       {mobile && (
-        <Link to="/">
+        <Link to={MAIN_URL}>
           <Logo width="130px" mobile />
         </Link>
       )}
       <div>
         {userId && (
-          <Link className="nav-link" to="/user">
+          <Link className="nav-link" to={ORDER_LIST_URL}>
             {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
           </Link>
         )}
-        <Link className="nav-link" to="/cart">
+        <Link className="nav-link" to={CART_URL}>
           {mobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
         </Link>
         {userId ? (
@@ -77,7 +78,7 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogo
             {mobile ? <img src={logoutIcon} alt="logout" /> : '로그아웃'}
           </button>
         ) : (
-          <Link className="nav-link" to="/login">
+          <Link className="nav-link" to={SIGNIN_URL}>
             {mobile ? <img src={loginIcon} alt="login" /> : '로그인'}
           </Link>
         )}
