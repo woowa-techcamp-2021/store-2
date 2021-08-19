@@ -1,6 +1,7 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
+import { useQuery } from 'lib/router/hooks/use-query';
 import { IMenu } from 'types/category';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
 import LargeMenu from './large-menu';
@@ -63,7 +64,11 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [menuName, setMenuName] = useState('');
   const { width } = useWindowSize();
+  const query = useQuery();
 
+  useEffect(() => {
+    setOpenStatus(false);
+  }, [query]);
   if (currentMenu !== menuName) {
     setMenuName(currentMenu);
     setOpenStatus(false);
