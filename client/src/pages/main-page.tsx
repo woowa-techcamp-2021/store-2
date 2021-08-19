@@ -4,11 +4,20 @@ import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import MainItemContainer from 'containers/main-item-container';
-import { Layout } from 'components';
 import SearchContainer from 'containers/search-container';
+import { Layout, Banner } from 'components';
 
-const Wrapper = styled.section`
+const Wrapper = styled.article`
   width: 100%;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    ${props => props.theme?.mobile} {
+      flex-direction: column-reverse;
+    }
+  }
 `;
 
 const MainPage = (): ReactElement => {
@@ -21,7 +30,10 @@ const MainPage = (): ReactElement => {
       <Layout displayMain isMobile={isMobile}>
         <SmartMenuContainer />
         <Wrapper>
-          <SearchContainer />
+          <div className="header">
+            <SearchContainer />
+            <Banner />
+          </div>
           <MainItemContainer />
         </Wrapper>
       </Layout>

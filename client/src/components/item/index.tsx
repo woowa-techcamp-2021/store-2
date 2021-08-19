@@ -95,6 +95,10 @@ const Info = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &.sale {
+      width: 180px;
+    }
   }
 
   .price {
@@ -111,6 +115,10 @@ const Info = styled.div`
     .title {
       width: 140px;
       font-size: 14px;
+
+      &.sale {
+        width: 90px;
+      }
     }
 
     .price {
@@ -126,6 +134,10 @@ const Info = styled.div`
     .title {
       width: 170px;
       font-size: 16px;
+
+      &.sale {
+        width: 120px;
+      }
     }
 
     .price {
@@ -147,6 +159,7 @@ const SaleWrapper = styled.div`
     font-size: 24px;
     font-family: ${props => props.theme?.fontEuljiro};
     color: ${props => props.theme?.colorWhite};
+    text-shadow: ${props => props.theme?.colorGreyDark} 1px 0 10px;
   }
 
   ${props => props.theme?.mobile} {
@@ -212,7 +225,7 @@ const Item: FC<ItemProps> = ({
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>
       <Info>
-        <div className="title">{title}</div>
+        <div className={`title ${salePercent ? 'sale' : ''}`}>{title}</div>
         <div className="price">
           {formatPrice(price)}원 {salePercent !== 0 && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
         </div>

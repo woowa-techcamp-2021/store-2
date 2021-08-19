@@ -3,6 +3,7 @@ export { default as Layout } from './common/layout';
 export { default as Navbar } from './common/navbar';
 export { default as Modal } from './common/modal';
 export { default as Loader } from './common/loader';
+export { default as Banner } from './common/banner';
 
 export { default as Input } from './form/input';
 export { default as Button } from './form/button';

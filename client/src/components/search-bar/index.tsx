@@ -33,6 +33,14 @@ const SearchBarContainer = styled.section`
   img {
     height: 30px;
   }
+
+  ${props => props.theme?.mobile} {
+    margin-bottom: 0;
+
+    form {
+      width: 85%;
+    }
+  }
 `;
 
 const SearchBox = styled.div`
