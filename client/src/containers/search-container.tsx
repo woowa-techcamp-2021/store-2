@@ -60,12 +60,13 @@ const SearchContainer: FC = () => {
       setIsRecent(true);
       return;
     }
-    setIsRecent(false);
     setKeywords([]);
+    setIsRecent(false);
     dispatch({ type: getAutoComplete.type, payload: { keyword: e.target.value } });
 
     if (autoComplete) {
-      setKeywords(autoComplete);
+      const set = new Set<string>(autoComplete);
+      setKeywords(Array.from(set));
     }
   };
 
