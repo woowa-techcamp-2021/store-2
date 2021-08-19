@@ -11,7 +11,7 @@ const ItemsPage = (): ReactElement => {
 
   return (
     <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
+      <HeaderContainer isMobile={isMobile} />
       <main>
         <SmartMenuContainer />
         <ItemsContainer />
