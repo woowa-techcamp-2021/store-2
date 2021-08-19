@@ -10,7 +10,7 @@ async function mainItems(): Promise<Model<ItemAttributes, ItemCreationAttributes
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
   ]);
-  // 3번째 recommend 수정 예정
+  // TODO 3번째 recommend 수정 예정
   return items;
 }
 
@@ -33,7 +33,7 @@ async function getItems(
   }
 
   const order = [];
-  //  recommend 수정 예정
+  // TODO recommend 수정 예정
   if (type === 'recommend') order.push(['sale_count', 'DESC']);
   else if (type === 'popular') order.push(['sale_count', 'DESC']);
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
