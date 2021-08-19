@@ -31,6 +31,30 @@ const Title = styled.div`
     font-family: ${props => props.theme?.fontHanna};
     font-size: 30px;
   }
+
+  ${props => props.theme?.mobile} {
+    .text-point {
+      font-size: 80px;
+      top: -24px;
+      left: -20px;
+    }
+
+    .text-title {
+      font-size: 26px;
+    }
+  }
+
+  ${props => props.theme?.tablet} {
+    .text-point {
+      font-size: 95px;
+      top: -32px;
+      left: -30px;
+    }
+
+    .text-title {
+      font-size: 28px;
+    }
+  }
 `;
 
 const DisplayItemList: FC<DisplayItemListProps> = ({ title, items }) => {

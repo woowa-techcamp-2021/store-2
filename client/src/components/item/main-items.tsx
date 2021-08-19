@@ -12,13 +12,6 @@ interface ItemListProps {
 
 const Wrapper = styled.div`
   margin-top: 60px;
-  ${props => props.theme?.mobile} {
-    margin-top: 50px;
-  }
-
-  ${props => props.theme?.tablet} {
-    margin-top: 70px;
-  }
 `;
 
 const MainItems: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, loading }) => {
