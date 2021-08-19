@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import CategoryItems from 'components/item/category-items';
 import { getCategoryItems } from 'store/items';
-import { useQuery } from 'utils';
+import useQuery from 'hooks/use-query';
 
 const CategoryItemContainer: FC = () => {
   const { items, loading } = useSelector(({ items, loading }: RootState) => ({
