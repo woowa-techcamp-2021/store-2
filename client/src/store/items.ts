@@ -7,9 +7,10 @@ import { put } from 'redux-saga-test-plan/matchers';
 import { finishLoading, startLoading } from './loading';
 
 export interface IItemsState {
-  categoryId: string;
+  categoryId?: string;
   pageId?: number;
-  type: string;
+  type?: string;
+  search?: string;
 }
 
 interface IMainItems {
