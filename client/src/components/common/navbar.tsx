@@ -4,10 +4,10 @@ import styled from 'lib/woowahan-components';
 import { Logo } from 'components';
 import { MAIN_URL, CART_URL, SIGNIN_URL, ORDER_LIST_URL } from 'constants/urls';
 
-import accountIcon from 'assets/icons/account.png';
-import cartIcon from 'assets/icons/cart.png';
-import logoutIcon from 'assets/icons/logout.png';
-import loginIcon from 'assets/icons/login.png';
+import accountIcon from 'assets/icons/account.svg';
+import cartIcon from 'assets/icons/cart.svg';
+import logoutIcon from 'assets/icons/logout.svg';
+import loginIcon from 'assets/icons/login.svg';
 
 interface NavbarProps {
   displayMain: boolean;
@@ -49,10 +49,19 @@ const Wrapper = styled.nav`
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     justify-content: space-between;
     align-items: center;
-    padding: 14px 5%;
+    padding: 14px;
 
     .nav-link {
-      padding: 0 8px;
+      padding: 0;
+      padding-left: 12px;
+    }
+
+    .nav-link > img {
+      width: 30px;
+    }
+
+    div:last-child {
+      padding-left: 9px;
     }
   }
 `;
