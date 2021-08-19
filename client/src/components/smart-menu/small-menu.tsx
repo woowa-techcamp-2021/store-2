@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
 import { IMenu } from 'types/category';
 
 interface SmallMenuProps {
@@ -14,21 +14,19 @@ const SmallItemDiv = styled.div`
 `;
 
 const SmallItem = styled.div`
-  font-family: ${({ theme }) => theme.fontHannaAir};
+  font-family: ${({ theme }) => theme?.fontHannaAir};
   font-size: 26px;
-  background-color: ${({ theme }) => theme.colorBg};
-
-  border: 1px solid ${({ theme }) => theme.colorOffWhite};
-  padding: 10px;
-  ${({ theme }) => theme.mobile} {
+  background-color: ${({ theme }) => theme?.colorBg};
+  padding: 5px 10px;
+  ${({ theme }) => theme?.mobile} {
     width: 110px;
     font-size: 16px;
   }
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     width: 150px;
     font-size: 18px;
   }
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     width: 200px;
     font-size: 22px;
   }

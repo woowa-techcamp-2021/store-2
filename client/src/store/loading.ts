@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const loadingSlice = createSlice({
   name: 'loading',
-  initialState: { 'auth/getLogin': false, 'auth/getUser': false, 'auth/getSignup': false },
+  initialState: {
+    'auth/getLogin': false,
+    'auth/getUser': false,
+    'auth/getSignup': false,
+    'items/getMainItems': false,
+    'items/getItems': false,
+  },
   reducers: {
     startLoading: (state, action) => ({ ...state, [action.payload]: true }),
     finishLoading: (state, action) => ({ ...state, [action.payload]: false }),

@@ -4,31 +4,35 @@ import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { getUser } from 'store/auth';
+import { getCategories } from 'store/category';
 import logger from 'redux-logger';
 import rootReducer, { rootSaga } from './store';
 import App from './App';
 
 const sagaMiddleware = createSagaMiddleware();
 
+const middleware = process.env.NODE_ENV === 'development' ? [sagaMiddleware, logger] : [sagaMiddleware];
+
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [sagaMiddleware, logger],
+  middleware,
 });
 
 sagaMiddleware.run(rootSaga);
 
 function loadUser() {
-  try {
-    const user = localStorage.getItem('user');
-    if (!user) return;
+  const user = localStorage.getItem('user');
+  if (!user) return;
 
-    store.dispatch({ type: getUser.type });
-  } catch (e) {
-    throw new Error(e);
-  }
+  store.dispatch({ type: getUser.type });
+}
+
+function loadCategories() {
+  store.dispatch({ type: getCategories.type });
 }
 
 loadUser();
+loadCategories();
 
 ReactDOM.render(
   <Provider store={store}>

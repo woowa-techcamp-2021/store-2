@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
-import HeaderContainer from 'containers/header-container';
-import { Layout, Footer } from 'components';
+import NavbarContainer from 'containers/navbar-container';
+import { Layout } from 'components';
 
 const Text = styled.div`
   flex: 1;
@@ -12,8 +12,8 @@ const Text = styled.div`
   margin-top: 50px;
 
   span {
-    font-family: ${props => props.theme.fontEuljiro10};
-    color: ${props => props.theme.colorTextBeige};
+    font-family: ${props => props.theme?.fontEuljiro10};
+    color: ${props => props.theme?.colorTextBeige};
   }
 
   span:nth-child(1) {
@@ -24,7 +24,7 @@ const Text = styled.div`
     font-size: 80px;
   }
 
-  ${props => props.theme.mobile} {
+  ${props => props.theme?.mobile} {
     span:nth-child(1) {
       font-size: 100px;
     }
@@ -40,16 +40,15 @@ const NotFoundPage = (): ReactElement => {
   const isMobile = width <= 480;
 
   return (
-    <Layout>
-      <HeaderContainer isMobile={isMobile} />
-      <main>
+    <>
+      <NavbarContainer isMobile={isMobile} />
+      <Layout isMobile={isMobile}>
         <Text>
           <span>404</span>
           <span>낫 파운드</span>
         </Text>
-      </main>
-      <Footer isMobile={isMobile} />
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

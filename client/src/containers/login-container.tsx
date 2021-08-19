@@ -2,11 +2,12 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import { getLogin, getLoginRest } from 'store/auth';
+import { getLogin, getLoginReset } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
+import { MAIN_URL } from 'constants/urls';
 
 const LoginContainer: FC = () => {
   const history = useHistory();
@@ -23,7 +24,7 @@ const LoginContainer: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: getLoginRest });
+      dispatch({ type: getLoginReset });
     };
   }, [dispatch]);
 
@@ -33,7 +34,7 @@ const LoginContainer: FC = () => {
 
   useEffect(() => {
     if (userId || userLoading) {
-      history.push('/');
+      history.push(MAIN_URL);
     }
   }, [userId, history, userLoading]);
 
@@ -44,8 +45,20 @@ const LoginContainer: FC = () => {
     else dispatch({ type: getLogin.type, payload: { id, password } });
   };
 
+  const onGuestLogin = () => {
+    dispatch({ type: getLogin.type, payload: { id: 'guest', password: 'guest' } });
+  };
+
   return (
-    <AuthForm id={id} password={password} onChange={onChange} onSubmit={onSubmit} error={authError} loading={loading} />
+    <AuthForm
+      id={id}
+      password={password}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      onGuestLogin={onGuestLogin}
+      error={authError}
+      loading={loading}
+    />
   );
 };
 

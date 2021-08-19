@@ -1,21 +1,43 @@
 import React, { ReactElement } from 'react';
+import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
+import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
-import HeaderContainer from 'containers/header-container';
-import { Layout, Footer } from 'components';
+import MainItemContainer from 'containers/main-item-container';
+import SearchContainer from 'containers/search-container';
+import { Layout, Banner } from 'components';
+
+const Wrapper = styled.article`
+  width: 100%;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    ${props => props.theme?.mobile} {
+      flex-direction: column-reverse;
+    }
+  }
+`;
 
 const MainPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
   return (
-    <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
-      <main>
-        <SmartMenuContainer currentMenu="캇테고리" />
-      </main>
-      <Footer isMobile={isMobile} />
-    </Layout>
+    <>
+      <NavbarContainer displayMain isMobile={isMobile} />
+      <Layout displayMain isMobile={isMobile}>
+        <SmartMenuContainer />
+        <Wrapper>
+          <div className="header">
+            <SearchContainer />
+            <Banner />
+          </div>
+          <MainItemContainer />
+        </Wrapper>
+      </Layout>
+    </>
   );
 };
 

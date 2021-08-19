@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled from 'lib/woowahan-components';
 
-import LogoImg from 'assets/images/logo.png';
-import LogoTentImg from 'assets/images/logo_tent.png';
-import LogoMobile from 'assets/icons/logo_mobile.png';
+import LogoImg from 'assets/images/logo.svg';
+import LogoTentImg from 'assets/images/logo_tent.svg';
+import LogoMobile from 'assets/images/logo_mobile.svg';
 
 interface LogoProps {
   className?: string;

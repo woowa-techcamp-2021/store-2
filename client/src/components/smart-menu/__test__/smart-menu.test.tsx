@@ -4,13 +4,13 @@ import SmartMenuContainer from '../../../containers/smart-menu-container';
 
 describe('<SmartMenu />', () => {
   it('render menu', () => {
-    render(<SmartMenuContainer currentMenu="캇테고리" />);
+    render(<SmartMenuContainer currentCode="000000" />);
     const menu = screen.getByText('캇테고리');
     expect(menu).toBeInTheDocument();
   });
 
   it('open/close menu', () => {
-    render(<SmartMenuContainer currentMenu="캇테고리" />);
+    render(<SmartMenuContainer currentCode="000000" />);
     const menu = screen.getByText('캇테고리');
 
     fireEvent.click(menu);

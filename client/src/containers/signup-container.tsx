@@ -2,19 +2,20 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import { getSignup, getSignupRest } from 'store/auth';
+import { getSignup, getSignupReset } from 'store/auth';
 import useInputs from 'hooks/use-inputs';
 import AuthForm from 'components/auth/form';
 import AuthSuccessModal from 'components/auth/success-modal';
 import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
+import { MAIN_URL } from 'constants/urls';
 
 const SignupContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
     loading: loading['auth/getSignup'],
     error: auth.signup.error,
@@ -25,7 +26,7 @@ const SignupContainer: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: getSignupRest });
+      dispatch({ type: getSignupReset.type });
     };
   }, [dispatch]);
 
@@ -34,12 +35,12 @@ const SignupContainer: FC = () => {
   }, [error]);
 
   useEffect(() => {
-    if (userLoading) history.push('/');
+    if (userLoading) history.push(MAIN_URL);
     if (userId) {
-      setModal(true);
+      setModalVisible(true);
       setTimeout(() => {
-        setModal(false);
-        history.push('/');
+        setModalVisible(false);
+        history.push(MAIN_URL);
       }, 1000);
     }
   }, [userId, history, userLoading]);
@@ -65,10 +66,9 @@ const SignupContainer: FC = () => {
         error={authError}
         loading={loading}
         isSignup
-        check={check}
         onCheckChange={onCheckChange}
       />
-      {modal && <AuthSuccessModal userId={userId} />}
+      <AuthSuccessModal userId={userId} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };

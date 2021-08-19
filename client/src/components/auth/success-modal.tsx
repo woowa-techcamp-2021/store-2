@@ -1,15 +1,17 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, Dispatch, SetStateAction } from 'react';
+import styled from 'lib/woowahan-components';
 import { Modal } from 'components';
 import { IUserId } from 'types/auth';
 
 interface AuthSuccessModalProps {
   userId: IUserId;
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 const Title = styled.h2`
   span {
-    color: ${props => props.theme.colorPrimary};
+    color: ${props => props.theme?.colorPrimary};
   }
 `;
 
@@ -19,14 +21,14 @@ const Info = styled.div`
   }
 
   span {
-    font-family: ${props => props.theme.fontHanna};
+    font-family: ${props => props.theme?.fontHanna};
     font-size: 105%;
     vertical-align: middle;
     margin-right: 1px;
   }
 `;
 
-const AuthSuccessModal: FC<AuthSuccessModalProps> = ({ userId }) => {
+const AuthSuccessModal: FC<AuthSuccessModalProps> = ({ userId, visible, setVisible }) => {
   return (
     <Modal
       type="alert"
@@ -43,6 +45,8 @@ const AuthSuccessModal: FC<AuthSuccessModalProps> = ({ userId }) => {
           <p>알차고 실속있는 서비스로 찾아뵙겠습니다.</p>
         </Info>
       }
+      visible={visible}
+      setVisible={setVisible}
     />
   );
 };

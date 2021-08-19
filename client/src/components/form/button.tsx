@@ -1,23 +1,19 @@
-import styled from 'styled-components';
+import styled from 'lib/woowahan-components';
 
-interface ButtonProps {
-  color?: 'basic' | 'dark' | 'github';
-}
-
-const Button = styled.button<ButtonProps>`
+const Button = styled.button`
   cursor: pointer;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colorWhite};
-  font-family: ${({ theme }) => theme.fontEuljiro};
+  color: ${({ theme }) => theme?.colorWhite};
+  font-family: ${({ theme }) => theme?.fontEuljiro};
   opacity: 0.9;
   margin-bottom: 10px;
   background-color: ${props => {
-    if (props.color === 'dark') return props.theme.colorLineDark;
-    if (props.color === 'github') return props.theme.colorGithub;
-    return props.theme.colorLine;
+    if (props.color === 'primary') return props.theme?.colorPrimary;
+    if (props.color === 'github') return props.theme?.colorGithub;
+    return props.theme?.colorLine;
   }};
 
   &:hover {
@@ -25,17 +21,17 @@ const Button = styled.button<ButtonProps>`
     transform: translateY(-2px);
   }
 
-  ${({ theme }) => theme.mobile} {
+  ${({ theme }) => theme?.mobile} {
     height: 50px;
     font-size: 20px;
   }
 
-  ${({ theme }) => theme.tablet} {
+  ${({ theme }) => theme?.tablet} {
     height: 56px;
     font-size: 22px;
   }
 
-  ${({ theme }) => theme.laptop} {
+  ${({ theme }) => theme?.laptop} {
     height: 64px;
     font-size: 24px;
   }

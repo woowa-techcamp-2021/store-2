@@ -5,9 +5,9 @@ export const REFRESH_TOKEN_NAME = 'rteofkreensh';
 export const MAX_SCORE = 5;
 
 export const USER = {
-  ID_MAX_LENGTH: 10,
+  ID_MAX_LENGTH: 30,
   ID_MIN_LENGTH: 3,
-  PASSWORD_MAX_LENGTH: 14,
+  PASSWORD_MAX_LENGTH: 20,
   PASSWORD_MIN_LENGTH: 4,
   PROVIDER_LENGTH: 45,
   PHONE_LENGTH: 12,
@@ -61,7 +61,7 @@ export const CATEGORY_DATA = [
   { id: '090800', name: '위생' },
   { id: '110000', name: 'ㅋㅋ에디션' },
   { id: '120000', name: '콜라보레이션' },
-  { id: '130000', name: '배달이친구들' },
+  { id: '170000', name: '배달이친구들' },
   { id: '140000', name: '책' },
   { id: '160000', name: '선물세트' },
   { id: '180000', name: '을지로에디션' },

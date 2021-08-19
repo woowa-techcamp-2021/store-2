@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'lib/router';
-import { MainPage, NotFoundPage, LoginPage, SignupPage } from 'pages';
+
+import { MAIN_URL, ITEM_LIST_URL, ITEM_URL, AUTH_URL, SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
+import { MainPage, NotFoundPage, ItemListPage, LoginPage, SignupPage, AuthPage, ItemDetailPage } from 'pages';
 import Theme from './styles/theme';
 
 const App: React.FC = () => {
@@ -8,9 +11,12 @@ const App: React.FC = () => {
     <Theme>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/signup" component={SignupPage} />
+          <Route exact path={MAIN_URL} component={MainPage} />
+          <Route exact path={SIGNIN_URL} component={LoginPage} />
+          <Route exact path={SIGNUP_URL} component={SignupPage} />
+          <Route exact path={`${ITEM_URL}/:id`} component={ItemDetailPage} />
+          <Route exact path={ITEM_LIST_URL} component={ItemListPage} />
+          <Route exact path={AUTH_URL} component={AuthPage} />
           <Route path="" component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
