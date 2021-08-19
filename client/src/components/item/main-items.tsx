@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem } from 'types/item';
+import { Loader } from 'components';
 import DisplayItemList from './display-item-list';
 
 interface ItemListProps {
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
 const MainItems: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, loading }) => {
   return (
     <Wrapper>
-      {loading && <div>로딩중</div>}
+      {loading && <Loader size="25px" color="brown" />}
       <DisplayItemList title="잘나가요" items={popularItems} />
       <DisplayItemList title="새로 나왔어요" items={newItems} />
       <DisplayItemList title="추천드려요" items={recommendItems} />
