@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 
 interface CheckBoxProps {
   id: string;
@@ -7,7 +7,7 @@ interface CheckBoxProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Label = woowahan.label`
+const Label = styled.label`
   cursor: pointer;
   margin-bottom: 20px;
   position: relative;
@@ -20,7 +20,7 @@ const Label = woowahan.label`
   }
 `;
 
-const CheckBoxInput = woowahan.input`
+const CheckBoxInput = styled.input`
   opacity: 0;
   height: 0;
   width: 0;
@@ -34,7 +34,7 @@ const CheckBoxInput = woowahan.input`
   }
 `;
 
-const CheckMark = woowahan.span`
+const CheckMark = styled.span`
   height: 14px;
   width: 14px;
   background-color: ${props => props.theme?.colorOffWhite};
@@ -42,7 +42,7 @@ const CheckMark = woowahan.span`
   margin-right: 10px;
 
   &:after {
-    content: "";
+    content: '';
     display: none;
     position: absolute;
     left: 9px;

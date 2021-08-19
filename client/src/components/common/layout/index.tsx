@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import Header from './header';
 import Footer from './footer';
 
@@ -8,7 +8,7 @@ interface LayoutProps {
   isMobile: boolean;
 }
 
-const Wrapper = woowahan.div`
+const Wrapper = styled.div`
   min-height: 100%;
   background-color: ${props => props.theme?.colorBg};
   display: flex;
