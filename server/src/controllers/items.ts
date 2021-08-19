@@ -4,12 +4,12 @@ import itemService from 'services/items';
 
 import errorHandler from 'utils/error/error-handler';
 
-type IRequest = Request<
-  unknown,
-  unknown,
-  unknown,
-  { categoryId: string; type: string; pageId: number; search: string }
->;
+interface IQuery {
+  categoryId: string;
+  type: string;
+  pageId: number;
+  search: string;
+}
 
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -22,7 +22,7 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-export const getItems = async (req: IRequest, res: Response): Promise<void> => {
+export const getItems = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
   const { categoryId, pageId, type, search } = req.query;
   try {
     const items = await itemService.getItems(categoryId, pageId, type, search);
