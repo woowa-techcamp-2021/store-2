@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { startLoading, finishLoading } from 'store/loading';
@@ -52,13 +52,9 @@ function* autoCompleteSaga(action: PayloadAction): Generator {
     )) as AxiosResponse<AutoCompleteKeyword>;
     yield put({ type: getAutoCompleteSuccess.type, payload: data });
   } catch (e) {
-    if (axios.isAxiosError(e)) {
-      yield put({
-        type: getAutoCompleteFail.type,
-      });
-    } else {
-      throw new Error(e);
-    }
+    yield put({
+      type: getAutoCompleteFail.type,
+    });
   } finally {
     yield put(finishLoading(getAutoComplete.type));
   }
