@@ -12,8 +12,6 @@ const Wrapper = styled.div`
     padding: 0 10%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 
   ${props => props.theme?.mobile} {

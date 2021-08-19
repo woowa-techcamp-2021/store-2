@@ -1,16 +1,22 @@
 import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
 import { authReducer, authSaga } from './auth';
+import { itemReducer, itemSaga } from './item';
 import { itemsReducer, itemsSaga } from './items';
 import { loadingReducer } from './loading';
 
-const rootReducer = combineReducers({ auth: authReducer, loading: loadingReducer, items: itemsReducer });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  loading: loadingReducer,
+  items: itemsReducer,
+  item: itemReducer,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 export function* rootSaga(): Generator {
   try {
-    yield all([authSaga(), itemsSaga()]);
+    yield all([authSaga(), itemsSaga(), itemSaga()]);
   } catch (e) {
     throw new Error(e);
   }
