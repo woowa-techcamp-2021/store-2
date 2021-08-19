@@ -12,27 +12,24 @@ interface HeaderProps {
 }
 
 const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => {
-  const [modal, setModal] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { userId }: IUser = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
   }));
   const dispatch = useDispatch();
 
   const onLogout = (): void => {
-    setModal(true);
+    setModalVisible(true);
   };
-  const onCancel = (): void => {
-    setModal(false);
-  };
-  const onConfirm = (): void => {
-    setModal(false);
+
+  const handleLogout = (): void => {
     dispatch({ type: logout.type });
   };
 
   return (
     <>
       <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
-      {modal && <AuthLogoutModal onCancel={onCancel} onConfirm={onConfirm} />}
+      <AuthLogoutModal visible={modalVisible} setVisible={setModalVisible} onConfirm={handleLogout} />
     </>
   );
 };

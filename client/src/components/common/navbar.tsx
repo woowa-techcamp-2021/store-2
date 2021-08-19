@@ -31,6 +31,7 @@ const Wrapper = styled.nav`
   }
 
   .nav-link {
+    cursor: pointer;
     font-size: 12px;
     font-weight: ${props => props.theme?.weightMid};
     color: ${props => props.theme?.colorGreyDark};
