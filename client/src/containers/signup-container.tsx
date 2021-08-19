@@ -8,6 +8,7 @@ import AuthForm from 'components/auth/form';
 import AuthSuccessModal from 'components/auth/success-modal';
 import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
+import { MAIN_URL } from 'constants/urls';
 
 const SignupContainer: FC = () => {
   const history = useHistory();
@@ -34,12 +35,12 @@ const SignupContainer: FC = () => {
   }, [error]);
 
   useEffect(() => {
-    if (userLoading) history.push('/');
+    if (userLoading) history.push(MAIN_URL);
     if (userId) {
       setModal(true);
       setTimeout(() => {
         setModal(false);
-        history.push('/');
+        history.push(MAIN_URL);
       }, 1000);
     }
   }, [userId, history, userLoading]);

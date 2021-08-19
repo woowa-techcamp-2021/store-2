@@ -3,6 +3,7 @@ import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IItem } from 'types/item';
 import Item from 'components/item';
+import { ITEM_URL } from 'constants/urls';
 
 interface ItemListProps {
   items: IItem[] | null;
@@ -29,7 +30,8 @@ const Wrapper = styled.div`
 
 const ItemList: FC<ItemListProps> = ({ items }) => {
   const history = useHistory();
-  const goDetailPage = useCallback((id: number) => () => history.push(`/item/${id}`), [history]);
+
+  const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
 
   return (
     <Wrapper>

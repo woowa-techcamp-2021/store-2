@@ -7,6 +7,8 @@ import SearchBar from 'components/search-bar';
 import { RootState } from 'store';
 import { getAutoComplete } from 'store/item';
 
+export const ITEM_LIST_URL = '/items';
+
 const SearchContainer: FC = () => {
   const [search, setSearch] = useState<string>('');
   const [keywords, setKeywords] = useState<string[]>([]);
@@ -56,7 +58,7 @@ const SearchContainer: FC = () => {
     setSearch(keyword);
     saveRecentKeywords(keyword);
     // TODO: url이 정해지면 이동 수정
-    history.push(`/items?search=${keyword}`);
+    history.push(`${ITEM_LIST_URL}?search=${keyword}`);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
