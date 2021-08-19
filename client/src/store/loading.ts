@@ -6,7 +6,7 @@ const loadingSlice = createSlice({
     'auth/getLogin': false,
     'auth/getUser': false,
     'auth/getSignup': false,
-    'auth/getMainItemSuccess': false,
+    'auth/getMainItem': false,
   },
   reducers: {
     startLoading: (state, action) => ({ ...state, [action.payload]: true }),
