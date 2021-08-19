@@ -1,8 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { takeLatest } from 'redux-saga/effects';
+import { call, takeLatest } from 'redux-saga/effects';
 import * as itemsAPI from 'utils/api/items';
+import axios, { AxiosResponse } from 'axios';
 import { IItem } from 'types/item';
-import createPromiseSaga from 'utils/saga-utils';
+import { put } from 'redux-saga-test-plan/matchers';
+import { finishLoading, startLoading } from './loading';
+
+export interface IItemsState {
+  categoryId: string;
+  pageId?: number;
+  type: string;
+}
 
 interface MainProps {
   popularItems: IItem[] | null;
@@ -18,6 +26,10 @@ interface StateProps {
   };
   items: IItem[] | null;
   error: null | string;
+}
+
+interface IError {
+  errorMessage: string;
 }
 
 const initialState: StateProps = {
@@ -42,14 +54,63 @@ const counterSlice = createSlice({
       state.error = action.payload;
       return state;
     },
+    getCategoryItems: state => state,
+    getCategoryItemsSuccess: (state, action: PayloadAction<string>) => {
+      state.items = action.payload as unknown as IItem[];
+    },
+    getCategoryItemsFail: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      return state;
+    },
   },
 });
 
 const { actions, reducer: itemsReducer } = counterSlice;
-const { getMainItems } = actions;
+const {
+  getMainItems,
+  getMainItemsSuccess,
+  getMainItemsFail,
+  getCategoryItems,
+  getCategoryItemsSuccess,
+  getCategoryItemsFail,
+} = actions;
 export { getMainItems, itemsReducer };
-const getMainItemsSaga = createPromiseSaga(getMainItems.type, itemsAPI.getMainItems);
+
+function* getMainItemsSaga(): Generator {
+  try {
+    yield put(startLoading(getMainItems.type));
+    const { data } = (yield call(itemsAPI.getMainItems)) as AxiosResponse<MainProps>;
+    yield put({ type: getMainItemsSuccess.type, payload: data });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const { errorMessage } = e.response?.data as IError;
+      yield put({ type: getMainItemsFail.type, payload: errorMessage });
+    } else {
+      throw new Error(e);
+    }
+  } finally {
+    yield put(finishLoading(getMainItems.type));
+  }
+}
+
+function* getCategoryItemsSaga(): Generator {
+  try {
+    yield put(startLoading(getCategoryItems.type));
+    const { data } = (yield call(itemsAPI.getMainItems)) as AxiosResponse<MainProps>;
+    yield put({ type: getCategoryItemsSuccess.type, payload: data });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const { errorMessage } = e.response?.data as IError;
+      yield put({ type: getCategoryItemsFail.type, payload: errorMessage });
+    } else {
+      throw new Error(e);
+    }
+  } finally {
+    yield put(finishLoading(getCategoryItems.type));
+  }
+}
 
 export function* itemsSaga(): Generator {
   yield takeLatest(getMainItems, getMainItemsSaga);
+  yield takeLatest(getCategoryItems, getCategoryItemsSaga);
 }
