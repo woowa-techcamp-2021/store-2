@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
-import HeaderContainer from 'containers/header-container';
-import { Layout, Footer } from 'components';
+import NavbarContainer from 'containers/navbar-container';
+import { Layout } from 'components';
 
 const Text = styled.div`
   flex: 1;
@@ -40,16 +40,15 @@ const NotFoundPage = (): ReactElement => {
   const isMobile = width <= 480;
 
   return (
-    <Layout>
-      <HeaderContainer isMobile={isMobile} />
-      <main>
+    <>
+      <NavbarContainer isMobile={isMobile} />
+      <Layout isMobile={isMobile}>
         <Text>
           <span>404</span>
           <span>낫 파운드</span>
         </Text>
-      </main>
-      <Footer isMobile={isMobile} />
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

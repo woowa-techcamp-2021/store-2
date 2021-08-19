@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import { logout } from 'store/auth';
-import { Header } from 'components';
 import { IUser } from 'types/auth';
+import { Navbar } from 'components';
 import AuthLogoutModal from 'components/auth/logout-modal';
 
 interface HeaderProps {
@@ -28,9 +28,10 @@ const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => 
     setModal(false);
     dispatch({ type: logout.type });
   };
+
   return (
     <>
-      <Header displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
+      <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
       {modal && <AuthLogoutModal onCancel={onCancel} onConfirm={onConfirm} />}
     </>
   );

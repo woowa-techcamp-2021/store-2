@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
+import NavbarContainer from 'containers/navbar-container';
 import SignupContainer from 'containers/signup-container';
-import HeaderContainer from 'containers/header-container';
-import { Layout, Footer } from 'components';
+import { Layout } from 'components';
 
 const Div = styled.div`
   display: flex;
@@ -17,15 +17,14 @@ const SignupPage = (): ReactElement => {
   const isMobile = width <= 480;
 
   return (
-    <Layout>
-      <HeaderContainer isMobile={isMobile} />
-      <main>
+    <>
+      <NavbarContainer isMobile={isMobile} />
+      <Layout isMobile={isMobile}>
         <Div>
           <SignupContainer />
         </Div>
-      </main>
-      <Footer isMobile={isMobile} />
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

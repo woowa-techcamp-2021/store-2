@@ -10,8 +10,8 @@ import logoutIcon from 'assets/icons/logout.png';
 import loginIcon from 'assets/icons/login.png';
 
 interface NavbarProps {
-  white?: boolean;
-  mobile?: boolean;
+  displayMain: boolean;
+  isMobile: boolean;
   userId: string | null | undefined;
   onLogout: () => void;
 }
@@ -56,9 +56,9 @@ const Wrapper = styled.nav`
   }
 `;
 
-const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogout }) => {
+const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) => {
   return (
-    <Wrapper white={white}>
+    <Wrapper white={displayMain}>
       {mobile && (
         <Link to={MAIN_URL}>
           <Logo width="130px" mobile />
@@ -75,7 +75,7 @@ const Navbar: FC<NavbarProps> = ({ white = false, mobile = false, userId, onLogo
         </Link>
         {userId ? (
           <button type="button" className="nav-link" onClick={onLogout}>
-            {mobile ? <img src={logoutIcon} alt="logout" /> : '로그아웃'}
+            {isMobile ? <img src={logoutIcon} alt="logout" /> : '로그아웃'}
           </button>
         ) : (
           <Link className="nav-link" to={SIGNIN_URL}>

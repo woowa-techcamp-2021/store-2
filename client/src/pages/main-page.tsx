@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
+import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
-import HeaderContainer from 'containers/header-container';
 import MainItemContainer from 'containers/main-item-container';
-import { Layout, Footer } from 'components';
+import { Layout } from 'components';
 import SearchContainer from 'containers/search-container';
 
 const MainPage = (): ReactElement => {
@@ -11,15 +11,14 @@ const MainPage = (): ReactElement => {
   const isMobile = width <= 480;
 
   return (
-    <Layout>
-      <HeaderContainer displayMain isMobile={isMobile} />
-      <main>
+    <>
+      <NavbarContainer displayMain isMobile={isMobile} />
+      <Layout displayMain isMobile={isMobile}>
         <SmartMenuContainer />
         <SearchContainer />
         <MainItemContainer />
-      </main>
-      <Footer isMobile={isMobile} />
-    </Layout>
+      </Layout>
+    </>
   );
 };
 
