@@ -69,7 +69,7 @@ const Wrapper = styled.nav`
 const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) => {
   return (
     <Wrapper white={displayMain}>
-      {mobile && (
+      {isMobile && (
         <Link to={MAIN_URL}>
           <Logo width="130px" mobile />
         </Link>
@@ -77,11 +77,11 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
       <div>
         {userId && (
           <Link className="nav-link" to={ORDER_LIST_URL}>
-            {mobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
+            {isMobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
           </Link>
         )}
         <Link className="nav-link" to={CART_URL}>
-          {mobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
+          {isMobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
         </Link>
         {userId ? (
           <button type="button" className="nav-link" onClick={onLogout}>
@@ -89,7 +89,7 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
           </button>
         ) : (
           <Link className="nav-link" to={SIGNIN_URL}>
-            {mobile ? <img src={loginIcon} alt="login" /> : '로그인'}
+            {isMobile ? <img src={loginIcon} alt="login" /> : '로그인'}
           </Link>
         )}
       </div>

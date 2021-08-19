@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { useParams } from 'lib/router';
+import { useQuery } from 'lib/router';
 import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import NavbarContainer from 'containers/navbar-container';
-import { Layout, Footer } from 'components';
+import { Layout } from 'components';
 import { useQuery } from 'lib/router';
 import SearchContainer from 'containers/search-container';
 import ItemListContainer from 'containers/item-list-container';

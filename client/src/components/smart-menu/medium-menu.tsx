@@ -3,7 +3,7 @@ import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
 import { ITEM_LIST_URL } from 'constants/urls';
-import arrow from 'assets/icons/arrow_forward.png';
+import arrow from 'assets/icons/arrow_forward.svg';
 
 interface MediumMenuProps {
   menu: IMenu;
