@@ -12,7 +12,7 @@ export interface IItemsState {
   type: string;
 }
 
-interface MainProps {
+interface IMainItems {
   popularItems: IItem[] | null;
   newItems: IItem[] | null;
   recommendItems: IItem[] | null;
@@ -43,12 +43,12 @@ const initialState: StateProps = {
 };
 
 const counterSlice = createSlice({
-  name: 'item',
+  name: 'items',
   initialState,
   reducers: {
     getMainItems: state => state,
     getMainItemsSuccess: (state, action: PayloadAction<string>) => {
-      state.mainItems = action.payload as unknown as MainProps;
+      state.mainItems = action.payload as unknown as IMainItems;
     },
     getMainItemsFail: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
@@ -74,12 +74,12 @@ const {
   getCategoryItemsSuccess,
   getCategoryItemsFail,
 } = actions;
-export { getMainItems, itemsReducer };
+export { getMainItems, getCategoryItems, itemsReducer };
 
 function* getMainItemsSaga(): Generator {
   try {
     yield put(startLoading(getMainItems.type));
-    const { data } = (yield call(itemsAPI.getMainItems)) as AxiosResponse<MainProps>;
+    const { data } = (yield call(itemsAPI.getMainItems)) as AxiosResponse<IMainItems>;
     yield put({ type: getMainItemsSuccess.type, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
@@ -93,10 +93,12 @@ function* getMainItemsSaga(): Generator {
   }
 }
 
-function* getCategoryItemsSaga(): Generator {
+function* getCategoryItemsSaga(action: PayloadAction): Generator {
   try {
     yield put(startLoading(getCategoryItems.type));
-    const { data } = (yield call(itemsAPI.getMainItems)) as AxiosResponse<MainProps>;
+    const { data } = (yield call(itemsAPI.getCategoryItems, action.payload as unknown as IItemsState)) as AxiosResponse<
+      IItem[]
+    >;
     yield put({ type: getCategoryItemsSuccess.type, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
