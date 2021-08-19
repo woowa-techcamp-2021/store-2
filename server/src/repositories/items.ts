@@ -21,7 +21,6 @@ const getMainItems = async (
     ],
     order: order as Order,
     limit,
-    raw: true,
   });
 
   if (!items) {
@@ -30,6 +29,10 @@ const getMainItems = async (
       code: 'items-not-found',
     });
   }
+
+  items.forEach(v => {
+    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
+  });
 
   return items;
 };
@@ -53,7 +56,6 @@ const getCategoryItems = async (
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     offset: (pageId - 1) * 8 + 1,
     limit: 12,
-    raw: true,
     include: [
       {
         model: db.Category,
@@ -68,6 +70,10 @@ const getCategoryItems = async (
       code: 'items/not-found',
     });
   }
+
+  items.forEach(v => {
+    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
+  });
 
   return items;
 };
