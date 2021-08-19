@@ -4,7 +4,7 @@ import SmartMenuContainer from 'containers/smart-menu-container';
 import HeaderContainer from 'containers/header-container';
 import MainItemContainer from 'containers/main-item-container';
 import { Layout, Footer } from 'components';
-import SearchBar from 'containers/search-container';
+import SearchContainer from 'containers/search-container';
 
 const MainPage = (): ReactElement => {
   const { width } = useWindowSize();
@@ -15,7 +15,7 @@ const MainPage = (): ReactElement => {
       <HeaderContainer displayMain isMobile={isMobile} />
       <main>
         <SmartMenuContainer />
-        <SearchBar />
+        <SearchContainer />
         <MainItemContainer />
       </main>
       <Footer isMobile={isMobile} />

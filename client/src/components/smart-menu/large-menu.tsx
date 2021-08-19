@@ -90,7 +90,7 @@ const Image = styled.img`
 const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
-    (code: string) => () => history.push(`${ITEM_LIST_URL}?category=${code}`),
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
     [history],
   );
 
