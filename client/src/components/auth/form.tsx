@@ -12,6 +12,7 @@ interface AuthFormProps {
   password: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onGuestLogin?: () => void;
   error: string | null;
   loading: boolean;
   isSignup?: boolean;
@@ -86,7 +87,34 @@ const LinkWrapper = styled.div`
   }
 `;
 
-const AuthForm: FC<AuthFormProps> = ({ id, password, onChange, onSubmit, error, loading, isSignup, onCheckChange }) => {
+const GuestButton = styled.button`
+  padding: 5px;
+  margin-bottom: 10px;
+
+  span {
+    color: ${props => props.theme?.colorGreyMid};
+    font-family: ${props => props.theme?.fontHanna};
+    font-size: 16px;
+    padding: 0 5px;
+  }
+
+  &:hover span {
+    color: ${props => props.theme?.colorPrimary};
+    border-bottom: 1px solid ${props => props.theme?.colorPrimary};
+  }
+`;
+
+const AuthForm: FC<AuthFormProps> = ({
+  id,
+  password,
+  onChange,
+  onSubmit,
+  onGuestLogin,
+  error,
+  loading,
+  isSignup,
+  onCheckChange,
+}) => {
   const [githubLoading, setGithubLoading] = useState(false);
   const goGithub = () => {
     setGithubLoading(true);
@@ -109,6 +137,10 @@ const AuthForm: FC<AuthFormProps> = ({ id, password, onChange, onSubmit, error, 
         {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
 
         <Error>{error}</Error>
+        <GuestButton type="button" onClick={onGuestLogin}>
+          <span>게스트 로그인</span>
+        </GuestButton>
+
         <Button type="submit">
           {loading ? (
             <Loader size="25px" color="brown" />
