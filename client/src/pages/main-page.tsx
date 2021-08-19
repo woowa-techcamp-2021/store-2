@@ -9,6 +9,15 @@ import { Layout, Banner } from 'components';
 
 const Wrapper = styled.article`
   width: 100%;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    ${props => props.theme?.mobile} {
+      flex-direction: column-reverse;
+    }
+  }
 `;
 
 const MainPage = (): ReactElement => {
@@ -21,8 +30,10 @@ const MainPage = (): ReactElement => {
       <Layout displayMain isMobile={isMobile}>
         <SmartMenuContainer />
         <Wrapper>
-          <SearchContainer />
-          <Banner />
+          <div className="header">
+            <SearchContainer />
+            <Banner />
+          </div>
           <MainItemContainer />
         </Wrapper>
       </Layout>

@@ -15,6 +15,15 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  ${props => props.theme?.tablet} {
+    height: 400px;
+  }
+
+  ${props => props.theme?.mobile} {
+    height: 300px;
+    margin-top: 30px;
+  }
 `;
 
 const Inner = styled.div`
@@ -36,19 +45,31 @@ const Title = styled.h2`
   font-size: 40px;
   margin-bottom: 15px;
   text-align: center;
+
+  ${props => props.theme?.tablet} {
+    font-size: 36px;
+  }
+
+  ${props => props.theme?.mobile} {
+    font-size: 28px;
+  }
 `;
 
 const Item = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
 
   .item {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    height: 90%;
   }
 
   .tag {
+    width: 80%;
     margin-top: 80px;
   }
 `;
@@ -61,7 +82,7 @@ const Banner: FC = () => {
       </Inner>
       <Title>푸랫쉬한 맥주-짠</Title>
       <Item>
-        <img className="item" src={bannerImg} alt="banner-img" height="300px" />
+        <img className="item" src={bannerImg} alt="banner-img" />
         <img className="tag" src={tagImg} alt="banner-img" />
       </Item>
     </Container>
