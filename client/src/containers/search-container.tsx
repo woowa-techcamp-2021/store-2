@@ -41,6 +41,12 @@ const SearchContainer: FC = () => {
   };
 
   useEffect(() => {
+    const set = new Set<string>(autoComplete);
+    setKeywords(Array.from(set));
+  }, [autoComplete]);
+
+  useEffect(() => {
+    setKeywords([]);
     if (isRecent) {
       loadRecentKeywords();
     }
@@ -56,18 +62,12 @@ const SearchContainer: FC = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     if (!e.target.value) {
-      loadRecentKeywords();
       setIsRecent(true);
       return;
     }
     setKeywords([]);
     setIsRecent(false);
     dispatch({ type: getAutoComplete.type, payload: { keyword: e.target.value } });
-
-    if (autoComplete) {
-      const set = new Set<string>(autoComplete);
-      setKeywords(Array.from(set));
-    }
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
