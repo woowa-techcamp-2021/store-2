@@ -10,7 +10,15 @@ const getMainItems = async (
   limit: number,
 ): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
   const items = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'contents', 'price', 'sale_percent', 'amount', 'is_green'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+    ],
     order: order as Order,
     limit,
     raw: true,
@@ -32,7 +40,15 @@ const getCategoryItems = async (
   categoryReg: string,
 ): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
   const items = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'contents', 'price', 'sale_percent', 'amount', 'is_green'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+    ],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     offset: (pageId - 1) * 8 + 1,
