@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types/category';
@@ -61,7 +61,13 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [selectedLargeId, setLargeId] = useState('');
   const [selectedMediumId, setMediumId] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [menuName, setMenuName] = useState('');
   const { width } = useWindowSize();
+
+  if (currentMenu !== menuName) {
+    setMenuName(currentMenu);
+    setOpenStatus(false);
+  }
 
   return (
     <MenuDiv
@@ -87,7 +93,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setPosition={setPosition}
         />
       )}
-      {selectedLargeId !== '' && (
+      {isOpen && selectedLargeId !== '' && (
         <MediumMenu
           menu={menu}
           selectedLargeId={selectedLargeId}
@@ -95,7 +101,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setMediumId={setMediumId}
         />
       )}
-      {!isSmall(width) && selectedMediumId !== '' && (
+      {isOpen && !isSmall(width) && selectedMediumId !== '' && (
         <SmallMenu menu={menu} selectedLargeId={selectedLargeId} selectedMediumId={selectedMediumId} />
       )}
       <MenuTitle
