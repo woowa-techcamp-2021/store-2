@@ -4,4 +4,4 @@ export { default as LoginPage } from './login-page';
 export { default as SignupPage } from './signup-page';
 export { default as ItemDetailPage } from './item-detail-page';
 export { default as AuthPage } from './auth-page';
-export { default as ItemsPage } from './items-page';
+export { default as ItemListPage } from './item-list-page';
