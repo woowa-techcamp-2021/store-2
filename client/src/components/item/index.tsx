@@ -206,7 +206,6 @@ const Item: FC<ItemProps> = ({
     if ((e.target as HTMLDivElement).classList.contains('like')) return;
     onClick();
   };
-
   return (
     <Container bgColor={salePercent ? 'red' : 'green'} onClick={onItemClick}>
       <Thumbnail>
@@ -218,12 +217,12 @@ const Item: FC<ItemProps> = ({
           {formatPrice(price)}원 {salePercent && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
         </div>
       </Info>
-      <SaleWrapper>{salePercent && salePercent && <span>{salePercent}%</span>}</SaleWrapper>
+      <SaleWrapper>{salePercent !== 0 && <span>{salePercent}%</span>}</SaleWrapper>
       <BadgeWrapper>
         {isBest && <img src={badgeBestIcon} alt="badge" />}
         {isGreen && <img src={badgeGreenIcon} alt="badge" />}
         {isNew && <img src={badgeNewIcon} alt="badge" />}
-        {salePercent && <img src={badgeSaleIcon} alt="badge" />}
+        {salePercent !== 0 && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
       <LikeWrapper onClick={toggleLike}>
         {isLiked ? (
