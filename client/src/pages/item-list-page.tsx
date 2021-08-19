@@ -1,12 +1,16 @@
 import React, { ReactElement } from 'react';
+import styled from 'lib/woowahan-components';
 import { useQuery } from 'lib/router';
 import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import NavbarContainer from 'containers/navbar-container';
-import { Layout } from 'components';
-import { useQuery } from 'lib/router';
 import SearchContainer from 'containers/search-container';
 import ItemListContainer from 'containers/item-list-container';
+import { Layout } from 'components';
+
+const Wrapper = styled.section`
+  width: 100%;
+`;
 
 const ItemListPage = (): ReactElement => {
   const query = useQuery();
@@ -18,8 +22,10 @@ const ItemListPage = (): ReactElement => {
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
         <SmartMenuContainer currentCode={query.categoryId} />
-        <SearchContainer />
-        <ItemListContainer />
+        <Wrapper>
+          <SearchContainer />
+          <ItemListContainer />
+        </Wrapper>
       </Layout>
     </>
   );
