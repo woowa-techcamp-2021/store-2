@@ -55,11 +55,11 @@ const counterSlice = createSlice({
       state.error = action.payload;
       return state;
     },
-    getCategoryItems: state => state,
-    getCategoryItemsSuccess: (state, action: PayloadAction<string>) => {
+    getItems: state => state,
+    getItemsSuccess: (state, action: PayloadAction<string>) => {
       state.items = action.payload as unknown as IItem[];
     },
-    getCategoryItemsFail: (state, action: PayloadAction<string>) => {
+    getItemsFail: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       return state;
     },
@@ -67,15 +67,8 @@ const counterSlice = createSlice({
 });
 
 const { actions, reducer: itemsReducer } = counterSlice;
-const {
-  getMainItems,
-  getMainItemsSuccess,
-  getMainItemsFail,
-  getCategoryItems,
-  getCategoryItemsSuccess,
-  getCategoryItemsFail,
-} = actions;
-export { getMainItems, getCategoryItems, itemsReducer };
+const { getMainItems, getMainItemsSuccess, getMainItemsFail, getItems, getItemsSuccess, getItemsFail } = actions;
+export { getMainItems, getItems, itemsReducer };
 
 function* getMainItemsSaga(): Generator {
   try {
@@ -94,26 +87,26 @@ function* getMainItemsSaga(): Generator {
   }
 }
 
-function* getCategoryItemsSaga(action: PayloadAction): Generator {
+function* getItemsSaga(action: PayloadAction): Generator {
   try {
-    yield put(startLoading(getCategoryItems.type));
+    yield put(startLoading(getItems.type));
     const { data } = (yield call(itemsAPI.getItems, action.payload as unknown as IItemsState)) as AxiosResponse<
       IItem[]
     >;
-    yield put({ type: getCategoryItemsSuccess.type, payload: data });
+    yield put({ type: getItemsSuccess.type, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
-      yield put({ type: getCategoryItemsFail.type, payload: errorMessage });
+      yield put({ type: getItemsFail.type, payload: errorMessage });
     } else {
       throw new Error(e);
     }
   } finally {
-    yield put(finishLoading(getCategoryItems.type));
+    yield put(finishLoading(getItems.type));
   }
 }
 
 export function* itemsSaga(): Generator {
   yield takeLatest(getMainItems, getMainItemsSaga);
-  yield takeLatest(getCategoryItems, getCategoryItemsSaga);
+  yield takeLatest(getItems, getItemsSaga);
 }

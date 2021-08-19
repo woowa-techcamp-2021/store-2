@@ -3,19 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import Items from 'components/item/items';
 import { useQuery } from 'lib/router';
-import { getCategoryItems } from 'store/items';
+import { getItems } from 'store/items';
 
 const ItemsContainer: FC = () => {
   const { items, loading } = useSelector(({ items, loading }: RootState) => ({
     items: items.items,
-    loading: loading['items/getCategoryItems'],
+    loading: loading['items/getItems'],
   }));
   const dispatch = useDispatch();
   const query = useQuery();
   useEffect(() => {
-    console.log('123123', query);
     const { categoryId, pageId, type, search } = query;
-    dispatch({ type: getCategoryItems.type, payload: { categoryId, pageId, type, search } });
+    dispatch({ type: getItems.type, payload: { categoryId, pageId, type, search } });
   }, [query, dispatch]);
   return <Items items={items} loading={loading} />;
 };
