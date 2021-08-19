@@ -7,7 +7,7 @@ import { ITEM_URL } from 'constants/urls';
 
 interface ItemListProps {
   items: IItem[] | null;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const Wrapper = styled.div`

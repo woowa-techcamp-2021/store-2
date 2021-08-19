@@ -7,7 +7,7 @@ import MainItemContainer from 'containers/main-item-container';
 import { Layout } from 'components';
 import SearchContainer from 'containers/search-container';
 
-const Wrapper = styled.section`
+const Wrapper = styled.article`
   width: 100%;
 `;
 
