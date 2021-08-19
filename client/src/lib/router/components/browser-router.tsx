@@ -13,13 +13,15 @@ const BrowserRouter: FC = ({ children }) => {
   }, [handlePopState]);
 
   const push = useCallback((pathname: string) => {
+    const pathnameWithoutQuery = pathname.split('?')[0];
     window.history.pushState(null, '', pathname);
-    setCurrentPath(pathname);
+    setCurrentPath(pathnameWithoutQuery);
   }, []);
 
   const replace = useCallback((pathname: string) => {
+    const pathnameWithoutQuery = pathname.split('?')[0];
     window.history.replaceState(null, '', pathname);
-    setCurrentPath(pathname);
+    setCurrentPath(pathnameWithoutQuery);
   }, []);
 
   const goBack = useCallback(() => {
