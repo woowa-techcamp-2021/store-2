@@ -1,11 +1,22 @@
 import React, { FC, useState, Dispatch, SetStateAction, ChangeEvent, FormEvent, useRef } from 'react';
 import styled from 'lib/woowahan-components';
 
-import searchIcon from 'assets/icons/search.png';
-
 import useOutSideClick from 'hooks/use-out-side-click';
 
+import searchIcon from 'assets/icons/search.png';
+
 import RecentKeywordBox from './recent-keyword-box';
+
+interface SearchBarProps {
+  search: string;
+  keywords: string[];
+  isRecent: boolean;
+  setSearch: Dispatch<SetStateAction<string>>;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  removeRecentKeyword: (index: number) => void;
+  moveToSearchPage: (keyword: string) => void;
+}
 
 const SearchBarContainer = styled.section`
   width: 100%;
@@ -47,17 +58,6 @@ const SearchInput = styled.input`
     border-bottom-color: ${props => props.theme?.colorLineLight};
   }
 `;
-
-interface SearchBarProps {
-  search: string;
-  keywords: string[];
-  isRecent: boolean;
-  setSearch: Dispatch<SetStateAction<string>>;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  removeRecentKeyword: (index: number) => void;
-  moveToSearchPage: (keyword: string) => void;
-}
 
 const SearchBar: FC<SearchBarProps> = ({
   search,
