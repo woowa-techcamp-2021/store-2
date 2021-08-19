@@ -19,10 +19,15 @@ interface LargeMenuProps {
   >;
 }
 
-const LargeItemDiv = styled.ul`
+const LargeItemDiv = styled.div`
+  display: grid;
+`;
+
+const LargeItemUl = styled.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${({ theme }) => theme?.colorBg};
+
   border-radius: 20px;
   padding-left: 32px;
 `;
@@ -87,35 +92,37 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
 
   return (
     <LargeItemDiv>
-      {menu.data.map(large => {
-        const largeId = large.code.slice(0, 2);
-        return (
-          <LargeItem
-            key={largeId}
-            onMouseMove={(e: React.MouseEvent) => {
-              if (isLaptop) {
-                setTimeout(() => {
-                  if (e.clientX < position.x + 10) {
-                    setLargeId(largeId);
-                  }
-                  setPosition({ x: e.clientX, y: e.clientY });
-                }, SMART_MENU_BLOCK_DELAY);
-              }
-            }}
-            onClick={() => {
-              if (!isLaptop) {
-                setLargeId(largeId);
-              }
-            }}
-            isSelected={selectedLargeId === largeId}
-          >
-            <LargeTitle>{large.name}</LargeTitle>
-            <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>
-              <Image src={arrow} alt="카테고리 탐색" />
-            </GoCategoryButton>
-          </LargeItem>
-        );
-      })}
+      <LargeItemUl>
+        {menu.data.map(large => {
+          const largeId = large.code.slice(0, 2);
+          return (
+            <LargeItem
+              key={largeId}
+              onMouseMove={(e: React.MouseEvent) => {
+                if (isLaptop) {
+                  setTimeout(() => {
+                    if (e.clientX < position.x + 10) {
+                      setLargeId(largeId);
+                    }
+                    setPosition({ x: e.clientX, y: e.clientY });
+                  }, SMART_MENU_BLOCK_DELAY);
+                }
+              }}
+              onClick={() => {
+                if (!isLaptop) {
+                  setLargeId(largeId);
+                }
+              }}
+              isSelected={selectedLargeId === largeId}
+            >
+              <LargeTitle>{large.name}</LargeTitle>
+              <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>
+                <Image src={arrow} alt="카테고리 탐색" />
+              </GoCategoryButton>
+            </LargeItem>
+          );
+        })}
+      </LargeItemUl>
     </LargeItemDiv>
   );
 };
