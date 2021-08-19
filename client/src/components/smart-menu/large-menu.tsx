@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
+import { ITEM_LIST_URL } from 'constants/urls';
 import arrow from 'assets/icons/arrow_forward.png';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
@@ -88,7 +89,10 @@ const Image = styled.img`
 
 const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
   const history = useHistory();
-  const goCategoryPage = useCallback((code: string) => () => history.push(`/item/category/${code}`), [history]);
+  const goCategoryPage = useCallback(
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?category=${code}`),
+    [history],
+  );
 
   return (
     <LargeItemDiv>
