@@ -25,12 +25,11 @@ async function getItems(
     (!categoryId && !search) ||
     (categoryId && categoryId.length !== 6) ||
     Number.isNaN(pageId)
-  ) {
+  )
     throw errorGenerator({
       message: 'POST /api/item - no exist querystring',
       code: 'item/no-exist-querystring',
     });
-  }
 
   const order = [];
   // TODO recommend 수정 예정
@@ -43,10 +42,10 @@ async function getItems(
   let items;
   if (categoryId) {
     let categoryReg = '';
-    if (categoryReg) {
-      if (categoryId.slice(2, 4) === '00') categoryReg = categoryId.slice(0, 2);
-      else categoryId.slice(0, 4);
-    }
+    if (categoryId === '000000') categoryReg = '';
+    else if (categoryId.slice(2, 4) === '00') categoryReg = categoryId.slice(0, 2);
+    else categoryReg = categoryId.slice(0, 4);
+
     items = await itemRepository.getCategoryItems(pageId, order, categoryReg);
   } else {
     const regExp = String(
@@ -54,6 +53,7 @@ async function getItems(
         initialSearch: true,
       }),
     );
+
     items = await itemRepository.getSearchItems(pageId, order, regExp.substring(0, regExp.length - 2).slice(1));
   }
   return items;
