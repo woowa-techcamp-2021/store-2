@@ -4,7 +4,9 @@ import { IItem } from 'types/item';
 import ItemList from 'components/item/item-list';
 
 interface ItemListProps {
-  items: IItem[] | null;
+  popularItems: IItem[] | null;
+  newItems: IItem[] | null;
+  recommendItems: IItem[] | null;
   loading: boolean;
 }
 
@@ -33,14 +35,18 @@ const SmallTitle = styled.div`
   }
 `;
 
-const Items: FC<ItemListProps> = ({ items, loading }) => {
+const MainItemWrapper: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, loading }) => {
   return (
     <Div>
       {loading && <div>로딩중</div>}
-      <SmallTitle>총 개수, 추천 등등...</SmallTitle>
-      <ItemList items={items} isLoading={loading} />
+      <SmallTitle>잘나가요</SmallTitle>
+      <ItemList items={popularItems} isLoading={loading} />
+      <SmallTitle>새로 나왔어요</SmallTitle>
+      <ItemList items={newItems} isLoading={loading} />
+      <SmallTitle>추천 드려요</SmallTitle>
+      <ItemList items={recommendItems} isLoading={loading} />
     </Div>
   );
 };
 
-export default Items;
+export default MainItemWrapper;

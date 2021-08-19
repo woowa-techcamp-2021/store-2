@@ -5,7 +5,7 @@ import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
 import { useQuery } from 'lib/router';
 import SearchContainer from 'containers/search-container';
-import ItemsContainer from 'containers/items-container';
+import ItemListContainer from 'containers/item-list-container';
 
 const ItemListPage = (): ReactElement => {
   const query = useQuery();
@@ -18,7 +18,7 @@ const ItemListPage = (): ReactElement => {
       <main>
         <SmartMenuContainer currentCode={query.categoryId} />
         <SearchContainer />
-        <ItemsContainer />
+        <ItemListContainer />
       </main>
       <Footer isMobile={isMobile} />
     </Layout>
