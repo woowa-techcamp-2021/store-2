@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 
 import alertImg from 'assets/icons/congrats.gif';
@@ -8,6 +8,8 @@ interface ModalProps {
   type: 'alert' | 'confirm';
   header?: ReactNode;
   body?: ReactNode;
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
   onCancel?: () => void;
   onConfirm?: () => void;
 }
@@ -19,7 +21,7 @@ const ModalBlock = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
+  display: ${props => (props.visible ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -35,6 +37,7 @@ const Inner = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 50px;
   height: 500px;
+  animation: fadeinfromtop 1s;
 
   ${({ theme }) => theme?.mobile} {
     border-radius: 40px;
@@ -133,9 +136,22 @@ const ModalFooter = styled.div`
   }
 `;
 
-const Modal: FC<ModalProps> = ({ type, header, body, onCancel, onConfirm }) => {
+const Modal: FC<ModalProps> = ({ type, header, body, visible, setVisible, onCancel, onConfirm }) => {
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+  const modalClickHandler = (e: Event) => {
+    if (e.target === e.currentTarget) closeModal();
+  };
+
+  const confirmHandler = () => {
+    closeModal();
+    if (onConfirm) onConfirm();
+  };
+
   return (
-    <ModalBlock>
+    <ModalBlock onClick={modalClickHandler} visible={visible}>
       <Inner className="modal-inner">
         <ModalHeader>
           <img src={type === 'alert' ? alertImg : confirmImg} alt="modal-img" />
@@ -146,10 +162,10 @@ const Modal: FC<ModalProps> = ({ type, header, body, onCancel, onConfirm }) => {
         </ModalBody>
         {type === 'confirm' && (
           <ModalFooter>
-            <button type="button" onClick={onCancel}>
+            <button type="button" onClick={onCancel || closeModal}>
               아니오
             </button>
-            <button type="button" onClick={onConfirm}>
+            <button type="button" onClick={confirmHandler}>
               네
             </button>
           </ModalFooter>

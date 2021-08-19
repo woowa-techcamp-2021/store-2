@@ -1,5 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
+import Header from './header';
+import Footer from './footer';
+
+interface LayoutProps {
+  displayMain?: boolean;
+  isMobile: boolean;
+}
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -11,7 +18,6 @@ const Wrapper = styled.div`
     flex: 1;
     padding: 0 10%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
   }
 
@@ -30,8 +36,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const Layout: FC = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+const Layout: FC<LayoutProps> = ({ children, displayMain = false, isMobile }) => {
+  return (
+    <Wrapper>
+      <Header displayMain={displayMain} isMobile={isMobile} />
+      <main>{children}</main>
+      <Footer isMobile={isMobile} />
+    </Wrapper>
+  );
 };
 
 export default Layout;

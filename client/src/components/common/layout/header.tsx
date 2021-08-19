@@ -1,16 +1,13 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Logo, Navbar } from 'components';
-import { MAIN_URL } from 'constants/urls';
+import { Logo } from 'components';
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
 
 interface HeaderProps {
   displayMain: boolean;
   isMobile: boolean;
-  userId: string | null | undefined;
-  onLogout: () => void;
 }
 
 const Wrapper = styled.header`
@@ -46,7 +43,7 @@ const LogoWrapper = styled.div`
   padding: 25px 0;
 `;
 
-const Header: FC<HeaderProps> = ({ displayMain, isMobile, userId, onLogout }) => {
+const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
   const renderLogo = () => {
     if (isMobile) {
       if (displayMain) return <Tent />;
@@ -64,19 +61,14 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile, userId, onLogout }) =>
     }
     return (
       <LogoWrapper>
-        <Link to={MAIN_URL}>
+        <Link to="/">
           <Logo className="header-logo" width="200px" />
         </Link>
       </LogoWrapper>
     );
   };
 
-  return (
-    <Wrapper>
-      <Navbar white={displayMain} mobile={isMobile} userId={userId} onLogout={onLogout} />
-      {renderLogo()}
-    </Wrapper>
-  );
+  return <Wrapper>{renderLogo()}</Wrapper>;
 };
 
 export default Header;

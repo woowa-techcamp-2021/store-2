@@ -1,12 +1,12 @@
 import React, { FC, useState, MouseEvent } from 'react';
 import styled from 'lib/woowahan-components';
 import { formatPrice } from 'utils';
-import likeIcon from 'assets/icons/like.png';
-import likeFilledIcon from 'assets/icons/like-filled.png';
-import badgeBestIcon from 'assets/icons/badge_best.png';
-import badgeGreenIcon from 'assets/icons/badge_green.png';
-import badgeNewIcon from 'assets/icons/badge_new.png';
-import badgeSaleIcon from 'assets/icons/badge_sale.png';
+import likeIcon from 'assets/icons/like.svg';
+import likeFilledIcon from 'assets/icons/like_filled.svg';
+import badgeBestIcon from 'assets/icons/badge_best.svg';
+import badgeGreenIcon from 'assets/icons/badge_green.svg';
+import badgeNewIcon from 'assets/icons/badge_new.svg';
+import badgeSaleIcon from 'assets/icons/badge_sale.svg';
 
 interface ItemProps {
   thumbnail: string;

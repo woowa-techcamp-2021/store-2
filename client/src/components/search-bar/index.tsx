@@ -3,7 +3,7 @@ import styled from 'lib/woowahan-components';
 
 import useOutSideClick from 'hooks/use-out-side-click';
 
-import searchIcon from 'assets/icons/search.png';
+import searchIcon from 'assets/icons/search.svg';
 
 import RecentKeywordBox from './recent-keyword-box';
 
@@ -31,7 +31,7 @@ const SearchBarContainer = styled.section`
   }
 
   img {
-    height: 25px;
+    height: 30px;
   }
 `;
 

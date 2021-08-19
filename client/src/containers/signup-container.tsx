@@ -15,7 +15,7 @@ const SignupContainer: FC = () => {
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
     loading: loading['auth/getSignup'],
     error: auth.signup.error,
@@ -37,9 +37,9 @@ const SignupContainer: FC = () => {
   useEffect(() => {
     if (userLoading) history.push(MAIN_URL);
     if (userId) {
-      setModal(true);
+      setModalVisible(true);
       setTimeout(() => {
-        setModal(false);
+        setModalVisible(false);
         history.push(MAIN_URL);
       }, 1000);
     }
@@ -66,10 +66,9 @@ const SignupContainer: FC = () => {
         error={authError}
         loading={loading}
         isSignup
-        check={check}
         onCheckChange={onCheckChange}
       />
-      {modal && <AuthSuccessModal userId={userId} />}
+      <AuthSuccessModal userId={userId} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };

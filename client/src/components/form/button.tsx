@@ -11,7 +11,7 @@ const Button = styled.button`
   opacity: 0.9;
   margin-bottom: 10px;
   background-color: ${props => {
-    if (props.color === 'dark') return props.theme?.colorLineDark;
+    if (props.color === 'primary') return props.theme?.colorPrimary;
     if (props.color === 'github') return props.theme?.colorGithub;
     return props.theme?.colorLine;
   }};

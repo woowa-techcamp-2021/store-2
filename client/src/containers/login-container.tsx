@@ -45,8 +45,20 @@ const LoginContainer: FC = () => {
     else dispatch({ type: getLogin.type, payload: { id, password } });
   };
 
+  const onGuestLogin = () => {
+    dispatch({ type: getLogin.type, payload: { id: 'guest', password: 'guest' } });
+  };
+
   return (
-    <AuthForm id={id} password={password} onChange={onChange} onSubmit={onSubmit} error={authError} loading={loading} />
+    <AuthForm
+      id={id}
+      password={password}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      onGuestLogin={onGuestLogin}
+      error={authError}
+      loading={loading}
+    />
   );
 };
 

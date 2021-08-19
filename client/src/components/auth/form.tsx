@@ -1,20 +1,21 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Input, Button } from 'components';
+import { Input, Button, Loader, CheckBox } from 'components';
 import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
+import { GITHUB_LOGIN_LINK } from 'constants/index';
 
 interface AuthFormProps {
   id: string;
   password: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onGuestLogin?: () => void;
   error: string | null;
   loading: boolean;
   isSignup?: boolean;
-  check?: boolean;
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -60,19 +61,6 @@ const Image = styled.img`
   }
 `;
 
-const CheckBoxLabel = styled.label`
-  cursor: pointer;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: flex-end;
-  font-family: ${props => props.theme?.fontHannaAir};
-  color: ${props => props.theme?.colorSoftBlack};
-
-  input[type='checkbox'] {
-    margin-right: 10px;
-  }
-`;
-
 const Error = styled.div`
   color: ${props => props.theme?.colorError};
   font-family: ${props => props.theme?.fontHannaAir};
@@ -93,9 +81,26 @@ const LinkWrapper = styled.div`
     font-size: 18px;
     color: ${props => props.theme?.colorTextBeige};
 
-    :hover {
+    &:hover {
       color: ${props => props.theme?.colorLine};
     }
+  }
+`;
+
+const GuestButton = styled.button`
+  padding: 5px;
+  margin-bottom: 10px;
+
+  span {
+    color: ${props => props.theme?.colorGreyMid};
+    font-family: ${props => props.theme?.fontHanna};
+    font-size: 16px;
+    padding: 0 5px;
+  }
+
+  &:hover span {
+    color: ${props => props.theme?.colorPrimary};
+    border-bottom: 1px solid ${props => props.theme?.colorPrimary};
   }
 `;
 
@@ -104,21 +109,22 @@ const AuthForm: FC<AuthFormProps> = ({
   password,
   onChange,
   onSubmit,
+  onGuestLogin,
   error,
   loading,
   isSignup,
-  check,
   onCheckChange,
 }) => {
+  const [githubLoading, setGithubLoading] = useState(false);
   const goGithub = () => {
-    window.location.href = `http://${window.location.hostname}:3000/api/auth/github`;
+    setGithubLoading(true);
+    window.location.href = GITHUB_LOGIN_LINK;
   };
   const FORM_TEXT = isSignup ? '회원가입' : '로그인';
 
   return (
     <Wrapper>
       <Form onSubmit={onSubmit}>
-        {loading && <div>로딩중~~</div>}
         <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={30} />
         <Input
           type="password"
@@ -128,17 +134,24 @@ const AuthForm: FC<AuthFormProps> = ({
           onChange={onChange}
           maxLength={20}
         />
-        {isSignup && (
-          <CheckBoxLabel htmlFor="signup-agree">
-            <input type="checkbox" checked={check} onChange={onCheckChange} id="signup-agree" />
-            배민문방구 전체 동의
-          </CheckBoxLabel>
-        )}
+        {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
 
         <Error>{error}</Error>
+        {!isSignup && (
+          <GuestButton type="button" onClick={onGuestLogin}>
+            <span>게스트 로그인</span>
+          </GuestButton>
+        )}
+
         <Button type="submit">
-          <Image src={baedal} alt="배달이" />
-          {FORM_TEXT}
+          {loading ? (
+            <Loader size="25px" color="brown" />
+          ) : (
+            <>
+              <Image src={baedal} alt="form-icon" />
+              {FORM_TEXT}
+            </>
+          )}
         </Button>
       </Form>
 
@@ -149,8 +162,14 @@ const AuthForm: FC<AuthFormProps> = ({
       ) : (
         <>
           <Button type="button" color="github" onClick={goGithub}>
-            <Image src={github} alt="배달이" />
-            깃-헙으로 로그인
+            {githubLoading ? (
+              <Loader size="25px" color="grey" />
+            ) : (
+              <>
+                <Image src={github} alt="github-icon" />
+                깃-헙으로 로그인
+              </>
+            )}
           </Button>
           <LinkWrapper>
             <Link to={SIGNUP_URL}>계정이 없다면? 회원가입하러 가기</Link>
