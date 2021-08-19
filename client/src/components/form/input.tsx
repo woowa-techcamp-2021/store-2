@@ -1,6 +1,6 @@
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 
-const Input = woowahan.input`
+const Input = styled.input`
   border: 0;
   border-bottom: 2px solid ${props => props.theme?.colorGreyMid};
   color: ${props => props.theme?.colorSoftBlack};

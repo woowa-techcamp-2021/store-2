@@ -1,6 +1,6 @@
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 
-const Button = woowahan.button`
+const Button = styled.button`
   cursor: pointer;
   border: 0;
   display: flex;

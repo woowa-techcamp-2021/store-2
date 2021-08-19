@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 
 import alertImg from 'assets/icons/congrats.gif';
 import confirmImg from 'assets/icons/wait.png';
@@ -12,7 +12,7 @@ interface ModalProps {
   onConfirm?: () => void;
 }
 
-const ModalBlock = woowahan.div`
+const ModalBlock = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -26,7 +26,7 @@ const ModalBlock = woowahan.div`
   z-index: 10;
 `;
 
-const Inner = woowahan.div`
+const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,7 +52,7 @@ const Inner = woowahan.div`
   }
 `;
 
-const ModalHeader = woowahan.div`
+const ModalHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +82,7 @@ const ModalHeader = woowahan.div`
   }
 `;
 
-const ModalBody = woowahan.div`
+const ModalBody = styled.div`
   text-align: center;
   margin-bottom: 20px;
 
@@ -101,7 +101,7 @@ const ModalBody = woowahan.div`
   }
 `;
 
-const ModalFooter = woowahan.div`
+const ModalFooter = styled.div`
   margin-top: 10px;
 
   button {

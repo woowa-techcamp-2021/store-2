@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'lib/router';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Logo } from 'components';
 
 import accountIcon from 'assets/icons/account.png';
@@ -15,7 +15,7 @@ interface NavbarProps {
   onLogout: () => void;
 }
 
-const Wrapper = woowahan.nav`
+const Wrapper = styled.nav`
   background-color: ${props => (props.white ? props.theme?.colorWhite : props.theme?.colorBg)};
   border-bottom: 1px solid ${props => props.theme?.colorLineLight};
   padding: 10px 10%;
