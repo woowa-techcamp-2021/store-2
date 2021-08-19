@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 interface SmartMenuContainerProps {
-  currentMenu: string;
+  currentCode?: string;
 }
 
 const generateMenu = (data: ICategory[]) => {
@@ -37,11 +37,13 @@ const generateMenu = (data: ICategory[]) => {
   return dataJson;
 };
 
-const SmartMenuContainer: FC<SmartMenuContainerProps> = ({ currentMenu }) => {
+const SmartMenuContainer: FC<SmartMenuContainerProps> = ({ currentCode }) => {
   const { data } = useSelector(({ category }: RootState) => ({
     data: category.categories.data,
   }));
-  return <SmartMenu currentMenu={currentMenu} menu={generateMenu(data)} />;
+  const currentName = currentCode ? data.find(category => category.code === currentCode)?.name : '캇테고리';
+  console.log(currentCode, currentName);
+  return <SmartMenu currentMenu={currentName || '캇테고리'} menu={generateMenu(data)} />;
 };
 
 export default SmartMenuContainer;
