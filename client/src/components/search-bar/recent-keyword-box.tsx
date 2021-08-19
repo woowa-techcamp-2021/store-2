@@ -3,6 +3,15 @@ import styled from 'lib/woowahan-components';
 
 import xIcon from 'assets/icons/x.png';
 
+interface RecentKeywordBoxProps {
+  keywords: string[];
+  isOpen: boolean;
+  isRecent: boolean;
+  setInput: (keyword: string) => void;
+  removeRecentKeyword: (index: number) => void;
+  moveToSearchPage: (keyword: string) => void;
+}
+
 const Container = styled.ul`
   position: absolute;
   padding: 4px;
@@ -37,15 +46,6 @@ const KeywordList = styled.li`
     height: 10px;
   }
 `;
-
-interface RecentKeywordBoxProps {
-  keywords: string[];
-  isOpen: boolean;
-  isRecent: boolean;
-  setInput: (keyword: string) => void;
-  removeRecentKeyword: (index: number) => void;
-  moveToSearchPage: (keyword: string) => void;
-}
 
 const RecentKeywordBox: FC<RecentKeywordBoxProps> = ({
   keywords,
