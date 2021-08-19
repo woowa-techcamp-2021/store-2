@@ -1,5 +1,5 @@
-import React, { useState, FC, useEffect } from 'react';
-import woowahan from 'lib/woowahan-components';
+import React, { useState, FC } from 'react';
+import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types/category';
 import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
@@ -12,7 +12,7 @@ interface SmartMenuProps {
   menu: IMenu;
 }
 
-const MenuDiv = woowahan.div`
+const MenuDiv = styled.div`
   cursor: pointer;
   position: fixed;
   top: 10%;
@@ -29,7 +29,7 @@ const MenuDiv = woowahan.div`
   z-index: 1000;
 `;
 
-const MenuTitle = woowahan.div`
+const MenuTitle = styled.div`
   padding-left: 20px;
   color: ${({ theme }) => theme?.colorLineDark};
   font-family: ${({ theme }) => theme?.fontHanna};

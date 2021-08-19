@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
 import arrow from 'assets/icons/arrow_forward.png';
@@ -11,11 +11,11 @@ interface MediumMenuProps {
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MediumItemDiv = woowahan.div`
+const MediumItemDiv = styled.div`
   display: flex;
 `;
 
-const MediumItem = woowahan.ul`
+const MediumItem = styled.ul`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;
@@ -39,11 +39,11 @@ const MediumItem = woowahan.ul`
   }
 `;
 
-const MediumTitle = woowahan.div`
+const MediumTitle = styled.div`
   padding-top: 3px;
 `;
 
-const GoCategoryButton = woowahan.div`
+const GoCategoryButton = styled.div`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
   ${({ theme }) => theme?.mobile} {
@@ -57,7 +57,7 @@ const GoCategoryButton = woowahan.div`
   }
 `;
 
-const Image = woowahan.img`
+const Image = styled.img`
   ${({ theme }) => theme?.mobile} {
     width: 16px;
   }

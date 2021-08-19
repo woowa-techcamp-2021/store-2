@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { IMenu } from 'types/category';
 
 interface SmallMenuProps {
@@ -8,12 +8,12 @@ interface SmallMenuProps {
   selectedMediumId: string;
 }
 
-const SmallItemDiv = woowahan.div`
+const SmallItemDiv = styled.div`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
 `;
 
-const SmallItem = woowahan.div`
+const SmallItem = styled.div`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   font-size: 26px;
   background-color: ${({ theme }) => theme?.colorBg};

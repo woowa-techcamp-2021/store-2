@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
 import arrow from 'assets/icons/arrow_forward.png';
@@ -19,7 +19,7 @@ interface LargeMenuProps {
   >;
 }
 
-const LargeItemDiv = woowahan.ul`
+const LargeItemDiv = styled.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${({ theme }) => theme?.colorBg};
@@ -27,7 +27,7 @@ const LargeItemDiv = woowahan.ul`
   padding-left: 32px;
 `;
 
-const LargeItem = woowahan.li`
+const LargeItem = styled.li`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   display: flex;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
@@ -49,11 +49,11 @@ const LargeItem = woowahan.li`
   }
 `;
 
-const LargeTitle = woowahan.div`
-  padding-top: 3px; 
+const LargeTitle = styled.div`
+  padding-top: 3px;
 `;
 
-const GoCategoryButton = woowahan.div`
+const GoCategoryButton = styled.div`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
   ${({ theme }) => theme?.mobile} {
@@ -67,7 +67,7 @@ const GoCategoryButton = woowahan.div`
   }
 `;
 
-const Image = woowahan.img`
+const Image = styled.img`
   ${({ theme }) => theme?.mobile} {
     width: 16px;
   }
