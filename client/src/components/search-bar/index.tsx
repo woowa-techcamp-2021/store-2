@@ -23,7 +23,7 @@ const SearchBarContainer = styled.section`
   display: flex;
   justify-content: center;
   height: fit-content;
-  margin: 24px 0;
+  margin: 48px 0;
 
   form {
     display: flex;
