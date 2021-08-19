@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Logo } from 'components';
 
 interface FooterProps {
   isMobile: boolean;
 }
 
-const Wrapper = woowahan.footer`
+const Wrapper = styled.footer`
   width: 100%;
   min-height: 200px;
   background-color: ${props => props.theme?.colorFooter};
@@ -21,7 +21,7 @@ const Wrapper = woowahan.footer`
   }
 `;
 
-const Left = woowahan.div`
+const Left = styled.div`
   width: 30%;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ const Left = woowahan.div`
   }
 `;
 
-const Right = woowahan.div`
+const Right = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ const Right = woowahan.div`
   }
 `;
 
-const Links = woowahan.div`
+const Links = styled.div`
   margin-top: 5px;
   margin-bottom: 20px;
 
@@ -77,7 +77,7 @@ const Links = woowahan.div`
   }
 `;
 
-const Info = woowahan.div`
+const Info = styled.div`
   p {
     color: ${props => props.theme?.colorGreyDark};
     font-size: 12px;
@@ -141,7 +141,7 @@ const Footer: FC<FooterProps> = ({ isMobile }) => {
               상호 : (주)그림의남자들 | 대표 : 윤민상 | 사업자등록번호 : 120-87-65763 | 통신판매업신고번호 :
               2012-서울송파-0515
             </p>
-            <p>팩스번호 : 050-605-0041 | 메일 : baemin_store@woowahan.com | 배민문방구 인스타그램 : @baemin_store</p>
+            <p>팩스번호 : 050-605-0041 | 메일 : baemin_store@styled.com | 배민문방구 인스타그램 : @baemin_store</p>
             <p>주소 : 서울특별시 송파구 위례성대로 2 장은빌딩 | 호스팅제공 : AWS</p>
             <p>© Men of the geurim Corp. All right Reserved</p>
           </Info>

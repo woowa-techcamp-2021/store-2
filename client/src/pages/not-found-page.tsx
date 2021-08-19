@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
 
-const Text = woowahan.div`
+const Text = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Input, Button } from 'components';
 import baedal from 'assets/icons/baedalee.png';
@@ -17,7 +17,7 @@ interface AuthFormProps {
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Wrapper = woowahan.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 50px;
@@ -39,13 +39,13 @@ const Wrapper = woowahan.div`
   }
 `;
 
-const Form = woowahan.form`
+const Form = styled.form`
   > * {
     width: 100%;
   }
 `;
 
-const Image = woowahan.img`
+const Image = styled.img`
   margin-right: 10px;
 
   ${({ theme }) => theme?.mobile} {
@@ -59,7 +59,7 @@ const Image = woowahan.img`
   }
 `;
 
-const CheckBoxLabel = woowahan.label`
+const CheckBoxLabel = styled.label`
   cursor: pointer;
   margin-bottom: 20px;
   display: flex;
@@ -72,7 +72,7 @@ const CheckBoxLabel = woowahan.label`
   }
 `;
 
-const Error = woowahan.div`
+const Error = styled.div`
   color: ${props => props.theme?.colorError};
   font-family: ${props => props.theme?.fontHannaAir};
   font-size: 14px;
@@ -80,7 +80,7 @@ const Error = woowahan.div`
   text-indent: 5px;
 `;
 
-const LinkWrapper = woowahan.div`
+const LinkWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { IMenu } from 'types/category';
 import { SMART_MENU_BLOCK_DELAY } from '../../constants';
 
@@ -17,7 +17,7 @@ interface LargeMenuProps {
   >;
 }
 
-const LargeItemDiv = woowahan.ul`
+const LargeItemDiv = styled.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${({ theme }) => theme?.colorBg};
@@ -25,7 +25,7 @@ const LargeItemDiv = woowahan.ul`
   padding-left: 32px;
 `;
 
-const LargeItem = woowahan.li`
+const LargeItem = styled.li`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   display: flex;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};

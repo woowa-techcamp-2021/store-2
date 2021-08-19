@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { IMenu } from 'types/category';
 
 interface MediumMenuProps {
@@ -9,11 +9,11 @@ interface MediumMenuProps {
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MediumItemDiv = woowahan.div`
+const MediumItemDiv = styled.div`
   display: flex;
 `;
 
-const MediumItem = woowahan.ul`
+const MediumItem = styled.ul`
   font-family: ${({ theme }) => theme?.fontHannaAir};
   writing-mode: horizontal-tb;
   text-orientation: sideways;

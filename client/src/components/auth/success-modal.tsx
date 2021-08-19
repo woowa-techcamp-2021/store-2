@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Modal } from 'components';
 import { IUserId } from 'types/auth';
 
@@ -7,13 +7,13 @@ interface AuthSuccessModalProps {
   userId: IUserId;
 }
 
-const Title = woowahan.h2`
+const Title = styled.h2`
   span {
     color: ${props => props.theme?.colorPrimary};
   }
 `;
 
-const Info = woowahan.div`
+const Info = styled.div`
   p {
     margin-bottom: 3px;
   }

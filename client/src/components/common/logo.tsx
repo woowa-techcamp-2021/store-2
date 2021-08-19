@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 
 import LogoImg from 'assets/images/logo.png';
 import LogoTentImg from 'assets/images/logo_tent.png';
@@ -12,7 +12,7 @@ interface LogoProps {
   mobile?: boolean;
 }
 
-const Wrapper = woowahan.div`
+const Wrapper = styled.div`
   width: fit-content;
 `;
 

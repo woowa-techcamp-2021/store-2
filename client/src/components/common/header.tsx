@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
 import { Logo, Navbar } from 'components';
 import BrickBg from 'assets/images/brick.png';
@@ -12,11 +12,11 @@ interface HeaderProps {
   onLogout: () => void;
 }
 
-const Wrapper = woowahan.header`
+const Wrapper = styled.header`
   width: 100%;
 `;
 
-const Brick = woowahan.div`
+const Brick = styled.div`
   width: 100%;
   height: 150px;
   background-image: url(${BrickBg});
@@ -28,7 +28,7 @@ const Brick = woowahan.div`
   }
 `;
 
-const Tent = woowahan.div`
+const Tent = styled.div`
   width: 100%;
   height: 80px;
   background-image: url(${TentBg});
@@ -39,7 +39,7 @@ const Tent = woowahan.div`
   }
 `;
 
-const LogoWrapper = woowahan.div`
+const LogoWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 25px 0;

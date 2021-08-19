@@ -8,10 +8,10 @@ export interface IWoowahan {
   [key: string]: TaggedTemplateType;
 }
 
-const woowahan: IWoowahan = {};
+const styled: IWoowahan = {};
 
 tags.forEach((tag: string) => {
-  woowahan[tag] = woowahanComponent(tag);
+  styled[tag] = woowahanComponent(tag);
 });
 
-export default woowahan;
+export default styled;

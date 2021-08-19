@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import woowahan from 'lib/woowahan-components';
+import styled from 'lib/woowahan-components';
 import { Modal } from 'components';
 
-const Title = woowahan.h2`
+const Title = styled.h2`
   span {
     color: ${props => props.theme?.colorPrimary};
   }
