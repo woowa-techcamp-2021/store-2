@@ -66,7 +66,6 @@ const SignupContainer: FC = () => {
         error={authError}
         loading={loading}
         isSignup
-        check={check}
         onCheckChange={onCheckChange}
       />
       <AuthSuccessModal userId={userId} visible={modalVisible} setVisible={setModalVisible} />

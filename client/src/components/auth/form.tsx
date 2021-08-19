@@ -15,7 +15,6 @@ interface AuthFormProps {
   error: string | null;
   loading: boolean;
   isSignup?: boolean;
-  check?: boolean;
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -87,17 +86,7 @@ const LinkWrapper = styled.div`
   }
 `;
 
-const AuthForm: FC<AuthFormProps> = ({
-  id,
-  password,
-  onChange,
-  onSubmit,
-  error,
-  loading,
-  isSignup,
-  check,
-  onCheckChange,
-}) => {
+const AuthForm: FC<AuthFormProps> = ({ id, password, onChange, onSubmit, error, loading, isSignup, onCheckChange }) => {
   const [githubLoading, setGithubLoading] = useState(false);
   const goGithub = () => {
     setGithubLoading(true);
@@ -125,7 +114,7 @@ const AuthForm: FC<AuthFormProps> = ({
             <Loader size="25px" color="brown" />
           ) : (
             <>
-              <Image src={baedal} alt="배달이" />
+              <Image src={baedal} alt="form-icon" />
               {FORM_TEXT}
             </>
           )}
@@ -143,7 +132,7 @@ const AuthForm: FC<AuthFormProps> = ({
               <Loader size="25px" color="grey" />
             ) : (
               <>
-                <Image src={github} alt="배달이" />
+                <Image src={github} alt="github-icon" />
                 깃-헙으로 로그인
               </>
             )}
