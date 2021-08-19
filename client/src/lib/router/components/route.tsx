@@ -14,7 +14,7 @@ const Route: FC<IRoute> = ({ component, path, exact }) => {
 
   // TODO: 좀 더 세련된 방법으로
   const pathSplit = path.split('/');
-  const currentPathSplit = currentPath.split('/');
+  const currentPathSplit = currentPath.split('?')[0].split('/');
 
   const arr: [string, number][] = [];
   pathSplit.forEach((v, i) => {
