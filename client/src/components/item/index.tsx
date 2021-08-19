@@ -11,11 +11,10 @@ import badgeSaleIcon from 'assets/icons/badge_sale.png';
 interface ItemProps {
   thumbnail: string;
   title: string;
-  price: number;
+  price: string;
   isBest?: boolean;
-  isGreen?: boolean;
+  isGreen: boolean;
   isNew?: boolean;
-  isSale?: boolean;
   salePercent?: number;
   originalPrice?: number;
   onClick: () => void;
@@ -195,7 +194,6 @@ const Item: FC<ItemProps> = ({
   isBest,
   isGreen,
   isNew,
-  isSale,
   salePercent,
   originalPrice,
   onClick,
@@ -210,22 +208,22 @@ const Item: FC<ItemProps> = ({
   };
 
   return (
-    <Container bgColor={isSale ? 'red' : 'green'} onClick={onItemClick}>
+    <Container bgColor={salePercent ? 'red' : 'green'} onClick={onItemClick}>
       <Thumbnail>
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>
       <Info>
         <div className="title">{title}</div>
         <div className="price">
-          {formatPrice(price)}원 {isSale && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
+          {formatPrice(price)}원 {salePercent && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
         </div>
       </Info>
-      <SaleWrapper>{isSale && salePercent && <span>{salePercent}%</span>}</SaleWrapper>
+      <SaleWrapper>{salePercent && salePercent && <span>{salePercent}%</span>}</SaleWrapper>
       <BadgeWrapper>
         {isBest && <img src={badgeBestIcon} alt="badge" />}
         {isGreen && <img src={badgeGreenIcon} alt="badge" />}
         {isNew && <img src={badgeNewIcon} alt="badge" />}
-        {isSale && <img src={badgeSaleIcon} alt="badge" />}
+        {salePercent && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
       <LikeWrapper onClick={toggleLike}>
         {isLiked ? (

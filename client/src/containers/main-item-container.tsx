@@ -9,7 +9,7 @@ const MainItemContainer: FC = () => {
     popularItems: items.mainItems.popularItems,
     newItems: items.mainItems.newItems,
     recommendItems: items.mainItems.recommendItems,
-    loading: loading['auth/getMainItem'],
+    loading: loading['items/getMainItems'],
   }));
   const dispatch = useDispatch();
   useEffect(() => {

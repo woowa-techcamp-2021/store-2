@@ -29,7 +29,6 @@ const Wrapper = styled.div`
 
 const ItemList: FC<ItemListProps> = ({ items }) => {
   const history = useHistory();
-
   const goDetailPage = useCallback((id: number) => () => history.push(`/item/${id}`), [history]);
 
   return (
@@ -45,7 +44,6 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
               isBest={item.isBest}
               isGreen={item.isGreen}
               isNew={item.isNew}
-              isSale={item.isSale}
               salePercent={item.salePercent}
               originalPrice={item.originalPrice}
               onClick={goDetailPage(item.id)}

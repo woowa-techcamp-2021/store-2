@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem } from 'types/item';
 import ItemList from 'components/item/item-list';
