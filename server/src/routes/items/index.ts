@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { getCategoryItems, getMainItems } from 'controllers/items';
+import { getItems, getMainItems } from 'controllers/items';
 
 const router = Router();
 router.get('/main', getMainItems);
-router.get('/category', getCategoryItems);
+router.get('/', getItems);
 
 export default router;
