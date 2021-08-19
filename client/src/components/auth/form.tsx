@@ -137,9 +137,11 @@ const AuthForm: FC<AuthFormProps> = ({
         {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
 
         <Error>{error}</Error>
-        <GuestButton type="button" onClick={onGuestLogin}>
-          <span>게스트 로그인</span>
-        </GuestButton>
+        {!isSignup && (
+          <GuestButton type="button" onClick={onGuestLogin}>
+            <span>게스트 로그인</span>
+          </GuestButton>
+        )}
 
         <Button type="submit">
           {loading ? (
