@@ -214,7 +214,7 @@ const Item: FC<ItemProps> = ({
       <Info>
         <div className="title">{title}</div>
         <div className="price">
-          {formatPrice(price)}원 {salePercent && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
+          {formatPrice(price)}원 {salePercent !== 0 && originalPrice && <span>{formatPrice(originalPrice)}원</span>}
         </div>
       </Info>
       <SaleWrapper>{salePercent !== 0 && <span>{salePercent}%</span>}</SaleWrapper>
