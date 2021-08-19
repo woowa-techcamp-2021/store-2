@@ -4,7 +4,7 @@ import SmartMenuContainer from 'containers/smart-menu-container';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
 
-const MainPage = (): ReactElement => {
+const ItemDetailPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
@@ -12,7 +12,7 @@ const MainPage = (): ReactElement => {
     <Layout>
       <HeaderContainer isMobile={isMobile} />
       <main>
-        <SmartMenuContainer currentMenu="캇테고리" />
+        <SmartMenuContainer />
         여기는 아이템 디테일 페이지
       </main>
       <Footer isMobile={isMobile} />
@@ -20,4 +20,4 @@ const MainPage = (): ReactElement => {
   );
 };
 
-export default MainPage;
+export default ItemDetailPage;

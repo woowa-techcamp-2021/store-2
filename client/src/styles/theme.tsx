@@ -89,6 +89,16 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  input, button {
+    background: none;
+    border: none;
+    outline: none;
+    padding: none;
+  }
+  button {
+    cursor: pointer;
+  }
 `;
 
 const Theme: FC = ({ children }) => {

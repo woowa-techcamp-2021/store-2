@@ -63,7 +63,7 @@ const initialState: StateProps = {
   },
 };
 
-const counterSlice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -117,7 +117,7 @@ const counterSlice = createSlice({
   },
 });
 
-const { actions, reducer: authReducer } = counterSlice;
+const { actions, reducer: authReducer } = authSlice;
 const {
   getLogin,
   getLoginSuccess,

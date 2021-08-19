@@ -2,11 +2,10 @@ import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import HeaderContainer from 'containers/header-container';
-import MainItemContainer from 'containers/main-item-container';
 import { Layout, Footer } from 'components';
-import SearchBar from 'containers/search-container';
+import CategoryItemContainer from 'containers/category-container';
 
-const MainPage = (): ReactElement => {
+const CategoryPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
@@ -14,13 +13,12 @@ const MainPage = (): ReactElement => {
     <Layout>
       <HeaderContainer displayMain isMobile={isMobile} />
       <main>
-        <SmartMenuContainer />
-        <SearchBar />
-        <MainItemContainer />
+        <SmartMenuContainer currentMenu="캇테고리" />
+        <CategoryItemContainer />
       </main>
       <Footer isMobile={isMobile} />
     </Layout>
   );
 };
 
-export default MainPage;
+export default CategoryPage;

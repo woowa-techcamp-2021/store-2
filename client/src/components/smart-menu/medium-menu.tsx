@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
+import { useHistory } from 'lib/router';
 import { IMenu } from 'types/category';
+import arrow from 'assets/icons/arrow_forward.png';
 
 interface MediumMenuProps {
   menu: IMenu;
@@ -18,11 +20,13 @@ const MediumItem = styled.ul`
   writing-mode: horizontal-tb;
   text-orientation: sideways;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
   ${({ theme }) => theme?.mobile} {
-    width: 110px;
+    width: 130px;
     font-size: 16px;
   }
   ${({ theme }) => theme?.tablet} {
@@ -35,7 +39,40 @@ const MediumItem = styled.ul`
   }
 `;
 
+const MediumTitle = styled.div`
+  padding-top: 3px;
+`;
+
+const GoCategoryButton = styled.div`
+  font-family: ${({ theme }) => theme?.fontHannaAir};
+  visibility: ${props => (props.isSelected ? 'visible' : 'hidden')};
+  ${({ theme }) => theme?.mobile} {
+    font-size: 16px;
+  }
+  ${({ theme }) => theme?.tablet} {
+    font-size: 18px;
+  }
+  ${({ theme }) => theme?.laptop} {
+    font-size: 22px;
+  }
+`;
+
+const Image = styled.img`
+  ${({ theme }) => theme?.mobile} {
+    width: 16px;
+  }
+  ${({ theme }) => theme?.tablet} {
+    width: 22px;
+  }
+  ${({ theme }) => theme?.laptop} {
+    width: 24px;
+  }
+`;
+
 const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
+  const history = useHistory();
+  const goCategoryPage = useCallback((code: string) => () => history.push(`/item/category/${code}`), [history]);
+
   return (
     <MediumItemDiv>
       {menu.data.map(large => {
@@ -51,7 +88,10 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
                 }}
                 isSelected={selectedMediumId === mediumId}
               >
-                {medium.name}
+                <MediumTitle>{medium.name}</MediumTitle>
+                <GoCategoryButton isSelected={selectedMediumId === mediumId} onClick={goCategoryPage(medium.code)}>
+                  <Image src={arrow} alt="카테고리 탐색" />
+                </GoCategoryButton>
               </MediumItem>
             );
           });

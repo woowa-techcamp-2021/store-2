@@ -15,7 +15,7 @@ interface SmartMenuProps {
 const MenuDiv = styled.div`
   cursor: pointer;
   position: fixed;
-  top: 200px;
+  top: 10%;
   left: -27px;
   display: inline-block;
   writing-mode: vertical-lr;
@@ -61,7 +61,13 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [selectedLargeId, setLargeId] = useState('');
   const [selectedMediumId, setMediumId] = useState('');
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [menuName, setMenuName] = useState('');
   const { width } = useWindowSize();
+
+  if (currentMenu !== menuName) {
+    setMenuName(currentMenu);
+    setOpenStatus(false);
+  }
 
   return (
     <MenuDiv
@@ -87,7 +93,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setPosition={setPosition}
         />
       )}
-      {selectedLargeId !== '' && (
+      {isOpen && selectedLargeId !== '' && (
         <MediumMenu
           menu={menu}
           selectedLargeId={selectedLargeId}
@@ -95,7 +101,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setMediumId={setMediumId}
         />
       )}
-      {!isSmall(width) && selectedMediumId !== '' && (
+      {isOpen && !isSmall(width) && selectedMediumId !== '' && (
         <SmallMenu menu={menu} selectedLargeId={selectedLargeId} selectedMediumId={selectedMediumId} />
       )}
       <MenuTitle

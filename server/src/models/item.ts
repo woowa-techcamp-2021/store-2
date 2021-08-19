@@ -6,10 +6,11 @@ export interface ItemAttributes {
   thumbnail: string;
   contents: string;
   price: string;
-  sale_percent: number;
+  sale_percent: number | boolean;
   sale_count: number;
   amount: number;
-  is_green: number;
+  is_green: number | boolean;
+  isGreen?: number | boolean;
   CategoryId: string;
 }
 

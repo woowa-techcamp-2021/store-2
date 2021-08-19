@@ -12,6 +12,7 @@ export const getAllKeywords = async (regExp: string): Promise<Model<ItemAttribut
         [Op.regexp]: regExp,
       },
     },
+    limit: 5,
   });
 
   if (!searchSnapshot) {

@@ -4,7 +4,6 @@ import { CATEGORY_DATA } from 'config/constants';
 const { User, Item, Like, Address, Category, Order, Review } = db;
 
 export default async (): Promise<void> => {
-  // db안되면 외래키 다시보기
   User.belongsToMany(Item, { through: Like });
   User.hasMany(Address);
   User.hasMany(Order);
