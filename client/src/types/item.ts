@@ -2,11 +2,10 @@ export interface IItem {
   id: number;
   thumbnail: string;
   title: string;
-  price: number;
+  price: string;
   isBest?: boolean;
-  isGreen?: boolean;
+  isGreen: boolean;
   isNew?: boolean;
-  isSale?: boolean;
-  salePercent?: number;
+  salePercent: number;
   originalPrice?: number;
 }
