@@ -15,7 +15,7 @@ interface SmartMenuProps {
 const MenuDiv = woowahan.div`
   cursor: pointer;
   position: fixed;
-  top: 200px;
+  top: 10%;
   left: -27px;
   display: inline-block;
   writing-mode: vertical-lr;
