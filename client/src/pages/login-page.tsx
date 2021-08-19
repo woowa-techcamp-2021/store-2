@@ -1,8 +1,16 @@
 import React, { ReactElement } from 'react';
+import woowahan from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 import LoginContainer from 'containers/login-container';
 import HeaderContainer from 'containers/header-container';
 import { Layout, Footer } from 'components';
+
+const Div = woowahan.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+`;
 
 const LoginPage = (): ReactElement => {
   const { width } = useWindowSize();
@@ -12,7 +20,9 @@ const LoginPage = (): ReactElement => {
     <Layout>
       <HeaderContainer isMobile={isMobile} />
       <main>
-        <LoginContainer />
+        <Div>
+          <LoginContainer />
+        </Div>
       </main>
       <Footer isMobile={isMobile} />
     </Layout>

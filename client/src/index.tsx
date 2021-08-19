@@ -20,14 +20,10 @@ const store = configureStore({
 sagaMiddleware.run(rootSaga);
 
 function loadUser() {
-  try {
-    const user = localStorage.getItem('user');
-    if (!user) return;
+  const user = localStorage.getItem('user');
+  if (!user) return;
 
-    store.dispatch({ type: getUser.type });
-  } catch (e) {
-    throw new Error(e);
-  }
+  store.dispatch({ type: getUser.type });
 }
 
 loadUser();

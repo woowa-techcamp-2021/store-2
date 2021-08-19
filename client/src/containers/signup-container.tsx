@@ -25,7 +25,7 @@ const SignupContainer: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: getSignupReset });
+      dispatch({ type: getSignupReset.type });
     };
   }, [dispatch]);
 
