@@ -21,11 +21,12 @@ const MediumItem = woowahan.ul`
   text-orientation: sideways;
   background-color: ${props => (props.isSelected ? props.theme?.colorOffWhite : props.theme?.colorBg)};
   display: flex;
+  align-items: center;
   justify-content: space-between;
   border: 1px solid ${({ theme }) => theme?.colorOffWhite};
   padding: 10px;
   ${({ theme }) => theme?.mobile} {
-    width: 110px;
+    width: 130px;
     font-size: 16px;
   }
   ${({ theme }) => theme?.tablet} {
@@ -58,7 +59,7 @@ const GoCategoryButton = woowahan.div`
 
 const Image = woowahan.img`
   ${({ theme }) => theme?.mobile} {
-    width: 20px;
+    width: 16px;
   }
   ${({ theme }) => theme?.tablet} {
     width: 22px;

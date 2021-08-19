@@ -36,7 +36,7 @@ const LargeItem = woowahan.li`
   align-items: center;
   justify-content: space-between;
   ${({ theme }) => theme?.mobile} {
-    width: 110px;
+    width: 130px;
     font-size: 16px;
   }
   ${({ theme }) => theme?.tablet} {
@@ -69,7 +69,7 @@ const GoCategoryButton = woowahan.div`
 
 const Image = woowahan.img`
   ${({ theme }) => theme?.mobile} {
-    width: 20px;
+    width: 16px;
   }
   ${({ theme }) => theme?.tablet} {
     width: 22px;
