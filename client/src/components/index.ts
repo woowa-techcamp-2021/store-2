@@ -6,3 +6,4 @@ export { default as Loader } from './common/loader';
 
 export { default as Input } from './form/input';
 export { default as Button } from './form/button';
+export { default as CheckBox } from './form/check-box';

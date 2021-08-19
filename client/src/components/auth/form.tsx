@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Input, Button, Loader } from 'components';
+import { Input, Button, Loader, CheckBox } from 'components';
 import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
@@ -61,19 +61,6 @@ const Image = styled.img`
   }
 `;
 
-const CheckBoxLabel = styled.label`
-  cursor: pointer;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: flex-end;
-  font-family: ${props => props.theme?.fontHannaAir};
-  color: ${props => props.theme?.colorSoftBlack};
-
-  input[type='checkbox'] {
-    margin-right: 10px;
-  }
-`;
-
 const Error = styled.div`
   color: ${props => props.theme?.colorError};
   font-family: ${props => props.theme?.fontHannaAir};
@@ -130,12 +117,7 @@ const AuthForm: FC<AuthFormProps> = ({
           onChange={onChange}
           maxLength={20}
         />
-        {isSignup && (
-          <CheckBoxLabel htmlFor="signup-agree">
-            <input type="checkbox" checked={check} onChange={onCheckChange} id="signup-agree" />
-            배민문방구 전체 동의
-          </CheckBoxLabel>
-        )}
+        {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
 
         <Error>{error}</Error>
         <Button type="submit">
