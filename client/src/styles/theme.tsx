@@ -92,6 +92,12 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  @keyframes spinner {
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+
   #root {
     width: 100%;
     height: 100vh;
