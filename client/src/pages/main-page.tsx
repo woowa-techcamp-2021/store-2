@@ -4,8 +4,8 @@ import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import MainItemContainer from 'containers/main-item-container';
-import { Layout } from 'components';
-import SearchContainer from 'containers/search-container';
+import SearchBar from 'containers/search-container';
+import { Layout, Banner } from 'components';
 
 const Wrapper = styled.article`
   width: 100%;
@@ -22,6 +22,7 @@ const MainPage = (): ReactElement => {
         <SmartMenuContainer />
         <Wrapper>
           <SearchContainer />
+          <Banner />
           <MainItemContainer />
         </Wrapper>
       </Layout>
