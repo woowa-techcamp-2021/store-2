@@ -5,6 +5,18 @@ import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 
 import errorGenerator from 'utils/error/error-generator';
 
+const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
+  items.forEach(v => {
+    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
+    const salePercent = v.getDataValue('salePercent');
+    const price = parseInt(v.getDataValue('price') as string, 10);
+    if (salePercent !== 0) {
+      v.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
+      v.setDataValue('originalPrice', price);
+    }
+  });
+};
+
 const getMainItems = async (
   order: string[][],
   limit: number,
@@ -18,6 +30,7 @@ const getMainItems = async (
       ['sale_percent', 'salePercent'],
       'amount',
       ['is_green', 'isGreen'],
+      ['is_best', 'isBest'],
     ],
     order: order as Order,
     limit,
@@ -30,9 +43,7 @@ const getMainItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
   return items;
 };
@@ -71,9 +82,7 @@ const getCategoryItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
   return items;
 };
@@ -116,9 +125,7 @@ const getSearchItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
   return items;
 };
