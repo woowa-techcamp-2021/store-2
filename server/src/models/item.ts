@@ -15,8 +15,8 @@ export interface ItemAttributes {
   isGreen: number | boolean;
   is_best: number | boolean;
   isBest: number | boolean;
-  is_new: number | boolean;
-  isNew: number | boolean;
+  updatedAt: string;
+  isNew: boolean;
   CategoryId: string;
 }
 
@@ -67,11 +67,6 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
       defaultValue: 0,
     },
     is_best: {
-      type: DataTypes.TINYINT,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    is_new: {
       type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: 0,

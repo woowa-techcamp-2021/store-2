@@ -1,5 +1,5 @@
 import { db } from 'models';
-import { Model, Order, Op } from 'sequelize';
+import { Model, Order, Op, Sequelize } from 'sequelize';
 
 import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 
@@ -9,6 +9,12 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
   items.forEach(v => {
     v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
     v.setDataValue('isBest', v.getDataValue('isBest') === 1);
+
+    const isNewDate = new Date();
+    isNewDate.setMonth(isNewDate.getMonth() - 6);
+    const itemDate = new Date(v.getDataValue('updatedAt'));
+    if (isNewDate < itemDate) v.setDataValue('isNew', true);
+
     const salePercent = v.getDataValue('salePercent');
     const price = parseInt(v.getDataValue('price') as string, 10);
     if (salePercent !== 0) {
@@ -32,6 +38,7 @@ const getMainItems = async (
       'amount',
       ['is_green', 'isGreen'],
       ['is_best', 'isBest'],
+      [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
     ],
     order: order as Order,
     limit,
