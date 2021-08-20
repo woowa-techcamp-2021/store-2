@@ -14,6 +14,7 @@ export interface ItemAttributes {
   is_green: number | boolean;
   isGreen: number | boolean;
   is_best: number | boolean;
+  isBest: number | boolean;
   is_new: number | boolean;
   isNew: number | boolean;
   CategoryId: string;

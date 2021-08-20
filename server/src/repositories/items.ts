@@ -8,6 +8,7 @@ import errorGenerator from 'utils/error/error-generator';
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(v => {
     v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
+    v.setDataValue('isBest', v.getDataValue('isBest') === 1);
     const salePercent = v.getDataValue('salePercent');
     const price = parseInt(v.getDataValue('price') as string, 10);
     if (salePercent !== 0) {
