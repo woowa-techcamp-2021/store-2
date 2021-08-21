@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IItemsData, IMainItems } from 'types/item';
-import { IItemsState } from 'store/items';
+import { IItemsData, IMainItems, IItemsState } from 'types/item';
 import client from './client';
 
 export const getMainItems = (): Promise<AxiosResponse> => client.get<IMainItems>('/api/items/main');

@@ -2,17 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, takeLatest } from 'redux-saga/effects';
 import * as itemsAPI from 'utils/api/items';
 import axios, { AxiosResponse } from 'axios';
-import { IItem, IItemsData, IMainItems } from 'types/item';
+import { IItem, IItemsData, IItemsState, IMainItems } from 'types/item';
 import { put } from 'redux-saga-test-plan/matchers';
 import { IError } from 'types/error';
 import { finishLoading, startLoading } from './loading';
-
-export interface IItemsState {
-  categoryId?: string;
-  pageId?: number;
-  type?: string;
-  search?: string;
-}
 
 interface StateProps {
   mainItems: {

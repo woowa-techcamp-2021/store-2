@@ -20,3 +20,10 @@ export interface IMainItems {
   newItems: IItem[] | null;
   recommendItems: IItem[] | null;
 }
+
+export interface IItemsState {
+  categoryId?: string;
+  pageId?: number;
+  type?: string;
+  search?: string;
+}
