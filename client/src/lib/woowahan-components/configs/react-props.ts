@@ -23,6 +23,9 @@ const reactProps = [
   'onFocus',
   'onBlur',
   'onMouseMove',
+  'maxLength',
+  'onSubmit',
+  'htmlFor',
 ];
 
 export default reactProps;
