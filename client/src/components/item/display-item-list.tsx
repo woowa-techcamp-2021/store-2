@@ -6,6 +6,7 @@ import ItemList from './item-list';
 interface DisplayItemListProps {
   title: string;
   items: IItem[];
+  loading: boolean;
 }
 
 const Wrapper = styled.section`
@@ -57,14 +58,14 @@ const Title = styled.div`
   }
 `;
 
-const DisplayItemList: FC<DisplayItemListProps> = ({ title, items }) => {
+const DisplayItemList: FC<DisplayItemListProps> = ({ title, items, loading }) => {
   return (
     <Wrapper>
       <Title>
         <span className="text-point">{title.charAt(0)}</span>
         <span className="text-title">{title}</span>
       </Title>
-      <ItemList items={items} />
+      <ItemList items={items} isLoading={loading} />
     </Wrapper>
   );
 };

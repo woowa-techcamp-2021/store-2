@@ -41,9 +41,8 @@ const ItemListWrapper: FC<ItemListProps> = ({
 }) => {
   return (
     <Wrapper>
-      {loading && <div>로딩중</div>}
       <Filter total={totalCount} sortType={sortType} setSortType={setSortType} />
-      <ItemList items={items} />
+      <ItemList items={items} isLoading={loading} />
       <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
     </Wrapper>
   );
