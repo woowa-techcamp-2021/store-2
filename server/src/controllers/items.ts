@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import itemService from 'services/items';
+import itemService, { ItemType } from 'services/items';
 
 import errorHandler from 'utils/error/error-handler';
 
 interface IQuery {
   categoryId: string;
-  type: string;
+  type: ItemType;
   pageId: number;
   search: string;
 }

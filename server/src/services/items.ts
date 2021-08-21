@@ -8,7 +8,7 @@ interface IMainItems {
   recommendItems: IItems;
 }
 
-type Type = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive';
+export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
 
 async function mainItems(): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
@@ -20,7 +20,7 @@ async function mainItems(): Promise<IMainItems> {
   // TODO 3번째 recommend 수정 예정
 }
 
-async function getItems(categoryId: string, pageId = 1, type: Type, search: string): Promise<IItemsData> {
+async function getItems(categoryId: string, pageId = 1, type: ItemType, search: string): Promise<IItemsData> {
   if (
     (categoryId && search) ||
     (!categoryId && !search) ||
@@ -33,6 +33,7 @@ async function getItems(categoryId: string, pageId = 1, type: Type, search: stri
     });
 
   const order = [];
+  console.log('type', type);
   // TODO recommend 수정 예정
   if (type === 'recommend') order.push(['sale_count', 'DESC']);
   else if (type === 'popular') order.push(['sale_count', 'DESC']);
