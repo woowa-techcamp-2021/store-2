@@ -219,8 +219,15 @@ const Item: FC<ItemProps> = ({
     if ((e.target as HTMLDivElement).classList.contains('like')) return;
     onClick();
   };
+
+  const setBgColor = () => {
+    if (salePercent) return 'red';
+    if (isNew) return 'beige';
+    return 'green';
+  };
+
   return (
-    <Container bgColor={salePercent ? 'red' : 'green'} onClick={onItemClick}>
+    <Container bgColor={setBgColor()} onClick={onItemClick}>
       <Thumbnail>
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>
