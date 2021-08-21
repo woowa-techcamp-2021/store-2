@@ -12,13 +12,22 @@ interface FilterProps {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 0 16px 30px 16px;
+
+  @media all and (max-width: 730px) {
+    flex-direction: column;
+  }
 `;
 
 const Total = styled.div`
   color: ${props => props.theme?.colorSoftBlack};
   font-family: ${props => props.theme?.fontEuljiro};
   font-size: 18px;
+
+  @media all and (max-width: 730px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Sort = styled.div`
@@ -33,6 +42,16 @@ const Sort = styled.div`
 
     &.active {
       color: ${props => props.theme?.colorPrimary};
+    }
+  }
+
+  @media all and (max-width: 730px) {
+    text-align: center;
+    width: 70%;
+    font-size: 14px;
+
+    button {
+      font-size: 16px;
     }
   }
 `;
