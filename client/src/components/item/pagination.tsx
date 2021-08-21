@@ -11,7 +11,7 @@ interface PaginationProps {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 80px;
+  margin-top: 30px;
   margin-bottom: 60px;
   flex-wrap: wrap;
 `;
