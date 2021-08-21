@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as authAPI from 'utils/api/auth';
+import { IError } from 'types/error';
 import { startLoading, finishLoading } from 'store/loading';
 
 export interface IAuthState {
@@ -38,10 +39,6 @@ interface StateProps {
   user: IUser;
   logout: IAuth;
   githubSignup: IAuth;
-}
-
-interface IError {
-  errorMessage: string;
 }
 
 const initialState: StateProps = {
