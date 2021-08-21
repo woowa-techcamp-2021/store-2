@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem } from 'types/item';
 import ItemList from 'components/item/item-list';
@@ -6,8 +6,10 @@ import Pagination from './pagination';
 
 interface ItemListProps {
   items: IItem[];
-  pageCount: number;
   loading: boolean;
+  pageCount: number;
+  pageId: number;
+  setPageId: Dispatch<SetStateAction<number>>;
 }
 
 const Wrapper = styled.div`
@@ -37,13 +39,13 @@ const SmallTitle = styled.div`
   }
 `;
 
-const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount }) => {
+const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount, pageId, setPageId }) => {
   return (
     <Wrapper>
       {loading && <div>로딩중</div>}
       <SmallTitle>총 개수, 추천 등등...</SmallTitle>
       <ItemList items={items} />
-      <Pagination totalCnt={pageCount} />
+      <Pagination totalCnt={pageCount} activePage={pageId} setActivePage={setPageId} />
     </Wrapper>
   );
 };

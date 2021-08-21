@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { getMainItem } from 'store/item';
-import MainItemWrapper from 'components/item/main-item-wrapper';
+import { MainItemWrapper } from 'components';
 
 const MainItemContainer: FC = () => {
   const { popularItems, newItems, recommendItems, loading } = useSelector(({ item, loading }: RootState) => ({

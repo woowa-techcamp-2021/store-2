@@ -13,6 +13,8 @@ export interface IItemsData extends IItems {
   pageCount: number;
 }
 
+const LIMIT_COUNT = 12;
+
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(item => {
     item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
@@ -74,8 +76,8 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
     ],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
-    offset: (pageId - 1) * 8 + 1,
-    limit: 12,
+    offset: (pageId - 1) * LIMIT_COUNT + 1,
+    limit: LIMIT_COUNT,
     include: [
       {
         model: db.Category,
@@ -85,7 +87,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
   });
 
   const pageCount = Math.ceil(
-    (await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } })) / 12,
+    (await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } })) / LIMIT_COUNT,
   );
 
   if (!items) {
@@ -117,8 +119,8 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
         [Op.regexp]: regExp,
       },
     },
-    offset: (pageId - 1) * 8 + 1,
-    limit: 12,
+    offset: (pageId - 1) * LIMIT_COUNT + 1,
+    limit: LIMIT_COUNT,
     include: [
       {
         model: db.Category,
@@ -134,7 +136,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
           [Op.regexp]: regExp,
         },
       },
-    })) / 12,
+    })) / LIMIT_COUNT,
   );
 
   if (!items) {

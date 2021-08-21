@@ -1,15 +1,18 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 
 interface PaginationProps {
   totalCnt: number;
   showCnt?: number;
+  activePage: number;
+  setActivePage: Dispatch<SetStateAction<number>>;
 }
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 50px 0;
+  margin-top: 80px;
+  margin-bottom: 60px;
   flex-wrap: wrap;
 `;
 
@@ -29,29 +32,36 @@ const Button = styled.button`
   }
 `;
 
-const Pagination: FC<PaginationProps> = ({ totalCnt, showCnt = 10 }) => {
+const Pagination: FC<PaginationProps> = ({ totalCnt, showCnt = 10, activePage, setActivePage }) => {
   const [startPage, setStartPage] = useState(1);
-  const [activePage, setActivePage] = useState(1);
 
   const goNextPage = useCallback(() => {
     setStartPage(startPage + showCnt);
     setActivePage(startPage + showCnt);
-  }, [showCnt, startPage]);
+  }, [showCnt, startPage, setActivePage]);
 
   const goPrevPage = useCallback(() => {
     setStartPage(startPage - showCnt);
     setActivePage(startPage - showCnt);
-  }, [showCnt, startPage]);
+  }, [showCnt, startPage, setActivePage]);
 
-  const handleClickPage = useCallback(page => {
-    setActivePage(page);
-  }, []);
+  const handleClickPage = useCallback(
+    page => {
+      setActivePage(page);
+    },
+    [setActivePage],
+  );
 
   const renderPage = () => {
     const items = [];
     for (let page = startPage; page < startPage + showCnt && page <= totalCnt; page += 1) {
       items.push(
-        <Button type="button" className={activePage === page && 'active'} onClick={() => handleClickPage(page)}>
+        <Button
+          type="button"
+          key={page}
+          className={activePage === page && 'active'}
+          onClick={() => handleClickPage(page)}
+        >
           {page}
         </Button>,
       );
