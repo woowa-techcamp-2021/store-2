@@ -14,20 +14,20 @@ export interface IItemsData extends IItems {
 }
 
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-    v.setDataValue('isBest', v.getDataValue('isBest') === 1);
+  items.forEach(item => {
+    item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
+    item.setDataValue('isBest', item.getDataValue('isBest') === 1);
 
     const isNewDate = new Date();
     isNewDate.setMonth(isNewDate.getMonth() - 6);
-    const itemDate = new Date(v.getDataValue('updatedAt'));
-    if (isNewDate < itemDate) v.setDataValue('isNew', true);
+    const itemDate = new Date(item.getDataValue('updatedAt'));
+    if (isNewDate < itemDate) item.setDataValue('isNew', true);
 
-    const salePercent = v.getDataValue('salePercent');
-    const price = parseInt(v.getDataValue('price') as string, 10);
+    const salePercent = item.getDataValue('salePercent');
+    const price = parseInt(item.getDataValue('price') as string, 10);
     if (salePercent !== 0) {
-      v.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
-      v.setDataValue('originalPrice', price);
+      item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
+      item.setDataValue('originalPrice', price);
     }
   });
 };
