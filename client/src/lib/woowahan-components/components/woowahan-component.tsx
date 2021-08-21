@@ -1,19 +1,25 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { compile, serialize, stringify, middleware } from 'stylis';
 
 import useTheme from '../hooks/use-theme';
 import generateId from '../utils/generate-id';
-import parseString, { IProps, ExpType } from '../utils/parse-string';
-import { IThemeContext } from './theme-provider';
+import parseString, { ExpType } from '../utils/parse-string';
 
-export type TaggedTemplateType = (styleString: TemplateStringsArray, ...exps: ExpType) => FC<IProps>;
-type ElementProps = { [key: string]: unknown };
+import reactProps from '../configs/react-props';
 
-const woowahanComponent = (tag: string): TaggedTemplateType => {
-  const classMap = new Map<string, string>();
+export type WoowahanComponent = (
+  styleString: TemplateStringsArray,
+  ...exps: ExpType
+) => (props: ElementProps) => React.ReactElement;
 
-  return (styleString: TemplateStringsArray, ...exps: ExpType): FC => {
-    const FuntionComponent: FC<IThemeContext> = props => {
+type ElementProps = Record<string, unknown>;
+
+const woowahanComponent =
+  (tag: string): WoowahanComponent =>
+  (styleString: TemplateStringsArray, ...exps: ExpType): ((props: ElementProps) => React.ReactElement) => {
+    const classMap = new Map<string, string>();
+    const FuntionComponent = (props: ElementProps): React.ReactElement => {
+      const { children } = props;
       const theme = useTheme();
       const parsedString = parseString(styleString, exps, { theme, ...props });
 
@@ -47,28 +53,29 @@ const woowahanComponent = (tag: string): TaggedTemplateType => {
         });
       }
 
-      const { children } = props;
       if (props.className) {
-        className += ` ${props.className}`;
+        const a = props.className as string;
+        className += ` ${a}`;
       }
 
       const newProps: ElementProps = {};
 
       Object.entries(props).forEach(([key, value]) => {
         if (typeof value === 'boolean') {
-          newProps[key] = (value as boolean).toString();
+          if (!reactProps.includes(key)) newProps[key.toLowerCase()] = value.toString();
+          else newProps[key] = value.toString();
+        } else if (!reactProps.includes(key)) {
+          newProps[key.toLowerCase()] = value;
         } else {
           newProps[key] = value;
         }
       });
 
-      const ReactElement = React.createElement(tag, { ...newProps, className }, children);
-
+      const ReactElement = React.createElement(tag, { ...newProps, className }, children as React.ReactNode[]);
       return ReactElement;
     };
 
     return FuntionComponent;
   };
-};
 
 export default woowahanComponent;
