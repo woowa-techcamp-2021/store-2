@@ -13,8 +13,10 @@ interface IQuery {
 
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
-    const [popularItems, newItems, recommendItems] = await itemService.mainItems();
-    res.status(200).json({ popularItems, newItems, recommendItems });
+    const { popularItems, newItems, recommendItems } = await itemService.mainItems();
+    res
+      .status(200)
+      .json({ popularItems: popularItems.items, newItems: newItems.items, recommendItems: recommendItems.items });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -25,8 +27,9 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
 export const getItems = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
   const { categoryId, pageId, type, search } = req.query;
   try {
-    const items = await itemService.getItems(categoryId, pageId, type, search);
-    res.status(200).json(items);
+    const data = await itemService.getItems(categoryId, pageId, type, search);
+    const { items, pageCount } = data;
+    res.status(200).json({ items, pageCount });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
