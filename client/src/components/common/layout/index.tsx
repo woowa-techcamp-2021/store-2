@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     flex: 1;
     padding: 0 10%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
   }
 
   ${props => props.theme?.mobile} {
