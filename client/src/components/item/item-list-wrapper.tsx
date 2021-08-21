@@ -11,6 +11,7 @@ interface ItemListProps {
   pageCount: number;
   pageId: number;
   setPageId: Dispatch<SetStateAction<number>>;
+  totalCount: number;
   sortType: ESortType;
   setSortType: Dispatch<SetStateAction<ESortType>>;
 }
@@ -34,13 +35,14 @@ const ItemListWrapper: FC<ItemListProps> = ({
   pageCount,
   pageId,
   setPageId,
+  totalCount,
   sortType,
   setSortType,
 }) => {
   return (
     <Wrapper>
       {loading && <div>로딩중</div>}
-      <Filter total={76} sortType={sortType} setSortType={setSortType} />
+      <Filter total={totalCount} sortType={sortType} setSortType={setSortType} />
       <ItemList items={items} />
       <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
     </Wrapper>

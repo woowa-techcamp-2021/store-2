@@ -10,6 +10,7 @@ export interface IItems {
 }
 
 export interface IItemsData extends IItems {
+  totalCount: number;
   pageCount: number;
 }
 
@@ -76,7 +77,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
     ],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
-    offset: (pageId - 1) * LIMIT_COUNT + 1,
+    offset: (pageId - 1) * LIMIT_COUNT,
     limit: LIMIT_COUNT,
     include: [
       {
@@ -86,9 +87,9 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
     ],
   });
 
-  const pageCount = Math.ceil(
-    (await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } })) / LIMIT_COUNT,
-  );
+  const totalCount = await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
 
   if (!items) {
     throw errorGenerator({
@@ -99,7 +100,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
 
   filterItems(items);
 
-  return { items, pageCount };
+  return { items, totalCount, pageCount };
 };
 
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
@@ -119,7 +120,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
         [Op.regexp]: regExp,
       },
     },
-    offset: (pageId - 1) * LIMIT_COUNT + 1,
+    offset: (pageId - 1) * LIMIT_COUNT,
     limit: LIMIT_COUNT,
     include: [
       {
@@ -129,15 +130,15 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
     ],
   });
 
-  const pageCount = Math.ceil(
-    (await db.Item.count({
-      where: {
-        title: {
-          [Op.regexp]: regExp,
-        },
+  const totalCount = await db.Item.count({
+    where: {
+      title: {
+        [Op.regexp]: regExp,
       },
-    })) / LIMIT_COUNT,
-  );
+    },
+  });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
 
   if (!items) {
     throw errorGenerator({
@@ -148,7 +149,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
 
   filterItems(items);
 
-  return { items, pageCount };
+  return { items, totalCount, pageCount };
 };
 
 export default { getMainItems, getCategoryItems, getSearchItems };

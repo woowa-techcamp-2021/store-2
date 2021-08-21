@@ -22,6 +22,7 @@ const initialState: StateProps = {
   },
   list: {
     items: [],
+    totalCount: 0,
     pageCount: 0,
   },
   search: {

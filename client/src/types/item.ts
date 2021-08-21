@@ -12,6 +12,7 @@ export interface IItem {
 
 export interface IListItem {
   items: IItem[];
+  totalCount: number;
   pageCount: number;
 }
 
