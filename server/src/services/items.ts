@@ -33,7 +33,6 @@ async function getItems(categoryId: string, pageId = 1, type: ItemType, search: 
     });
 
   const order = [];
-  console.log('type', type);
   // TODO: recommend 수정 예정
   if (type === 'recommend') order.push(['sale_count', 'DESC']);
   else if (type === 'popular') order.push(['sale_count', 'DESC']);
