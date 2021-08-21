@@ -6,8 +6,9 @@ import { useQuery } from 'lib/router';
 import { getItems } from 'store/items';
 
 const ItemListContainer: FC = () => {
-  const { items, loading } = useSelector(({ items, loading }: RootState) => ({
-    items: items.items,
+  const { items, pageCount, loading } = useSelector(({ items, loading }: RootState) => ({
+    items: items.items.items,
+    pageCount: items.items.pageCount,
     loading: loading['items/getItems'],
   }));
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ItemListContainer: FC = () => {
     const { categoryId, pageId, type, search } = query;
     dispatch({ type: getItems.type, payload: { categoryId, pageId, type, search } });
   }, [query, dispatch]);
-  return <ItemListWrapper items={items} loading={loading} />;
+  return <ItemListWrapper items={items} pageCount={pageCount} loading={loading} />;
 };
 
 export default ItemListContainer;

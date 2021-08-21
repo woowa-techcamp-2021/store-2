@@ -1,14 +1,9 @@
 import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
-import { IItem } from 'types/item';
+import { IItemsData } from 'types/item';
 import Item from 'components/item';
 import { ITEM_URL } from 'constants/urls';
-
-interface ItemListProps {
-  items: IItem[] | null;
-  isLoading?: boolean;
-}
 
 const Wrapper = styled.div`
   width: 100%;
@@ -28,11 +23,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const ItemList: FC<ItemListProps> = ({ items }) => {
+const ItemList: FC<IItemsData> = ({ items, pageCount }) => {
   const history = useHistory();
 
   const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
-
+  console.log(items);
   return (
     <Wrapper>
       {items &&
@@ -52,6 +47,7 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
             />
           );
         })}
+      {pageCount && <div>페이지 카운트{pageCount}</div>}
     </Wrapper>
   );
 };
