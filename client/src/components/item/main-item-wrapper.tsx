@@ -4,7 +4,7 @@ import { IItem } from 'types/item';
 import { Loader } from 'components';
 import DisplayItemList from './display-item-list';
 
-interface ItemListProps {
+interface MainItemWrapperProps {
   popularItems: IItem[] | null;
   newItems: IItem[] | null;
   recommendItems: IItem[] | null;
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   margin-top: 60px;
 `;
 
-const MainItems: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, loading }) => {
+const MainItemWrapper: FC<MainItemWrapperProps> = ({ popularItems, newItems, recommendItems, loading }) => {
   return (
     <Wrapper>
       {loading && <Loader size="25px" color="brown" />}
@@ -26,4 +26,4 @@ const MainItems: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, 
   );
 };
 
-export default MainItems;
+export default MainItemWrapper;
