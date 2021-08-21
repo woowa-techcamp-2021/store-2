@@ -8,6 +8,8 @@ interface IMainItems {
   recommendItems: IItems;
 }
 
+type Type = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive';
+
 async function mainItems(): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
@@ -18,7 +20,7 @@ async function mainItems(): Promise<IMainItems> {
   // TODO 3번째 recommend 수정 예정
 }
 
-async function getItems(categoryId: string, pageId = 1, type: string, search: string): Promise<IItemsData> {
+async function getItems(categoryId: string, pageId = 1, type: Type, search: string): Promise<IItemsData> {
   if (
     (categoryId && search) ||
     (!categoryId && !search) ||
