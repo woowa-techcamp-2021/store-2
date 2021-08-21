@@ -11,6 +11,12 @@ const Wrapper = styled.div`
 `;
 
 const Spinner = styled.div`
+  @keyframes spinner {
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+
   margin: 0 auto;
   width: ${props => props.size as string};
   height: ${props => props.size as string};
