@@ -18,10 +18,10 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
     item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
     item.setDataValue('isBest', item.getDataValue('isBest') === 1);
 
-    const isNewDate = new Date();
-    isNewDate.setMonth(isNewDate.getMonth() - 6);
+    const standardDate = new Date();
+    standardDate.setMonth(standardDate.getMonth() - 6);
     const itemDate = new Date(item.getDataValue('updatedAt'));
-    if (isNewDate < itemDate) item.setDataValue('isNew', true);
+    if (standardDate < itemDate) item.setDataValue('isNew', true);
 
     const salePercent = item.getDataValue('salePercent');
     const price = parseInt(item.getDataValue('price') as string, 10);
