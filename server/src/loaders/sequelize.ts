@@ -12,7 +12,7 @@ export default async (): Promise<void> => {
   Item.belongsTo(Category);
   Item.hasMany(Review);
 
-  await sequelize.sync({ alter: true });
+  await sequelize.sync();
 
   const rows = await Category.findAll();
   if (!rows.length) {

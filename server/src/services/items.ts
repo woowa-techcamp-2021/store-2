@@ -17,7 +17,7 @@ async function mainItems(): Promise<IMainItems> {
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
   ]);
   return { popularItems, newItems, recommendItems };
-  // TODO 3번째 recommend 수정 예정
+  // TODO: 3번째 recommend 수정 예정
 }
 
 async function getItems(categoryId: string, pageId = 1, type: ItemType, search: string): Promise<IItemsData> {
@@ -34,7 +34,7 @@ async function getItems(categoryId: string, pageId = 1, type: ItemType, search: 
 
   const order = [];
   console.log('type', type);
-  // TODO recommend 수정 예정
+  // TODO: recommend 수정 예정
   if (type === 'recommend') order.push(['sale_count', 'DESC']);
   else if (type === 'popular') order.push(['sale_count', 'DESC']);
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
