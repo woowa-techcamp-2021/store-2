@@ -2,13 +2,16 @@ import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItemsData } from 'types/item';
 import ItemList from 'components/item/item-list';
+import Pagination from './pagination';
 
 interface ItemListProps extends IItemsData {
   loading: boolean;
 }
 
-const Div = styled.div`
+const Wrapper = styled.div`
   margin-top: 90px;
+  margin-bottom: 50px;
+
   ${props => props.theme?.mobile} {
     margin-top: 50px;
   }
@@ -34,11 +37,12 @@ const SmallTitle = styled.div`
 
 const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount }) => {
   return (
-    <Div>
+    <Wrapper>
       {loading && <div>로딩중</div>}
       <SmallTitle>총 개수, 추천 등등...</SmallTitle>
       <ItemList items={items} pageCount={pageCount} />
-    </Div>
+      <Pagination totalCnt={55} />
+    </Wrapper>
   );
 };
 
