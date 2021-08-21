@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import ItemListWrapper from 'components/item/item-list-wrapper';
 import { useQuery } from 'lib/router';
-import { getItems } from 'store/items';
+import { getListItem } from 'store/item';
 
 const ItemListContainer: FC = () => {
-  const { items, pageCount, loading } = useSelector(({ items, loading }: RootState) => ({
-    items: items.items.items,
-    pageCount: items.items.pageCount,
-    loading: loading['items/getItems'],
+  const { items, pageCount, loading } = useSelector(({ item, loading }: RootState) => ({
+    items: item.list.items,
+    pageCount: item.list.pageCount,
+    loading: loading['item/getListItem'],
   }));
   const dispatch = useDispatch();
   const query = useQuery();
   useEffect(() => {
     const { categoryId, pageId, type, search } = query;
-    dispatch({ type: getItems.type, payload: { categoryId, pageId, type, search } });
+    dispatch({ type: getListItem.type, payload: { categoryId, pageId, type, search } });
   }, [query, dispatch]);
   return <ItemListWrapper items={items} pageCount={pageCount} loading={loading} />;
 };

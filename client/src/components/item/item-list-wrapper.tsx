@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItemsData } from 'types/item';
+import { IItem } from 'types/item';
 import ItemList from 'components/item/item-list';
 import Pagination from './pagination';
 
-interface ItemListProps extends IItemsData {
+interface ItemListProps {
+  items: IItem[];
+  pageCount: number;
   loading: boolean;
 }
 
@@ -40,8 +42,8 @@ const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount }) => {
     <Wrapper>
       {loading && <div>로딩중</div>}
       <SmallTitle>총 개수, 추천 등등...</SmallTitle>
-      <ItemList items={items} pageCount={pageCount} />
-      <Pagination totalCnt={55} />
+      <ItemList items={items} />
+      <Pagination totalCnt={pageCount} />
     </Wrapper>
   );
 };

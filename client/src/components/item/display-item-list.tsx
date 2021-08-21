@@ -5,7 +5,7 @@ import ItemList from './item-list';
 
 interface DisplayItemListProps {
   title: string;
-  items: IItem[] | null;
+  items: IItem[];
 }
 
 const Wrapper = styled.section`

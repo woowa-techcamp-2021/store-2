@@ -5,9 +5,9 @@ import { Loader } from 'components';
 import DisplayItemList from './display-item-list';
 
 interface MainItemWrapperProps {
-  popularItems: IItem[] | null;
-  newItems: IItem[] | null;
-  recommendItems: IItem[] | null;
+  popularItems: IItem[];
+  newItems: IItem[];
+  recommendItems: IItem[];
   loading: boolean;
 }
 
