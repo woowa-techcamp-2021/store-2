@@ -19,6 +19,7 @@ const ItemListContainer: FC = () => {
   useEffect(() => {
     const { categoryId, type, search } = query;
     dispatch({ type: getListItem.type, payload: { categoryId, pageId, type, search } });
+    window.scrollTo(0, 0);
   }, [query, pageId, dispatch]);
 
   return (
