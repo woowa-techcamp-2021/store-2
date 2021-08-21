@@ -1,0 +1,28 @@
+const reactProps = [
+  'onClick',
+  'onContextMenu',
+  'onDoubleClick',
+  'onDrag',
+  'onDragEnd',
+  'onDragEnter',
+  'onDragExit',
+  'onDragLeave',
+  'onDragOver',
+  'onDragStart',
+  'onDrop',
+  'onMouseDown',
+  'onMouseEnter',
+  'onMouseLeave',
+  'onMouseMove',
+  'onMouseOut',
+  'onMouseOver',
+  'onMouseUp',
+  'className',
+  'onMouseLeave',
+  'onChange',
+  'onFocus',
+  'onBlur',
+  'onMouseMove',
+];
+
+export default reactProps;

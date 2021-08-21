@@ -5,6 +5,8 @@ import useTheme from '../hooks/use-theme';
 import generateId from '../utils/generate-id';
 import parseString, { ExpType } from '../utils/parse-string';
 
+import reactProps from '../configs/react-props';
+
 export type WoowahanComponent = (
   styleString: TemplateStringsArray,
   ...exps: ExpType
@@ -60,7 +62,10 @@ const woowahanComponent =
 
       Object.entries(props).forEach(([key, value]) => {
         if (typeof value === 'boolean') {
-          newProps[key] = value.toString();
+          if (!reactProps.includes(key)) newProps[key.toLowerCase()] = value.toString();
+          else newProps[key] = value.toString();
+        } else if (!reactProps.includes(key)) {
+          newProps[key.toLowerCase()] = value;
         } else {
           newProps[key] = value;
         }
