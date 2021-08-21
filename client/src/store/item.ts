@@ -44,7 +44,11 @@ const itemSlice = createSlice({
       state.error = action.payload;
       return state;
     },
-    getListItem: state => state,
+    getListItem: state => {
+      state.list.totalCount = 0;
+      state.list.pageCount = 0;
+      return state;
+    },
     getListItemSuccess: (state, action: PayloadAction<IListItem>) => {
       state.list = action.payload;
       return state;
