@@ -27,3 +27,11 @@ export interface IItemState {
   type?: string;
   search?: string;
 }
+
+export enum ESortType {
+  RECOMMEND = 'recommend',
+  POPULAR = 'popular',
+  RECENT = 'recent',
+  CHEAP = 'cheap',
+  EXPENSIVE = 'expensive',
+}

@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { getListItem } from 'store/item';
 import { ItemListWrapper } from 'components';
+import { ESortType } from 'types/item';
 
 const ItemListContainer: FC = () => {
   const query = useQuery();
   const [pageId, setPageId] = useState(1);
+  const [sortType, setSortType] = useState(ESortType.RECOMMEND);
   const dispatch = useDispatch();
 
   const { items, pageCount, loading } = useSelector(({ item, loading }: RootState) => ({
@@ -17,17 +19,29 @@ const ItemListContainer: FC = () => {
   }));
 
   useEffect(() => {
-    setPageId(1);
+    setSortType(ESortType.RECOMMEND);
   }, [query]);
 
   useEffect(() => {
-    const { categoryId, type, search } = query;
-    dispatch({ type: getListItem.type, payload: { categoryId, pageId, type, search } });
+    setPageId(1);
+  }, [query, sortType]);
+
+  useEffect(() => {
+    const { categoryId, search } = query;
+    dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
     window.scrollTo(0, 0);
-  }, [query, pageId, dispatch]);
+  }, [query, pageId, sortType, dispatch]);
 
   return (
-    <ItemListWrapper items={items} loading={loading} pageCount={pageCount} pageId={pageId} setPageId={setPageId} />
+    <ItemListWrapper
+      items={items}
+      loading={loading}
+      pageCount={pageCount}
+      pageId={pageId}
+      setPageId={setPageId}
+      sortType={sortType}
+      setSortType={setSortType}
+    />
   );
 };
 

@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, Dispatch, SetStateAction } from 'reac
 import styled from 'lib/woowahan-components';
 
 interface PaginationProps {
-  totalCnt: number;
+  pageCount: number;
   showCnt?: number;
   activePage: number;
   setActivePage: Dispatch<SetStateAction<number>>;
@@ -32,7 +32,7 @@ const Button = styled.button`
   }
 `;
 
-const Pagination: FC<PaginationProps> = ({ totalCnt, showCnt = 10, activePage, setActivePage }) => {
+const Pagination: FC<PaginationProps> = ({ pageCount, showCnt = 10, activePage, setActivePage }) => {
   const [startPage, setStartPage] = useState(1);
 
   const goNextPage = useCallback(() => {
@@ -54,7 +54,7 @@ const Pagination: FC<PaginationProps> = ({ totalCnt, showCnt = 10, activePage, s
 
   const renderPage = () => {
     const items = [];
-    for (let page = startPage; page < startPage + showCnt && page <= totalCnt; page += 1) {
+    for (let page = startPage; page < startPage + showCnt && page <= pageCount; page += 1) {
       items.push(
         <Button
           type="button"
@@ -77,7 +77,7 @@ const Pagination: FC<PaginationProps> = ({ totalCnt, showCnt = 10, activePage, s
         </Button>
       )}
       {renderPage()}
-      {startPage + showCnt <= totalCnt && (
+      {startPage + showCnt <= pageCount && (
         <Button type="button" onClick={goNextPage}>
           다음
         </Button>
