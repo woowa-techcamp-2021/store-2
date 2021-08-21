@@ -27,7 +27,6 @@ const ItemList: FC<IItemsData> = ({ items, pageCount }) => {
   const history = useHistory();
 
   const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
-  console.log(items);
   return (
     <Wrapper>
       {items &&

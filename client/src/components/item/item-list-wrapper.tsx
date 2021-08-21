@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItem, IItemsData } from 'types/item';
+import { IItemsData } from 'types/item';
 import ItemList from 'components/item/item-list';
 
 interface ItemListProps extends IItemsData {
