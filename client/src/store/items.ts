@@ -2,22 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, takeLatest } from 'redux-saga/effects';
 import * as itemsAPI from 'utils/api/items';
 import axios, { AxiosResponse } from 'axios';
-import { IItem } from 'types/item';
+import { IItem, IItemsData, IItemsState, IMainItems } from 'types/item';
 import { put } from 'redux-saga-test-plan/matchers';
+import { IError } from 'types/error';
 import { finishLoading, startLoading } from './loading';
-
-export interface IItemsState {
-  categoryId?: string;
-  pageId?: number;
-  type?: string;
-  search?: string;
-}
-
-interface IMainItems {
-  popularItems: IItem[] | null;
-  newItems: IItem[] | null;
-  recommendItems: IItem[] | null;
-}
 
 interface StateProps {
   mainItems: {
@@ -25,12 +13,8 @@ interface StateProps {
     newItems: IItem[] | null;
     recommendItems: IItem[] | null;
   };
-  items: IItem[] | null;
+  items: IItemsData;
   error: null | string;
-}
-
-interface IError {
-  errorMessage: string;
 }
 
 const initialState: StateProps = {
@@ -39,7 +23,10 @@ const initialState: StateProps = {
     newItems: null,
     recommendItems: null,
   },
-  items: null,
+  items: {
+    items: null,
+    pageCount: 0,
+  },
   error: null,
 };
 
@@ -56,8 +43,8 @@ const counterSlice = createSlice({
       return state;
     },
     getItems: state => state,
-    getItemsSuccess: (state, action: PayloadAction<string>) => {
-      state.items = action.payload as unknown as IItem[];
+    getItemsSuccess: (state, action: PayloadAction<IItemsData>) => {
+      state.items = action.payload;
     },
     getItemsFail: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
@@ -90,9 +77,10 @@ function* getMainItemsSaga(): Generator {
 function* getItemsSaga(action: PayloadAction): Generator {
   try {
     yield put(startLoading(getItems.type));
-    const { data } = (yield call(itemsAPI.getItems, action.payload as unknown as IItemsState)) as AxiosResponse<
-      IItem[]
-    >;
+    const { data } = (yield call(
+      itemsAPI.getItems,
+      action.payload as unknown as IItemsState,
+    )) as AxiosResponse<IItemsData>;
     yield put({ type: getItemsSuccess.type, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {

@@ -5,12 +5,18 @@ export interface ItemAttributes {
   title: string;
   thumbnail: string;
   contents: string;
-  price: string;
-  sale_percent: number | boolean;
+  price: string | number;
+  originalPrice: number;
+  sale_percent: number;
+  salePercent: number;
   sale_count: number;
   amount: number;
   is_green: number | boolean;
-  isGreen?: number | boolean;
+  isGreen: number | boolean;
+  is_best: number | boolean;
+  isBest: number | boolean;
+  updatedAt: string;
+  isNew: boolean;
   CategoryId: string;
 }
 
@@ -56,8 +62,14 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
       defaultValue: DEFAULT_AMOUNT,
     },
     is_green: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: 0,
+    },
+    is_best: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
     },
   });
 

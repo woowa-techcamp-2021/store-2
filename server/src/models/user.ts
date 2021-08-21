@@ -24,7 +24,7 @@ const userSchema = (sequelize: Sequelize): ModelCtor<Model<UserAttribures, UserC
     user_id: {
       type: DataTypes.STRING(USER.ID_MAX_LENGTH),
       allowNull: false,
-      unique: true,
+      unique: 'user_id',
     },
     password: {
       type: DataTypes.STRING(HASHED_PASSWORD_LENGTH),

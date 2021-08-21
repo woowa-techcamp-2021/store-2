@@ -1,14 +1,38 @@
 import { db } from 'models';
-import { Model, Order, Op } from 'sequelize';
+import { Model, Order, Op, Sequelize } from 'sequelize';
 
 import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 
 import errorGenerator from 'utils/error/error-generator';
 
-const getMainItems = async (
-  order: string[][],
-  limit: number,
-): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
+export interface IItems {
+  items: Model<ItemAttributes, ItemCreationAttributes>[];
+}
+
+export interface IItemsData extends IItems {
+  pageCount: number;
+}
+
+const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
+  items.forEach(item => {
+    item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
+    item.setDataValue('isBest', item.getDataValue('isBest') === 1);
+
+    const standardDate = new Date();
+    standardDate.setMonth(standardDate.getMonth() - 6);
+    const itemDate = new Date(item.getDataValue('updatedAt'));
+    if (standardDate < itemDate) item.setDataValue('isNew', true);
+
+    const salePercent = item.getDataValue('salePercent');
+    const price = parseInt(item.getDataValue('price') as string, 10);
+    if (salePercent !== 0) {
+      item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
+      item.setDataValue('originalPrice', price);
+    }
+  });
+};
+
+const getMainItems = async (order: string[][], limit: number): Promise<IItems> => {
   const items = await db.Item.findAll({
     attributes: [
       'id',
@@ -18,6 +42,8 @@ const getMainItems = async (
       ['sale_percent', 'salePercent'],
       'amount',
       ['is_green', 'isGreen'],
+      ['is_best', 'isBest'],
+      [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
     ],
     order: order as Order,
     limit,
@@ -30,18 +56,12 @@ const getMainItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
-  return items;
+  return { items };
 };
 
-const getCategoryItems = async (
-  pageId: number,
-  order: string[][],
-  categoryReg: string,
-): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
+const getCategoryItems = async (pageId: number, order: string[][], categoryReg: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
     attributes: [
       'id',
@@ -64,6 +84,10 @@ const getCategoryItems = async (
     ],
   });
 
+  const pageCount = Math.ceil(
+    (await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } })) / 12,
+  );
+
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
@@ -71,18 +95,12 @@ const getCategoryItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
-  return items;
+  return { items, pageCount };
 };
 
-const getSearchItems = async (
-  pageId: number,
-  order: string[][],
-  regExp: string,
-): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
+const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
     attributes: [
       'id',
@@ -109,6 +127,16 @@ const getSearchItems = async (
     ],
   });
 
+  const pageCount = Math.ceil(
+    (await db.Item.count({
+      where: {
+        title: {
+          [Op.regexp]: regExp,
+        },
+      },
+    })) / 12,
+  );
+
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
@@ -116,11 +144,9 @@ const getSearchItems = async (
     });
   }
 
-  items.forEach(v => {
-    v.setDataValue('isGreen', v.getDataValue('isGreen') === 1);
-  });
+  filterItems(items);
 
-  return items;
+  return { items, pageCount };
 };
 
 export default { getMainItems, getCategoryItems, getSearchItems };

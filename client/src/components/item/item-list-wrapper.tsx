@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItem } from 'types/item';
+import { IItemsData } from 'types/item';
 import ItemList from 'components/item/item-list';
 
-interface ItemListProps {
-  items: IItem[] | null;
+interface ItemListProps extends IItemsData {
   loading: boolean;
 }
 
@@ -33,12 +32,12 @@ const SmallTitle = styled.div`
   }
 `;
 
-const ItemListWrapper: FC<ItemListProps> = ({ items, loading }) => {
+const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount }) => {
   return (
     <Div>
       {loading && <div>로딩중</div>}
       <SmallTitle>총 개수, 추천 등등...</SmallTitle>
-      <ItemList items={items} isLoading={loading} />
+      <ItemList items={items} pageCount={pageCount} />
     </Div>
   );
 };

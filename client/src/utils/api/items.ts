@@ -1,9 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { IItem } from 'types/item';
-import { IItemsState } from 'store/items';
+import { IItemsData, IMainItems, IItemsState } from 'types/item';
 import client from './client';
 
-export const getMainItems = (): Promise<AxiosResponse> => client.get('/api/items/main');
+export const getMainItems = (): Promise<AxiosResponse> => client.get<IMainItems>('/api/items/main');
 
 export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Promise<AxiosResponse> => {
   let url = '/api/items?';
@@ -14,5 +13,5 @@ export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Pro
   if (search) arr.push(`search=${search}&`);
   url += arr.join('');
   url = url.slice(0, url.length - 1);
-  return client.get<IItem>(url);
+  return client.get<IItemsData>(url);
 };
