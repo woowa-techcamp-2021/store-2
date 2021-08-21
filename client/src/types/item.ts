@@ -9,3 +9,14 @@ export interface IItem {
   salePercent: number;
   originalPrice?: number;
 }
+
+export interface IItemsData {
+  items: IItem[] | null;
+  pageCount?: number;
+}
+
+export interface IMainItems {
+  popularItems: IItem[] | null;
+  newItems: IItem[] | null;
+  recommendItems: IItem[] | null;
+}
