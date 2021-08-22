@@ -10,19 +10,41 @@ interface InquiryPeroidProps {
 }
 
 const Wrapper = styled.div`
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px;
+  }
+  padding: 35px 40px;
+  border: 2px solid ${props => props.theme?.colorLineLight};
   ${props => props.theme?.mobile} {
+    padding: 0;
+    border: 0;
     h3 {
       margin: 0 -12px;
-      padding: 16px;
       font-size: 16px;
       font-weight: 700;
     }
+  }
+  ${props => props.theme?.labtop} {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const Form = styled.form`
+  display: flex;
+  align-items: baselin;
+  flex-wrap: wrap;
+  > div {
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
 `;
 
 const RegionFlex = styled.div`
   display: flex;
-  div {
+  button {
     width: 54px;
     height: 31px;
     font-size: 12px;
@@ -31,28 +53,32 @@ const RegionFlex = styled.div`
     align-items: center;
     border: 1px solid ${props => props.theme?.colorLineLight};
   }
-  div:not(:first-child) {
+  button:not(:first-child) {
     border-left: 0;
   }
 `;
 
 const DateFlex = styled.div`
   display: flex;
-  align-items: center;
-  margin-top: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
   input[type='date'] {
     padding: 5px;
     font-size: 12px;
     height: 31px;
     border: 1px solid ${props => props.theme?.colorLineLight};
+    margin-bottom: 15px;
+  }
+  :nth-child(3) {
+    margin-right: 10px;
   }
   span {
     margin: 0 5px;
+    margin-bottom: 15px;
   }
 `;
 
 const Button = styled.button`
-  margin-top: 8px;
   width: 100px;
   height: 31px;
   font-weight: 700;
@@ -65,13 +91,13 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({ prevDate, setPrevDate, currentD
   return (
     <Wrapper>
       <h3>조회기간</h3>
-      <RegionFlex>
-        <div>오늘</div>
-        <div>이번주</div>
-        <div>1개월</div>
-        <div>3개월</div>
-      </RegionFlex>
-      <form>
+      <Form>
+        <RegionFlex>
+          <button type="button">오늘</button>
+          <button type="button">이번주</button>
+          <button type="button">1개월</button>
+          <button type="button">3개월</button>
+        </RegionFlex>
         <DateFlex>
           <input
             type="date"
@@ -90,9 +116,9 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({ prevDate, setPrevDate, currentD
               setCurrentDate(e.target.value);
             }}
           />
+          <Button type="submit">조회</Button>
         </DateFlex>
-        <Button type="submit">조회</Button>
-      </form>
+      </Form>
     </Wrapper>
   );
 };
