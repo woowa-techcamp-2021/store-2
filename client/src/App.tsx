@@ -23,7 +23,7 @@ const App: React.FC = () => {
           <Route exact path={MAIN_URL} component={MainPage} />
           <Route exact path={SIGNIN_URL} component={LoginPage} />
           <Route exact path={SIGNUP_URL} component={SignupPage} />
-          {/* <Route exact path={`${ITEM_URL}/:id`} component={ItemDetailPage} /> */}
+          <Route exact path={`${ITEM_URL}/:id`} component={ItemDetailPage} />
           <Route exact path={ITEM_LIST_URL} component={ItemListPage} />
           <Route exact path={AUTH_URL} component={AuthPage} />
           <Route exact path={ORDER_LIST_URL} component={MyOrderListPage} />
