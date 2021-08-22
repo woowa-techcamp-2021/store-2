@@ -11,6 +11,30 @@ const dummy = [
     count: 1,
     status: '주문완료',
   },
+  {
+    createdAt: '2021-07-28',
+    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
+    itemTitle: '재생지에 콩기름을 먹어요2',
+    price: '3500',
+    count: 1,
+    status: '주문완료',
+  },
+  {
+    createdAt: '2021-07-28',
+    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
+    itemTitle: '재생지에 콩기름을 먹어요3',
+    price: '3500',
+    count: 1,
+    status: '주문완료',
+  },
+  {
+    createdAt: '2021-07-28',
+    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
+    itemTitle: '재생지에 콩기름을 먹어요4',
+    price: '3500',
+    count: 1,
+    status: '주문완료',
+  },
 ];
 
 const Wrapper = styled.div`
