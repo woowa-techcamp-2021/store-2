@@ -220,7 +220,23 @@ const Item: FC<ItemProps> = ({
     onClick();
   };
   return (
-    <Container bgColor={salePercent ? 'red' : 'green'} onClick={onItemClick}>
+    <Container
+      bgColor={salePercent ? 'red' : 'green'}
+      onClick={(e: MouseEvent) => {
+        if (localStorage.getItem('visited') === null) {
+          localStorage.setItem('visited', JSON.stringify([title]));
+        } else {
+          const data = localStorage.getItem('visited') as string;
+          let visitedList = JSON.parse(data) as string[];
+          visitedList.push(title);
+          if (visitedList.length > 10) {
+            visitedList = visitedList.slice(1);
+          }
+          localStorage.setItem('visited', JSON.stringify(visitedList));
+        }
+        onItemClick(e);
+      }}
+    >
       <Thumbnail>
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>
