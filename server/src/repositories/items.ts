@@ -13,6 +13,11 @@ export interface IItemsData extends IItems {
   pageCount: number;
 }
 
+export interface IScore {
+  title: string;
+  score: number;
+}
+
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(item => {
     item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
@@ -30,6 +35,65 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
       item.setDataValue('originalPrice', price);
     }
   });
+};
+
+const getRecommendItems = async (visited: string[]): Promise<IItems> => {
+  const scores = await db.Score.findAll({
+    where: {
+      title: {
+        [Op.or]: visited.reverse().slice(0, 5),
+      },
+    },
+  });
+
+  const rank: IScore[] = [];
+  scores.forEach(row => {
+    const data = row.getDataValue('scores');
+    const scoreStr = data
+      .substring(0, data.length - 1)
+      .slice(1)
+      .replace(/'/g, '"');
+    const scoreJson = JSON.parse(scoreStr) as IScore[];
+    scoreJson.forEach(score => rank.push(score));
+  });
+
+  rank.sort((a, b) => {
+    if (a.score > b.score) {
+      return -1;
+    }
+    if (a.score < b.score) {
+      return 1;
+    }
+    return 0;
+  });
+
+  const rankTitles: string[] = [];
+  rank.forEach(row => {
+    rankTitles.push(row.title);
+  });
+
+  const items = await db.Item.findAll({
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+      ['is_best', 'isBest'],
+      [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
+    ],
+    where: {
+      title: {
+        [Op.or]: rankTitles.slice(0, 12),
+      },
+    },
+  });
+
+  filterItems(items);
+
+  return { items };
 };
 
 const getMainItems = async (order: string[][], limit: number): Promise<IItems> => {
@@ -149,4 +213,4 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
   return { items, pageCount };
 };
 
-export default { getMainItems, getCategoryItems, getSearchItems };
+export default { getMainItems, getCategoryItems, getSearchItems, getRecommendItems };
