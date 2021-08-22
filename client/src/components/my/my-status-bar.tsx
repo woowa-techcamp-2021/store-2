@@ -12,22 +12,23 @@ const Wrapper = styled.div`
   padding: 0 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   div {
     display: flex;
     font-weight: bold;
     color: ${props => props.theme?.softBlack};
     font-size: 12px;
-    margin-right: 15%;
-    :last-child {
-      margin-left: auto;
-    }
+  }
+  :nth-child(1) {
+    flex: 1.4;
+  }
+  :nth-child(2) {
+    flex: 3;
   }
   :nth-child(3) {
-    margin-left: auto;
+    flex: 1.7;
   }
-  :last-child {
-    margin-right: 0;
+  :nth-child(4) {
+    flex: 1;
   }
   margin-top: 50px;
   background-color: ${props => props.theme?.colorFooter};
@@ -35,14 +36,6 @@ const Wrapper = styled.div`
   ${props => props.theme?.mobile} {
     margin: 0 -12px;
     background-color: transparent;
-    div {
-      margin-right: 10%;
-    }
-  }
-  ${props => props.theme?.laptop} {
-    div {
-      margin-right: 20%;
-    }
   }
 `;
 
