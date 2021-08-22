@@ -16,3 +16,5 @@ export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Pro
   url = url.slice(0, url.length - 1);
   return client.get<IItem>(url);
 };
+
+export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => client.get(`/api/items/${id}`);
