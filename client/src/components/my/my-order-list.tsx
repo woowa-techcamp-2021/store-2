@@ -15,6 +15,7 @@ const dummy = [
 
 const Wrapper = styled.div`
   margin: 0 -12px;
+  margin-bottom: 100px;
 `;
 
 const MyOrderList: FC = () => {
