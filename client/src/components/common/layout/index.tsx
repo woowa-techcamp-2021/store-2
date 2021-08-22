@@ -18,7 +18,8 @@ const Wrapper = styled.div`
     flex: 1;
     padding: 0 10%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 
   ${props => props.theme?.mobile} {
@@ -31,6 +32,7 @@ const Wrapper = styled.div`
     align-items: center;
     main {
       padding: 0;
+      padding-bottom: 60px;
       width: 1000px;
     }
   }
