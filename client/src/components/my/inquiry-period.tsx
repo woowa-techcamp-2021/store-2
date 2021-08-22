@@ -1,12 +1,18 @@
 import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
-import { getToday } from 'utils';
 
 interface InquiryPeroidProps {
   prevDate: string;
   setPrevDate: React.Dispatch<React.SetStateAction<string>>;
   currentDate: string;
   setCurrentDate: React.Dispatch<React.SetStateAction<string>>;
+  today: string;
+  onClickToday: () => void;
+  onClickThisWeek: () => void;
+  onClickThisMonth: () => void;
+  onClickThreeMonth: () => void;
+  select: undefined | number;
+  onSubmit: (e: React.FormEvent) => void;
 }
 
 const Wrapper = styled.div`
@@ -52,6 +58,11 @@ const RegionFlex = styled.div`
     justify-content: center;
     align-items: center;
     border: 1px solid ${props => props.theme?.colorLineLight};
+    color: #777777;
+    &.active {
+      color: ${props => props.theme?.colorWhite};
+      background-color: ${props => props.theme?.colorLineLight};
+    }
   }
   button:not(:first-child) {
     border-left: 0;
@@ -86,17 +97,35 @@ const Button = styled.button`
   color: ${props => props.theme?.colorWhite};
 `;
 
-const InquiryPeriod: FC<InquiryPeroidProps> = ({ prevDate, setPrevDate, currentDate, setCurrentDate }) => {
-  const today = getToday();
+const InquiryPeriod: FC<InquiryPeroidProps> = ({
+  prevDate,
+  setPrevDate,
+  currentDate,
+  setCurrentDate,
+  today,
+  onClickToday,
+  onClickThisWeek,
+  onClickThisMonth,
+  onClickThreeMonth,
+  select,
+  onSubmit,
+}) => {
+  const btn: [string, () => void][] = [
+    ['오늘', onClickToday],
+    ['이번주', onClickThisWeek],
+    ['1개월', onClickThisMonth],
+    ['3개월', onClickThreeMonth],
+  ];
   return (
     <Wrapper>
       <h3>조회기간</h3>
-      <Form>
+      <Form onSubmit={onSubmit}>
         <RegionFlex>
-          <button type="button">오늘</button>
-          <button type="button">이번주</button>
-          <button type="button">1개월</button>
-          <button type="button">3개월</button>
+          {btn.map(([text, fn], idx) => (
+            <button key={text} type="button" onClick={fn} className={select === idx ? 'active' : ''}>
+              {text}
+            </button>
+          ))}
         </RegionFlex>
         <DateFlex>
           <input
