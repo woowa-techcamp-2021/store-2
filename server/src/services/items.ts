@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
@@ -10,14 +11,13 @@ interface IMainItems {
 
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
 
-async function mainItems(): Promise<IMainItems> {
+async function mainItems(req: Request): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
-    itemRepository.getMainItems([['sale_count', 'DESC']], 4),
+    itemRepository.getRecommendItems(req.body as string[]),
   ]);
   return { popularItems, newItems, recommendItems };
-  // TODO: 3번째 recommend 수정 예정
 }
 
 async function getItems(categoryId: string, pageId = 1, type: ItemType, search: string): Promise<IItemsData> {
