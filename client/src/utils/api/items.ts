@@ -2,7 +2,11 @@ import { AxiosResponse } from 'axios';
 import { IItemsData, IMainItems, IItemsState } from 'types/item';
 import client from './client';
 
-export const getMainItems = (): Promise<AxiosResponse> => client.get<IMainItems>('/api/items/main');
+export const getMainItems = (): Promise<AxiosResponse> => {
+  const visited = localStorage.getItem('visited') || '';
+
+  return client.post<IMainItems>('/api/items/main', JSON.parse(visited) as string[]);
+};
 
 export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Promise<AxiosResponse> => {
   let url = '/api/items?';
