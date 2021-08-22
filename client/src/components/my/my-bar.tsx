@@ -8,7 +8,7 @@ const Wrapper = styled.nav`
   a {
     font-size: 18px;
     margin-right: 18px;
-    font-weight: 700;
+    font-weight: bold;
     color: #797979;
     &.active {
       color: #3e3d3c;
