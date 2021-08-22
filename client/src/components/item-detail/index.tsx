@@ -11,12 +11,32 @@ export interface ItemDetailProps {
   isLike: boolean;
   isSoldOut: boolean;
   reviewCount: number;
+  onSubmitCart: () => void;
+  onBuy: () => void;
 }
 
-const ItemDetail: FC<ItemDetailProps> = ({ thumbnail, title, price, contents, isLike, isSoldOut, reviewCount }) => {
+const ItemDetail: FC<ItemDetailProps> = ({
+  thumbnail,
+  title,
+  price,
+  contents,
+  isLike,
+  isSoldOut,
+  reviewCount,
+  onSubmitCart,
+  onBuy,
+}) => {
   return (
     <>
-      <InfoSection thumbnail={thumbnail} title={title} price={price} isLike={isLike} isSoldOut={isSoldOut} />
+      <InfoSection
+        thumbnail={thumbnail}
+        title={title}
+        price={price}
+        isLike={isLike}
+        isSoldOut={isSoldOut}
+        onSubmitCart={onSubmitCart}
+        onBuy={onBuy}
+      />
       <DetailInfo contents={contents} reviewCount={reviewCount} />
     </>
   );

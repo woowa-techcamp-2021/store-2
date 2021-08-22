@@ -26,6 +26,14 @@ const MainItemContainer: FC = () => {
     dispatch({ type: getItem.type, payload: { id } });
   }, [id, dispatch]);
 
+  const onSubmitCart = () => {
+    // TODO: 장바구니 추가
+  };
+
+  const onBuy = () => {
+    // TODO: 상품 구매
+  };
+
   return (
     <ItemDetail
       thumbnail={thumbnail}
@@ -35,6 +43,8 @@ const MainItemContainer: FC = () => {
       isLike={isLike}
       isSoldOut={isSoldOut}
       reviewCount={reviewCount}
+      onSubmitCart={onSubmitCart}
+      onBuy={onBuy}
     />
   );
 };
