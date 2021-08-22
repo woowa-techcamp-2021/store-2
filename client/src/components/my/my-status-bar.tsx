@@ -37,6 +37,16 @@ const Wrapper = styled.div`
     margin: 0 -12px;
     background-color: transparent;
   }
+  ${props => props.theme?.tablet} {
+    > div {
+      font-size: 14px;
+    }
+  }
+  ${props => props.theme?.laptop} {
+    > div {
+      font-size: 16px;
+    }
+  }
 `;
 
 const MyStatusBar: FC<MyStatusBarProps> = ({ data }) => {

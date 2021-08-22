@@ -30,17 +30,37 @@ const Wrapper = styled.div`
     flex: 3;
     display: flex;
     align-items: center;
-    img {
-      width: 62px;
-      height: 52px;
-      padding-right: 5px;
-    }
   }
   > div:nth-child(3) {
     flex: 1.7;
   }
   > div:nth-child(4) {
     flex: 1;
+  }
+  img {
+    width: 62px;
+    height: 52px;
+    padding-right: 5px;
+  }
+  ${props => props.theme?.tablet} {
+    > div {
+      font-size: 14px;
+    }
+    img {
+      width: 72px;
+      height: 62px;
+      padding-right: 7px;
+    }
+  }
+  ${props => props.theme?.laptop} {
+    > div {
+      font-size: 16px;
+    }
+    img {
+      width: 82px;
+      height: 72px;
+      padding-right: 10px;
+    }
   }
 `;
 
