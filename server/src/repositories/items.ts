@@ -123,4 +123,20 @@ const getSearchItems = async (
   return items;
 };
 
-export default { getMainItems, getCategoryItems, getSearchItems };
+const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>> => {
+  const item = await db.Item.findOne({
+    attributes: ['title', 'thumbnail', 'price', 'sale_percent', 'amount', ['is_green', 'isGreen'], 'contents'],
+    where: { id },
+  });
+
+  if (!item) {
+    throw errorGenerator({
+      message: 'GET /api/items/:id - item not found',
+      code: 'items/item-not-found',
+    });
+  }
+
+  return item;
+};
+
+export default { getMainItems, getCategoryItems, getSearchItems, getItem };

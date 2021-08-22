@@ -38,6 +38,8 @@ function errorHandler(err: CustomError): ErrorType {
       return { statusCode: 500, errorMessage: err.customMessage || '카테고리 데이터가 없습니다.' };
     case 'items/items-not-found':
       return { statusCode: 500, errorMessage: err.customMessage || '아이템 데이터가 없습니다.' };
+    case 'items/item-not-found':
+      return { statusCode: 404, errorMessage: err.customMessage || '존재하지 않는 상품입니다.' };
     case 'item/no-exist-querystring':
       return { statusCode: 500, errorMessage: err.customMessage || '쿼리스트링을 확인해주세요.' };
 
