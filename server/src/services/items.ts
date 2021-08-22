@@ -4,6 +4,17 @@ import { Model } from 'sequelize';
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
 
+export interface IGetItem {
+  thumbnail: string;
+  title: string;
+  price: number;
+  contents: string[];
+  salePercent: number;
+  isSoldOut: boolean;
+  isLike: boolean;
+  reviewCount: number;
+}
+
 async function mainItems(): Promise<Model<ItemAttributes, ItemCreationAttributes>[][]> {
   const items = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
@@ -59,7 +70,27 @@ async function getItems(
   return items;
 }
 
+async function getItem(id: string): Promise<IGetItem> {
+  const item = await itemRepository.getItem(id);
+
+  const itemData: IGetItem = {
+    thumbnail: item.getDataValue('thumbnail'),
+    title: item.getDataValue('title'),
+    price: Number.parseInt(item.getDataValue('price'), 10),
+    salePercent: item.getDataValue('sale_percent'),
+    contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
+    isSoldOut: item.getDataValue('amount') < 1,
+    // TODO: 좋아요
+    isLike: true,
+    // TODO: 리뷰 갯수
+    reviewCount: 0,
+  };
+
+  return itemData;
+}
+
 export default {
   mainItems,
   getItems,
+  getItem,
 };
