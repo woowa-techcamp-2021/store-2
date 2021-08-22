@@ -8,6 +8,17 @@ interface IMainItems {
   recommendItems: IItems;
 }
 
+export interface IGetItem {
+  thumbnail: string;
+  title: string;
+  price: number;
+  contents: string[];
+  salePercent: number;
+  isSoldOut: boolean;
+  isLike: boolean;
+  reviewCount: number;
+}
+
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
 
 async function mainItems(visited: string[]): Promise<IMainItems> {
@@ -60,7 +71,27 @@ async function getItems(categoryId: string, pageId = 1, type: ItemType, search: 
   return { items, totalCount, pageCount };
 }
 
+async function getItem(id: string): Promise<IGetItem> {
+  const item = await itemRepository.getItem(id);
+
+  const itemData: IGetItem = {
+    thumbnail: item.getDataValue('thumbnail'),
+    title: item.getDataValue('title'),
+    price: Number.parseInt(item.getDataValue('price'), 10),
+    salePercent: item.getDataValue('sale_percent'),
+    contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
+    isSoldOut: item.getDataValue('amount') < 1,
+    // TODO: 좋아요
+    isLike: true,
+    // TODO: 리뷰 갯수
+    reviewCount: 0,
+  };
+
+  return itemData;
+}
+
 export default {
   mainItems,
   getItems,
+  getItem,
 };
