@@ -13,7 +13,7 @@ interface IQuery {
 
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { popularItems, newItems, recommendItems } = await itemService.mainItems();
+    const { popularItems, newItems, recommendItems } = await itemService.mainItems(req);
     res
       .status(200)
       .json({ popularItems: popularItems.items, newItems: newItems.items, recommendItems: recommendItems.items });
