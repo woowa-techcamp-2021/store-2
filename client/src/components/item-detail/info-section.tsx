@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import styled from 'lib/woowahan-components';
 
 import starsTitle from 'assets/icons/stars_title.png';
@@ -12,6 +12,8 @@ export interface InfoSectionProps {
   price: number;
   isLike: boolean;
   isSoldOut: boolean;
+  onSubmitCart: () => void;
+  onBuy: () => void;
 }
 
 const Wrapper = styled.section`
@@ -148,12 +150,16 @@ const PaymentWrapper = styled.form`
   }
 `;
 
-const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, isSoldOut }: InfoSectionProps) => {
+const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, isSoldOut, onSubmitCart, onBuy }) => {
   const [totalPrice, setTotalPrice] = useState(price);
 
   const handleCounterChange = (v: number) => {
     setTotalPrice(v);
   };
+
+  useEffect(() => {
+    setTotalPrice(price);
+  }, [price]);
 
   return (
     <Wrapper>
@@ -182,8 +188,8 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
               <div className="sold-out">다 팔렸읍니다</div>
             ) : (
               <>
-                <Button title="장바구니" type="button" styleType="white" />
-                <Button title="바로구매" type="button" styleType="black" />
+                <Button title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
+                <Button title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
             )}
           </div>
