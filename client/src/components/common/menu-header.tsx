@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import back from 'assets/icons/back.png';
-import { Link } from 'lib/router';
+import { Link, useHistory } from 'lib/router';
 
 interface MenuHeaderProps {
   title: string;
@@ -36,12 +36,14 @@ const Wrapper = styled.div`
 `;
 
 const MenuHeader: FC<MenuHeaderProps> = ({ title, isMobile }) => {
+  const history = useHistory();
+  const onClick = useCallback(() => history.goBack(), [history]);
   if (isMobile)
     return (
       <MobileWrapper className="mobile-wrapper">
-        <Link to="/">
-          <img src={back} alt="뛰로가기" />
-        </Link>
+        <button type="button" onClick={onClick}>
+          <img src={back} alt="뒤로가기" />
+        </button>
         <div className="title">{title}</div>
         <div className="empty" />
       </MobileWrapper>

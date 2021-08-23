@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   > div {
     font-size: 12px;
     color: ${props => props.theme?.softBlack};
-    font-weight: bold;
+    font-weight: ${props => props.theme?.weightMid};
     padding: 0 2px;
   }
   > div:nth-child(1) {
@@ -38,9 +38,7 @@ const Wrapper = styled.div`
     flex: 1;
   }
   img {
-    width: 62px;
-    height: 52px;
-    padding-right: 5px;
+    display: none;
   }
   ${props => props.theme?.tablet} {
     > div {
@@ -50,6 +48,7 @@ const Wrapper = styled.div`
       width: 72px;
       height: 62px;
       padding-right: 7px;
+      display: block;
     }
   }
   ${props => props.theme?.laptop} {
@@ -60,6 +59,7 @@ const Wrapper = styled.div`
       width: 82px;
       height: 72px;
       padding-right: 10px;
+      display: block;
     }
   }
 `;
