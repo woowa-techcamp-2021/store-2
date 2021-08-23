@@ -22,7 +22,7 @@ const getUserOrders = async (uid: string, pageId: number): Promise<IOrdersData> 
       [Sequelize.col('Item.thumbnail'), 'thumbnail'],
       [Sequelize.col('Item.title'), 'title'],
       'quantity',
-      [Sequelize.literal(`CASE WHEN status=1 THEN '배송완료' ELSE '주문완료' END`), 'statusS'],
+      [Sequelize.literal(`CASE WHEN status=1 THEN '배송완료' ELSE '주문완료' END`), 'status'],
       [
         Sequelize.literal(
           'CASE WHEN Item.salePercent !=0 THEN ROUND(Item.price - (Item.price * Item.salePercent /100),0) ELSE Item.price END',
