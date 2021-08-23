@@ -58,15 +58,7 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       scoreJson.forEach(score => rank.push(score));
     });
 
-    rank.sort((a, b) => {
-      if (a.score > b.score) {
-        return -1;
-      }
-      if (a.score < b.score) {
-        return 1;
-      }
-      return 0;
-    });
+    rank.sort((a, b) => b.score - a.score);
 
     const rankTitles: string[] = [];
     rank.forEach(row => {
