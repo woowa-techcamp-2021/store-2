@@ -21,5 +21,7 @@ export const getListItem = ({ categoryId, pageId, type, search }: IItemState): P
   return client.get<IListItem>(url);
 };
 
+export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => client.get(`/api/items/${id}`);
+
 export const getAutoComplete = ({ keyword }: ISearchState): Promise<AxiosResponse<AutoCompleteKeyword>> =>
   client.get(`/api/search?keyword=${keyword}`);
