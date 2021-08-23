@@ -53,7 +53,15 @@ const getUserOrders = async (
     ],
   });
 
-  const totalCount = await db.Order.count({ where: { UserId: uid } });
+  const totalCount = await db.Order.count({
+    where: {
+      UserId: uid,
+      createdAt: {
+        [Op.gte]: prevDate,
+        [Op.lte]: currentDate,
+      },
+    },
+  });
   const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
 
   if (!orders) {
