@@ -7,14 +7,13 @@ export const checkPathValidation = (
   const currentPathSplit = /^\/$/.test(currentPath)
     ? currentPath.split('/')
     : currentPath.replace(/\/$/, '').split('/');
-
   if (!validatePath(pathSplit, currentPathSplit)) return false;
 
   const result = pathSplit.reduce((acc, cur, i) => {
     if (!/^:/.test(cur)) {
       return acc && cur === currentPathSplit[i];
     }
-    return true;
+    return acc;
   }, true);
 
   return result;
