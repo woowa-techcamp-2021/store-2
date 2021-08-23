@@ -1,5 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
+import * as itemAPI from 'utils/api/item';
+import * as likeAPI from 'utils/api/like';
 import axios, { AxiosResponse } from 'axios';
 
 import * as itemAPI from 'utils/api/item';
@@ -81,4 +83,30 @@ function* getItemSaga(action: PayloadAction): Generator {
   }
 }
 
-export { getMainItemSaga, getListItemSaga, autoCompleteSaga, getItemSaga };
+function* addLikeSaga(action: PayloadAction): Generator {
+  try {
+    yield call(likeAPI.addLike, action.payload as unknown as number);
+    yield put({
+      type: itemStore.addLikeSuccess,
+    });
+  } catch (e) {
+    yield put({
+      type: itemStore.addLikeFail,
+    });
+  }
+}
+
+function* deleteLikeSaga(action: PayloadAction): Generator {
+  try {
+    yield call(likeAPI.deleteLike, action.payload as unknown as number);
+    yield put({
+      type: itemStore.deleteLikeSuccess,
+    });
+  } catch (e) {
+    yield put({
+      type: itemStore.deleteLikeFail,
+    });
+  }
+}
+
+export { getMainItemSaga, getListItemSaga, autoCompleteSaga, getItemSaga, addLikeSaga, deleteLikeSaga };
