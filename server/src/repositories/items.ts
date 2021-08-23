@@ -40,7 +40,7 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
   });
 };
 
-const getRecommendItems = async (visited: string[]): Promise<IItems> => {
+const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Promise<IItems> => {
   if (visited.length > 0) {
     const scores = await db.Score.findAll({
       where: {
@@ -68,6 +68,9 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       rankTitles.push(row.title);
     });
     rankTitles = rankTitles.filter((item, index) => rankTitles.indexOf(item) === index);
+    if (!isCategoryItem) {
+      rankTitles = rankTitles.slice(0, LIMIT_COUNT);
+    }
 
     const items = await db.Item.findAll({
       attributes: [
@@ -83,15 +86,21 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       ],
       where: {
         title: {
-          [Op.or]: rankTitles.slice(0, LIMIT_COUNT),
+          [Op.or]: rankTitles,
         },
       },
-      limit: LIMIT_COUNT,
     });
 
-    filterItems(items);
+    const sortedItems: IItems = { items: [] };
+    rankTitles.forEach(ranktitle =>
+      sortedItems.items.push(
+        items.find(item => item.getDataValue('title') === ranktitle) as Model<ItemAttributes, ItemCreationAttributes>,
+      ),
+    );
 
-    return { items };
+    filterItems(sortedItems.items);
+
+    return { items: sortedItems.items };
   }
 
   const items = await db.Item.findAll({
@@ -207,7 +216,7 @@ const getCategoryRecommendItems = async (
     ],
   });
 
-  const recommendItems: IItems = await getRecommendItems(visited);
+  const recommendItems: IItems = await getRecommendItems(visited, true);
   recommendItems.items = recommendItems.items.filter(item =>
     items.some(categoryItem => categoryItem.getDataValue('title') === item.getDataValue('title')),
   );

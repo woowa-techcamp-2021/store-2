@@ -25,7 +25,7 @@ async function mainItems(visited: string[]): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
-    itemRepository.getRecommendItems(visited),
+    itemRepository.getRecommendItems(visited, false),
   ]);
   return { popularItems, newItems, recommendItems };
 }
