@@ -50,8 +50,7 @@ const ButtonBox = styled.div`
   align-items: center;
 
   button {
-    background: ${({ theme }) => theme?.colorLineLight};
-    border: 1px solid ${({ theme }) => theme?.colorLine};
+    background: ${({ theme }) => theme?.colorTextBrownLight};
     width: 24px;
   }
 `;
