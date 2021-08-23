@@ -49,9 +49,6 @@ async function getItems(
     });
 
   const order = [];
-  // TODO: recommend 수정 예정
-  // if (type === 'recommend') order.push([Sequelize.literal('rand()')]);
-  // else
   if (type === 'popular') order.push(['sale_count', 'DESC']);
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
