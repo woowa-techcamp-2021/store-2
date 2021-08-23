@@ -135,7 +135,7 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items-not-found',
+      code: 'items/items-not-found',
     });
   }
 
