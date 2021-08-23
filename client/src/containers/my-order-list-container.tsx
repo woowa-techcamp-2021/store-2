@@ -1,3 +1,4 @@
+import Pagination from 'components/item/pagination';
 import InquiryPeriod from 'components/my/inquiry-period';
 import MyBar from 'components/my/my-bar';
 import MyOrderList from 'components/my/my-order-list';
@@ -15,6 +16,7 @@ const MyOrderListContainer: FC = () => {
   const [select, setSelect] = useState<undefined | number>(undefined);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [pageId, setPageId] = useState(1);
 
   const { loading, user, orders, pageCount, totalCount, userLoading } = useSelector(
     ({ auth, loading, order }: RootState) => ({
@@ -28,9 +30,9 @@ const MyOrderListContainer: FC = () => {
   );
 
   useEffect(() => {
-    // TODO: 페이지네이션 리베이스 받고 수정
-    dispatch({ type: getOrders.type, payload: { pageId: 1, prevDate: getLastThreeMonth(), currentDate: getToday() } });
-  }, [dispatch]);
+    dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, pageId]);
 
   useEffect(() => {
     if (!userLoading && !user) history.push('/');
@@ -59,10 +61,8 @@ const MyOrderListContainer: FC = () => {
   };
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 페이지네이션 리베이스 받고 수정
     dispatch({ type: getOrders.type, payload: { pageId: 1, prevDate, currentDate } });
   };
-
   if (userLoading) return null;
   return (
     <>
@@ -81,7 +81,8 @@ const MyOrderListContainer: FC = () => {
         onSubmit={onSubmit}
       />
       <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
-      <MyOrderList loading={loading} orders={orders} pageCount={pageCount} totalCount={totalCount} />
+      <MyOrderList loading={loading} orders={orders} totalCount={totalCount} />
+      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
     </>
   );
 };
