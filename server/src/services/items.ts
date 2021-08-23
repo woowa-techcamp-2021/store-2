@@ -56,8 +56,8 @@ async function getItems(categoryId: string, pageId = 1, type: ItemType, search: 
 
     data = await itemRepository.getSearchItems(pageId, order, regExp.substring(0, regExp.length - 2).slice(1));
   }
-  const { items, pageCount } = data;
-  return { items, pageCount };
+  const { items, totalCount, pageCount } = data;
+  return { items, totalCount, pageCount };
 }
 
 export default {

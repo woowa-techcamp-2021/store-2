@@ -10,6 +10,7 @@ export interface IItems {
 }
 
 export interface IItemsData extends IItems {
+  totalCount: number;
   pageCount: number;
 }
 
@@ -17,6 +18,8 @@ export interface IScore {
   title: string;
   score: number;
 }
+
+const LIMIT_COUNT = 12;
 
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(item => {
@@ -80,10 +83,10 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       ],
       where: {
         title: {
-          [Op.or]: rankTitles.slice(0, 12),
+          [Op.or]: rankTitles.slice(0, LIMIT_COUNT),
         },
       },
-      limit: 12,
+      limit: LIMIT_COUNT,
     });
 
     filterItems(items);
@@ -104,7 +107,7 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       ['is_best', 'isBest'],
       [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
     ],
-    limit: 12,
+    limit: LIMIT_COUNT,
   });
 
   filterItems(items);
@@ -154,8 +157,8 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
     ],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
-    offset: (pageId - 1) * 8 + 1,
-    limit: 12,
+    offset: (pageId - 1) * LIMIT_COUNT,
+    limit: LIMIT_COUNT,
     include: [
       {
         model: db.Category,
@@ -164,9 +167,9 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
     ],
   });
 
-  const pageCount = Math.ceil(
-    (await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } })) / 12,
-  );
+  const totalCount = await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
 
   if (!items) {
     throw errorGenerator({
@@ -177,7 +180,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
 
   filterItems(items);
 
-  return { items, pageCount };
+  return { items, totalCount, pageCount };
 };
 
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
@@ -197,8 +200,8 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
         [Op.regexp]: regExp,
       },
     },
-    offset: (pageId - 1) * 8 + 1,
-    limit: 12,
+    offset: (pageId - 1) * LIMIT_COUNT,
+    limit: LIMIT_COUNT,
     include: [
       {
         model: db.Category,
@@ -207,15 +210,15 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
     ],
   });
 
-  const pageCount = Math.ceil(
-    (await db.Item.count({
-      where: {
-        title: {
-          [Op.regexp]: regExp,
-        },
+  const totalCount = await db.Item.count({
+    where: {
+      title: {
+        [Op.regexp]: regExp,
       },
-    })) / 12,
-  );
+    },
+  });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
 
   if (!items) {
     throw errorGenerator({
@@ -226,7 +229,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
 
   filterItems(items);
 
-  return { items, pageCount };
+  return { items, totalCount, pageCount };
 };
 
 export default { getMainItems, getCategoryItems, getSearchItems, getRecommendItems };

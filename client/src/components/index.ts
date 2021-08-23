@@ -8,3 +8,6 @@ export { default as Banner } from './common/banner';
 export { default as Input } from './form/input';
 export { default as Button } from './form/button';
 export { default as CheckBox } from './form/check-box';
+
+export { default as MainItemWrapper } from './item/main-item-wrapper';
+export { default as ItemListWrapper } from './item/item-list-wrapper';
