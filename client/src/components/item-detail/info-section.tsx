@@ -5,7 +5,7 @@ import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
 
-import Button from 'components/common/button';
+import TextButton from 'components/common/text-button';
 import ItemCounter from './item-counter';
 
 export interface InfoSectionProps {
@@ -181,11 +181,11 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
           </div>
           <div className="row end">
             {isSoldOut ? (
-              <Button title="다 팔렸읍니다" type="button" styleType="black" disabled />
+              <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
-                <Button title="장바구니" type="button" styleType="white" />
-                <Button title="바로구매" type="button" styleType="black" />
+                <TextButton title="장바구니" type="button" styleType="white" />
+                <TextButton title="바로구매" type="button" styleType="black" />
               </>
             )}
           </div>
