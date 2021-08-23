@@ -214,26 +214,25 @@ const Item: FC<ItemProps> = ({
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => setIsLiked(!isLiked);
-
   const onItemClick = (e: MouseEvent) => {
     if ((e.target as HTMLDivElement).classList.contains('like')) return;
+    if (!localStorage.getItem('visited')) {
+      localStorage.setItem('visited', title);
+    } else {
+      const data = localStorage.getItem('visited') as string;
+      let visitedList = data.split(',');
+      visitedList.push(title);
+      if (visitedList.length > 10) {
+        visitedList = visitedList.slice(1);
+      }
+      localStorage.setItem('visited', visitedList.join(','));
+    }
     onClick();
   };
   return (
     <Container
       bgColor={salePercent ? 'red' : 'green'}
       onClick={(e: MouseEvent) => {
-        if (!localStorage.getItem('visited')) {
-          localStorage.setItem('visited', title);
-        } else {
-          const data = localStorage.getItem('visited') as string;
-          let visitedList = data.split(',');
-          visitedList.push(title);
-          if (visitedList.length > 10) {
-            visitedList = visitedList.slice(1);
-          }
-          localStorage.setItem('visited', visitedList.join(','));
-        }
         onItemClick(e);
       }}
     >
