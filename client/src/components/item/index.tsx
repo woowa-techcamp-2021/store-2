@@ -214,8 +214,7 @@ const Item: FC<ItemProps> = ({
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => setIsLiked(!isLiked);
-  const onItemClick = (e: MouseEvent) => {
-    if ((e.target as HTMLDivElement).classList.contains('like')) return;
+  const setVisitedItem = () => {
     if (!localStorage.getItem('visited')) {
       localStorage.setItem('visited', title);
     } else {
@@ -227,6 +226,10 @@ const Item: FC<ItemProps> = ({
       }
       localStorage.setItem('visited', visitedList.join(','));
     }
+  };
+  const onItemClick = (e: MouseEvent) => {
+    if ((e.target as HTMLDivElement).classList.contains('like')) return;
+    setVisitedItem();
     onClick();
   };
   return (
