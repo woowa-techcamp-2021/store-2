@@ -39,7 +39,7 @@ const getUserOrders = async (
       UserId: uid,
       createdAt: {
         [Op.gte]: prevDate,
-        [Op.lt]: currentDate,
+        [Op.lte]: currentDate,
       },
     },
     limit: LIMIT_COUNT,
