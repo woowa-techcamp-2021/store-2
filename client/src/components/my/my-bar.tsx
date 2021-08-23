@@ -1,3 +1,4 @@
+import { ADDRESS_URL, ORDER_LIST_URL, REVIEW_URL } from 'constants/urls';
 import { Link, useHistory } from 'lib/router';
 import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
@@ -28,13 +29,16 @@ const Wrapper = styled.nav`
 
 const MyBar: FC = () => {
   const { currentPath } = useHistory();
-  const list = ['/my/order', '/my/address', '/my/review'];
-  const nav = ['주문목록 조회', '배송지 관리', '나의 후기'];
+  const myPageNav = [
+    { link: ORDER_LIST_URL, name: '주문목록 조회' },
+    { link: ADDRESS_URL, name: '배송지 관리' },
+    { link: REVIEW_URL, name: '나의 후기' },
+  ];
   return (
     <Wrapper>
-      {list.map((li, i) => (
-        <Link key={li} to="/my/address" className={li === currentPath ? 'active' : ''}>
-          {nav[i]}
+      {myPageNav.map(({ link, name }, i) => (
+        <Link key={name} to={link} className={link === currentPath ? 'active' : ''}>
+          {name}
         </Link>
       ))}
     </Wrapper>
