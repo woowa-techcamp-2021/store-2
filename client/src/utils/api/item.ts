@@ -3,7 +3,11 @@ import { IMainItem, IListItem, IItemState } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import client from './client';
 
-export const getMainItem = (): Promise<AxiosResponse> => client.get<IMainItem>('/api/items/main');
+export const getMainItem = (): Promise<AxiosResponse> => {
+  const visited = localStorage.getItem('visited')?.split(',');
+
+  return client.post<IMainItem>('/api/items/main', visited);
+};
 
 export const getListItem = ({ categoryId, pageId, type, search }: IItemState): Promise<AxiosResponse> => {
   let url = '/api/items?';

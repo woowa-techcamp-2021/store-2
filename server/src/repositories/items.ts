@@ -14,6 +14,11 @@ export interface IItemsData extends IItems {
   pageCount: number;
 }
 
+export interface IScore {
+  title: string;
+  score: number;
+}
+
 const LIMIT_COUNT = 12;
 
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
@@ -33,6 +38,81 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
       item.setDataValue('originalPrice', price);
     }
   });
+};
+
+const getRecommendItems = async (visited: string[]): Promise<IItems> => {
+  if (visited.length > 0) {
+    const scores = await db.Score.findAll({
+      where: {
+        title: {
+          [Op.or]: visited.reverse().slice(0, 5),
+        },
+      },
+    });
+
+    const rank: IScore[] = [];
+    scores.forEach(row => {
+      const data = row.getDataValue('scores');
+      const scoreStr = data
+        .substring(0, data.length - 1)
+        .slice(1)
+        .replace(/'/g, '"');
+      const scoreJson = JSON.parse(scoreStr) as IScore[];
+      scoreJson.forEach(score => rank.push(score));
+    });
+
+    rank.sort((a, b) => b.score - a.score);
+
+    const rankTitles: string[] = [];
+    rank.forEach(row => {
+      rankTitles.push(row.title);
+    });
+    console.log(rankTitles);
+
+    const items = await db.Item.findAll({
+      attributes: [
+        'id',
+        'title',
+        'thumbnail',
+        'price',
+        ['sale_percent', 'salePercent'],
+        'amount',
+        ['is_green', 'isGreen'],
+        ['is_best', 'isBest'],
+        [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
+      ],
+      where: {
+        title: {
+          [Op.or]: rankTitles.slice(0, LIMIT_COUNT),
+        },
+      },
+      limit: LIMIT_COUNT,
+    });
+
+    filterItems(items);
+
+    return { items };
+  }
+
+  const items = await db.Item.findAll({
+    order: Sequelize.literal('rand()'),
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+      ['is_best', 'isBest'],
+      [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
+    ],
+    limit: LIMIT_COUNT,
+  });
+
+  filterItems(items);
+
+  return { items };
 };
 
 const getMainItems = async (order: string[][], limit: number): Promise<IItems> => {
@@ -152,4 +232,4 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
   return { items, totalCount, pageCount };
 };
 
-export default { getMainItems, getCategoryItems, getSearchItems };
+export default { getMainItems, getCategoryItems, getSearchItems, getRecommendItems };
