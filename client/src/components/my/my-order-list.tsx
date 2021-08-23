@@ -1,55 +1,29 @@
 import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import { IOrder } from 'types/order';
 import MyOrder from './my-order';
 
-const dummy = [
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요2',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요3',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요4',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-];
+interface MyOrderListProps {
+  loading: boolean;
+  orders: IOrder[];
+  pageCount: number;
+  totalCount: number;
+}
 
 const Wrapper = styled.div`
   margin: 0 -12px;
   margin-bottom: 100px;
 `;
 
-const MyOrderList: FC = () => {
+const MyOrderList: FC<MyOrderListProps> = ({ loading, orders, pageCount, totalCount }) => {
+  // TODO: 로딩, 페이지 카운트, 토탈카운트
   return (
     <Wrapper>
-      {dummy.map(({ createdAt, itemTitle, thumbnail, price, count, status }) => (
+      {orders.map(({ createdAt, title, thumbnail, price, count, status }) => (
         <MyOrder
-          key={itemTitle}
+          key={title}
           createdAt={createdAt}
-          itemTitle={itemTitle}
+          title={title}
           thumbnail={thumbnail}
           price={price}
           count={count}
