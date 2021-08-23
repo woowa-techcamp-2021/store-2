@@ -15,7 +15,7 @@ export interface IOrdersData extends IOrders {
   pageCount: number;
 }
 
-const getUserOrders = async (uid: string): Promise<IOrdersData> => {
+const getUserOrders = async (uid: string, pageId: number): Promise<IOrdersData> => {
   const orders = await db.Order.findAll({
     attributes: [
       [Sequelize.fn('date_format', Sequelize.col('Order.createdAt'), '%Y-%m-%d'), 'createdAt'],
@@ -33,6 +33,8 @@ const getUserOrders = async (uid: string): Promise<IOrdersData> => {
     where: {
       UserId: uid,
     },
+    limit: LIMIT_COUNT,
+    offset: (pageId - 1) * LIMIT_COUNT,
     order: [['createdAt', 'DESC']],
     include: [
       {
