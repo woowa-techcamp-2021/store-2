@@ -5,6 +5,10 @@ export interface OrderAttributes {
   address: string;
   receiver: string;
   quantity: number;
+  status: number | string;
+  UserId: string;
+  price: string | number;
+  salePercent: number;
 }
 
 export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
@@ -28,6 +32,11 @@ const orderSchema = (sequelize: Sequelize): ModelCtor<Model<OrderAttributes, Ord
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
     },
   });
 
