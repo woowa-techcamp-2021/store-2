@@ -4,7 +4,7 @@ import { USER } from 'config/constants';
 
 export interface UserAttribures {
   id: string;
-  user_id: string;
+  userId: string;
   password: string;
   provider: string;
   phone: string;
