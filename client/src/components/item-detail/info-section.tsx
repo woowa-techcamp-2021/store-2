@@ -1,14 +1,14 @@
 import React, { useState, useEffect, FC } from 'react';
 import styled from 'lib/woowahan-components';
+import useWindowSize from 'hooks/use-window-size';
 
 import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
 
 import TextButton from 'components/common/text-button';
-import ItemCounter from './item-counter';
 import ImageViewer from 'components/image-viewer';
-import useWindowSize from 'hooks/use-window-size';
+import ItemCounter from './item-counter';
 
 export interface InfoSectionProps {
   thumbnail: string;
@@ -160,7 +160,7 @@ const PaymentWrapper = styled.form`
   }
 `;
 
-const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, isSoldOut, onSubmitCart, onBuy }) => {
+const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const { width } = useWindowSize();
 
