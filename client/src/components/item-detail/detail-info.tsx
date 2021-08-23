@@ -33,14 +33,14 @@ const DetailImageWrapper = styled.div`
 const DetailInfo: FC<DetailInfoProps> = ({ contents, reviewCount }) => {
   return (
     <Container>
-      <DetailWrapper select={1} reviewCount={reviewCount}>
+      <DetailWrapper select="detail" reviewCount={reviewCount}>
         <DetailImageWrapper>
           {contents.map((v, i) => {
             return <img src={v} key={v} alt={`${i}`} />;
           })}
         </DetailImageWrapper>
       </DetailWrapper>
-      <DetailWrapper select={2} reviewCount={reviewCount}>
+      <DetailWrapper select="review" reviewCount={reviewCount}>
         후기
       </DetailWrapper>
     </Container>

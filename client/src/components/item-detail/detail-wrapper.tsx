@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
 interface DetailWrapperProps {
-  select: number;
+  select: 'detail' | 'review';
   reviewCount: number;
 }
 
@@ -49,8 +49,8 @@ const DetailWrapper: FC<DetailWrapperProps> = ({ children, select, reviewCount }
   return (
     <Container>
       <DetailHeader>
-        <Marker selected={select === 1 ? true : ''}>상품상세정보</Marker>
-        <Marker selected={select === 2 ? true : ''}>
+        <Marker selected={select === 'detail' ? true : ''}>상품상세정보</Marker>
+        <Marker selected={select === 'review' ? true : ''}>
           상품후기 <span>{reviewCount}</span>
         </Marker>
       </DetailHeader>
