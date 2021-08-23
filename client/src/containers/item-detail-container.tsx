@@ -11,15 +11,15 @@ const MainItemContainer: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ items }: RootState) => ({
-    thumbnail: items.item.thumbnail,
-    title: items.item.title,
-    price: items.item.price,
-    contents: items.item.contents,
-    salePercent: items.item.salePercent,
-    isLike: items.item.isLike,
-    isSoldOut: items.item.isSoldOut,
-    reviewCount: items.item.reviewCount,
+  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ item }: RootState) => ({
+    thumbnail: item.item.thumbnail,
+    title: item.item.title,
+    price: item.item.price,
+    contents: item.item.contents,
+    salePercent: item.item.salePercent,
+    isLike: item.item.isLike,
+    isSoldOut: item.item.isSoldOut,
+    reviewCount: item.item.reviewCount,
   }));
 
   useEffect(() => {
