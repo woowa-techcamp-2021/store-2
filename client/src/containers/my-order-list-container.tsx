@@ -30,7 +30,7 @@ const MyOrderListContainer: FC = () => {
   );
 
   useEffect(() => {
-    dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
+    if (prevDate && currentDate) dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, pageId]);
 

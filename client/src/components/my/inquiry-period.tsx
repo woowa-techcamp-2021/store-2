@@ -135,6 +135,7 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({
             onChange={e => {
               setPrevDate(e.target.value);
             }}
+            required
           />
           <span>~</span>
           <input
@@ -144,6 +145,7 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({
             onChange={e => {
               setCurrentDate(e.target.value);
             }}
+            required
           />
           <Button type="submit">조회</Button>
         </DateFlex>
