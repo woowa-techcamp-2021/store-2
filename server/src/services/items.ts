@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
