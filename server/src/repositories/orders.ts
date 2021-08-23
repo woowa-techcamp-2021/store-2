@@ -4,30 +4,31 @@ import { Model, Sequelize } from 'sequelize';
 
 import errorGenerator from 'utils/error/error-generator';
 
-const filterOrders = (orders: Model<OrderAttributes, OrderCreationAttributes>[]) => {
-  orders.forEach(order => {
-    const statusArr = ['주문완료', '배송완료'];
-    const status = order.getDataValue('status') as number;
-    order.setDataValue('status', statusArr[status]);
+const LIMIT_COUNT = 10;
 
-    const salePercent = order.getDataValue('salePercent');
-    const price = parseInt(order.getDataValue('price') as string, 10);
-    if (salePercent !== 0) {
-      order.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
-    }
-  });
-};
+interface IOrders {
+  orders: Model<OrderAttributes, OrderCreationAttributes>[];
+}
 
-const getUserOrders = async (uid: string): Promise<Model<OrderAttributes, OrderCreationAttributes>[]> => {
+export interface IOrdersData extends IOrders {
+  totalCount: number;
+  pageCount: number;
+}
+
+const getUserOrders = async (uid: string): Promise<IOrdersData> => {
   const orders = await db.Order.findAll({
     attributes: [
       [Sequelize.fn('date_format', Sequelize.col('Order.createdAt'), '%Y-%m-%d'), 'createdAt'],
       [Sequelize.col('Item.thumbnail'), 'thumbnail'],
       [Sequelize.col('Item.title'), 'title'],
-      [Sequelize.col('Item.price'), 'price'],
-      [Sequelize.col('Item.salePercent'), 'salePercent'],
       'quantity',
-      'status',
+      [Sequelize.literal(`CASE WHEN status=1 THEN '배송완료' ELSE '주문완료' END`), 'statusS'],
+      [
+        Sequelize.literal(
+          'CASE WHEN Item.salePercent !=0 THEN ROUND(Item.price - (Item.price * Item.salePercent /100),0) ELSE Item.price END',
+        ),
+        'price',
+      ],
     ],
     where: {
       UserId: uid,
@@ -41,6 +42,9 @@ const getUserOrders = async (uid: string): Promise<Model<OrderAttributes, OrderC
     ],
   });
 
+  const totalCount = await db.Order.count({ where: { UserId: uid } });
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
+
   if (!orders) {
     throw errorGenerator({
       message: 'POST /api/orders - orders not found',
@@ -48,10 +52,6 @@ const getUserOrders = async (uid: string): Promise<Model<OrderAttributes, OrderC
     });
   }
 
-  // TODO: 주문상태, 페이지네이션(rebase받고), 주문완성되면 case when으로 변경
-
-  filterOrders(orders);
-
-  return orders;
+  return { orders, totalCount, pageCount };
 };
 export default { getUserOrders };
