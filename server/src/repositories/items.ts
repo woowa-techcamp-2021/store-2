@@ -89,6 +89,7 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
         [Op.or]: rankTitles.slice(0, 12),
       },
     },
+    limit: 12,
   });
 
   filterItems(items);
