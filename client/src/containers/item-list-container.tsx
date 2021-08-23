@@ -1,23 +1,50 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
+import { useQuery } from 'lib/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import ItemListWrapper from 'components/item/item-list-wrapper';
-import { useQuery } from 'lib/router';
-import { getItems } from 'store/items';
+import { getListItem } from 'store/item';
+import { ItemListWrapper } from 'components';
+import { ESortType } from 'types/item';
 
 const ItemListContainer: FC = () => {
-  const { items, pageCount, loading } = useSelector(({ items, loading }: RootState) => ({
-    items: items.items.items,
-    pageCount: items.items.pageCount,
-    loading: loading['items/getItems'],
-  }));
-  const dispatch = useDispatch();
   const query = useQuery();
+  const [pageId, setPageId] = useState(1);
+  const [sortType, setSortType] = useState(ESortType.RECOMMEND);
+  const dispatch = useDispatch();
+
+  const { items, totalCount, pageCount, loading } = useSelector(({ item, loading }: RootState) => ({
+    items: item.list.items,
+    totalCount: item.list.totalCount,
+    pageCount: item.list.pageCount,
+    loading: loading['item/getListItem'],
+  }));
+
   useEffect(() => {
-    const { categoryId, pageId, type, search } = query;
-    dispatch({ type: getItems.type, payload: { categoryId, pageId, type, search } });
-  }, [query, dispatch]);
-  return <ItemListWrapper items={items} pageCount={pageCount} loading={loading} />;
+    setSortType(ESortType.RECOMMEND);
+  }, [query]);
+
+  useEffect(() => {
+    setPageId(1);
+  }, [query, sortType]);
+
+  useEffect(() => {
+    const { categoryId, search } = query;
+    dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
+    window.scrollTo(0, 0);
+  }, [query, pageId, sortType, dispatch]);
+
+  return (
+    <ItemListWrapper
+      items={items}
+      loading={loading}
+      pageCount={pageCount}
+      pageId={pageId}
+      setPageId={setPageId}
+      totalCount={totalCount}
+      sortType={sortType}
+      setSortType={setSortType}
+    />
+  );
 };
 
 export default ItemListContainer;

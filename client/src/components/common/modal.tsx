@@ -29,6 +29,17 @@ const ModalBlock = styled.div`
 `;
 
 const Inner = styled.div`
+  @keyframes fadeinfromtop {
+    from {
+      margin-top: -10vh;
+      opacity: 0;
+    }
+    to {
+      margin-top: 0vh;
+      opacity: 1;
+    }
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;

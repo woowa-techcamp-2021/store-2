@@ -10,6 +10,8 @@ import { Layout } from 'components';
 
 const Wrapper = styled.section`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ItemListPage = (): ReactElement => {
