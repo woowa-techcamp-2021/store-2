@@ -99,6 +99,10 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  div {
+    font-family: "Noto Sans KR", sans-serif;
+  }
 `;
 
 const Theme: FC = ({ children }) => {
