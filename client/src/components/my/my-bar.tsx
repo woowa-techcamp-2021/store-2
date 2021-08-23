@@ -36,7 +36,7 @@ const MyBar: FC = () => {
   ];
   return (
     <Wrapper>
-      {myPageNav.map(({ link, name }, i) => (
+      {myPageNav.map(({ link, name }) => (
         <Link key={name} to={link} className={link === currentPath ? 'active' : ''}>
           {name}
         </Link>
