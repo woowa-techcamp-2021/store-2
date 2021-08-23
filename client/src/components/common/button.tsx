@@ -32,11 +32,11 @@ const ButtonBox = styled.button`
 const TextButton: FC<ButtonProps> = ({
   title,
   type,
-  size,
-  onClick,
-  disabled = false,
   styleType,
-  isLoading,
+  size = 'big',
+  onClick = () => {},
+  disabled = false,
+  isLoading = false,
 }: ButtonProps) => {
   return (
     <ButtonBox
@@ -50,13 +50,6 @@ const TextButton: FC<ButtonProps> = ({
       {title}
     </ButtonBox>
   );
-};
-
-TextButton.defaultProps = {
-  onClick: () => {},
-  disabled: false,
-  isLoading: false,
-  size: 'big',
 };
 
 export default TextButton;
