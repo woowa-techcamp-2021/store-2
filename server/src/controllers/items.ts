@@ -28,10 +28,10 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-export const getItems = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
+export const getItems = async (req: Request<unknown, unknown, string[], IQuery>, res: Response): Promise<void> => {
   const { categoryId, pageId, type, search } = req.query;
   try {
-    const data = await itemService.getItems(categoryId, pageId, type, search);
+    const data = await itemService.getItems(categoryId, pageId, type, search, req.body);
     const { items, totalCount, pageCount } = data;
     res.status(200).json({ items, totalCount, pageCount });
   } catch (err) {
