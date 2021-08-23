@@ -2,7 +2,7 @@ import orderRepisitory, { IOrdersData } from 'repositories/orders';
 import { decodeToken } from 'utils/jwt';
 import errorGenerator from 'utils/error/error-generator';
 
-async function getOrders(token: string, pageId = 1): Promise<IOrdersData> {
+async function getOrders(token: string, pageId = 1, prevDate: string, currentDate: string): Promise<IOrdersData> {
   if (!token) {
     throw errorGenerator({
       message: 'GET /api/orders - no token',
@@ -11,7 +11,7 @@ async function getOrders(token: string, pageId = 1): Promise<IOrdersData> {
   }
 
   const { uid } = decodeToken('access', token);
-  const { orders, totalCount, pageCount } = await orderRepisitory.getUserOrders(uid, pageId);
+  const { orders, totalCount, pageCount } = await orderRepisitory.getUserOrders(uid, pageId, prevDate, currentDate);
 
   return { orders, totalCount, pageCount };
 }

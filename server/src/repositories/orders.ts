@@ -1,6 +1,6 @@
 import { db } from 'models';
 import { OrderAttributes, OrderCreationAttributes } from 'models/order';
-import { Model, Sequelize } from 'sequelize';
+import { Op, Model, Sequelize } from 'sequelize';
 
 import errorGenerator from 'utils/error/error-generator';
 
@@ -15,7 +15,12 @@ export interface IOrdersData extends IOrders {
   pageCount: number;
 }
 
-const getUserOrders = async (uid: string, pageId: number): Promise<IOrdersData> => {
+const getUserOrders = async (
+  uid: string,
+  pageId: number,
+  prevDate: string,
+  currentDate: string,
+): Promise<IOrdersData> => {
   const orders = await db.Order.findAll({
     attributes: [
       [Sequelize.fn('date_format', Sequelize.col('Order.createdAt'), '%Y-%m-%d'), 'createdAt'],
@@ -32,6 +37,10 @@ const getUserOrders = async (uid: string, pageId: number): Promise<IOrdersData> 
     ],
     where: {
       UserId: uid,
+      createdAt: {
+        [Op.gte]: prevDate,
+        [Op.lt]: currentDate,
+      },
     },
     limit: LIMIT_COUNT,
     offset: (pageId - 1) * LIMIT_COUNT,

@@ -10,6 +10,7 @@ export interface OrderAttributes {
   ItemId: number;
   price: string | number;
   salePercent: number;
+  createdAt: string;
 }
 
 export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
