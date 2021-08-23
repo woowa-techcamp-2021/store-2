@@ -1,6 +1,8 @@
 import React, { useState, FC } from 'react';
 import styled from 'lib/woowahan-components';
 
+import { formatPrice } from 'utils';
+
 interface ItenCounterProps {
   title: string;
   price: number;
@@ -78,7 +80,7 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
             -
           </button>
         </ButtonBox>
-        <div className="text price">{count * price}원</div>
+        <div className="text price">{formatPrice(count * price)}원</div>
       </Counter>
     </Container>
   );

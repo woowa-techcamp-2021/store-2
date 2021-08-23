@@ -3,6 +3,8 @@ import styled from 'lib/woowahan-components';
 
 import starsTitle from 'assets/icons/stars_title.png';
 
+import { formatPrice } from 'utils';
+
 import Button from 'components/common/button';
 import ItemCounter from './item-counter';
 
@@ -164,7 +166,7 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
           <ItemTitle>{title}</ItemTitle>
           <ItemPrice>
             <div className="title">판매가격</div>
-            <div className="price">{price}원</div>
+            <div className="price">{formatPrice(price)}원</div>
             <div className="title">배송정보</div>
             <div>데모기념 오늘만 배송비 무료!!!</div>
           </ItemPrice>
@@ -174,7 +176,7 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
           <div className="row">
             <div className="title">총 합계금액</div>
             <div className="price">
-              <input value={totalPrice} readOnly size={7} />원
+              <input value={formatPrice(totalPrice)} readOnly size={7} />원
             </div>
           </div>
           <div className="row end">
