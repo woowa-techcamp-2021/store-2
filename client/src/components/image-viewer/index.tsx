@@ -2,6 +2,7 @@ import React, { FC, useCallback, useRef, MouseEvent } from 'react';
 import styled from 'lib/woowahan-components';
 
 interface ImageViewerProps {
+  className?: string;
   imgSrc: string;
   imgWidth: number;
   imgHeight: number;
@@ -30,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageViewer: FC<ImageViewerProps> = ({ imgSrc, imgWidth, imgHeight }) => {
+const ImageViewer: FC<ImageViewerProps> = ({ className = '', imgSrc, imgWidth, imgHeight }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const lensRef = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
@@ -93,7 +94,14 @@ const ImageViewer: FC<ImageViewerProps> = ({ imgSrc, imgWidth, imgHeight }) => {
   };
 
   return (
-    <Wrapper left={imgWidth + 5} imgWidth={imgWidth} imgHeight={imgHeight} targetImg={imgSrc} resultSize={calcBgSize()}>
+    <Wrapper
+      className={className}
+      left={imgWidth + 5}
+      imgWidth={imgWidth}
+      imgHeight={imgHeight}
+      targetImg={imgSrc}
+      resultSize={calcBgSize()}
+    >
       <img
         ref={imgRef}
         src={imgSrc}

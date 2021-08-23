@@ -7,6 +7,8 @@ import { formatPrice } from 'utils';
 
 import TextButton from 'components/common/text-button';
 import ItemCounter from './item-counter';
+import ImageViewer from 'components/image-viewer';
+import useWindowSize from 'hooks/use-window-size';
 
 export interface InfoSectionProps {
   thumbnail: string;
@@ -22,6 +24,10 @@ const Wrapper = styled.section`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  .image-viewer {
+    margin-right: 50px;
+  }
 
   ${({ theme }) => theme?.tablet} {
     flex-direction: column;
@@ -41,9 +47,11 @@ const Thumbnail = styled.img`
     margin-bottom: 18px;
     margin-right: 0;
   }
+
   ${({ theme }) => theme?.mobile} {
     width: 100%;
     height: auto;
+    margin-top: 10px;
     margin-right: 0;
     margin-bottom: 18px;
   }
@@ -154,6 +162,7 @@ const PaymentWrapper = styled.form`
 
 const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, isSoldOut, onSubmitCart, onBuy }) => {
   const [totalPrice, setTotalPrice] = useState(price);
+  const { width } = useWindowSize();
 
   const handleCounterChange = (v: number) => {
     setTotalPrice(v);
@@ -165,7 +174,11 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
 
   return (
     <Wrapper>
-      <Thumbnail src={thumbnail} alt={title} />
+      {width >= 1200 ? (
+        <ImageViewer className="image-viewer" imgSrc={thumbnail} imgWidth={450} imgHeight={527} />
+      ) : (
+        <Thumbnail src={thumbnail} alt={title} />
+      )}
       <ItemInfo>
         <div className="top-wrapper">
           <img src={starsTitle} alt="stars-title" />
