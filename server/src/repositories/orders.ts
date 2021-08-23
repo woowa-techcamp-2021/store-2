@@ -25,7 +25,7 @@ const getUserOrders = async (uid: string): Promise<Model<OrderAttributes, OrderC
       [Sequelize.col('Item.thumbnail'), 'thumbnail'],
       [Sequelize.col('Item.title'), 'title'],
       [Sequelize.col('Item.price'), 'price'],
-      [Sequelize.col('Item.sale_percent'), 'salePercent'],
+      [Sequelize.col('Item.salePercent'), 'salePercent'],
       'quantity',
       'status',
     ],

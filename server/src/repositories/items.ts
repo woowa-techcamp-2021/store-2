@@ -215,7 +215,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
 
 const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>> => {
   const item = await db.Item.findOne({
-    attributes: ['title', 'thumbnail', 'price', 'sale_percent', 'amount', ['is_green', 'isGreen'], 'contents'],
+    attributes: ['title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen', 'contents'],
     where: { id },
   });
 
