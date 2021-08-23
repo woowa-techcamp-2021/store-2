@@ -181,7 +181,7 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
           </div>
           <div className="row end">
             {isSoldOut ? (
-              <div className="sold-out">다 팔렸읍니다</div>
+              <Button title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
                 <Button title="장바구니" type="button" styleType="white" />

@@ -23,6 +23,11 @@ const ButtonBox = styled.button`
   border: 1px solid ${({ styleType, theme }) => (styleType === 'black' ? 'black' : theme?.colorTextBeige)};
   color: ${({ styleType, theme }) => (styleType === 'black' ? 'white' : theme?.colorLineDark)};
 
+  &:disabled {
+    background: ${({ theme }) => theme?.colorPlaceholder};
+    border-color: ${({ theme }) => theme?.colorPlaceholder};
+  }
+
   ${({ theme }) => theme?.mobile} {
     padding: 12px 30px;
     font-size: 14px;
