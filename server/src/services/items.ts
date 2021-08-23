@@ -77,7 +77,7 @@ async function getItem(id: string): Promise<IGetItem> {
   const itemData: IGetItem = {
     thumbnail: item.getDataValue('thumbnail'),
     title: item.getDataValue('title'),
-    price: Number.parseInt(item.getDataValue('price'), 10),
+    price: Number.parseInt(`${item.getDataValue('price')}`, 10),
     salePercent: item.getDataValue('sale_percent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
