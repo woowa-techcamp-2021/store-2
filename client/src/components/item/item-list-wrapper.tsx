@@ -1,44 +1,99 @@
-import React, { FC } from 'react';
+import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItemsData } from 'types/item';
-import ItemList from 'components/item/item-list';
+import { IItem, ESortType } from 'types/item';
+import findIcon from 'assets/icons/find.png';
+import ItemList from './item-list';
+import Filter from './filter';
+import Pagination from './pagination';
 
-interface ItemListProps extends IItemsData {
+interface ItemListProps {
+  items: IItem[];
   loading: boolean;
+  pageCount: number;
+  pageId: number;
+  setPageId: Dispatch<SetStateAction<number>>;
+  totalCount: number;
+  sortType: ESortType;
+  setSortType: Dispatch<SetStateAction<ESortType>>;
 }
 
-const Div = styled.div`
-  margin-top: 90px;
+const Wrapper = styled.div`
+  margin-top: 50px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Empty = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 100px;
+
+  span {
+    text-align: center;
+    margin: 50px 0;
+    color: ${props => props.theme?.colorTextBrown};
+    font-family: ${props => props.theme?.fontEuljiro10};
+    font-size: 50px;
+  }
+
+  img {
+    width: 400px;
+  }
+
   ${props => props.theme?.mobile} {
-    margin-top: 50px;
+    padding-top: 0;
+
+    span {
+      font-size: 24px;
+    }
+
+    img {
+      width: 250px;
+    }
   }
 
   ${props => props.theme?.tablet} {
-    margin-top: 70px;
+    padding-top: 50px;
+
+    span {
+      font-size: 32px;
+    }
+
+    img {
+      width: 330px;
+    }
   }
 `;
 
-const SmallTitle = styled.div`
-  font-family: ${props => props.theme?.fontHanna};
-  font-size: 36px;
-  ${props => props.theme?.mobile} {
-    font-size: 20px;
-    margin-left: 50px;
-  }
-
-  ${props => props.theme?.tablet} {
-    font-size: 28px;
-    margin-left: 50px;
-  }
-`;
-
-const ItemListWrapper: FC<ItemListProps> = ({ items, loading, pageCount }) => {
+const ItemListWrapper: FC<ItemListProps> = ({
+  items,
+  loading,
+  pageCount,
+  pageId,
+  setPageId,
+  totalCount,
+  sortType,
+  setSortType,
+}) => {
   return (
-    <Div>
-      {loading && <div>로딩중</div>}
-      <SmallTitle>총 개수, 추천 등등...</SmallTitle>
-      <ItemList items={items} pageCount={pageCount} />
-    </Div>
+    <Wrapper>
+      <Filter total={totalCount} sortType={sortType} setSortType={setSortType} />
+      {loading || totalCount ? (
+        <>
+          <ItemList items={items} isLoading={loading} />
+          <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+        </>
+      ) : (
+        <Empty>
+          <span>앗! 그런 물건은 안 팔아요. . .</span>
+          <img src={findIcon} alt="find" />
+        </Empty>
+      )}
+    </Wrapper>
   );
 };
 

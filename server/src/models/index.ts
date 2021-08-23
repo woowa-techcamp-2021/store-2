@@ -7,6 +7,7 @@ import addressSchema from './address';
 import categorySchema from './category';
 import orderSchema from './order';
 import reviewSchema from './review';
+import scoreSchema from './score';
 
 import configFile from '../config/db';
 
@@ -22,6 +23,7 @@ const Address = addressSchema(sequelize);
 const Category = categorySchema(sequelize);
 const Order = orderSchema(sequelize);
 const Review = reviewSchema(sequelize);
+const Score = scoreSchema(sequelize);
 
 export const db = {
   User,
@@ -31,6 +33,7 @@ export const db = {
   Category,
   Order,
   Review,
+  Score,
 };
 
 export default sequelize;

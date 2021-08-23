@@ -81,26 +81,10 @@ const GlobalStyle = createGlobalStyle`
     src: url(${BMHANNAAir}) format('woff');
   }
 
-  @keyframes fadeinfromtop {
-    from {
-      margin-top: -10vh;
-      opacity: 0;
-    }
-    to {
-      margin-top: 0vh;
-      opacity: 1;
-    }
-  }
-
-  @keyframes spinner {
-    0% {
-      transform: rotate(360deg);
-    }
-  }
-
   #root {
     width: 100%;
     height: 100vh;
+    font-family: "Noto Sans KR", sans-serif;
   }
 
   a {

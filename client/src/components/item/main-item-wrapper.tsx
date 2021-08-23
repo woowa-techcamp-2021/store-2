@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem } from 'types/item';
-import { Loader } from 'components';
 import DisplayItemList from './display-item-list';
 
-interface ItemListProps {
-  popularItems: IItem[] | null;
-  newItems: IItem[] | null;
-  recommendItems: IItem[] | null;
+interface MainItemWrapperProps {
+  popularItems: IItem[];
+  newItems: IItem[];
+  recommendItems: IItem[];
   loading: boolean;
 }
 
@@ -15,15 +14,14 @@ const Wrapper = styled.div`
   margin-top: 60px;
 `;
 
-const MainItems: FC<ItemListProps> = ({ popularItems, newItems, recommendItems, loading }) => {
+const MainItemWrapper: FC<MainItemWrapperProps> = ({ popularItems, newItems, recommendItems, loading }) => {
   return (
     <Wrapper>
-      {loading && <Loader size="25px" color="brown" />}
-      <DisplayItemList title="잘나가요" items={popularItems} />
-      <DisplayItemList title="새로 나왔어요" items={newItems} />
-      <DisplayItemList title="추천드려요" items={recommendItems} />
+      <DisplayItemList title="잘나가요" items={popularItems} loading={loading} />
+      <DisplayItemList title="새로 나왔어요" items={newItems} loading={loading} />
+      <DisplayItemList title="추천드려요" items={recommendItems} loading={loading} />
     </Wrapper>
   );
 };
 
-export default MainItems;
+export default MainItemWrapper;

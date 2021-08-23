@@ -19,7 +19,8 @@
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-shadow": "off",
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "react/require-default-props": "off"
   },
   "ignorePatterns": ["webpack.*.js", "jest.config.js", "setup-tests.ts", "file-transformer.js"],
   "overrides": [

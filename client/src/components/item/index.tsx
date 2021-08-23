@@ -89,8 +89,8 @@ const Info = styled.div`
 
   .title {
     width: 220px;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 17px;
+    line-height: 30px;
     letter-spacing: 0.5px;
     white-space: nowrap;
     overflow: hidden;
@@ -102,10 +102,10 @@ const Info = styled.div`
   }
 
   .price {
-    font-size: 30px;
+    font-size: 24px;
 
     span {
-      font-size: 22px;
+      font-size: 18px;
       color: ${props => props.theme?.colorGreyMid};
       text-decoration: line-through;
     }
@@ -114,7 +114,7 @@ const Info = styled.div`
   ${props => props.theme?.mobile} {
     .title {
       width: 140px;
-      font-size: 14px;
+      font-size: 12px;
 
       &.sale {
         width: 90px;
@@ -122,10 +122,10 @@ const Info = styled.div`
     }
 
     .price {
-      font-size: 22px;
+      font-size: 18px;
 
       span {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
   }
@@ -133,7 +133,7 @@ const Info = styled.div`
   ${props => props.theme?.tablet} {
     .title {
       width: 170px;
-      font-size: 16px;
+      font-size: 14px;
 
       &.sale {
         width: 120px;
@@ -141,10 +141,10 @@ const Info = styled.div`
     }
 
     .price {
-      font-size: 26px;
+      font-size: 20px;
 
       span {
-        font-size: 18px;
+        font-size: 14px;
       }
     }
   }
@@ -214,13 +214,33 @@ const Item: FC<ItemProps> = ({
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => setIsLiked(!isLiked);
-
+  const setVisitedItem = () => {
+    if (!localStorage.getItem('visited')) {
+      localStorage.setItem('visited', title);
+    } else {
+      const data = localStorage.getItem('visited') as string;
+      let visitedList = data.split(',');
+      visitedList.push(title);
+      if (visitedList.length > 10) {
+        visitedList = visitedList.slice(1);
+      }
+      localStorage.setItem('visited', visitedList.join(','));
+    }
+  };
   const onItemClick = (e: MouseEvent) => {
     if ((e.target as HTMLDivElement).classList.contains('like')) return;
+    setVisitedItem();
     onClick();
   };
+
+  const setBgColor = () => {
+    if (salePercent) return 'red';
+    if (isNew) return 'beige';
+    return 'green';
+  };
+
   return (
-    <Container bgColor={salePercent ? 'red' : 'green'} onClick={onItemClick}>
+    <Container bgColor={setBgColor()} onClick={onItemClick}>
       <Thumbnail>
         <img className="thumbnail-img" src={thumbnail} alt="item-thumbnail" />
       </Thumbnail>

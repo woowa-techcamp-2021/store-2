@@ -10,20 +10,29 @@ export interface IItem {
   originalPrice?: number;
 }
 
-export interface IItemsData {
-  items: IItem[] | null;
-  pageCount?: number;
+export interface IListItem {
+  items: IItem[];
+  totalCount: number;
+  pageCount: number;
 }
 
-export interface IMainItems {
-  popularItems: IItem[] | null;
-  newItems: IItem[] | null;
-  recommendItems: IItem[] | null;
+export interface IMainItem {
+  popularItems: IItem[];
+  newItems: IItem[];
+  recommendItems: IItem[];
 }
 
-export interface IItemsState {
+export interface IItemState {
   categoryId?: string;
   pageId?: number;
   type?: string;
   search?: string;
+}
+
+export enum ESortType {
+  RECOMMEND = 'recommend',
+  POPULAR = 'popular',
+  RECENT = 'recent',
+  CHEAP = 'cheap',
+  EXPENSIVE = 'expensive',
 }
