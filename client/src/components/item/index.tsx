@@ -223,16 +223,16 @@ const Item: FC<ItemProps> = ({
     <Container
       bgColor={salePercent ? 'red' : 'green'}
       onClick={(e: MouseEvent) => {
-        if (localStorage.getItem('visited') === null) {
-          localStorage.setItem('visited', JSON.stringify([title]));
+        if (!localStorage.getItem('visited')) {
+          localStorage.setItem('visited', title);
         } else {
           const data = localStorage.getItem('visited') as string;
-          let visitedList = JSON.parse(data) as string[];
+          let visitedList = data.split(',');
           visitedList.push(title);
           if (visitedList.length > 10) {
             visitedList = visitedList.slice(1);
           }
-          localStorage.setItem('visited', JSON.stringify(visitedList));
+          localStorage.setItem('visited', visitedList.join(','));
         }
         onItemClick(e);
       }}

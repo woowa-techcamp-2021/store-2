@@ -3,9 +3,9 @@ import { IItemsData, IMainItems, IItemsState } from 'types/item';
 import client from './client';
 
 export const getMainItems = (): Promise<AxiosResponse> => {
-  const visited = localStorage.getItem('visited') || '';
+  const visited = localStorage.getItem('visited')?.split(',');
 
-  return client.post<IMainItems>('/api/items/main', JSON.parse(visited) as string[]);
+  return client.post<IMainItems>('/api/items/main', visited);
 };
 
 export const getItems = ({ categoryId, pageId, type, search }: IItemsState): Promise<AxiosResponse> => {
