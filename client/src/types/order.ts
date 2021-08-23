@@ -12,6 +12,9 @@ export interface IOrderList {
   totalCount: number;
   pageCount: number;
 }
+
 export interface IOrderState {
   pageId?: number;
+  prevDate: string;
+  currentDate: string;
 }
