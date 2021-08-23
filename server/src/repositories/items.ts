@@ -63,11 +63,11 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
 
     rank.sort((a, b) => b.score - a.score);
 
-    const rankTitles: string[] = [];
+    let rankTitles: string[] = [];
     rank.forEach(row => {
       rankTitles.push(row.title);
     });
-    console.log(rankTitles);
+    rankTitles = rankTitles.filter((item, index) => rankTitles.indexOf(item) === index);
 
     const items = await db.Item.findAll({
       attributes: [
@@ -183,6 +183,56 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
   return { items, totalCount, pageCount };
 };
 
+const getCategoryRecommendItems = async (
+  pageId: number,
+  categoryReg: string,
+  visited: string[],
+): Promise<IItemsData> => {
+  let items = await db.Item.findAll({
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+    ],
+    where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
+    include: [
+      {
+        model: db.Category,
+        attributes: [],
+      },
+    ],
+  });
+
+  const recommendItems: IItems = await getRecommendItems(visited);
+  recommendItems.items = recommendItems.items.filter(item =>
+    items.some(categoryItem => categoryItem.getDataValue('title') === item.getDataValue('title')),
+  );
+
+  items = items.filter(
+    item =>
+      !recommendItems.items.some(recommendItem => recommendItem.getDataValue('title') === item.getDataValue('title')),
+  );
+  items = recommendItems.items.concat(items).slice((pageId - 1) * LIMIT_COUNT, pageId * LIMIT_COUNT);
+
+  const totalCount = await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } });
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
+
+  if (!items) {
+    throw errorGenerator({
+      message: 'POST /api/items - items not found',
+      code: 'items/not-found',
+    });
+  }
+
+  filterItems(items);
+
+  return { items, totalCount, pageCount };
+};
+
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
     attributes: [
@@ -248,4 +298,11 @@ const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAt
   return item;
 };
 
-export default { getMainItems, getCategoryItems, getSearchItems, getItem, getRecommendItems };
+export default {
+  getMainItems,
+  getCategoryItems,
+  getSearchItems,
+  getItem,
+  getRecommendItems,
+  getCategoryRecommendItems,
+};
