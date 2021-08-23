@@ -11,11 +11,11 @@ interface IMainItems {
 
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
 
-async function mainItems(req: Request): Promise<IMainItems> {
+async function mainItems(visited: string[]): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
     itemRepository.getMainItems([['sale_count', 'DESC']], 4),
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
-    itemRepository.getRecommendItems(req.body as string[]),
+    itemRepository.getRecommendItems(visited),
   ]);
   return { popularItems, newItems, recommendItems };
 }
