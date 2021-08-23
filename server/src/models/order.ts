@@ -7,6 +7,7 @@ export interface OrderAttributes {
   quantity: number;
   status: number | string;
   UserId: string;
+  ItemId: number;
   price: string | number;
   salePercent: number;
 }
@@ -34,7 +35,7 @@ const orderSchema = (sequelize: Sequelize): ModelCtor<Model<OrderAttributes, Ord
       defaultValue: 1,
     },
     status: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: 0,
     },

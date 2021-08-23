@@ -4,10 +4,6 @@ import { Model, Sequelize } from 'sequelize';
 
 import errorGenerator from 'utils/error/error-generator';
 
-export interface IOrders {
-  orders: Model<OrderAttributes, OrderCreationAttributes>[];
-}
-
 const filterOrders = (orders: Model<OrderAttributes, OrderCreationAttributes>[]) => {
   orders.forEach(order => {
     const statusArr = ['주문완료', '배송완료'];
@@ -22,19 +18,19 @@ const filterOrders = (orders: Model<OrderAttributes, OrderCreationAttributes>[])
   });
 };
 
-const getUserOrders = async (id: string): Promise<IOrders> => {
+const getUserOrders = async (uid: string): Promise<Model<OrderAttributes, OrderCreationAttributes>[]> => {
   const orders = await db.Order.findAll({
     attributes: [
-      [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%Y-%m-%d'), 'createdAt'],
-      [Sequelize.col('Items.thumbnail'), 'thumbnail'],
-      [Sequelize.col('Items.title'), 'title'],
-      [Sequelize.col('Items.price'), 'price'],
-      [Sequelize.col('Items.sale_percent'), 'salePercent'],
+      [Sequelize.fn('date_format', Sequelize.col('Order.createdAt'), '%Y-%m-%d'), 'createdAt'],
+      [Sequelize.col('Item.thumbnail'), 'thumbnail'],
+      [Sequelize.col('Item.title'), 'title'],
+      [Sequelize.col('Item.price'), 'price'],
+      [Sequelize.col('Item.sale_percent'), 'salePercent'],
       'quantity',
       'status',
     ],
     where: {
-      UserId: id,
+      UserId: uid,
     },
     order: [['createdAt', 'DESC']],
     include: [
@@ -56,6 +52,6 @@ const getUserOrders = async (id: string): Promise<IOrders> => {
 
   filterOrders(orders);
 
-  return { orders };
+  return orders;
 };
 export default { getUserOrders };
