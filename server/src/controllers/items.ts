@@ -11,6 +11,10 @@ interface IQuery {
   search: string;
 }
 
+interface IParams {
+  id: string;
+}
+
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
     const { popularItems, newItems, recommendItems } = await itemService.mainItems(req.body);
@@ -30,6 +34,18 @@ export const getItems = async (req: Request<unknown, unknown, unknown, IQuery>, 
     const data = await itemService.getItems(categoryId, pageId, type, search);
     const { items, totalCount, pageCount } = data;
     res.status(200).json({ items, totalCount, pageCount });
+  } catch (err) {
+    console.log(err);
+    const { statusCode, errorMessage } = errorHandler(err);
+    res.status(statusCode).json({ errorMessage });
+  }
+};
+
+export const getItem = async (req: Request<IParams, unknown, unknown, unknown>, res: Response): Promise<void> => {
+  const { id } = req.params;
+  try {
+    const items = await itemService.getItem(id);
+    res.status(200).json(items);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
