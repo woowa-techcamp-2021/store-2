@@ -38,7 +38,6 @@ const ItemList: FC<IItemListProps> = ({ items, isLoading }) => {
       {isLoading ? (
         <ItemLoader />
       ) : (
-        items &&
         items.map(item => {
           return (
             <Item
