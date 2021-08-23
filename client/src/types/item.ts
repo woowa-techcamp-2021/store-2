@@ -36,3 +36,14 @@ export enum ESortType {
   CHEAP = 'cheap',
   EXPENSIVE = 'expensive',
 }
+
+export interface IItemDetail {
+  thumbnail: string;
+  title: string;
+  price: number;
+  contents: string[];
+  salePercent: number;
+  isSoldOut: boolean;
+  isLike: boolean;
+  reviewCount: number;
+}

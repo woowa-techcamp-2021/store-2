@@ -5,7 +5,7 @@ import { useParams } from 'lib/router';
 import ItemDetail from 'components/item-detail';
 
 import { RootState } from 'store';
-import { getItem } from 'store/items';
+import { getItem } from 'store/item';
 
 const MainItemContainer: FC = () => {
   const dispatch = useDispatch();
