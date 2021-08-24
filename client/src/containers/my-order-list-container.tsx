@@ -1,9 +1,11 @@
-import InquiryPeriod from 'components/common/period-selector';
+import React, { FC, useState } from 'react';
+
+import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
+
+import { PeriodSelector } from 'components';
 import MyBar from 'components/my/my-nav';
 import MyOrderList from 'components/my/table/my-order-list';
 import MyStatusBar from 'components/my/table/my-status-bar';
-import React, { FC, useState } from 'react';
-import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
 
 const MyOrderListContainer: FC = () => {
   const [prevDate, setPrevDate] = useState('');
@@ -37,7 +39,7 @@ const MyOrderListContainer: FC = () => {
   return (
     <>
       <MyBar />
-      <InquiryPeriod
+      <PeriodSelector
         prevDate={prevDate}
         setPrevDate={setPrevDate}
         currentDate={currentDate}

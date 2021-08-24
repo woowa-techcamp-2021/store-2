@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { LineInput, BoxButton, CheckBox, CircleLoader } from 'components';
-import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
 import { GITHUB_LOGIN_LINK } from 'constants/index';
+
+import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
+import { LineInput, BoxButton, CheckBox, CircleLoader } from 'components';
 
 interface AuthFormProps {
   id: string;

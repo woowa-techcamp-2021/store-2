@@ -1,13 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'lib/router';
+
+import useInputs from 'hooks/use-inputs';
+
+import { IAuth } from 'types/auth';
+
+import authValidation from 'utils/validation/auth-validation';
+import { MAIN_URL } from 'constants/urls';
+
+import AuthForm from 'components/auth/form';
+
 import { RootState } from 'store';
 import { getLogin, getLoginReset } from 'store/auth';
-import useInputs from 'hooks/use-inputs';
-import AuthForm from 'components/auth/form';
-import authValidation from 'utils/validation/auth-validation';
-import { IAuth } from 'types/auth';
-import { MAIN_URL } from 'constants/urls';
 
 const SigninContainer: FC = () => {
   const history = useHistory();

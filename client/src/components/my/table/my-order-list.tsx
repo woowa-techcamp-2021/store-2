@@ -1,5 +1,6 @@
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
+
 import MyOrder from './my-order';
 
 const dummy = [

@@ -1,5 +1,6 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
+
 import { Modal } from 'components';
 
 interface LogoutModalProps {

@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
+
 import { IItem } from 'types/item';
+
 import ItemList from '../item-list';
 
 interface MainItemWrapperProps {

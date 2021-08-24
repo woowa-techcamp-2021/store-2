@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Logo } from 'components';
+
 import BrickBg from 'assets/images/brick.png';
 import TentBg from 'assets/images/tent.png';
+
+import { Logo } from 'components';
 
 interface HeaderProps {
   displayMain: boolean;

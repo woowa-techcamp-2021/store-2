@@ -1,10 +1,13 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
-import { logout } from 'store/auth';
+
 import { IUser } from 'types/auth';
+
 import { Navbar } from 'components';
 import AuthLogoutModal from 'components/auth/logout-modal';
+
+import { RootState } from 'store';
+import { logout } from 'store/auth';
 
 interface NavbarProps {
   displayMain?: boolean;

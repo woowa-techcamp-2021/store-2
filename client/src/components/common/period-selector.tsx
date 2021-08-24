@@ -1,5 +1,5 @@
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
 
 interface PeriodSelectorProps {
   prevDate: string;
