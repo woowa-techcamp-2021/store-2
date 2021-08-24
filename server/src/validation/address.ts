@@ -27,8 +27,8 @@ export const addAddressValidation = (
         .max(ADDRESS.NAME_MAX_LENGTH)
         .required()
         .messages({
-          'string.max': `이름은 ${ADDRESS.NAME_MIN_LENGTH}자 이상 입력해야 합니다.`,
-          'string.min': `이름은 ${ADDRESS.NAME_MAX_LENGTH}자를 넘길 수 없습니다.`,
+          'string.min': `이름은 ${ADDRESS.NAME_MIN_LENGTH}자 이상 입력해야 합니다.`,
+          'string.max': `이름은 ${ADDRESS.NAME_MAX_LENGTH}자를 넘길 수 없습니다.`,
           'any.required': '이름을 입력해주세요.',
         }),
       receiver: Joi.string()
@@ -36,17 +36,17 @@ export const addAddressValidation = (
         .max(ADDRESS.RECEIVER_MAX_LENGTH)
         .required()
         .messages({
-          'string.max': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자 이상 입력해야 합니다.`,
-          'string.min': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자를 넘길 수 없습니다.`,
+          'string.min': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자 이상 입력해야 합니다.`,
+          'string.max': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자를 넘길 수 없습니다.`,
           'any.required': `받는분을 입력해주세요.`,
         }),
       address: Joi.string()
-        .max(ADDRESS.ADDRESS_MIN_LENGTH)
-        .min(ADDRESS.ADDRESS_MAX_LENGTH)
+        .min(ADDRESS.ADDRESS_MIN_LENGTH)
+        .max(ADDRESS.ADDRESS_MAX_LENGTH)
         .required()
         .messages({
-          'string.max': `주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
-          'string.min': `주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
+          'string.min': `주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
+          'string.max': `주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
           'any.required': `주소를 입력해주세요.`,
         }),
     });
