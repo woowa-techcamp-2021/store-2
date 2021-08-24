@@ -23,9 +23,6 @@ const LIMIT_COUNT = 12;
 
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(item => {
-    item.setDataValue('isGreen', item.getDataValue('isGreen') === 1);
-    item.setDataValue('isBest', item.getDataValue('isBest') === 1);
-
     const standardDate = new Date();
     standardDate.setMonth(standardDate.getMonth() - 6);
     const itemDate = new Date(item.getDataValue('updatedAt'));
@@ -75,10 +72,10 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
         'title',
         'thumbnail',
         'price',
-        ['sale_percent', 'salePercent'],
+        'salePercent',
         'amount',
-        ['is_green', 'isGreen'],
-        ['is_best', 'isBest'],
+        'isGreen',
+        'isBest',
         [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
       ],
       where: {
@@ -101,10 +98,10 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       'title',
       'thumbnail',
       'price',
-      ['sale_percent', 'salePercent'],
+      'salePercent',
       'amount',
-      ['is_green', 'isGreen'],
-      ['is_best', 'isBest'],
+      'isGreen',
+      'isBest',
       [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
     ],
     limit: LIMIT_COUNT,
@@ -122,10 +119,10 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
       'title',
       'thumbnail',
       'price',
-      ['sale_percent', 'salePercent'],
+      'salePercent',
       'amount',
-      ['is_green', 'isGreen'],
-      ['is_best', 'isBest'],
+      'isGreen',
+      'isBest',
       [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'],
     ],
     order: order as Order,
@@ -135,7 +132,7 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items-not-found',
+      code: 'items/items-not-found',
     });
   }
 
@@ -146,15 +143,7 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
 
 const getCategoryItems = async (pageId: number, order: string[][], categoryReg: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
-    attributes: [
-      'id',
-      'title',
-      'thumbnail',
-      'price',
-      ['sale_percent', 'salePercent'],
-      'amount',
-      ['is_green', 'isGreen'],
-    ],
+    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     offset: (pageId - 1) * LIMIT_COUNT,
@@ -185,15 +174,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
 
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
-    attributes: [
-      'id',
-      'title',
-      'thumbnail',
-      'price',
-      ['sale_percent', 'salePercent'],
-      'amount',
-      ['is_green', 'isGreen'],
-    ],
+    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
     order: order as Order,
     where: {
       title: {
@@ -234,7 +215,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
 
 const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>> => {
   const item = await db.Item.findOne({
-    attributes: ['title', 'thumbnail', 'price', 'sale_percent', 'amount', ['is_green', 'isGreen'], 'contents'],
+    attributes: ['title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen', 'contents'],
     where: { id },
   });
 

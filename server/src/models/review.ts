@@ -7,7 +7,7 @@ export interface ReviewAttribures {
   score: number;
   title: string;
   contents: string;
-  img_url: string;
+  imgUrl: string;
 }
 
 export type ReviewCreationAttributes = Optional<ReviewAttribures, 'id'>;
@@ -29,7 +29,7 @@ const reviewSchema = (sequelize: Sequelize): ModelCtor<Model<ReviewAttribures, R
     contents: {
       type: DataTypes.STRING(100),
     },
-    img_url: {
+    imgUrl: {
       type: DataTypes.TEXT,
     },
   });

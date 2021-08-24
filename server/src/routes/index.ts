@@ -5,6 +5,7 @@ import users from './users';
 import categories from './categories';
 import search from './search';
 import items from './items';
+import orders from './orders';
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use('/users', users);
 router.use('/categories', categories);
 router.use('/search', search);
 router.use('/items', items);
+router.use('/orders', orders);
 
 export default router;

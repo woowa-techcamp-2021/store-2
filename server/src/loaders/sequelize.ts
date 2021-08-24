@@ -11,6 +11,8 @@ export default async (): Promise<void> => {
   Item.belongsToMany(User, { through: Like });
   Item.belongsTo(Category);
   Item.hasMany(Review);
+  Item.hasMany(Order);
+  Order.belongsTo(Item);
 
   await sequelize.sync({ alter: true });
 

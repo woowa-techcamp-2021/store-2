@@ -5,10 +5,10 @@ import { UserAttribures, UserCreationAttributes } from 'models/user';
 
 import errorGenerator from 'utils/error/error-generator';
 
-export const checkUserExists = async (user_id: string): Promise<boolean> => {
+export const checkUserExists = async (userId: string): Promise<boolean> => {
   const userCount = await db.User.count({
     where: {
-      user_id,
+      userId,
     },
   });
 
@@ -16,12 +16,12 @@ export const checkUserExists = async (user_id: string): Promise<boolean> => {
 };
 
 export const createUser = async ({
-  user_id,
+  userId,
   provider,
   password,
 }: UserCreationAttributes): Promise<Model<UserAttribures, UserCreationAttributes>> => {
   const user = await db.User.create({
-    user_id,
+    userId,
     provider,
     password,
   });
@@ -31,7 +31,7 @@ export const createUser = async ({
 
 export const getUserId = async (uid: string): Promise<Model<UserAttribures, UserCreationAttributes>> => {
   const userSnapshot = await db.User.findOne({
-    attributes: ['user_id'],
+    attributes: ['userId'],
     where: {
       id: uid,
     },
