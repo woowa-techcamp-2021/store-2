@@ -89,11 +89,13 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
     });
 
     const sortedItems: IItems = { items: [] };
-    rankTitles.forEach(ranktitle =>
-      sortedItems.items.push(
-        items.find(item => item.getDataValue('title') === ranktitle) as Model<ItemAttributes, ItemCreationAttributes>,
-      ),
-    );
+    rankTitles.forEach(ranktitle => {
+      const findItem = items.find(item => item.getDataValue('title') === ranktitle) as Model<
+        ItemAttributes,
+        ItemCreationAttributes
+      >;
+      if (findItem) sortedItems.items.push(findItem);
+    });
 
     filterItems(sortedItems.items);
 
