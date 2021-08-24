@@ -28,6 +28,12 @@ const TableRowTitle = styled.div`
     height: auto;
     margin-right: 8px;
   }
+
+  ${({ theme }) => theme?.mobile} {
+    img {
+      display: none;
+    }
+  }
 `;
 const TableRowText = styled.div`
   text-align: center;
