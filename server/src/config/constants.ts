@@ -13,6 +13,15 @@ export const USER = {
   PHONE_LENGTH: 12,
 };
 
+export const ADDRESS = {
+  NAME_MIN_LENGTH: 1,
+  NAME_MAX_LENGTH: 10,
+  RECEIVER_MIN_LENGTH: 1,
+  RECEIVER_MAX_LENGTH: 20,
+  ADDRESS_MIN_LENGTH: 1,
+  ADDRESS_MAX_LENGTH: 50,
+};
+
 export const CATEGORY_DATA = [
   { id: '000000', name: '전체' },
   { id: '080000', name: '문구' },
