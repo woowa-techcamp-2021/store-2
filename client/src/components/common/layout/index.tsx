@@ -31,9 +31,9 @@ const Wrapper = styled.div`
 
   ${props => props.theme?.laptop} {
     align-items: center;
+
     main {
       padding: 0;
-      padding-bottom: 60px;
       width: 1000px;
     }
   }

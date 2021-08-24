@@ -1,15 +1,15 @@
 import styled from 'lib/woowahan-components';
 
 const LineInput = styled.input`
-  border: 0;
   border-bottom: 2px solid ${props => props.theme?.colorGreyMid};
   color: ${props => props.theme?.colorSoftBlack};
   background-color: transparent;
   line-height: 1.5;
   text-indent: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 6px 10px;
   box-sizing: border-box;
+  width: 100%;
 
   &[type='text'] {
     font-family: ${props => props.theme?.fontHannaAir};
@@ -20,7 +20,8 @@ const LineInput = styled.input`
     font-family: ${props => props.theme?.fontHannaAir};
   }
 
-  &:focus {
+  &:focus,
+  &.active {
     outline: none;
     border-bottom: 2px solid ${props => props.theme?.colorLineDark};
   }

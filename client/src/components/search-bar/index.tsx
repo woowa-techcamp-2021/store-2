@@ -5,6 +5,7 @@ import useOutSideClick from 'hooks/use-out-side-click';
 
 import searchIcon from 'assets/icons/search.svg';
 
+import { LineInput } from 'components';
 import RecentKeywordBox from './recent-keyword-box';
 
 interface SearchBarProps {
@@ -27,6 +28,7 @@ const SearchBarContainer = styled.section`
 
   form {
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 
@@ -41,6 +43,12 @@ const SearchBarContainer = styled.section`
       width: 85%;
     }
   }
+
+  ${({ theme }) => theme?.tablet} {
+    form {
+      width: 90%;
+    }
+  }
 `;
 
 const SearchBox = styled.div`
@@ -50,20 +58,13 @@ const SearchBox = styled.div`
   gap: 12px;
   position: relative;
 
+  .search-input {
+    font-size: 18px;
+    height: 40px;
+  }
+
   ${({ theme }) => theme?.mobile} {
     width: 100%;
-  }
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  height: 30px;
-  border-bottom: 2px solid ${props => props.theme?.colorSoftBlack};
-  font-size: 18px;
-  font-family: ${props => props.theme?.fontHannaAir};
-
-  &:focus {
-    border-bottom-color: ${props => props.theme?.colorLineLight};
   }
 `;
 
@@ -94,7 +95,14 @@ const SearchBar: FC<SearchBarProps> = ({
     <SearchBarContainer>
       <form onSubmit={onSubmit} ref={searchBoxRef}>
         <SearchBox>
-          <SearchInput placeholder="무엇을 사러 오셨나요?" onChange={onChange} onFocus={onFocus} value={search} />
+          <LineInput
+            type="text"
+            placeholder="무엇을 사러 오셨나요?"
+            className="search-input active"
+            onChange={onChange}
+            onFocus={onFocus}
+            value={search}
+          />
           <RecentKeywordBox
             keywords={keywords}
             isOpen={isBoxOpened}
@@ -105,7 +113,7 @@ const SearchBar: FC<SearchBarProps> = ({
           />
         </SearchBox>
         <button type="submit">
-          <img src={searchIcon} alt="search" />
+          <img src={searchIcon} alt="search" width="30px" height="30px" />
         </button>
       </form>
     </SearchBarContainer>

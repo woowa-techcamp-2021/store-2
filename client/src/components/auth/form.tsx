@@ -55,6 +55,10 @@ const Form = styled.form`
   > * {
     width: 100%;
   }
+
+  .auth-input {
+    margin-bottom: 20px;
+  }
 `;
 
 const Image = styled.img`
@@ -136,10 +140,19 @@ const AuthForm: FC<AuthFormProps> = ({
     <WrapForCenter>
       <Wrapper>
         <Form onSubmit={onSubmit}>
-          <LineInput type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={30} />
+          <LineInput
+            type="text"
+            placeholder="아이디"
+            className="auth-input"
+            value={id}
+            name="id"
+            onChange={onChange}
+            maxLength={30}
+          />
           <LineInput
             type="password"
             placeholder="비밀번호"
+            className="auth-input"
             value={password}
             name="password"
             onChange={onChange}
