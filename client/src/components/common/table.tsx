@@ -36,6 +36,10 @@ const TableCell = styled.td`
   padding: 12px 24px;
   font-size: 12px;
   vertical-align: middle;
+
+  ${({ theme }) => theme?.mobile} {
+    padding: 12px 12px;
+  }
 `;
 
 const EmptyCell = styled.td`
