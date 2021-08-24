@@ -1,16 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-import { formatPrice } from 'utils';
+import { IOrder } from 'types/order';
 
-interface MyOrderProps {
-  createdAt: string;
-  itemTitle: string;
-  thumbnail: string;
-  price: string;
-  count: number;
-  status: string;
-}
+import { formatPrice } from 'utils';
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${props => props.theme?.colorLineLight};
@@ -65,7 +58,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MyOrder: FC<MyOrderProps> = ({ createdAt, itemTitle, thumbnail, price, count, status }) => {
+const MyOrder: FC<IOrder> = ({ createdAt, title, thumbnail, price, count, status }) => {
   return (
     <Wrapper>
       <div>{createdAt}</div>
@@ -73,7 +66,7 @@ const MyOrder: FC<MyOrderProps> = ({ createdAt, itemTitle, thumbnail, price, cou
         <div>
           <img src={thumbnail} alt="썸네일" />
         </div>
-        <div>{itemTitle}</div>
+        <div>{title}</div>
       </div>
       <div>
         {formatPrice(price)}원 / {count}개

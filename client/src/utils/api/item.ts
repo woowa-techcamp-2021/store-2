@@ -11,6 +11,8 @@ export const getMainItem = (): Promise<AxiosResponse> => {
 
 export const getListItem = ({ categoryId, pageId, type, search }: IItemState): Promise<AxiosResponse> => {
   let url = '/api/items?';
+  const visited = localStorage.getItem('visited')?.split(',');
+
   const arr = [];
   if (categoryId) arr.push(`categoryId=${categoryId}&`);
   if (pageId) arr.push(`pageId=${pageId}&`);
@@ -18,7 +20,7 @@ export const getListItem = ({ categoryId, pageId, type, search }: IItemState): P
   if (search) arr.push(`search=${search}&`);
   url += arr.join('');
   url = url.slice(0, url.length - 1);
-  return client.get<IListItem>(url);
+  return client.post<IListItem>(url, visited);
 };
 
 export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => client.get(`/api/items/${id}`);

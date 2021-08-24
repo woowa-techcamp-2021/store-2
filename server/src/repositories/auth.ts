@@ -5,11 +5,11 @@ import { UserAttribures, UserCreationAttributes } from 'models/user';
 
 import errorGenerator from 'utils/error/error-generator';
 
-export const getUser = async (user_id: string): Promise<Model<UserAttribures, UserCreationAttributes>> => {
+export const getUser = async (userId: string): Promise<Model<UserAttribures, UserCreationAttributes>> => {
   const userSnapshot = await db.User.findOne({
     attributes: ['id', 'password', 'provider'],
     where: {
-      user_id,
+      userId,
     },
   });
 

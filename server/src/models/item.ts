@@ -7,17 +7,12 @@ export interface ItemAttributes {
   contents: string;
   price: string | number;
   originalPrice: number;
-  sale_percent: number;
   salePercent: number;
-  sale_count: number;
   amount: number;
-  is_green: number | boolean;
-  isGreen: number | boolean;
-  is_best: number | boolean;
-  isBest: number | boolean;
+  isGreen: boolean;
   updatedAt: string;
-  isNew: boolean;
   CategoryId: string;
+  isNew: boolean;
 }
 
 export type ItemCreationAttributes = Optional<ItemAttributes, 'id' | 'amount'>;
@@ -47,11 +42,11 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
-    sale_percent: {
+    salePercent: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    sale_count: {
+    saleCount: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
@@ -61,12 +56,12 @@ const itemSchema = (sequelize: Sequelize): ModelCtor<Model<ItemAttributes, ItemC
       allowNull: false,
       defaultValue: DEFAULT_AMOUNT,
     },
-    is_green: {
+    isGreen: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,
     },
-    is_best: {
+    isBest: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,

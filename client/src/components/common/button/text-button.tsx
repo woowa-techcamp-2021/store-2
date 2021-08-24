@@ -22,6 +22,7 @@ const Button = styled.button`
   font-size: ${({ size }) => (size === 'big' ? '20px' : '16px')};
   border: 1px solid ${({ styleType, theme }) => (styleType === 'black' ? 'black' : theme?.colorTextBeige)};
   color: ${({ styleType, theme }) => (styleType === 'black' ? 'white' : theme?.colorLineDark)};
+  width: fit-content;
 
   &:disabled {
     background: ${({ theme }) => theme?.colorPlaceholder};

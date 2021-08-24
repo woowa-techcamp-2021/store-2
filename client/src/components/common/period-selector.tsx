@@ -12,7 +12,6 @@ interface PeriodSelectorProps {
   onClickThisMonth: () => void;
   onClickThreeMonth: () => void;
   select: undefined | number;
-  onSubmit: (e: React.FormEvent) => void;
 }
 
 const Wrapper = styled.div`
@@ -89,14 +88,6 @@ const DateFlex = styled.div`
   }
 `;
 
-const Button = styled.button`
-  width: 100px;
-  height: 31px;
-  font-weight: 700;
-  background-color: ${props => props.theme?.colorBlack};
-  color: ${props => props.theme?.colorWhite};
-`;
-
 const PeriodSelector: FC<PeriodSelectorProps> = ({
   prevDate,
   setPrevDate,
@@ -108,7 +99,6 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
   onClickThisMonth,
   onClickThreeMonth,
   select,
-  onSubmit,
 }) => {
   const btn: [string, () => void][] = [
     ['오늘', onClickToday],
@@ -119,7 +109,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
   return (
     <Wrapper>
       <h3>조회기간</h3>
-      <Form onSubmit={onSubmit}>
+      <Form>
         <RegionFlex>
           {btn.map(([text, fn], idx) => (
             <button key={text} type="button" onClick={fn} className={select === idx ? 'active' : ''}>
@@ -135,6 +125,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
             onChange={e => {
               setPrevDate(e.target.value);
             }}
+            required
           />
           <span>~</span>
           <input
@@ -144,8 +135,8 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
             onChange={e => {
               setCurrentDate(e.target.value);
             }}
+            required
           />
-          <Button type="submit">조회</Button>
         </DateFlex>
       </Form>
     </Wrapper>
