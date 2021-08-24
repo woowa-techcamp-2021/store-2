@@ -4,7 +4,7 @@ import { USER } from 'config/constants';
 
 export interface UserAttribures {
   id: string;
-  user_id: string;
+  userId: string;
   password: string;
   provider: string;
   phone: string;
@@ -21,10 +21,10 @@ const userSchema = (sequelize: Sequelize): ModelCtor<Model<UserAttribures, UserC
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    user_id: {
+    userId: {
       type: DataTypes.STRING(USER.ID_MAX_LENGTH),
       allowNull: false,
-      unique: true,
+      unique: 'userId',
     },
     password: {
       type: DataTypes.STRING(HASHED_PASSWORD_LENGTH),

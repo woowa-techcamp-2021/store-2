@@ -10,8 +10,8 @@ interface ISignUp {
   userId: string;
 }
 
-async function signUp(user_id: string, isOAuth: boolean, password: string): Promise<ISignUp> {
-  const isUserExists = await checkUserExists(user_id);
+async function signUp(id: string, isOAuth: boolean, password: string): Promise<ISignUp> {
+  const isUserExists = await checkUserExists(id);
 
   if (isUserExists) {
     throw errorGenerator({
@@ -25,7 +25,7 @@ async function signUp(user_id: string, isOAuth: boolean, password: string): Prom
   const provider = isOAuth ? 'github' : 'local';
   const passwordOnDB = isOAuth ? undefined : hashedPassword;
   const createUserArgs = {
-    user_id,
+    userId: id,
     provider,
     password: passwordOnDB,
   };
@@ -33,7 +33,7 @@ async function signUp(user_id: string, isOAuth: boolean, password: string): Prom
   const user = await createUser(createUserArgs);
 
   const uid = user.getDataValue('id');
-  const userId = user.getDataValue('user_id');
+  const userId = user.getDataValue('userId');
 
   const accessToken = createToken('access', { uid });
   const refreshToken = createToken('refresh', { uid });

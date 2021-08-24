@@ -1,14 +1,19 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
-import { getSignup, getSignupReset } from 'store/auth';
+import { useHistory } from 'lib/router';
+
 import useInputs from 'hooks/use-inputs';
+
+import { IAuth } from 'types/auth';
+
+import authValidation from 'utils/validation/auth-validation';
+import { MAIN_URL } from 'constants/urls';
+
 import AuthForm from 'components/auth/form';
 import AuthSuccessModal from 'components/auth/success-modal';
-import authValidation from 'utils/validation/auth-validation';
-import { IAuth } from 'types/auth';
-import { MAIN_URL } from 'constants/urls';
+
+import { RootState } from 'store';
+import { getSignup, getSignupReset } from 'store/auth';
 
 const SignupContainer: FC = () => {
   const history = useHistory();

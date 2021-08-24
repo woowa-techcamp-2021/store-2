@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Input, Button, Loader, CheckBox } from 'components';
-import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
 import { GITHUB_LOGIN_LINK } from 'constants/index';
+
+import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
+import { LineInput, BoxButton, CheckBox, CircleLoader } from 'components';
 
 interface AuthFormProps {
   id: string;
@@ -18,6 +21,13 @@ interface AuthFormProps {
   isSignup?: boolean;
   onCheckChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+const WrapForCenter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +54,10 @@ const Wrapper = styled.div`
 const Form = styled.form`
   > * {
     width: 100%;
+  }
+
+  .auth-input {
+    margin-bottom: 20px;
   }
 `;
 
@@ -123,60 +137,71 @@ const AuthForm: FC<AuthFormProps> = ({
   const FORM_TEXT = isSignup ? '회원가입' : '로그인';
 
   return (
-    <Wrapper>
-      <Form onSubmit={onSubmit}>
-        <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={30} />
-        <Input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          name="password"
-          onChange={onChange}
-          maxLength={20}
-        />
-        {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
+    <WrapForCenter>
+      <Wrapper>
+        <Form onSubmit={onSubmit}>
+          <LineInput
+            type="text"
+            placeholder="아이디"
+            className="auth-input"
+            value={id}
+            name="id"
+            onChange={onChange}
+            maxLength={30}
+          />
+          <LineInput
+            type="password"
+            placeholder="비밀번호"
+            className="auth-input"
+            value={password}
+            name="password"
+            onChange={onChange}
+            maxLength={20}
+          />
+          {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
 
-        <Error>{error}</Error>
-        {!isSignup && (
-          <GuestButton type="button" onClick={onGuestLogin}>
-            <span>게스트 로그인</span>
-          </GuestButton>
-        )}
-
-        <Button type="submit">
-          {loading ? (
-            <Loader size="25px" color="brown" />
-          ) : (
-            <>
-              <Image src={baedal} alt="form-icon" />
-              {FORM_TEXT}
-            </>
+          <Error>{error}</Error>
+          {!isSignup && (
+            <GuestButton type="button" onClick={onGuestLogin}>
+              <span>게스트 로그인</span>
+            </GuestButton>
           )}
-        </Button>
-      </Form>
 
-      {isSignup ? (
-        <LinkWrapper>
-          <Link to={SIGNIN_URL}>계정이 있다면? 로그인하러 가기</Link>
-        </LinkWrapper>
-      ) : (
-        <>
-          <Button type="button" color="github" onClick={goGithub}>
-            {githubLoading ? (
-              <Loader size="25px" color="grey" />
+          <BoxButton type="submit">
+            {loading ? (
+              <CircleLoader size="25px" color="brown" />
             ) : (
               <>
-                <Image src={github} alt="github-icon" />
-                깃-헙으로 로그인
+                <Image src={baedal} alt="form-icon" />
+                {FORM_TEXT}
               </>
             )}
-          </Button>
+          </BoxButton>
+        </Form>
+
+        {isSignup ? (
           <LinkWrapper>
-            <Link to={SIGNUP_URL}>계정이 없다면? 회원가입하러 가기</Link>
+            <Link to={SIGNIN_URL}>계정이 있다면? 로그인하러 가기</Link>
           </LinkWrapper>
-        </>
-      )}
-    </Wrapper>
+        ) : (
+          <>
+            <BoxButton type="button" color="github" onClick={goGithub}>
+              {githubLoading ? (
+                <CircleLoader size="25px" color="grey" />
+              ) : (
+                <>
+                  <Image src={github} alt="github-icon" />
+                  깃-헙으로 로그인
+                </>
+              )}
+            </BoxButton>
+            <LinkWrapper>
+              <Link to={SIGNUP_URL}>계정이 없다면? 회원가입하러 가기</Link>
+            </LinkWrapper>
+          </>
+        )}
+      </Wrapper>
+    </WrapForCenter>
   );
 };
 

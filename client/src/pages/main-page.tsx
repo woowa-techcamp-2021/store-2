@@ -1,11 +1,14 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
+
 import useWindowSize from 'hooks/use-window-size';
+
+import { Layout } from 'components';
+import Banner from 'components/item/main-item/banner';
 import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import MainItemContainer from 'containers/main-item-container';
 import SearchContainer from 'containers/search-container';
-import { Layout, Banner } from 'components';
 
 const Wrapper = styled.article`
   width: 100%;
@@ -13,6 +16,7 @@ const Wrapper = styled.article`
   .header {
     display: flex;
     flex-direction: column;
+    margin-bottom: 60px;
 
     ${props => props.theme?.mobile} {
       flex-direction: column-reverse;

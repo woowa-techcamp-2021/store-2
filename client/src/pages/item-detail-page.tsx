@@ -1,8 +1,11 @@
 import React, { ReactElement } from 'react';
+
 import useWindowSize from 'hooks/use-window-size';
+
+import { Layout } from 'components';
 import NavbarContainer from 'containers/navbar-container';
 import SmartMenuContainer from 'containers/smart-menu-container';
-import { Layout } from 'components';
+import ItemDetail from 'containers/item-detail-container';
 
 const ItemDetailPage = (): ReactElement => {
   const { width } = useWindowSize();
@@ -13,7 +16,7 @@ const ItemDetailPage = (): ReactElement => {
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
         <SmartMenuContainer />
-        여기는 아이템 디테일 페이지
+        <ItemDetail />
       </Layout>
     </>
   );

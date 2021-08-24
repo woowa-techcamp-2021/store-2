@@ -1,11 +1,14 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItem } from 'types/item';
-import ItemList from './item-list';
 
-interface DisplayItemListProps {
+import { IItem } from 'types/item';
+
+import ItemList from '../item-list';
+
+interface MainItemWrapperProps {
   title: string;
-  items: IItem[] | null;
+  items: IItem[];
+  loading: boolean;
 }
 
 const Wrapper = styled.section`
@@ -57,16 +60,16 @@ const Title = styled.div`
   }
 `;
 
-const DisplayItemList: FC<DisplayItemListProps> = ({ title, items }) => {
+const MainItemWrapper: FC<MainItemWrapperProps> = ({ title, items, loading }) => {
   return (
     <Wrapper>
       <Title>
         <span className="text-point">{title.charAt(0)}</span>
         <span className="text-title">{title}</span>
       </Title>
-      <ItemList items={items} />
+      <ItemList items={items} isLoading={loading} />
     </Wrapper>
   );
 };
 
-export default DisplayItemList;
+export default MainItemWrapper;

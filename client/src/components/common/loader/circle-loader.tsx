@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-interface LoaderProps {
+interface CircleLoaderProps {
   size?: string;
   color?: 'primary' | 'brown' | 'grey';
 }
@@ -11,6 +11,12 @@ const Wrapper = styled.div`
 `;
 
 const Spinner = styled.div`
+  @keyframes spinner {
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+
   margin: 0 auto;
   width: ${props => props.size as string};
   height: ${props => props.size as string};
@@ -29,7 +35,7 @@ const Spinner = styled.div`
   animation: spinner 600ms linear infinite;
 `;
 
-const Loader: FC<LoaderProps> = ({ color, size = '15px' }) => {
+const CircleLoader: FC<CircleLoaderProps> = ({ color, size = '15px' }) => {
   return (
     <Wrapper>
       <Spinner color={color} size={size} />
@@ -37,4 +43,4 @@ const Loader: FC<LoaderProps> = ({ color, size = '15px' }) => {
   );
 };
 
-export default Loader;
+export default CircleLoader;

@@ -1,6 +1,6 @@
 import styled from 'lib/woowahan-components';
 
-const Button = styled.button`
+const BoxButton = styled.button`
   cursor: pointer;
   border: 0;
   display: flex;
@@ -37,4 +37,4 @@ const Button = styled.button`
   }
 `;
 
-export default Button;
+export default BoxButton;

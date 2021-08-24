@@ -1,9 +1,13 @@
 import React, { useState, FC, useEffect } from 'react';
 import styled from 'lib/woowahan-components';
-import useWindowSize from 'hooks/use-window-size';
 import { useQuery } from 'lib/router';
+
+import useWindowSize from 'hooks/use-window-size';
+
 import { IMenu } from 'types/category';
-import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from '../../constants';
+
+import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from 'constants/index';
+
 import LargeMenu from './large-menu';
 import MediumMenu from './medium-menu';
 import SmallMenu from './small-menu';

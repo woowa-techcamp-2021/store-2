@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
-import SmartMenu from 'components/smart-menu';
-import { IMenu, IMenuChild, ICategory } from 'types/category';
 import { useSelector } from 'react-redux';
+
+import { IMenu, IMenuChild, ICategory } from 'types/category';
+
+import SmartMenu from 'components/smart-menu';
+
 import { RootState } from 'store';
 
 interface SmartMenuContainerProps {

@@ -1,27 +1,28 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import MainItemWrapper from 'components/item/main-item/main-item-wrapper';
+
 import { RootState } from 'store';
-import { getMainItems } from 'store/items';
-import MainItemWrapper from 'components/item/main-item-wrapper';
+import { getMainItem } from 'store/item';
 
 const MainItemContainer: FC = () => {
-  const { popularItems, newItems, recommendItems, loading } = useSelector(({ items, loading }: RootState) => ({
-    popularItems: items.mainItems.popularItems,
-    newItems: items.mainItems.newItems,
-    recommendItems: items.mainItems.recommendItems,
-    loading: loading['items/getMainItems'],
+  const { popularItems, newItems, recommendItems, loading } = useSelector(({ item, loading }: RootState) => ({
+    popularItems: item.main.popularItems,
+    newItems: item.main.newItems,
+    recommendItems: item.main.recommendItems,
+    loading: loading['item/getMainItem'],
   }));
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: getMainItems.type });
+    dispatch({ type: getMainItem.type });
   }, [dispatch]);
   return (
-    <MainItemWrapper
-      popularItems={popularItems}
-      newItems={newItems}
-      recommendItems={recommendItems}
-      loading={loading}
-    />
+    <>
+      <MainItemWrapper title="잘나가요" items={popularItems} loading={loading} />
+      <MainItemWrapper title="새로 나왔어요" items={newItems} loading={loading} />
+      <MainItemWrapper title="추천드려요" items={recommendItems} loading={loading} />
+    </>
   );
 };
 
