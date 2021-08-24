@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
-import { retry, put, takeLatest } from 'redux-saga/effects';
-import * as categoryAPI from 'utils/api/category';
+import { takeLatest } from 'redux-saga/effects';
 import { ICategory } from 'types/category';
-
-const MAX_TRY_COUNT = 10;
-const DELAY_TIME = 1000;
+import { getCategorySaga } from 'saga/category';
 
 interface StateProps {
   categories: {
@@ -36,22 +32,8 @@ const categorySlice = createSlice({
 });
 
 const { actions, reducer: categoryReducer } = categorySlice;
-const { getCategories, getCategoriesSuccess, getCategoriesFail } = actions;
-export { categoryReducer, getCategories };
-
-function* getCategorySaga(): Generator {
-  try {
-    const { data } = (yield retry(MAX_TRY_COUNT, DELAY_TIME, categoryAPI.getCategories)) as AxiosResponse<ICategory[]>;
-    yield put({
-      type: getCategoriesSuccess.type,
-      payload: data,
-    });
-  } catch (e) {
-    yield put({
-      type: getCategoriesFail.type,
-    });
-  }
-}
+export const { getCategories, getCategoriesSuccess, getCategoriesFail } = actions;
+export { categoryReducer };
 
 export function* categorySaga(): Generator {
   yield takeLatest(getCategories, getCategorySaga);
