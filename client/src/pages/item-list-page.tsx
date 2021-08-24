@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 import { useQuery } from 'lib/router';
+
 import useWindowSize from 'hooks/use-window-size';
+
+import { Layout } from 'components';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import NavbarContainer from 'containers/navbar-container';
 import SearchContainer from 'containers/search-container';
-import ItemListContainer from 'containers/item-list-container';
-import { Layout } from 'components';
+import SearchItemContainer from 'containers/search-item-container';
 
 const Wrapper = styled.section`
   width: 100%;
@@ -26,7 +28,7 @@ const ItemListPage = (): ReactElement => {
         <SmartMenuContainer currentCode={query.categoryId} />
         <Wrapper>
           <SearchContainer />
-          <ItemListContainer />
+          <SearchItemContainer />
         </Wrapper>
       </Layout>
     </>

@@ -1,7 +1,8 @@
 import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
-import back from 'assets/icons/back.png';
 import { useHistory } from 'lib/router';
+
+import back from 'assets/icons/back.png';
 
 interface MenuHeaderProps {
   title: string;

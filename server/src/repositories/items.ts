@@ -187,15 +187,7 @@ const getCategoryRecommendItems = async (
   visited: string[],
 ): Promise<IItemsData> => {
   let items = await db.Item.findAll({
-    attributes: [
-      'id',
-      'title',
-      'thumbnail',
-      'price',
-      ['sale_percent', 'salePercent'],
-      'amount',
-      ['is_green', 'isGreen'],
-    ],
+    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     include: [
       {

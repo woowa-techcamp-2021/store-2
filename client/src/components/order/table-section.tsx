@@ -1,7 +1,7 @@
 import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-import Table from 'components/common/table';
+import { Table } from 'components';
 
 import { formatPrice } from 'utils';
 

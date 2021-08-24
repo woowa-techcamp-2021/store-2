@@ -15,7 +15,7 @@ interface RecentKeywordBoxProps {
 const Container = styled.ul`
   position: absolute;
   padding: 4px;
-  top: 30px;
+  top: 40px;
   left: 0;
   border: 8px solid ${props => props.theme?.colorLineLight};
   border-top: none;

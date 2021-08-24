@@ -1,6 +1,8 @@
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
+
 import { IOrder } from 'types/order';
+
 import { formatPrice } from 'utils';
 
 const Wrapper = styled.div`

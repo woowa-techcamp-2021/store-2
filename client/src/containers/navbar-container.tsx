@@ -1,17 +1,20 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
-import { logout } from 'store/auth';
+
 import { IUser } from 'types/auth';
+
 import { Navbar } from 'components';
 import AuthLogoutModal from 'components/auth/logout-modal';
 
-interface HeaderProps {
+import { RootState } from 'store';
+import { logout } from 'store/auth';
+
+interface NavbarProps {
   displayMain?: boolean;
   isMobile: boolean;
 }
 
-const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => {
+const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId }: IUser = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
@@ -34,4 +37,4 @@ const HeaderContainer: FC<HeaderProps> = ({ displayMain = false, isMobile }) => 
   );
 };
 
-export default HeaderContainer;
+export default NavbarContainer;

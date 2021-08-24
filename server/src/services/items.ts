@@ -49,7 +49,7 @@ async function getItems(
     });
 
   const order = [];
-  if (type === 'popular') order.push(['sale_count', 'DESC']);
+  if (type === 'popular') order.push(['saleCount', 'DESC']);
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
   else if (type === 'expensive') order.push(['price', 'DESC']);

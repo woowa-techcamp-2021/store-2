@@ -1,15 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'lib/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
-import { getLogin, getLoginReset } from 'store/auth';
+import { useHistory } from 'lib/router';
+
 import useInputs from 'hooks/use-inputs';
-import AuthForm from 'components/auth/form';
-import authValidation from 'utils/validation/auth-validation';
+
 import { IAuth } from 'types/auth';
+
+import authValidation from 'utils/validation/auth-validation';
 import { MAIN_URL } from 'constants/urls';
 
-const LoginContainer: FC = () => {
+import AuthForm from 'components/auth/form';
+
+import { RootState } from 'store';
+import { getLogin, getLoginReset } from 'store/auth';
+
+const SigninContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
@@ -62,4 +67,4 @@ const LoginContainer: FC = () => {
   );
 };
 
-export default LoginContainer;
+export default SigninContainer;

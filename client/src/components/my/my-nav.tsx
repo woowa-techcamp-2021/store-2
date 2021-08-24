@@ -1,7 +1,8 @@
-import { ADDRESS_URL, ORDER_LIST_URL, REVIEW_URL } from 'constants/urls';
-import { Link, useHistory } from 'lib/router';
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
+import { Link, useHistory } from 'lib/router';
+
+import { MY_PAGE_NAV } from 'constants/index';
 
 const Wrapper = styled.nav`
   margin-top: 20px;
@@ -27,16 +28,12 @@ const Wrapper = styled.nav`
   }
 `;
 
-const MyBar: FC = () => {
+const MyNav: FC = () => {
   const { currentPath } = useHistory();
-  const myPageNav = [
-    { link: ORDER_LIST_URL, name: '주문목록 조회' },
-    { link: ADDRESS_URL, name: '배송지 관리' },
-    { link: REVIEW_URL, name: '나의 후기' },
-  ];
+
   return (
     <Wrapper>
-      {myPageNav.map(({ link, name }) => (
+      {MY_PAGE_NAV.map(({ link, name }) => (
         <Link key={name} to={link} className={link === currentPath ? 'active' : ''}>
           {name}
         </Link>
@@ -45,4 +42,4 @@ const MyBar: FC = () => {
   );
 };
 
-export default MyBar;
+export default MyNav;

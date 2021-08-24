@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
+
 import Header from './header';
 import Footer from './footer';
 
@@ -30,9 +31,9 @@ const Wrapper = styled.div`
 
   ${props => props.theme?.laptop} {
     align-items: center;
+
     main {
       padding: 0;
-      padding-bottom: 60px;
       width: 1000px;
     }
   }

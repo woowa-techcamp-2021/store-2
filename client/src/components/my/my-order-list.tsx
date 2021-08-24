@@ -1,7 +1,9 @@
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
+
 import { IOrder } from 'types/order';
-import Loader from 'components/common/loader';
+
+import { CircleLoader } from 'components';
 import MyOrder from './my-order';
 
 interface MyOrderListProps {
@@ -43,7 +45,7 @@ const MyOrderList: FC<MyOrderListProps> = ({ loading, orders, totalCount }) => {
     </Empty>
   );
 
-  return <Wrapper>{loading ? <Loader color="brown" size="100px" /> : inner}</Wrapper>;
+  return <Wrapper>{loading ? <CircleLoader color="brown" size="100px" /> : inner}</Wrapper>;
 };
 
 export default MyOrderList;

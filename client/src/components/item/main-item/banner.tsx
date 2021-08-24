@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
+
 import bannerImg from 'assets/images/beer.png';
 import tagImg from 'assets/icons/tag.png';
 

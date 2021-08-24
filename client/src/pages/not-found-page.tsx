@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
+
 import useWindowSize from 'hooks/use-window-size';
-import NavbarContainer from 'containers/navbar-container';
+
 import { Layout } from 'components';
+import NavbarContainer from 'containers/navbar-container';
 
 const Text = styled.div`
   flex: 1;
