@@ -55,7 +55,7 @@ export const addAddressValidation = (
 
     if (validationResult.error) {
       throw errorGenerator({
-        message: 'validation/auth - invalid request body',
+        message: 'validation/address - invalid request body',
         code: 'req/invalid-body',
         customMessage: validationResult.error.message,
       });
