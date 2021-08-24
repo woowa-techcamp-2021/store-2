@@ -32,8 +32,10 @@ const SearchItemContainer: FC = () => {
 
   useEffect(() => {
     const { categoryId, search } = query;
-    dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
-    window.scrollTo(0, 0);
+    if ((categoryId || search) && pageId) {
+      dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
+      window.scrollTo(0, 0);
+    }
   }, [query, pageId, sortType, dispatch]);
 
   return (
