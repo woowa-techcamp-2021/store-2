@@ -1,63 +1,49 @@
 import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import { IOrder } from 'types/order';
+import Loader from 'components/common/loader';
 import MyOrder from './my-order';
 
-const dummy = [
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요2',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요3',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-  {
-    createdAt: '2021-07-28',
-    thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/198_main_04.png',
-    itemTitle: '재생지에 콩기름을 먹어요4',
-    price: '3500',
-    count: 1,
-    status: '주문완료',
-  },
-];
+interface MyOrderListProps {
+  loading: boolean;
+  orders: IOrder[];
+  totalCount: number;
+}
 
 const Wrapper = styled.div`
   margin: 0 -12px;
   margin-bottom: 100px;
 `;
 
-const MyOrderList: FC = () => {
-  return (
-    <Wrapper>
-      {dummy.map(({ createdAt, itemTitle, thumbnail, price, count, status }) => (
-        <MyOrder
-          key={itemTitle}
-          createdAt={createdAt}
-          itemTitle={itemTitle}
-          thumbnail={thumbnail}
-          price={price}
-          count={count}
-          status={status}
-        />
-      ))}
-    </Wrapper>
+const Empty = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  font-family: ${props => props.theme?.fontEuljiro10};
+  color: ${props => props.theme?.colorLine};
+  font-size: 80px;
+`;
+
+const MyOrderList: FC<MyOrderListProps> = ({ loading, orders, totalCount }) => {
+  const inner = totalCount ? (
+    orders.map(({ createdAt, title, thumbnail, price, count, status }) => (
+      <MyOrder
+        key={title}
+        createdAt={createdAt}
+        title={title}
+        thumbnail={thumbnail}
+        price={price}
+        count={count}
+        status={status}
+      />
+    ))
+  ) : (
+    <Empty>
+      <div>텅</div>
+    </Empty>
   );
+
+  return <Wrapper>{loading ? <Loader color="brown" size="100px" /> : inner}</Wrapper>;
 };
 
 export default MyOrderList;
