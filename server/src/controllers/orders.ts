@@ -9,6 +9,15 @@ interface IQuery {
   currentDate: string;
 }
 
+export interface PostOrderReqBody {
+  user: string;
+  phone: string;
+  receiver: string;
+  address: string;
+  itemId: number;
+  quantity: number;
+}
+
 export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
   const { pageId, prevDate, currentDate } = req.query;
   const token = getAccessToken(req.headers.authorization);
@@ -16,6 +25,25 @@ export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>,
   try {
     const { orders, pageCount, totalCount } = await ordersService.getOrders(uid, pageId, prevDate, currentDate);
     res.status(200).json({ orders, pageCount, totalCount });
+  } catch (err) {
+    console.log(err);
+    const { statusCode, errorMessage } = errorHandler(err);
+    res.status(statusCode).json({ errorMessage });
+  }
+};
+
+export const postOrder = async (
+  req: Request<unknown, unknown, PostOrderReqBody, unknown>,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { phone, receiver, address, itemId, quantity } = req.body;
+    const token = getAccessToken(req.headers.authorization);
+    const { uid } = decodeToken('access', token);
+
+    await ordersService.postOrder(uid, phone, receiver, address, itemId, quantity);
+
+    res.status(200).json({});
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
