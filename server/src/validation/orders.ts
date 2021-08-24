@@ -6,15 +6,12 @@ import errorHandler from 'utils/error/error-handler';
 
 interface IQuery {
   pageId: number;
-}
-
-interface IReqBody {
   prevDate: string;
   currentDate: string;
 }
 
 export const ordersValidation = (
-  req: Request<unknown, unknown, IReqBody, IQuery>,
+  req: Request<unknown, unknown, unknown, IQuery>,
   res: Response,
   next: NextFunction,
 ): void => {
@@ -32,7 +29,7 @@ export const ordersValidation = (
       }),
     });
 
-    const validationResult = schema.validate(req.body);
+    const validationResult = schema.validate(req.query);
 
     if (validationResult.error) {
       throw errorGenerator({
