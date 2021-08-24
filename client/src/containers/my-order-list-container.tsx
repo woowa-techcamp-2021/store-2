@@ -4,13 +4,14 @@ import MyBar from 'components/my/my-bar';
 import MyOrderList from 'components/my/my-order-list';
 import MyStatusBar from 'components/my/my-status-bar';
 import { useHistory } from 'lib/router';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
 import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
 
 const MyOrderListContainer: FC = () => {
+  const today = getToday();
   const [prevDate, setPrevDate] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [select, setSelect] = useState<undefined | number>(undefined);
@@ -31,38 +32,37 @@ const MyOrderListContainer: FC = () => {
 
   useEffect(() => {
     if (prevDate && currentDate) dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, pageId]);
+  }, [dispatch, pageId, prevDate, currentDate]);
 
   useEffect(() => {
     if (!userLoading && !user) history.push('/');
   }, [userLoading, user, history]);
 
-  const today = getToday();
-  const onClickToday = () => {
+  const onClickToday = useCallback(() => {
     setPrevDate(today);
     setCurrentDate(today);
     setSelect(0);
-  };
-  const onClickThisWeek = () => {
+  }, [today]);
+  const onClickThisWeek = useCallback(() => {
     setPrevDate(getLastWeek());
     setCurrentDate(today);
     setSelect(1);
-  };
-  const onClickThisMonth = () => {
+  }, [today]);
+  const onClickThisMonth = useCallback(() => {
     setPrevDate(getLastMonth());
     setCurrentDate(today);
     setSelect(2);
-  };
-  const onClickThreeMonth = () => {
+  }, [today]);
+  const onClickThreeMonth = useCallback(() => {
     setPrevDate(getLastThreeMonth());
     setCurrentDate(today);
     setSelect(3);
-  };
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch({ type: getOrders.type, payload: { pageId: 1, prevDate, currentDate } });
-  };
+  }, [today]);
+
+  useEffect(() => {
+    onClickToday();
+  }, [onClickToday]);
+
   if (userLoading) return null;
   return (
     <>
@@ -78,7 +78,6 @@ const MyOrderListContainer: FC = () => {
         onClickThisMonth={onClickThisMonth}
         onClickThreeMonth={onClickThreeMonth}
         select={select}
-        onSubmit={onSubmit}
       />
       <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
       <MyOrderList loading={loading} orders={orders} totalCount={totalCount} />
