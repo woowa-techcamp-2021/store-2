@@ -8,8 +8,6 @@ export interface OrderAttributes {
   status: number | string;
   UserId: string;
   ItemId: number;
-  price: string | number;
-  salePercent: number;
   createdAt: string;
 }
 
