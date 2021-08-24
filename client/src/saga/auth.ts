@@ -5,25 +5,7 @@ import * as authAPI from 'utils/api/auth';
 import { IError } from 'types/error';
 import { startLoading, finishLoading } from 'store/loading';
 import * as authStore from 'store/auth';
-
-export interface IAuthState {
-  id: string;
-  password: string;
-}
-
-export interface IReceiveServer {
-  accessToken: string;
-  userId: string;
-}
-
-export interface ICheckUser {
-  newAccessToken?: string;
-  userId: string;
-}
-
-export interface IGithubCode {
-  code: string;
-}
+import { IAuthState, ICheckUser, IGithubCode, IReceiveServer } from 'types/auth';
 
 function* loginSaga(action: PayloadAction): Generator {
   try {

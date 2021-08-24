@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IAuthState, IReceiveServer, ICheckUser, IGithubCode } from 'saga/auth';
+import { IAuthState, IReceiveServer, ICheckUser, IGithubCode } from 'types/auth';
 import client from './client';
 
 export const login = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
