@@ -66,7 +66,7 @@ const getUserOrders = async (
 
   if (!orders) {
     throw errorGenerator({
-      message: 'POST /api/orders - orders not found',
+      message: 'GET /api/orders - orders not found',
       code: 'orders/orders-not-found',
     });
   }
