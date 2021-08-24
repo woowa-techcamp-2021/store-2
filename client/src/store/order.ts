@@ -21,7 +21,7 @@ const initialState: StateProps = {
 };
 
 const orderSlice = createSlice({
-  name: 'item',
+  name: 'order',
   initialState,
   reducers: {
     getOrders: state => state,
