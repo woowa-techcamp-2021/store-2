@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef, MouseEvent } from 'react';
+import React, { FC, useCallback, useRef, MouseEvent, useState } from 'react';
 import styled from 'lib/woowahan-components';
 
 interface ImageViewerProps {
@@ -10,6 +10,10 @@ interface ImageViewerProps {
 
 const Wrapper = styled.div`
   position: relative;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
 
   .image-lens {
     position: absolute;
@@ -18,7 +22,9 @@ const Wrapper = styled.div`
     width: 200px;
     height: 200px;
   }
+`;
 
+const ZoomContainer = styled.div`
   .image-zoom {
     position: absolute;
     top: 0;
@@ -26,15 +32,18 @@ const Wrapper = styled.div`
     width: ${props => props.imgWidth as string}px;
     height: ${props => props.imgWidth as string}px;
     background-image: url(${props => props.targetImg as string});
-    background-size: ${props => props.resultSize as string};
-    background-repeat: none;
+    background-repeat: no-repeat;
   }
 `;
 
 const ImageViewer: FC<ImageViewerProps> = ({ className = '', imgSrc, imgWidth, imgHeight }) => {
+  const [isLensVisible, setIsLensVisible] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const lensRef = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
+
+  const showLens = () => setIsLensVisible(true);
+  const hideLens = () => setIsLensVisible(false);
 
   const getCursorPos = (e: MouseEvent): { x: number; y: number } => {
     if (!imgRef.current) return { x: 0, y: 0 };
@@ -47,22 +56,17 @@ const ImageViewer: FC<ImageViewerProps> = ({ className = '', imgSrc, imgWidth, i
     return { x, y };
   };
 
-  const moveLens = useCallback((e: MouseEvent) => {
-    if (!imgRef.current || !lensRef.current || !zoomRef.current) return;
-    e.preventDefault();
+  const moveLens = useCallback(
+    (e: MouseEvent) => {
+      if (!imgRef.current || !lensRef.current || !zoomRef.current) return;
+      e.preventDefault();
 
-    const img = imgRef.current;
-    const lens = lensRef.current;
-    const zoom = zoomRef.current;
+      const img = imgRef.current;
+      const lens = lensRef.current;
+      const zoom = zoomRef.current;
 
-    const cursorPos = getCursorPos(e);
+      const cursorPos = getCursorPos(e);
 
-    if (cursorPos.x > img.width - 30 || cursorPos.x < 30 || cursorPos.y > img.height - 30 || cursorPos.y < 30) {
-      lens.style.display = 'none';
-      zoom.style.display = 'none';
-    } else {
-      lens.style.display = 'block';
-      zoom.style.display = 'block';
       let x = cursorPos.x - lens.offsetWidth / 2;
       let y = cursorPos.y - lens.offsetHeight / 2;
 
@@ -78,40 +82,22 @@ const ImageViewer: FC<ImageViewerProps> = ({ className = '', imgSrc, imgWidth, i
       const cy = zoom.offsetHeight / lens.offsetHeight;
 
       zoom.style.backgroundPosition = `-${x * cx}px -${y * cy}px`;
-    }
-  }, []);
-
-  const calcBgSize = () => {
-    if (!zoomRef.current || !lensRef.current) return '';
-
-    const zoom = zoomRef.current;
-    const lens = lensRef.current;
-
-    const cx = zoom.offsetWidth / lens.offsetWidth;
-    const cy = zoom.offsetHeight / lens.offsetHeight;
-
-    return `${imgWidth * cx}px ${imgHeight * cy}px`;
-  };
+      zoom.style.backgroundSize = `${imgWidth * cx}px ${imgHeight * cy}px`;
+    },
+    [imgWidth, imgHeight],
+  );
 
   return (
-    <Wrapper
-      className={className}
-      left={imgWidth + 5}
-      imgWidth={imgWidth}
-      imgHeight={imgHeight}
-      targetImg={imgSrc}
-      resultSize={calcBgSize()}
-    >
-      <img
-        ref={imgRef}
-        src={imgSrc}
-        alt="item-img"
-        width={`${imgWidth}px`}
-        height={`${imgHeight}px`}
-        onMouseMove={moveLens}
-      />
-      <div ref={lensRef} className="image-lens" onMouseMove={moveLens} />
-      <div ref={zoomRef} className="image-zoom" />
+    <Wrapper className={className}>
+      <ImageContainer onMouseEnter={showLens} onMouseLeave={hideLens} onMouseMove={moveLens}>
+        <img ref={imgRef} src={imgSrc} alt="item-img" width={`${imgWidth}px`} height={`${imgHeight}px`} />
+        {isLensVisible && <div ref={lensRef} className="image-lens" onMouseMove={moveLens} />}
+      </ImageContainer>
+      {isLensVisible && (
+        <ZoomContainer left={imgWidth + 5} imgWidth={imgWidth} imgHeight={imgHeight} targetImg={imgSrc}>
+          <div ref={zoomRef} className="image-zoom" />
+        </ZoomContainer>
+      )}
     </Wrapper>
   );
 };
