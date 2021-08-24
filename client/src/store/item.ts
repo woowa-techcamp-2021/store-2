@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { put, call, takeLatest } from 'redux-saga/effects';
-import * as itemAPI from 'utils/api/item';
-import axios, { AxiosResponse } from 'axios';
-import { IMainItem, IListItem, IItemState, IItemDetail } from 'types/item';
-import { ISearch, ISearchState, AutoCompleteKeyword } from 'types/search';
-import { IError } from 'types/error';
-import { finishLoading, startLoading } from './loading';
+import { takeLatest } from 'redux-saga/effects';
+import { IMainItem, IListItem, IItemDetail } from 'types/item';
+import { ISearch, AutoCompleteKeyword } from 'types/search';
+import { autoCompleteSaga, getItemSaga, getListItemSaga, getMainItemSaga } from 'saga/item';
 
 interface StateProps {
   main: IMainItem;
@@ -86,7 +83,7 @@ const itemSlice = createSlice({
 });
 
 const { actions, reducer: itemReducer } = itemSlice;
-const {
+export const {
   getMainItem,
   getMainItemSuccess,
   getMainItemFail,
@@ -100,81 +97,7 @@ const {
   getItemSuccess,
   getItemFail,
 } = actions;
-export { itemReducer, getMainItem, getListItem, getAutoComplete, getItem };
-
-function* getMainItemSaga(): Generator {
-  try {
-    yield put(startLoading(getMainItem));
-    const { data } = (yield call(itemAPI.getMainItem)) as AxiosResponse<IMainItem>;
-    yield put({ type: getMainItemSuccess, payload: data });
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const { errorMessage } = e.response?.data as IError;
-      yield put({ type: getMainItemFail, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
-  } finally {
-    yield put(finishLoading(getMainItem));
-  }
-}
-
-function* getListItemSaga(action: PayloadAction): Generator {
-  try {
-    yield put(startLoading(getListItem));
-    const { data } = (yield call(
-      itemAPI.getListItem,
-      action.payload as unknown as IItemState,
-    )) as AxiosResponse<IListItem>;
-    yield put({ type: getListItemSuccess, payload: data });
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const { errorMessage } = e.response?.data as IError;
-      yield put({ type: getListItemFail, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
-  } finally {
-    yield put(finishLoading(getListItem));
-  }
-}
-
-function* autoCompleteSaga(action: PayloadAction): Generator {
-  try {
-    yield put(startLoading(getAutoComplete));
-    const { data } = (yield call(
-      itemAPI.getAutoComplete,
-      action.payload as unknown as ISearchState,
-    )) as AxiosResponse<AutoCompleteKeyword>;
-    yield put({ type: getAutoCompleteSuccess, payload: data });
-  } catch (e) {
-    yield put({
-      type: getAutoCompleteFail,
-    });
-  } finally {
-    yield put(finishLoading(getAutoComplete));
-  }
-}
-
-function* getItemSaga(action: PayloadAction): Generator {
-  try {
-    yield put(startLoading(getItem.type));
-    const { data } = (yield call(
-      itemAPI.getItem,
-      action.payload as unknown as { id: string },
-    )) as AxiosResponse<IItemDetail>;
-    yield put({ type: getItemSuccess.type, payload: data });
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const { errorMessage } = e.response?.data as IError;
-      yield put({ type: getItemFail.type, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
-  } finally {
-    yield put(finishLoading(getItem.type));
-  }
-}
+export { itemReducer };
 
 export function* itemSaga(): Generator {
   yield takeLatest(getMainItem, getMainItemSaga);

@@ -37,8 +37,8 @@ const orderSlice = createSlice({
 });
 
 const { actions, reducer: orderReducer } = orderSlice;
-const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
-export { orderReducer, getOrders };
+export const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
+export { orderReducer };
 
 function* getOrdersSaga(action: PayloadAction): Generator {
   try {
