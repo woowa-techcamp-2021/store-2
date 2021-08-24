@@ -70,9 +70,11 @@ const Table: FC<TableProps> = ({ headers, children }) => {
         ))}
       </colgroup>
       <thead>
-        {headers.map(({ column }) => {
-          return <th key={column.toString()}>{column}</th>;
-        })}
+        <tr>
+          {headers.map(({ column }) => {
+            return <th key={column.toString()}>{column}</th>;
+          })}
+        </tr>
       </thead>
       <tbody>
         {Children.count(children) > 0 ? (
