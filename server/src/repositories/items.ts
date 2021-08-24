@@ -37,7 +37,7 @@ const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => 
   });
 };
 
-const getRecommendItems = async (visited: string[]): Promise<IItems> => {
+const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Promise<IItems> => {
   if (visited.length > 0) {
     const scores = await db.Score.findAll({
       where: {
@@ -60,11 +60,14 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
 
     rank.sort((a, b) => b.score - a.score);
 
-    const rankTitles: string[] = [];
+    let rankTitles: string[] = [];
     rank.forEach(row => {
       rankTitles.push(row.title);
     });
-    console.log(rankTitles);
+    rankTitles = rankTitles.filter((item, index) => rankTitles.indexOf(item) === index);
+    if (!isCategoryItem) {
+      rankTitles = rankTitles.slice(0, LIMIT_COUNT);
+    }
 
     const items = await db.Item.findAll({
       attributes: [
@@ -80,15 +83,21 @@ const getRecommendItems = async (visited: string[]): Promise<IItems> => {
       ],
       where: {
         title: {
-          [Op.or]: rankTitles.slice(0, LIMIT_COUNT),
+          [Op.or]: rankTitles,
         },
       },
-      limit: LIMIT_COUNT,
     });
 
-    filterItems(items);
+    const sortedItems: IItems = { items: [] };
+    rankTitles.forEach(ranktitle =>
+      sortedItems.items.push(
+        items.find(item => item.getDataValue('title') === ranktitle) as Model<ItemAttributes, ItemCreationAttributes>,
+      ),
+    );
 
-    return { items };
+    filterItems(sortedItems.items);
+
+    return { items: sortedItems.items };
   }
 
   const items = await db.Item.findAll({
@@ -172,6 +181,56 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
   return { items, totalCount, pageCount };
 };
 
+const getCategoryRecommendItems = async (
+  pageId: number,
+  categoryReg: string,
+  visited: string[],
+): Promise<IItemsData> => {
+  let items = await db.Item.findAll({
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      'price',
+      ['sale_percent', 'salePercent'],
+      'amount',
+      ['is_green', 'isGreen'],
+    ],
+    where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
+    include: [
+      {
+        model: db.Category,
+        attributes: [],
+      },
+    ],
+  });
+
+  const recommendItems: IItems = await getRecommendItems(visited, true);
+  recommendItems.items = recommendItems.items.filter(item =>
+    items.some(categoryItem => categoryItem.getDataValue('title') === item.getDataValue('title')),
+  );
+
+  items = items.filter(
+    item =>
+      !recommendItems.items.some(recommendItem => recommendItem.getDataValue('title') === item.getDataValue('title')),
+  );
+  items = recommendItems.items.concat(items).slice((pageId - 1) * LIMIT_COUNT, pageId * LIMIT_COUNT);
+
+  const totalCount = await db.Item.count({ where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } } });
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
+
+  if (!items) {
+    throw errorGenerator({
+      message: 'POST /api/items - items not found',
+      code: 'items/not-found',
+    });
+  }
+
+  filterItems(items);
+
+  return { items, totalCount, pageCount };
+};
+
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
     attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
@@ -229,4 +288,11 @@ const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAt
   return item;
 };
 
-export default { getMainItems, getCategoryItems, getSearchItems, getItem, getRecommendItems };
+export default {
+  getMainItems,
+  getCategoryItems,
+  getSearchItems,
+  getItem,
+  getRecommendItems,
+  getCategoryRecommendItems,
+};

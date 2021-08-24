@@ -25,12 +25,18 @@ async function mainItems(visited: string[]): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
     itemRepository.getMainItems([['saleCount', 'DESC']], 4),
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
-    itemRepository.getRecommendItems(visited),
+    itemRepository.getRecommendItems(visited, false),
   ]);
   return { popularItems, newItems, recommendItems };
 }
 
-async function getItems(categoryId: string, pageId = 1, type: ItemType, search: string): Promise<IItemsData> {
+async function getItems(
+  categoryId: string,
+  pageId = 1,
+  type: ItemType,
+  search: string,
+  visited: string[],
+): Promise<IItemsData> {
   if (
     (categoryId && search) ||
     (!categoryId && !search) ||
@@ -43,21 +49,23 @@ async function getItems(categoryId: string, pageId = 1, type: ItemType, search: 
     });
 
   const order = [];
-  // TODO: recommend 수정 예정
-  if (type === 'recommend') order.push(['saleCount', 'DESC']);
-  else if (type === 'popular') order.push(['saleCount', 'DESC']);
+  if (type === 'popular') order.push(['sale_count', 'DESC']);
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
   else if (type === 'expensive') order.push(['price', 'DESC']);
 
-  let data;
+  let data: IItemsData;
   if (categoryId) {
     let categoryReg = '';
     if (categoryId === '000000') categoryReg = '';
     else if (categoryId.slice(2, 4) === '00') categoryReg = categoryId.slice(0, 2);
     else categoryReg = categoryId.slice(0, 4);
 
-    data = await itemRepository.getCategoryItems(pageId, order, categoryReg);
+    if (type === 'recommend') {
+      data = await itemRepository.getCategoryRecommendItems(pageId, categoryReg, visited);
+    } else {
+      data = await itemRepository.getCategoryItems(pageId, order, categoryReg);
+    }
   } else {
     const regExp = String(
       getRegExp(engToKor(search), {
