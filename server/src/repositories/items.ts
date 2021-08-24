@@ -23,16 +23,18 @@ const LIMIT_COUNT = 12;
 
 const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
   items.forEach(item => {
-    const standardDate = new Date();
-    standardDate.setMonth(standardDate.getMonth() - 6);
-    const itemDate = new Date(item.getDataValue('updatedAt'));
-    if (standardDate < itemDate) item.setDataValue('isNew', true);
+    if (item) {
+      const standardDate = new Date();
+      standardDate.setMonth(standardDate.getMonth() - 6);
+      const itemDate = new Date(item.getDataValue('updatedAt'));
+      if (standardDate < itemDate) item.setDataValue('isNew', true);
 
-    const salePercent = item.getDataValue('salePercent');
-    const price = parseInt(item.getDataValue('price') as string, 10);
-    if (salePercent !== 0) {
-      item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
-      item.setDataValue('originalPrice', price);
+      const salePercent = item.getDataValue('salePercent');
+      const price = parseInt(item.getDataValue('price') as string, 10);
+      if (salePercent !== 0) {
+        item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
+        item.setDataValue('originalPrice', price);
+      }
     }
   });
 };
@@ -198,9 +200,10 @@ const getCategoryRecommendItems = async (
   });
 
   const recommendItems: IItems = await getRecommendItems(visited, true);
-  recommendItems.items = recommendItems.items.filter(item =>
-    items.some(categoryItem => categoryItem.getDataValue('title') === item.getDataValue('title')),
-  );
+  recommendItems.items = recommendItems.items.filter(item => {
+    if (!item) return false;
+    return items.some(categoryItem => categoryItem.getDataValue('title') === item.getDataValue('title'));
+  });
 
   items = items.filter(
     item =>
