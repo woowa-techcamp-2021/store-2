@@ -1,7 +1,7 @@
-import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
+import styled from 'lib/woowahan-components';
 
-interface InquiryPeroidProps {
+interface PeriodSelectorProps {
   prevDate: string;
   setPrevDate: React.Dispatch<React.SetStateAction<string>>;
   currentDate: string;
@@ -88,7 +88,7 @@ const DateFlex = styled.div`
   }
 `;
 
-const InquiryPeriod: FC<InquiryPeroidProps> = ({
+const PeriodSelector: FC<PeriodSelectorProps> = ({
   prevDate,
   setPrevDate,
   currentDate,
@@ -143,4 +143,4 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({
   );
 };
 
-export default InquiryPeriod;
+export default PeriodSelector;

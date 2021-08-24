@@ -97,6 +97,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     padding: none;
   }
+  
   button {
     cursor: pointer;
   }

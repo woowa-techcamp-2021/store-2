@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
+
 import { IMenu } from 'types/category';
 
 interface SmallMenuProps {

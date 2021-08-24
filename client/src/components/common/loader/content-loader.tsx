@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-const Content = styled.div`
+const ContentLoader = styled.div`
   @keyframes placeHolderShimmer {
     0% {
       background-position: -468px 0;
@@ -21,26 +20,6 @@ const Content = styled.div`
   background-size: 800px 104px;
   position: relative;
   border-radius: 10px;
-  width: 230px;
-  height: 380px;
-
-  ${props => props.theme?.mobile} {
-    width: 150px;
-    height: 280px;
-  }
-
-  ${props => props.theme?.tablet} {
-    width: 180px;
-    height: 320px;
-  }
 `;
 
-const ItemLoader: FC = () => {
-  return (
-    <>
-      <Content /> <Content /> <Content /> <Content />
-    </>
-  );
-};
-
-export default ItemLoader;
+export default ContentLoader;

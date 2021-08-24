@@ -1,10 +1,13 @@
-import { useHistory } from 'lib/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'lib/router';
+
+import { IUser } from 'types/auth';
+
+import { MAIN_URL } from 'constants/urls';
+
 import { RootState } from 'store';
 import { getGithubLogin } from 'store/auth';
-import { IUser } from 'types/auth';
-import { MAIN_URL } from 'constants/urls';
 
 const AuthPage = (): null => {
   const { userId }: IUser = useSelector(({ auth }: RootState) => ({

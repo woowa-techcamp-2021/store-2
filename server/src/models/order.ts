@@ -1,17 +1,19 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
+import { ORDER } from 'config/constants';
+
 export interface OrderAttributes {
   id: number;
   address: string;
   receiver: string;
   quantity: number;
-  status: number | string;
+  status: number;
   UserId: string;
   ItemId: number;
   createdAt: string;
 }
 
-export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
+export type OrderCreationAttributes = Optional<OrderAttributes, 'id' | 'status' | 'createdAt'>;
 
 const orderSchema = (sequelize: Sequelize): ModelCtor<Model<OrderAttributes, OrderCreationAttributes>> => {
   const Order = sequelize.define('Order', {
@@ -21,11 +23,11 @@ const orderSchema = (sequelize: Sequelize): ModelCtor<Model<OrderAttributes, Ord
       autoIncrement: true,
     },
     address: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(ORDER.ADDRESS_MAX_LENGTH),
       allowNull: false,
     },
     receiver: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(ORDER.RECEIVER_MAX_LENGTH),
       allowNull: false,
     },
     quantity: {

@@ -1,10 +1,13 @@
 import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
-import { IMenu } from 'types/category';
-import { ITEM_LIST_URL } from 'constants/urls';
+
 import arrow from 'assets/icons/arrow_forward.svg';
-import { SMART_MENU_BLOCK_DELAY } from '../../constants';
+
+import { IMenu } from 'types/category';
+
+import { SMART_MENU_BLOCK_DELAY } from 'constants/index';
+import { ITEM_LIST_URL } from 'constants/urls';
 
 interface LargeMenuProps {
   menu: IMenu;

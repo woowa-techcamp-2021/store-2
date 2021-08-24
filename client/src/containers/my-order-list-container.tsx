@@ -1,14 +1,16 @@
-import Pagination from 'components/item/pagination';
-import InquiryPeriod from 'components/my/inquiry-period';
-import MyBar from 'components/my/my-bar';
-import MyOrderList from 'components/my/my-order-list';
-import MyStatusBar from 'components/my/my-status-bar';
-import { useHistory } from 'lib/router';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'lib/router';
+
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
+
 import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
+
+import { Pagination, PeriodSelector } from 'components';
+import MyNav from 'components/my/my-nav';
+import MyOrderList from 'components/my/my-order-list';
+import MyStatusBar from 'components/my/my-status-bar';
 
 const MyOrderListContainer: FC = () => {
   const today = getToday();
@@ -66,8 +68,8 @@ const MyOrderListContainer: FC = () => {
   if (userLoading) return null;
   return (
     <>
-      <MyBar />
-      <InquiryPeriod
+      <MyNav />
+      <PeriodSelector
         prevDate={prevDate}
         setPrevDate={setPrevDate}
         currentDate={currentDate}

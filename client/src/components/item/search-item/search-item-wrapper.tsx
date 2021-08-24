@@ -1,12 +1,15 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
-import { IItem, ESortType } from 'types/item';
-import findIcon from 'assets/icons/find.png';
-import ItemList from './item-list';
-import Filter from './filter';
-import Pagination from './pagination';
 
-interface ItemListProps {
+import findIcon from 'assets/icons/find.png';
+
+import { IItem, ESortType } from 'types/item';
+
+import { Pagination } from 'components';
+import ItemList from '../item-list';
+import Filter from './filter';
+
+interface SearchItemWrapperProps {
   items: IItem[];
   loading: boolean;
   pageCount: number;
@@ -69,7 +72,7 @@ const Empty = styled.div`
   }
 `;
 
-const ItemListWrapper: FC<ItemListProps> = ({
+const SearchItemWrapper: FC<SearchItemWrapperProps> = ({
   items,
   loading,
   pageCount,
@@ -97,4 +100,4 @@ const ItemListWrapper: FC<ItemListProps> = ({
   );
 };
 
-export default ItemListWrapper;
+export default SearchItemWrapper;

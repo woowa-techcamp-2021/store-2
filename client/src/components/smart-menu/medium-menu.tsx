@@ -1,9 +1,12 @@
 import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
-import { IMenu } from 'types/category';
-import { ITEM_LIST_URL } from 'constants/urls';
+
 import arrow from 'assets/icons/arrow_forward.svg';
+
+import { IMenu } from 'types/category';
+
+import { ITEM_LIST_URL } from 'constants/urls';
 
 interface MediumMenuProps {
   menu: IMenu;

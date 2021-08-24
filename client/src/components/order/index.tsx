@@ -10,10 +10,7 @@ import {
   phoneValidation,
 } from 'utils/validation/order-validation';
 
-import { CheckBox } from 'components';
-import TextButton from 'components/common/text-button';
-import GridForm from 'components/common/grid-form';
-import PriceCalculator from 'components/common/price-calculator';
+import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
 import TableSection from './table-section';
 
 const Title = styled.h2`

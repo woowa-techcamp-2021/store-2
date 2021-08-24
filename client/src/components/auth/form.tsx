@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 import { Link } from 'lib/router';
-import { Input, Button, Loader, CheckBox } from 'components';
-import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
 import baedal from 'assets/icons/baedalee.png';
 import github from 'assets/icons/github.png';
 import { GITHUB_LOGIN_LINK } from 'constants/index';
+
+import { SIGNIN_URL, SIGNUP_URL } from 'constants/urls';
+
+import { LineInput, BoxButton, CheckBox, CircleLoader } from 'components';
 
 interface AuthFormProps {
   id: string;
@@ -23,6 +26,7 @@ const WrapForCenter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
 `;
 
 const Wrapper = styled.div`
@@ -50,6 +54,10 @@ const Wrapper = styled.div`
 const Form = styled.form`
   > * {
     width: 100%;
+  }
+
+  .auth-input {
+    margin-bottom: 20px;
   }
 `;
 
@@ -132,10 +140,19 @@ const AuthForm: FC<AuthFormProps> = ({
     <WrapForCenter>
       <Wrapper>
         <Form onSubmit={onSubmit}>
-          <Input type="text" placeholder="아이디" value={id} name="id" onChange={onChange} maxLength={30} />
-          <Input
+          <LineInput
+            type="text"
+            placeholder="아이디"
+            className="auth-input"
+            value={id}
+            name="id"
+            onChange={onChange}
+            maxLength={30}
+          />
+          <LineInput
             type="password"
             placeholder="비밀번호"
+            className="auth-input"
             value={password}
             name="password"
             onChange={onChange}
@@ -150,16 +167,16 @@ const AuthForm: FC<AuthFormProps> = ({
             </GuestButton>
           )}
 
-          <Button type="submit">
+          <BoxButton type="submit">
             {loading ? (
-              <Loader size="25px" color="brown" />
+              <CircleLoader size="25px" color="brown" />
             ) : (
               <>
                 <Image src={baedal} alt="form-icon" />
                 {FORM_TEXT}
               </>
             )}
-          </Button>
+          </BoxButton>
         </Form>
 
         {isSignup ? (
@@ -168,16 +185,16 @@ const AuthForm: FC<AuthFormProps> = ({
           </LinkWrapper>
         ) : (
           <>
-            <Button type="button" color="github" onClick={goGithub}>
+            <BoxButton type="button" color="github" onClick={goGithub}>
               {githubLoading ? (
-                <Loader size="25px" color="grey" />
+                <CircleLoader size="25px" color="grey" />
               ) : (
                 <>
                   <Image src={github} alt="github-icon" />
                   깃-헙으로 로그인
                 </>
               )}
-            </Button>
+            </BoxButton>
             <LinkWrapper>
               <Link to={SIGNUP_URL}>계정이 없다면? 회원가입하러 가기</Link>
             </LinkWrapper>

@@ -1,6 +1,8 @@
 import React, { FC, Dispatch, SetStateAction, ReactNode, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
+
 import { ESortType } from 'types/item';
+
 import { SORT } from 'constants/index';
 
 interface FilterProps {

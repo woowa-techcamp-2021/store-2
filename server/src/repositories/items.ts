@@ -89,11 +89,13 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
     });
 
     const sortedItems: IItems = { items: [] };
-    rankTitles.forEach(ranktitle =>
-      sortedItems.items.push(
-        items.find(item => item.getDataValue('title') === ranktitle) as Model<ItemAttributes, ItemCreationAttributes>,
-      ),
-    );
+    rankTitles.forEach(ranktitle => {
+      const findItem = items.find(item => item.getDataValue('title') === ranktitle) as Model<
+        ItemAttributes,
+        ItemCreationAttributes
+      >;
+      if (findItem) sortedItems.items.push(findItem);
+    });
 
     filterItems(sortedItems.items);
 
@@ -187,15 +189,7 @@ const getCategoryRecommendItems = async (
   visited: string[],
 ): Promise<IItemsData> => {
   let items = await db.Item.findAll({
-    attributes: [
-      'id',
-      'title',
-      'thumbnail',
-      'price',
-      ['sale_percent', 'salePercent'],
-      'amount',
-      ['is_green', 'isGreen'],
-    ],
+    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     include: [
       {

@@ -1,7 +1,9 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
-import { Modal } from 'components';
+
 import { IUserId } from 'types/auth';
+
+import { Modal } from 'components';
 
 interface AuthSuccessModalProps {
   userId: IUserId;
