@@ -97,12 +97,25 @@ const Order: FC = () => {
   const [phoneError, setPhoneError] = useState('');
   const [receiverError, setReceiverError] = useState('');
   const [addressError, setAddressError] = useState('');
-  const [{ user, phone, receiver, address }, onChange] = useInputs({
+  const [phone, setPhone] = useState('');
+  const [{ user, receiver, address }, onChange] = useInputs({
     user: userId,
-    phone: '',
     receiver: '',
     address: '',
   });
+
+  const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const currentValue = value.replace(/[^\d]/g, '');
+
+    if (currentValue.length < 4) {
+      setPhone(value);
+    } else if (currentValue.length < 8 && currentValue.length >= 4) {
+      setPhone(`${currentValue.slice(0, 3)}-${currentValue.slice(3)}`);
+    } else if (currentValue.length >= 8) {
+      setPhone(`${currentValue.slice(0, 3)}-${currentValue.slice(3, 7)}-${currentValue.slice(7)}`);
+    }
+  };
 
   const prices = orderItems.map(item => item.price * item.count);
 
@@ -156,7 +169,7 @@ const Order: FC = () => {
             <InputErrorMessage>{userError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input name="phone" value={phone} onChange={onChange} />
+            <input name="phone" value={phone} onChange={onChangePhone} maxLength={13} />
             <InputErrorMessage>{phoneError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
