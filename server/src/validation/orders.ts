@@ -22,7 +22,7 @@ export const getOrdersValidation = (
   try {
     const schema = Joi.object({
       pageId: Joi.number().required().messages({
-        'number.required': '페이지 아이디가 없습니다.',
+        'any.required': '페이지 아이디가 없습니다.',
       }),
       prevDate: Joi.string().min(10).max(10).required().messages({
         'string.min': `올바르지 않은 형식입니다`,

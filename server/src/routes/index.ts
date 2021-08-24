@@ -6,6 +6,7 @@ import categories from './categories';
 import search from './search';
 import items from './items';
 import orders from './orders';
+import address from './address';
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use('/categories', categories);
 router.use('/search', search);
 router.use('/items', items);
 router.use('/orders', orders);
+router.use('/address', address);
 
 export default router;
