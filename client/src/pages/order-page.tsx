@@ -10,8 +10,8 @@ const OrderPage = (): ReactElement => {
 
   return (
     <>
-      <NavbarContainer displayMain isMobile={isMobile} />
-      <Layout displayMain isMobile={isMobile}>
+      <NavbarContainer isMobile={isMobile} />
+      <Layout isMobile={isMobile}>
         <Order />
       </Layout>
     </>
