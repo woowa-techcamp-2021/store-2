@@ -1,4 +1,4 @@
-import React, { FC, Children } from 'react';
+import React, { FC, Children, ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 
 interface TableProps {
@@ -6,7 +6,7 @@ interface TableProps {
 }
 
 interface TableColumn {
-  column: string;
+  column: string | ReactElement;
   span: number;
 }
 
@@ -57,12 +57,12 @@ const Table: FC<TableProps> = ({ headers, children }) => {
     <TableBody>
       <colgroup>
         {headers.map(({ span }, i) => (
-          <col span={span} key={headers[i].column} />
+          <col span={span} key={headers[i].column.toString()} />
         ))}
       </colgroup>
       <thead>
         {headers.map(({ column }) => {
-          return <th key={column}>{column}</th>;
+          return <th key={column.toString()}>{column}</th>;
         })}
       </thead>
       <tbody>
