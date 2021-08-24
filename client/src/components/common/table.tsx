@@ -20,7 +20,7 @@ const TableBody = styled.table`
 
     th {
       padding: 16px 12px;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: ${({ theme }) => theme?.weightBold};
     }
   }
@@ -30,15 +30,24 @@ const TableBody = styled.table`
       border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
     }
   }
+
+  ${({ theme }) => theme?.mobile} {
+    thead {
+      th {
+        font-size: 12px;
+      }
+    }
+  }
 `;
 
 const TableCell = styled.td`
   padding: 12px 24px;
-  font-size: 12px;
+  font-size: 16px;
   vertical-align: middle;
 
   ${({ theme }) => theme?.mobile} {
     padding: 12px 12px;
+    font-size: 12px;
   }
 `;
 
