@@ -73,4 +73,25 @@ const getUserOrders = async (
 
   return { orders, totalCount, pageCount };
 };
-export default { getUserOrders };
+
+const postOrder = async (
+  uid: string,
+  phone: string,
+  receiver: string,
+  address: string,
+  itemId: number,
+  quantity: number,
+): Promise<void> => {
+  await Promise.all([
+    db.User.update({ phone }, { where: { id: uid } }),
+    db.Order.create({
+      address,
+      receiver,
+      quantity,
+      ItemId: itemId,
+      UserId: uid,
+    }),
+  ]);
+};
+
+export default { getUserOrders, postOrder };
