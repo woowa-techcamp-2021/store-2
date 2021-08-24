@@ -3,7 +3,7 @@ import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 import { IItem } from 'types/item';
 import { ITEM_URL } from 'constants/urls';
-import Item from 'components/item';
+import Item from './item';
 import ItemLoader from './item-loader';
 
 interface IItemListProps {

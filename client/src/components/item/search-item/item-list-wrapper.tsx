@@ -2,9 +2,9 @@ import React, { FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem, ESortType } from 'types/item';
 import findIcon from 'assets/icons/find.png';
-import ItemList from './item-list';
+import { Pagination } from 'components';
+import ItemList from '../item-list';
 import Filter from './filter';
-import Pagination from './pagination';
 
 interface ItemListProps {
   items: IItem[];

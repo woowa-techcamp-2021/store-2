@@ -5,7 +5,7 @@ type StyleType = 'black' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
 type Size = 'big' | 'small';
 
-interface ButtonProps {
+interface TextButtonProps {
   type: ButtonType;
   title: string;
   styleType: StyleType;
@@ -15,7 +15,7 @@ interface ButtonProps {
   isLoading?: boolean;
 }
 
-const ButtonBox = styled.button`
+const Button = styled.button`
   padding: ${({ styleType }) => (styleType === 'black' ? '16px 55px' : '16px 40px')};
   background: ${({ styleType }) => (styleType === 'black' ? 'black' : 'white')};
   font-family: ${({ theme }) => theme?.fontEuljiro};
@@ -34,7 +34,7 @@ const ButtonBox = styled.button`
   }
 `;
 
-const TextButton: FC<ButtonProps> = ({
+const TextButton: FC<TextButtonProps> = ({
   title,
   type,
   styleType,
@@ -42,9 +42,9 @@ const TextButton: FC<ButtonProps> = ({
   onClick = () => {},
   disabled = false,
   isLoading = false,
-}: ButtonProps) => {
+}: TextButtonProps) => {
   return (
-    <ButtonBox
+    <Button
       type={type}
       onClick={onClick}
       isLoading={isLoading}
@@ -53,7 +53,7 @@ const TextButton: FC<ButtonProps> = ({
       disabled={disabled ? true : ''}
     >
       {title}
-    </ButtonBox>
+    </Button>
   );
 };
 

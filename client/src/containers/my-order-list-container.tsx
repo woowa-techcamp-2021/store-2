@@ -1,7 +1,7 @@
-import InquiryPeriod from 'components/my/inquiry-period';
-import MyBar from 'components/my/my-bar';
-import MyOrderList from 'components/my/my-order-list';
-import MyStatusBar from 'components/my/my-status-bar';
+import InquiryPeriod from 'components/common/period-selector';
+import MyBar from 'components/my/my-nav';
+import MyOrderList from 'components/my/table/my-order-list';
+import MyStatusBar from 'components/my/table/my-status-bar';
 import React, { FC, useState } from 'react';
 import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
 

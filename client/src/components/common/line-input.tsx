@@ -1,6 +1,6 @@
 import styled from 'lib/woowahan-components';
 
-const Input = styled.input`
+const LineInput = styled.input`
   border: 0;
   border-bottom: 2px solid ${props => props.theme?.colorGreyMid};
   color: ${props => props.theme?.colorSoftBlack};
@@ -38,4 +38,4 @@ const Input = styled.input`
   }
 `;
 
-export default Input;
+export default LineInput;

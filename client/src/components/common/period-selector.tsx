@@ -1,7 +1,7 @@
 import styled from 'lib/woowahan-components';
 import React, { FC } from 'react';
 
-interface InquiryPeroidProps {
+interface PeriodSelectorProps {
   prevDate: string;
   setPrevDate: React.Dispatch<React.SetStateAction<string>>;
   currentDate: string;
@@ -97,7 +97,7 @@ const Button = styled.button`
   color: ${props => props.theme?.colorWhite};
 `;
 
-const InquiryPeriod: FC<InquiryPeroidProps> = ({
+const PeriodSelector: FC<PeriodSelectorProps> = ({
   prevDate,
   setPrevDate,
   currentDate,
@@ -152,4 +152,4 @@ const InquiryPeriod: FC<InquiryPeroidProps> = ({
   );
 };
 
-export default InquiryPeriod;
+export default PeriodSelector;

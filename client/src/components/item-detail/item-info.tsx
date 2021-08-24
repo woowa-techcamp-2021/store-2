@@ -5,10 +5,10 @@ import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
 
-import TextButton from 'components/common/text-button';
+import { TextButton } from 'components';
 import ItemCounter from './item-counter';
 
-export interface InfoSectionProps {
+export interface ItemInfoProps {
   thumbnail: string;
   title: string;
   price: number;
@@ -49,7 +49,7 @@ const Thumbnail = styled.img`
   }
 `;
 
-const ItemInfo = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -152,7 +152,7 @@ const PaymentWrapper = styled.form`
   }
 `;
 
-const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, isSoldOut, onSubmitCart, onBuy }) => {
+const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy }) => {
   const [totalPrice, setTotalPrice] = useState(price);
 
   const handleCounterChange = (v: number) => {
@@ -166,7 +166,7 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
   return (
     <Wrapper>
       <Thumbnail src={thumbnail} alt={title} />
-      <ItemInfo>
+      <Info>
         <div className="top-wrapper">
           <img src={starsTitle} alt="stars-title" />
           <ItemTitle>{title}</ItemTitle>
@@ -196,9 +196,9 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isLike, is
             )}
           </div>
         </PaymentWrapper>
-      </ItemInfo>
+      </Info>
     </Wrapper>
   );
 };
 
-export default InfoSection;
+export default ItemInfo;

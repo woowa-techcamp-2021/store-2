@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import InfoSection from './info-section';
-import DetailInfo from './detail-info';
+import ItemInfo from './item-info';
+import Detail from './detail';
 
 export interface ItemDetailProps {
   thumbnail: string;
@@ -28,7 +28,7 @@ const ItemDetail: FC<ItemDetailProps> = ({
 }) => {
   return (
     <>
-      <InfoSection
+      <ItemInfo
         thumbnail={thumbnail}
         title={title}
         price={price}
@@ -37,7 +37,7 @@ const ItemDetail: FC<ItemDetailProps> = ({
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
       />
-      <DetailInfo contents={contents} reviewCount={reviewCount} />
+      <Detail contents={contents} reviewCount={reviewCount} />
     </>
   );
 };

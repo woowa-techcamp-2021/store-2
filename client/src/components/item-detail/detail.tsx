@@ -3,7 +3,7 @@ import styled from 'lib/woowahan-components';
 
 import DetailWrapper from './detail-wrapper';
 
-interface DetailInfoProps {
+interface DetailProps {
   contents: string[];
   reviewCount: number;
 }
@@ -30,7 +30,7 @@ const DetailImageWrapper = styled.div`
   }
 `;
 
-const DetailInfo: FC<DetailInfoProps> = ({ contents, reviewCount }) => {
+const Detail: FC<DetailProps> = ({ contents, reviewCount }) => {
   return (
     <Container>
       <DetailWrapper select="detail" reviewCount={reviewCount}>
@@ -47,4 +47,4 @@ const DetailInfo: FC<DetailInfoProps> = ({ contents, reviewCount }) => {
   );
 };
 
-export default DetailInfo;
+export default Detail;

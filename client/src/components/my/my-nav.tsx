@@ -27,7 +27,7 @@ const Wrapper = styled.nav`
   }
 `;
 
-const MyBar: FC = () => {
+const MyNav: FC = () => {
   const { currentPath } = useHistory();
   const myPageNav = [
     { link: ORDER_LIST_URL, name: '주문목록 조회' },
@@ -45,4 +45,4 @@ const MyBar: FC = () => {
   );
 };
 
-export default MyBar;
+export default MyNav;
