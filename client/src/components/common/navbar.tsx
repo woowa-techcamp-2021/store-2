@@ -19,19 +19,19 @@ interface NavbarProps {
 const Wrapper = styled.nav`
   background-color: ${props => (props.white ? props.theme?.colorWhite : props.theme?.colorBg)};
   border-bottom: 1px solid ${props => props.theme?.colorLineLight};
-  padding: 10px 10%;
+  padding: 12px 10%;
   display: flex;
   justify-content: flex-end;
   position: relative;
 
-  button {
-    background-color: transparent;
-    outline: 0;
-    border: 0;
+  .nav-link-list {
+    display: flex;
+    align-items: center;
   }
 
   .nav-link {
     cursor: pointer;
+    height: 12px;
     font-size: 12px;
     font-weight: ${props => props.theme?.weightMid};
     color: ${props => props.theme?.colorGreyDark};
@@ -54,6 +54,7 @@ const Wrapper = styled.nav`
     .nav-link {
       padding: 0;
       padding-left: 12px;
+      height: auto;
     }
 
     .nav-link > img {
@@ -74,7 +75,7 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
           <Logo width="130px" mobile />
         </Link>
       )}
-      <div>
+      <div className="nav-link-list">
         {userId && (
           <Link className="nav-link" to={ORDER_LIST_URL}>
             {isMobile ? <img src={accountIcon} alt="user" /> : '마이페이지'}
