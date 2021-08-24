@@ -9,5 +9,7 @@ export { default as TextButton } from './common/button/text-button';
 export { default as CheckBox } from './common/check-box';
 export { default as LineInput } from './common/line-input';
 
+export { default as CircleLoader } from './common/loader/circle-loader';
+
 export { default as Pagination } from './common/pagination';
 export { default as PeriodSelector } from './common/period-selector';
