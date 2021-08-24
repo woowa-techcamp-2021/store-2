@@ -35,7 +35,7 @@ export const addAddress = async (
   const { name, receiver, address } = req.body;
   try {
     await addressService.addAddress(uid, name, receiver, address);
-    res.status(200).json(true);
+    res.status(200).json({});
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -52,7 +52,7 @@ export const removeAddress = async (
   const { id } = req.body;
   try {
     await addressService.removeAddress(id, uid);
-    res.status(200).json(true);
+    res.status(200).json({});
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
