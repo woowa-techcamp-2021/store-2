@@ -32,7 +32,7 @@ const Button = styled.button`
   }
 `;
 
-const Pagination: FC<PaginationProps> = ({ pageCount, showCnt = 10, activePage, setActivePage }) => {
+const Pagination: FC<PaginationProps> = ({ pageCount, showCnt = 5, activePage, setActivePage }) => {
   const [startPage, setStartPage] = useState(1);
 
   const goNextPage = useCallback(() => {
