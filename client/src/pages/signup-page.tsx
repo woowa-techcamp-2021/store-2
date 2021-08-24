@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
+
 import useWindowSize from 'hooks/use-window-size';
+
+import { Layout } from 'components';
 import NavbarContainer from 'containers/navbar-container';
 import SignupContainer from 'containers/signup-container';
-import { Layout } from 'components';
 
 const SignupPage = (): ReactElement => {
   const { width } = useWindowSize();

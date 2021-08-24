@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 import { useQuery } from 'lib/router';
+
 import useWindowSize from 'hooks/use-window-size';
+
+import { Layout } from 'components';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import NavbarContainer from 'containers/navbar-container';
 import SearchContainer from 'containers/search-container';
 import SearchItemContainer from 'containers/search-item-container';
-import { Layout } from 'components';
 
 const Wrapper = styled.section`
   width: 100%;
