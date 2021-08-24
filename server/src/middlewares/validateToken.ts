@@ -4,7 +4,11 @@ import { getAccessToken, getRefreshToken, checkTokenExpiration } from 'utils/jwt
 import errorGenerator from 'utils/error/error-generator';
 import errorHandler from 'utils/error/error-handler';
 
-async function validateToken(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateToken(
+  req: Request<unknown, unknown, unknown, unknown>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
   try {
     const accessToken = getAccessToken(req.headers.authorization);
     const refreshToken = getRefreshToken(req.cookies);

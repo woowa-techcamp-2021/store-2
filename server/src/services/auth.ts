@@ -31,8 +31,8 @@ interface IGithubId {
   login: string;
 }
 
-async function signIn(user_id: string, isOAuth: boolean, password: string): Promise<IToken> {
-  const userSnapshot = await getUser(user_id);
+async function signIn(userId: string, isOAuth: boolean, password: string): Promise<IToken> {
+  const userSnapshot = await getUser(userId);
 
   const uid = userSnapshot.getDataValue('id');
 
@@ -78,7 +78,7 @@ async function checkAuth(accessToken: string, refreshToken: string): Promise<ICh
 
   const userSnapshot = await getUserId(uid);
 
-  const userId = userSnapshot.getDataValue('user_id');
+  const userId = userSnapshot.getDataValue('userId');
 
   return { newAccessToken, isAccessTokenExpired, userId };
 }
