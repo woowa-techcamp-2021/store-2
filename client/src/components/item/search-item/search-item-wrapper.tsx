@@ -6,7 +6,7 @@ import { Pagination } from 'components';
 import ItemList from '../item-list';
 import Filter from './filter';
 
-interface ItemListProps {
+interface SearchItemWrapperProps {
   items: IItem[];
   loading: boolean;
   pageCount: number;
@@ -69,7 +69,7 @@ const Empty = styled.div`
   }
 `;
 
-const ItemListWrapper: FC<ItemListProps> = ({
+const SearchItemWrapper: FC<SearchItemWrapperProps> = ({
   items,
   loading,
   pageCount,
@@ -97,4 +97,4 @@ const ItemListWrapper: FC<ItemListProps> = ({
   );
 };
 
-export default ItemListWrapper;
+export default SearchItemWrapper;

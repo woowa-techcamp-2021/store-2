@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { getMainItem } from 'store/item';
-import { MainItemWrapper } from 'components';
+import MainItemWrapper from 'components/item/main-item/main-item-wrapper';
 
 const MainItemContainer: FC = () => {
   const { popularItems, newItems, recommendItems, loading } = useSelector(({ item, loading }: RootState) => ({
@@ -16,12 +16,11 @@ const MainItemContainer: FC = () => {
     dispatch({ type: getMainItem.type });
   }, [dispatch]);
   return (
-    <MainItemWrapper
-      popularItems={popularItems}
-      newItems={newItems}
-      recommendItems={recommendItems}
-      loading={loading}
-    />
+    <>
+      <MainItemWrapper title="잘나가요" items={popularItems} loading={loading} />
+      <MainItemWrapper title="새로 나왔어요" items={newItems} loading={loading} />
+      <MainItemWrapper title="추천드려요" items={recommendItems} loading={loading} />
+    </>
   );
 };
 

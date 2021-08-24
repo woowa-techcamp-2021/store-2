@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
-import LoginContainer from 'containers/login-container';
+import SigninContainer from 'containers/signin-container';
 import { Layout } from 'components';
 
-const LoginPage = (): ReactElement => {
+const SigninPage = (): ReactElement => {
   const { width } = useWindowSize();
   const isMobile = width <= 480;
 
@@ -12,10 +12,10 @@ const LoginPage = (): ReactElement => {
     <>
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
-        <LoginContainer />
+        <SigninContainer />
       </Layout>
     </>
   );
 };
 
-export default LoginPage;
+export default SigninPage;

@@ -1,25 +1,71 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 import { IItem } from 'types/item';
-import DisplayItemList from './display-item-list';
+import ItemList from '../item-list';
 
 interface MainItemWrapperProps {
-  popularItems: IItem[];
-  newItems: IItem[];
-  recommendItems: IItem[];
+  title: string;
+  items: IItem[];
   loading: boolean;
 }
 
-const Wrapper = styled.div`
-  margin-top: 60px;
+const Wrapper = styled.section`
+  margin-bottom: 100px;
 `;
 
-const MainItemWrapper: FC<MainItemWrapperProps> = ({ popularItems, newItems, recommendItems, loading }) => {
+const Title = styled.div`
+  position: relative;
+  margin-left: 16px;
+
+  .text-point {
+    color: ${props => props.theme?.colorTextBeige};
+    opacity: 0.5;
+    font-family: ${props => props.theme?.fontEuljiro10};
+    font-size: 110px;
+    position: absolute;
+    top: -40px;
+    left: -40px;
+  }
+
+  .text-title {
+    position: relative;
+    font-family: ${props => props.theme?.fontHanna};
+    font-size: 30px;
+  }
+
+  ${props => props.theme?.mobile} {
+    .text-point {
+      font-size: 80px;
+      top: -24px;
+      left: -20px;
+    }
+
+    .text-title {
+      font-size: 26px;
+    }
+  }
+
+  ${props => props.theme?.tablet} {
+    .text-point {
+      font-size: 95px;
+      top: -32px;
+      left: -30px;
+    }
+
+    .text-title {
+      font-size: 28px;
+    }
+  }
+`;
+
+const MainItemWrapper: FC<MainItemWrapperProps> = ({ title, items, loading }) => {
   return (
     <Wrapper>
-      <DisplayItemList title="잘나가요" items={popularItems} loading={loading} />
-      <DisplayItemList title="새로 나왔어요" items={newItems} loading={loading} />
-      <DisplayItemList title="추천드려요" items={recommendItems} loading={loading} />
+      <Title>
+        <span className="text-point">{title.charAt(0)}</span>
+        <span className="text-title">{title}</span>
+      </Title>
+      <ItemList items={items} isLoading={loading} />
     </Wrapper>
   );
 };

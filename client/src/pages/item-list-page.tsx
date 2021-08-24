@@ -5,7 +5,7 @@ import useWindowSize from 'hooks/use-window-size';
 import SmartMenuContainer from 'containers/smart-menu-container';
 import NavbarContainer from 'containers/navbar-container';
 import SearchContainer from 'containers/search-container';
-import ItemListContainer from 'containers/item-list-container';
+import SearchItemContainer from 'containers/search-item-container';
 import { Layout } from 'components';
 
 const Wrapper = styled.section`
@@ -26,7 +26,7 @@ const ItemListPage = (): ReactElement => {
         <SmartMenuContainer currentCode={query.categoryId} />
         <Wrapper>
           <SearchContainer />
-          <ItemListContainer />
+          <SearchItemContainer />
         </Wrapper>
       </Layout>
     </>

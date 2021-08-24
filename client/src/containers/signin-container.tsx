@@ -9,7 +9,7 @@ import authValidation from 'utils/validation/auth-validation';
 import { IAuth } from 'types/auth';
 import { MAIN_URL } from 'constants/urls';
 
-const LoginContainer: FC = () => {
+const SigninContainer: FC = () => {
   const history = useHistory();
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
@@ -62,4 +62,4 @@ const LoginContainer: FC = () => {
   );
 };
 
-export default LoginContainer;
+export default SigninContainer;

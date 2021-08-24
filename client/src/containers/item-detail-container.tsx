@@ -2,7 +2,8 @@ import React, { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'lib/router';
 
-import ItemDetail from 'components/item-detail';
+import ItemInfo from 'components/item-detail/item-info';
+import Detail from 'components/item-detail/detail';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
@@ -35,17 +36,18 @@ const MainItemContainer: FC = () => {
   };
 
   return (
-    <ItemDetail
-      thumbnail={thumbnail}
-      title={title}
-      price={price}
-      contents={contents}
-      isLike={isLike}
-      isSoldOut={isSoldOut}
-      reviewCount={reviewCount}
-      onSubmitCart={onSubmitCart}
-      onBuy={onBuy}
-    />
+    <>
+      <ItemInfo
+        thumbnail={thumbnail}
+        title={title}
+        price={price}
+        isLike={isLike}
+        isSoldOut={isSoldOut}
+        onSubmitCart={onSubmitCart}
+        onBuy={onBuy}
+      />
+      <Detail contents={contents} reviewCount={reviewCount} />
+    </>
   );
 };
 
