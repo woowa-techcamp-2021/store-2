@@ -42,7 +42,7 @@ const tableHeaders = [
   { column: '주문상태', span: 1 },
 ];
 
-const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders, totalCount }) => {
+const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
   return loading ? (
     <CircleLoader color="brown" size="100px" />
   ) : (
