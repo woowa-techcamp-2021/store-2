@@ -1,20 +1,21 @@
 import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-import { Table } from 'components';
-
 import { formatPrice } from 'utils';
 
-interface TableSectionProps {
-  orderItems: OrderItem[];
-}
+import { Table } from 'components';
 
-interface OrderItem {
+export interface OrderItem {
   id: string;
   thumbnail: string;
   title: string;
   count: number;
   price: number;
+}
+
+interface TableSectionProps {
+  orderItems: OrderItem[];
+  loading: boolean;
 }
 
 const TableRowTitle = styled.div`
@@ -46,9 +47,9 @@ const tableHeaders = [
   { column: '배송비', span: 1 },
 ];
 
-const TableSection: FC<TableSectionProps> = ({ orderItems }) => {
+const TableSection: FC<TableSectionProps> = ({ orderItems, loading }) => {
   return (
-    <Table headers={tableHeaders}>
+    <Table headers={tableHeaders} loading={loading}>
       {orderItems.map(item => {
         const { id, title, thumbnail, count, price } = item;
         return (

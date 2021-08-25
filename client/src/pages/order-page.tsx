@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
 import { Layout } from 'components';
-import Order from 'components/order';
+import OrderContainer from 'containers/order-continaer';
 
 const OrderPage = (): ReactElement => {
   const { width } = useWindowSize();
@@ -12,7 +12,7 @@ const OrderPage = (): ReactElement => {
     <>
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
-        <Order />
+        <OrderContainer />
       </Layout>
     </>
   );
