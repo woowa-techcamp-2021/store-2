@@ -23,17 +23,34 @@ const getAddress = async (uid: string): Promise<Model<AddressAttribures, Address
   return address;
 };
 
-const addAddress = async (uid: string, name: string, receiver: string, address: string): Promise<void> => {
+const addAddress = async (
+  uid: string,
+  name: string,
+  receiver: string,
+  address: string,
+): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> => {
+  const count = await db.Address.count();
+  if (count >= 3) {
+    throw errorGenerator({
+      message: 'POST /api/address - maximun address',
+      code: 'address/maximun address',
+    });
+  }
   await db.Address.create({
     name,
     receiver,
     address,
     UserId: uid,
   });
+  return getAddress(uid);
 };
 
-const removeAddress = async (id: string, uid: string): Promise<void> => {
+const removeAddress = async (
+  id: string,
+  uid: string,
+): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> => {
   await db.Address.destroy({ where: { id, UserId: uid } });
+  return getAddress(uid);
 };
 
 export default { getAddress, addAddress, removeAddress };
