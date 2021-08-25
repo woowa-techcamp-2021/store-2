@@ -7,6 +7,7 @@ import { IError } from 'types/error';
 import { IOrderList, IOrderState, IPostOrder, IOrderItem } from 'types/order';
 import * as orderStore from 'store/order';
 import { finishLoading, startLoading } from 'store/loading';
+import { MAIN_URL } from 'constants/urls';
 
 function* getOrdersSaga(action: PayloadAction): Generator {
   try {
@@ -33,6 +34,7 @@ function* postOrderSaga(action: PayloadAction): Generator {
     yield put(startLoading(orderStore.postOrder));
     yield call(orderAPI.postOrder, action.payload as unknown as IPostOrder);
     yield put({ type: orderStore.postOrderSuccess });
+    window.location.href = MAIN_URL;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const { errorMessage } = err.response?.data as IError;
