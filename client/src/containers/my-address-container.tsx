@@ -6,7 +6,7 @@ import useInputs from 'hooks/use-inputs';
 
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
-import { addAddress, getListAddress } from 'store/address';
+import { addAddress, getListAddress, removeAddress } from 'store/address';
 import MyNav from 'components/my/my-nav';
 import MyAddressForm from 'components/my/my-address/my-address-form';
 import MyAddressTable from 'components/my/my-address/my-address-table';
@@ -47,8 +47,8 @@ const MyAddressContainer: FC = () => {
       dispatch({ type: addAddress.type, payload: { name, receiver, address } });
     }
   };
-  const onRemove = (e: React.MouseEvent) => {
-    // dispatch
+  const onRemove = (id: string) => {
+    dispatch({ type: removeAddress.type, payload: { id } });
   };
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const MyAddressContainer: FC = () => {
         addError={addError}
         loading={loading}
       />
-      <MyAddressTable loading={loading} addressList={addressList} />
+      <MyAddressTable loading={loading} addressList={addressList} onRemove={onRemove} />
     </>
   );
 };

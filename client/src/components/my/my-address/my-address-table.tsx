@@ -9,6 +9,7 @@ import CircleLoader from 'components/common/loader/circle-loader';
 interface MyAddressTableProps {
   loading: boolean;
   addressList: IListAddress[];
+  onRemove: (id: string) => void;
 }
 
 const TableRowText = styled.div`
@@ -29,7 +30,7 @@ const tableHeaders = [
   { column: '삭제', span: 1 },
 ];
 
-const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList }) => {
+const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList, onRemove }) => {
   return loading ? (
     <CircleLoader color="brown" size="100px" />
   ) : (
@@ -42,7 +43,9 @@ const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList }) => {
             <TableRowText>{receiver}</TableRowText>
             <TableRowText>{address}</TableRowText>
             <TableRowText>
-              <RemoveButton type="button">삭제</RemoveButton>
+              <RemoveButton type="button" onClick={() => onRemove(id)}>
+                삭제
+              </RemoveButton>
             </TableRowText>
           </Fragment>
         );
