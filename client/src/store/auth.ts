@@ -56,8 +56,9 @@ const authSlice = createSlice({
     },
     getUser: state => state,
     getUserSuccess: (state, action: PayloadAction<IReceiveServer>) => {
-      state.user.userId = action.payload.userId;
-      localStorage.setItem('user', action.payload.accessToken);
+      const { userId, accessToken } = action.payload;
+      if (userId && state.user.userId !== userId) state.user.userId = action.payload.userId;
+      if (accessToken) localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getUserFail: (state, action: PayloadAction<string>) => {

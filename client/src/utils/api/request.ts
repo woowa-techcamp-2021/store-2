@@ -1,6 +1,11 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+interface IResetToken {
+  requestAgain: boolean;
+  newAccessToken: string;
+}
 
 const client: AxiosInstance = axios.create();
 
@@ -20,8 +25,8 @@ async function request<T>(method: Method, url: string, body?: T): Promise<AxiosR
       ...(body && { data: body }),
     });
 
-    if (res.data.requestAgain) {
-      const { newAccessToken } = res.data;
+    if ((res.data as IResetToken).requestAgain) {
+      const { newAccessToken } = res.data as IResetToken;
       if (newAccessToken) {
         window.localStorage.setItem('user', newAccessToken);
       }
@@ -35,6 +40,7 @@ async function request<T>(method: Method, url: string, body?: T): Promise<AxiosR
     if (axios.isAxiosError(err)) {
       if (err.response && err.response.status === 401) {
         window.localStorage.removeItem('user');
+        window.location.href = '/';
       }
     }
     throw err;
