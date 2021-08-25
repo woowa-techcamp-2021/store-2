@@ -56,21 +56,16 @@ const OrderContainer: FC = () => {
   const [receiver, setReceiver] = useState('');
   const [address, setAddress] = useState('');
   const [addressChecked, setaddressChecked] = useState('');
-  const { userId, submitError, itemsData, getLoading, submitLoading } = useSelector(
+  const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
     ({ auth, order, loading }: RootState) => ({
       userId: auth.user.userId || '',
       submitError: order.postError || '',
       itemsData: order.orderItems,
       getLoading: loading['order/getOrderItems'],
       submitLoading: loading['order/postOrder'],
+      addresses: [{ name: '', address: '' }],
     }),
   );
-
-  const addresses = [
-    { name: '십만대산', address: '십만대산 마교교주 앞' },
-    { name: '뉴욕', address: '뉴욕 생텀 앞' },
-    { name: '스타크타워', address: '스타크타워 12층' },
-  ];
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -80,7 +75,7 @@ const OrderContainer: FC = () => {
   }, [userId]);
 
   useEffect(() => {
-    const orderParamsString = window.localStorage.getItem('order') || '';
+    const orderParamsString = window.sessionStorage.getItem('order') || '';
     const { count } = parseOrderParams(orderParamsString);
 
     const newOrderItems = itemsData.map((itemData, i) => {
@@ -92,11 +87,12 @@ const OrderContainer: FC = () => {
 
   useEffect(() => {
     try {
-      const orderParamsString = window.localStorage.getItem('order') || '';
+      const orderParamsString = window.sessionStorage.getItem('order') || '';
       const { itemIDs } = parseOrderParams(orderParamsString);
       dispatch({ type: getOrderItems.type, payload: itemIDs });
     } catch (err) {
       setOrderItems([]);
+      window.sessionStorage.removeItem('order');
       history.goBack();
     }
   }, []);

@@ -36,7 +36,7 @@ const MainItemContainer: FC = () => {
   };
 
   const onBuy = () => {
-    window.localStorage.setItem('order', `${id}-${count}`);
+    window.sessionStorage.setItem('order', `${id}-${count}`);
     history.push(PAYMENT_URL);
   };
 
