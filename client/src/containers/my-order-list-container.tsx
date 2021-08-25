@@ -7,7 +7,7 @@ import { getOrders } from 'store/order';
 
 import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
 
-import { Pagination, PeriodSelector, Table } from 'components';
+import { Pagination, PeriodSelector } from 'components';
 import MyNav from 'components/my/my-nav';
 // import MyOrderList from 'components/my/my-order-list';
 // import MyStatusBar from 'components/my/my-status-bar';
