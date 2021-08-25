@@ -2,8 +2,6 @@ export const PORT = Number(process.env.PORT) || 3000;
 
 export const REFRESH_TOKEN_NAME = 'rteofkreensh';
 
-export const MAX_SCORE = 5;
-
 export const USER = {
   ID_MAX_LENGTH: 30,
   ID_MIN_LENGTH: 3,
@@ -27,6 +25,14 @@ export const ORDER = {
   ADDRESS_MIN_LENGTH: 3,
   RECEIVER_MAX_LENGTH: 20,
   QUANTITY_MIN: 1,
+};
+
+export const REVIEW = {
+  TITLE_MIN_LENGTH: 2,
+  TITLE_MAX_LENGTH: 30,
+  CONTENTS_MIN_LENGTH: 5,
+  MAX_SCORE: 5,
+  MIN_SCORE: 1,
 };
 
 export const CATEGORY_DATA = [

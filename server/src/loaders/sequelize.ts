@@ -7,12 +7,15 @@ export default async (): Promise<void> => {
   User.belongsToMany(Item, { through: Like });
   User.hasMany(Address);
   User.hasMany(Order);
+  User.hasMany(Review);
   Category.hasMany(Item);
   Item.belongsToMany(User, { through: Like });
   Item.belongsTo(Category);
   Item.hasMany(Review);
   Item.hasMany(Order);
   Order.belongsTo(Item);
+  Review.belongsTo(Item);
+  Review.belongsTo(User);
 
   await sequelize.sync({ alter: true });
 
