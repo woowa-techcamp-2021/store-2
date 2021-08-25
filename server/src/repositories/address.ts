@@ -10,7 +10,7 @@ const getAddress = async (uid: string): Promise<Model<AddressAttribures, Address
     where: {
       UserId: uid,
     },
-    order: [['updatedAt', 'DESC']],
+    order: [['updatedAt', 'ASC']],
   });
 
   if (!address) {
