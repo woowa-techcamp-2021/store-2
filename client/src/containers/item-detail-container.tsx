@@ -26,8 +26,13 @@ const MainItemContainer: FC = () => {
     dispatch({ type: getItem.type, payload: { id } });
   }, [id, dispatch]);
 
-  const onSubmitCart = () => {
-    // TODO: 장바구니 추가
+  const onSubmitCart = (count: number) => {
+    if (!localStorage.getItem('cart')) {
+      localStorage.setItem('cart', `${id},${thumbnail},${title},${count},${price}`);
+    } else {
+      const data = localStorage.getItem('cart') as string;
+      localStorage.setItem('cart', `${data},${id},${thumbnail},${title},${count},${price}`);
+    }
   };
 
   const onBuy = () => {
