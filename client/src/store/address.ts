@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
-import { getAddressSaga } from 'saga/address';
+import { addAddressSaga, getAddressSaga } from 'saga/address';
 import { IListAddress } from 'types/address';
 
 interface StateProps {
@@ -29,13 +29,30 @@ const addressSlice = createSlice({
       state.error = action.payload;
       return state;
     },
+    addAddress: state => state,
+    addAddressSuccess: state => {
+      state.error = null;
+      return state;
+    },
+    addAddressFail: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      return state;
+    },
   },
 });
 
 const { actions, reducer: addressReducer } = addressSlice;
-export const { getListAddress, getListAddressSuccess, getListAddressFail } = actions;
+export const {
+  getListAddress,
+  getListAddressSuccess,
+  getListAddressFail,
+  addAddress,
+  addAddressSuccess,
+  addAddressFail,
+} = actions;
 export { addressReducer, initialState };
 
 export function* addressSaga(): Generator {
   yield takeLatest(getListAddress, getAddressSaga);
+  yield takeLatest(addAddress, addAddressSaga);
 }
