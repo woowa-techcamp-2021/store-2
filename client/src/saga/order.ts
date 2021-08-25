@@ -38,9 +38,9 @@ function* postOrderSaga(action: PayloadAction): Generator {
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const { errorMessage } = err.response?.data as IError;
-      yield put({ type: orderStore.getOrdersFail, payload: errorMessage });
+      yield put({ type: orderStore.postOrderFail, payload: errorMessage });
     } else {
-      yield put({ type: orderStore.getOrdersFail, payload: '알 수 없는 에러가 발생했습니다.' });
+      yield put({ type: orderStore.postOrderFail, payload: '알 수 없는 에러가 발생했습니다.' });
     }
   } finally {
     yield put(finishLoading(orderStore.getOrders));
