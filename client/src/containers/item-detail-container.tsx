@@ -11,7 +11,7 @@ import { getItem } from 'store/item';
 import { PAYMENT_URL } from 'constants/urls';
 
 const MainItemContainer: FC = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
