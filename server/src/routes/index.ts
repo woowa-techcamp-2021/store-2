@@ -7,6 +7,7 @@ import search from './search';
 import items from './items';
 import orders from './orders';
 import address from './address';
+import reviews from './reviews';
 
 const router = Router();
 
@@ -17,5 +18,6 @@ router.use('/search', search);
 router.use('/items', items);
 router.use('/orders', orders);
 router.use('/address', address);
+router.use('/reviews', reviews);
 
 export default router;
