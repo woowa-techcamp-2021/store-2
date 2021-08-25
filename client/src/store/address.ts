@@ -17,12 +17,10 @@ const addressSlice = createSlice({
   name: 'address',
   initialState,
   reducers: {
-    getListAddress: state => {
-      state.error = null;
-      return state;
-    },
+    getListAddress: state => state,
     getListAddressSuccess: (state, action: PayloadAction<IListAddress[]>) => {
       state.list = action.payload;
+      state.error = null;
       return state;
     },
     getListAddressFail: (state, action: PayloadAction<string>) => {
