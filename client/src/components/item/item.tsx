@@ -1,4 +1,4 @@
-import React, { FC, useState, MouseEvent } from 'react';
+import React, { FC, MouseEvent, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 
 import likeIcon from 'assets/icons/like.svg';
@@ -19,6 +19,8 @@ interface ItemProps {
   isNew?: boolean;
   salePercent?: number;
   originalPrice?: number;
+  isLiked: boolean;
+  setIsLiked: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
 }
 
@@ -211,10 +213,10 @@ const Item: FC<ItemProps> = ({
   isNew,
   salePercent,
   originalPrice,
+  isLiked,
+  setIsLiked,
   onClick,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
   const toggleLike = () => setIsLiked(!isLiked);
   const setVisitedItem = () => {
     if (!localStorage.getItem('visited')) {
