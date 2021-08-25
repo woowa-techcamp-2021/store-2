@@ -16,8 +16,8 @@ function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
     let result = (yield call(orderAPI.getOrderList, action.payload, token)) as AxiosResponse<IOrderList | IResetToken>;
     if ('requestAgain' in result.data) {
       yield put({ type: authStore.getUserSuccess, payload: { newAccessToken: result.data.newAccessToken } });
+      result = (yield call(orderAPI.getOrderList, action.payload, token)) as AxiosResponse<IOrderList>;
     }
-    result = (yield call(orderAPI.getOrderList, action.payload, token)) as AxiosResponse<IOrderList>;
     yield put({ type: orderStore.getOrdersSuccess, payload: result.data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
