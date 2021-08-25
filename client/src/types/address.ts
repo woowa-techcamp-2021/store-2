@@ -4,3 +4,9 @@ export interface IListAddress {
   receiver: string;
   address: string;
 }
+
+export interface IAddressState {
+  name: string;
+  receiver: string;
+  address: string;
+}
