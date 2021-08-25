@@ -6,7 +6,6 @@ import { formatPrice } from 'utils';
 import Table from 'components/common/table';
 import { CheckBox } from 'components';
 
-
 interface TableSectionProps {
   cartItems: CartItem[];
   checkedItems: Set<number>;
