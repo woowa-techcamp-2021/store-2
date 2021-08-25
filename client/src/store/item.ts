@@ -100,8 +100,8 @@ export const {
 export { itemReducer, initialState };
 
 export function* itemSaga(): Generator {
-  yield takeLatest(getMainItem, getMainItemSaga);
-  yield takeLatest(getListItem, getListItemSaga);
-  yield takeLatest(getAutoComplete, autoCompleteSaga);
-  yield takeLatest(getItem, getItemSaga);
+  yield takeLatest(getMainItem.type, getMainItemSaga);
+  yield takeLatest(getListItem.type, getListItemSaga);
+  yield takeLatest(getAutoComplete.type, autoCompleteSaga);
+  yield takeLatest(getItem.type, getItemSaga);
 }

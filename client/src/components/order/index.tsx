@@ -143,10 +143,7 @@ const Order: FC = () => {
     }
     if (receiverValidation(receiver)) {
       setAddressError(receiverValidation(receiver));
-      return;
     }
-
-    console.log(user, phone, receiver, address);
   };
 
   const onAgree = () => {

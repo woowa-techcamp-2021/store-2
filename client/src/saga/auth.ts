@@ -6,21 +6,15 @@ import * as authAPI from 'utils/api/auth';
 import { INNER_ERROR } from 'constants/index';
 
 import { IError } from 'types/error';
-import { IAuthState, ICheckUser, IGithubCode, IReceiveServer } from 'types/auth';
+import { IAuthState, IGithubCode, IReceiveServer } from 'types/auth';
 import { startLoading, finishLoading } from 'store/loading';
 import * as authStore from 'store/auth';
 
-function* loginSaga(action: PayloadAction): Generator {
+function* loginSaga(action: PayloadAction<IAuthState>): Generator {
   try {
     yield put(startLoading(authStore.getLogin));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.login, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
-    yield put({
-      type: authStore.getLoginSuccess,
-      payload: userId,
-    });
-    localStorage.setItem('user', accessToken);
+    const { data } = (yield call(authAPI.login, action.payload)) as AxiosResponse<IReceiveServer>;
+    yield put({ type: authStore.getLoginSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
@@ -39,17 +33,14 @@ function* loginSaga(action: PayloadAction): Generator {
   }
 }
 
-function* signupSaga(action: PayloadAction): Generator {
+function* signupSaga(action: PayloadAction<IAuthState>): Generator {
   try {
     yield put(startLoading(authStore.getSignup));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.signup, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
+    const { data } = (yield call(authAPI.signup, action.payload)) as AxiosResponse<IReceiveServer>;
     yield put({
       type: authStore.getSignupSuccess,
-      payload: userId,
+      payload: data,
     });
-    localStorage.setItem('user', accessToken);
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
@@ -71,15 +62,14 @@ function* signupSaga(action: PayloadAction): Generator {
 function* checkAuthSaga(): Generator {
   try {
     yield put(startLoading(authStore.getUser));
-    const {
-      data: { newAccessToken, userId },
-    } = (yield call(authAPI.checkAuth)) as AxiosResponse<ICheckUser>;
-    if (newAccessToken) localStorage.setItem('user', newAccessToken);
+    const { data } = (yield call(
+      authAPI.checkAuth,
+      localStorage.getItem('user') || '',
+    )) as AxiosResponse<IReceiveServer>;
 
-    yield put({ type: authStore.getUserSuccess, payload: userId });
+    yield put({ type: authStore.getUserSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      localStorage.removeItem('user');
       const { errorMessage } = e.response?.data as IError;
       yield put({ type: authStore.getUserFail, payload: errorMessage });
     } else {
@@ -96,13 +86,11 @@ function* checkAuthSaga(): Generator {
 function* logoutSaga(): Generator {
   try {
     yield put(startLoading(authStore.logout));
-    (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
-    localStorage.removeItem('user');
+    yield call(authAPI.logout);
     yield put({ type: authStore.logoutSuccess });
     window.location.href = '/';
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      localStorage.removeItem('user');
       const { errorMessage } = e.response?.data as IError;
       yield put({ type: authStore.logoutFail, payload: errorMessage });
     } else
@@ -115,17 +103,11 @@ function* logoutSaga(): Generator {
   }
 }
 
-function* githubLoginSaga(action: PayloadAction): Generator {
+function* githubLoginSaga(action: PayloadAction<IGithubCode>): Generator {
   try {
     yield put(startLoading(authStore.getGithubLogin));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.githubLogin, action.payload as unknown as IGithubCode)) as AxiosResponse<IReceiveServer>;
-    yield put({
-      type: authStore.getGithubLoginSuccess,
-      payload: userId,
-    });
-    localStorage.setItem('user', accessToken);
+    const { data } = (yield call(authAPI.githubLogin, action.payload)) as AxiosResponse<IReceiveServer>;
+    yield put({ type: authStore.getGithubLoginSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;

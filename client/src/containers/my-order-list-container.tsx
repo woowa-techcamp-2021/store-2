@@ -23,7 +23,7 @@ const MyOrderListContainer: FC = () => {
 
   const { loading, user, orders, pageCount, totalCount, userLoading } = useSelector(
     ({ auth, loading, order }: RootState) => ({
-      loading: loading['order/getListOrder'],
+      loading: loading['order/getOrders'],
       user: auth.user.userId,
       orders: order.list.orders,
       pageCount: order.list.pageCount,

@@ -7,17 +7,22 @@ import { INNER_ERROR } from 'constants/index';
 
 import { IError } from 'types/error';
 import { IOrderList, IOrderState } from 'types/order';
+import * as authStore from 'store/auth';
 import * as orderStore from 'store/order';
 import { finishLoading, startLoading } from 'store/loading';
+import { IResetToken } from 'types/auth';
 
-function* getOrdersSaga(action: PayloadAction): Generator {
+function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
   try {
     yield put(startLoading(orderStore.getOrders));
-    const { data } = (yield call(
-      orderAPI.getOrderList,
-      action.payload as unknown as IOrderState,
-    )) as AxiosResponse<IOrderList>;
-    yield put({ type: orderStore.getOrdersSuccess, payload: data });
+    let token = localStorage.getItem('user') || '';
+    let result = (yield call(orderAPI.getOrderList, action.payload, token)) as AxiosResponse<IOrderList | IResetToken>;
+    if ('requestAgain' in result.data) {
+      token = result.data.newAccessToken;
+      yield put({ type: authStore.getUserSuccess, payload: { newAccessToken: token } });
+      result = (yield call(orderAPI.getOrderList, action.payload, token)) as AxiosResponse<IOrderList>;
+    }
+    yield put({ type: orderStore.getOrdersSuccess, payload: result.data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;

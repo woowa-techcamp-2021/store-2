@@ -1,16 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'lib/router';
 
-import {
-  MAIN_URL,
-  ITEM_LIST_URL,
-  ITEM_URL,
-  AUTH_URL,
-  SIGNIN_URL,
-  SIGNUP_URL,
-  ORDER_LIST_URL,
-  PAYMENT_URL,
-} from 'constants/urls';
+import { MAIN_URL, ITEM_LIST_URL, ITEM_URL, AUTH_URL, SIGNIN_URL, SIGNUP_URL, ORDER_LIST_URL } from 'constants/urls';
 
 import {
   NotFoundPage,
@@ -21,7 +12,6 @@ import {
   ItemListPage,
   ItemDetailPage,
   MyOrderListPage,
-  OrderPage,
 } from 'pages';
 import Theme from './styles/theme';
 

@@ -3,6 +3,8 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { call } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
+import { IAuthState, IGithubCode } from 'types/auth';
+
 import * as authAPI from 'utils/api/auth';
 import { INNER_ERROR } from 'constants/index';
 
@@ -20,15 +22,15 @@ describe('Login Saga', () => {
 
   it('should success', () => {
     try {
-      return expectSaga(authSaga.loginSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.loginSaga, action as unknown as PayloadAction<IAuthState>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getLogin))
         .provide([[call(authAPI.login, action.payload), { data }]])
-        .put({ type: authStore.getLoginSuccess, payload: data.userId })
+        .put({ type: authStore.getLoginSuccess, payload: data })
         .put(finishLoading(authStore.getLogin))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId },
+          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
         })
         .run();
     } catch (e) {
@@ -38,7 +40,7 @@ describe('Login Saga', () => {
 
   it('should fail', () => {
     try {
-      return expectSaga(authSaga.loginSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.loginSaga, action as unknown as PayloadAction<IAuthState>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getLogin))
         .provide([[call(authAPI.login, action.payload), throwError()]])
@@ -58,15 +60,15 @@ describe('Signup Saga', () => {
 
   it('should success', () => {
     try {
-      return expectSaga(authSaga.signupSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.signupSaga, action as unknown as PayloadAction<IAuthState>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getSignup))
         .provide([[call(authAPI.signup, action.payload), { data }]])
-        .put({ type: authStore.getSignupSuccess, payload: data.userId })
+        .put({ type: authStore.getSignupSuccess, payload: data })
         .put(finishLoading(authStore.getSignup))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId },
+          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
         })
         .run();
     } catch (e) {
@@ -76,7 +78,7 @@ describe('Signup Saga', () => {
 
   it('should fail', () => {
     try {
-      return expectSaga(authSaga.signupSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.signupSaga, action as unknown as PayloadAction<IAuthState>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getSignup))
         .provide([[call(authAPI.signup, action.payload), throwError()]])
@@ -95,12 +97,12 @@ describe('CheckAuth Saga', () => {
       return expectSaga(authSaga.checkAuthSaga)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getUser))
-        .provide([[call(authAPI.checkAuth), { data }]])
-        .put({ type: authStore.getUserSuccess, payload: data.userId })
+        .provide([[call(authAPI.checkAuth, localStorage.getItem('user') || ''), { data }]])
+        .put({ type: authStore.getUserSuccess, payload: data })
         .put(finishLoading(authStore.getUser))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId },
+          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
         })
         .run();
     } catch (e) {
@@ -113,7 +115,7 @@ describe('CheckAuth Saga', () => {
       return expectSaga(authSaga.checkAuthSaga)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getUser))
-        .provide([[call(authAPI.checkAuth), throwError()]])
+        .provide([[call(authAPI.checkAuth, localStorage.getItem('user') || ''), throwError()]])
         .put({ type: authStore.getUserFail, payload: INNER_ERROR })
         .put(finishLoading(authStore.getUser))
         .run();
@@ -157,15 +159,15 @@ describe('GithubLoginSaga Saga', () => {
   const action = { payload: { code: 'code' } };
   it('should success', () => {
     try {
-      return expectSaga(authSaga.githubLoginSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.githubLoginSaga, action as unknown as PayloadAction<IGithubCode>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getGithubLogin))
         .provide([[call(authAPI.githubLogin, action.payload), { data }]])
-        .put({ type: authStore.getGithubLoginSuccess, payload: data.userId })
+        .put({ type: authStore.getGithubLoginSuccess, payload: data })
         .put(finishLoading(authStore.getGithubLogin))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId },
+          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
         })
         .run();
     } catch (e) {
@@ -175,7 +177,7 @@ describe('GithubLoginSaga Saga', () => {
 
   it('should fail', () => {
     try {
-      return expectSaga(authSaga.githubLoginSaga, action as unknown as PayloadAction)
+      return expectSaga(authSaga.githubLoginSaga, action as unknown as PayloadAction<IGithubCode>)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getGithubLogin))
         .provide([[call(authAPI.githubLogin, action.payload), throwError()]])

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
-
 import { getOrdersSaga } from 'saga/order';
 import { IOrderList } from 'types/order';
 
@@ -39,5 +38,5 @@ export const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
 export { orderReducer, initialState };
 
 export function* orderSaga(): Generator {
-  yield takeLatest(getOrders, getOrdersSaga);
+  yield takeLatest(getOrders.type, getOrdersSaga);
 }
