@@ -3,9 +3,7 @@ import { retry, put } from 'redux-saga/effects';
 import { ICategory } from 'types/category';
 import * as categoryAPI from 'utils/api/category';
 import * as categoryStore from 'store/category';
-
-const MAX_TRY_COUNT = 10;
-const DELAY_TIME = 1000;
+import { MAX_TRY_COUNT, DELAY_TIME } from 'constants/index';
 
 function* getCategorySaga(): Generator {
   try {

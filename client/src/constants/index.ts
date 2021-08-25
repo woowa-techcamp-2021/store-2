@@ -1,6 +1,9 @@
 import { ESortType } from 'types/item';
 import { ADDRESS_URL, ORDER_LIST_URL, REVIEW_URL } from 'constants/urls';
 
+export const MAX_TRY_COUNT = 10;
+export const DELAY_TIME = 1000;
+
 export const SMART_MENU_LARGE_WIDTH = 1200;
 export const SMART_MENU_SMALL_WIDTH = 600;
 export const SMART_MENU_BLOCK_DELAY = 100;
