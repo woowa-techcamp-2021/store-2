@@ -10,3 +10,7 @@ export interface IAddressState {
   receiver: string;
   address: string;
 }
+
+export interface IAddressRemoveState {
+  id: string;
+}
