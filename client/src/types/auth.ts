@@ -1,14 +1,12 @@
 export type IUserId = string | null;
 
-export interface IUser {
-  userId: IUserId;
+export interface IAuth {
+  error: null | string;
 }
 
-export interface IAuth {
-  loading: boolean;
-  error: null | string;
+export interface IUser extends IAuth {
   userId: IUserId;
-  userLoading: boolean;
+  token: null | string;
 }
 
 export interface IAuthState {
@@ -17,8 +15,9 @@ export interface IAuthState {
 }
 
 export interface IReceiveServer {
-  accessToken: string;
   userId: string;
+  accessToken?: string;
+  newAccessToken?: string;
 }
 
 export interface ICheckUser {
