@@ -1,7 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'lib/router';
 
-import { MAIN_URL, ITEM_LIST_URL, ITEM_URL, AUTH_URL, SIGNIN_URL, SIGNUP_URL, ORDER_LIST_URL } from 'constants/urls';
+import {
+  MAIN_URL,
+  ITEM_LIST_URL,
+  ITEM_URL,
+  AUTH_URL,
+  SIGNIN_URL,
+  SIGNUP_URL,
+  ORDER_LIST_URL,
+  PAYMENT_URL,
+  ADDRESS_URL,
+} from 'constants/urls';
 
 import {
   NotFoundPage,
@@ -12,6 +22,8 @@ import {
   ItemListPage,
   ItemDetailPage,
   MyOrderListPage,
+  OrderPage,
+  MyAddressPage,
 } from 'pages';
 import Theme from './styles/theme';
 
@@ -27,6 +39,8 @@ const App: React.FC = () => {
           <Route exact path={ITEM_LIST_URL} component={ItemListPage} />
           <Route exact path={`${ITEM_URL}/:id`} component={ItemDetailPage} />
           <Route exact path={ORDER_LIST_URL} component={MyOrderListPage} />
+          <Route exact path={ADDRESS_URL} component={MyAddressPage} />
+          <Route exact path={PAYMENT_URL} component={OrderPage} />
           <Route path="" component={NotFoundPage} />
         </Switch>
       </BrowserRouter>

@@ -14,7 +14,7 @@ describe('Category Saga', () => {
     try {
       return expectSaga(categorySaga.getCategorySaga)
         .provide([[retry(MAX_TRY_COUNT, DELAY_TIME, categoryAPI.getCategories), { data: category }]])
-        .put({ type: categoryStore.getCategoriesSuccess.type, payload: category })
+        .put({ type: categoryStore.getCategoriesSuccess, payload: category })
         .run();
     } catch (e) {
       throw new Error(e);
@@ -25,7 +25,7 @@ describe('Category Saga', () => {
     try {
       return expectSaga(categorySaga.getCategorySaga)
         .provide([[retry(MAX_TRY_COUNT, DELAY_TIME, categoryAPI.getCategories), throwError()]])
-        .put({ type: categoryStore.getCategoriesFail.type })
+        .put({ type: categoryStore.getCategoriesFail })
         .run();
     } catch (e) {
       throw new Error(e);

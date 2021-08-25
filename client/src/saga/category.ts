@@ -9,12 +9,12 @@ function* getCategorySaga(): Generator {
   try {
     const { data } = (yield retry(MAX_TRY_COUNT, DELAY_TIME, categoryAPI.getCategories)) as AxiosResponse<ICategory[]>;
     yield put({
-      type: categoryStore.getCategoriesSuccess.type,
+      type: categoryStore.getCategoriesSuccess,
       payload: data,
     });
   } catch (e) {
     yield put({
-      type: categoryStore.getCategoriesFail.type,
+      type: categoryStore.getCategoriesFail,
     });
   }
 }
