@@ -5,7 +5,7 @@ import * as authAPI from 'utils/api/auth';
 import { IError } from 'types/error';
 import { startLoading, finishLoading } from 'store/loading';
 import * as authStore from 'store/auth';
-import { IAuthState, ICheckUser, IGithubCode, IReceiveServer } from 'types/auth';
+import { IAuthState, IGithubCode, IReceiveServer } from 'types/auth';
 
 function* loginSaga(action: PayloadAction): Generator {
   try {
@@ -65,7 +65,7 @@ function* checkAuthSaga(): Generator {
     yield put(startLoading(authStore.getUser));
     const {
       data: { newAccessToken, userId },
-    } = (yield call(authAPI.checkAuth, localStorage.getItem('user') || '')) as AxiosResponse<ICheckUser>;
+    } = (yield call(authAPI.checkAuth, localStorage.getItem('user') || '')) as AxiosResponse<IReceiveServer>;
 
     yield put({ type: authStore.getUserSuccess, payload: { userId, newAccessToken } });
   } catch (e) {

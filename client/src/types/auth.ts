@@ -14,17 +14,17 @@ export interface IAuthState {
   password: string;
 }
 
+export interface IGithubCode {
+  code: string;
+}
+
 export interface IReceiveServer {
   userId: string;
   accessToken?: string;
   newAccessToken?: string;
 }
 
-export interface ICheckUser {
-  newAccessToken?: string;
-  userId: string;
-}
-
-export interface IGithubCode {
-  code: string;
+export interface IResetToken {
+  requestAgain: boolean;
+  newAccessToken: string;
 }

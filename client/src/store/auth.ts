@@ -51,7 +51,9 @@ const authSlice = createSlice({
     getUserSuccess: (state, action: PayloadAction<IReceiveServer>) => {
       const { userId, accessToken, newAccessToken } = action.payload;
 
-      state.user.userId = userId;
+      if (userId && state.user.userId !== userId) {
+        state.user.userId = userId;
+      }
       if (accessToken) {
         localStorage.setItem('user', accessToken);
         state.user.token = accessToken;

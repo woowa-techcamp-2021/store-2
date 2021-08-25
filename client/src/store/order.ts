@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { put, call, takeLatest } from 'redux-saga/effects';
-import * as orderAPI from 'utils/api/order';
-import axios, { AxiosResponse } from 'axios';
-import { IError } from 'types/error';
-import { IOrderList, IOrderState } from 'types/order';
-import { finishLoading, startLoading } from './loading';
+import { take, takeLatest } from 'redux-saga/effects';
+import { getOrdersSaga } from 'saga/order';
+import { IOrderList } from 'types/order';
 
 interface StateProps {
   list: IOrderList;
@@ -40,26 +37,6 @@ const { actions, reducer: orderReducer } = orderSlice;
 export const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
 export { orderReducer };
 
-function* getOrdersSaga(action: PayloadAction): Generator {
-  try {
-    yield put(startLoading(getOrders));
-    const { data } = (yield call(
-      orderAPI.getOrderList,
-      action.payload as unknown as IOrderState,
-    )) as AxiosResponse<IOrderList>;
-    yield put({ type: getOrdersSuccess, payload: data });
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      const { errorMessage } = e.response?.data as IError;
-      yield put({ type: getOrdersFail, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
-  } finally {
-    yield put(finishLoading(getOrders));
-  }
-}
-
 export function* orderSaga(): Generator {
-  yield takeLatest(getOrders, getOrdersSaga);
+  yield takeLatest(getOrders.type, getOrdersSaga);
 }
