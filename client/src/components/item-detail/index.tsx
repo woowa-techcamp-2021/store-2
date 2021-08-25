@@ -11,7 +11,7 @@ export interface ItemDetailProps {
   isLike: boolean;
   isSoldOut: boolean;
   reviewCount: number;
-  onSubmitCart: () => void;
+  onSubmitCart: (count: number) => void;
   onBuy: () => void;
 }
 
