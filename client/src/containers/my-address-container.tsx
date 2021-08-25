@@ -18,7 +18,7 @@ const MyAddressContainer: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [{ name, receiver, address }, onChange] = useInputs({
+  const [{ name, receiver, address }, onChange, reset] = useInputs({
     name: '',
     receiver: '',
     address: '',
@@ -42,12 +42,17 @@ const MyAddressContainer: FC = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setNameError('');
+    setReceiverError('');
+    setAddressError('');
+    setAddError('');
     if (!name) setNameError('배송지를 입력하세요');
     if (!receiver) setReceiverError('받는분을 입력하세요');
     if (!address) setAddressError('주소를 입려갛세요');
     if (addressList.length >= 3) setAddError('배송지는 최대 3개까지 입력할 수 있습니다');
     if (name && receiver && address && addressList.length < 3) {
       dispatch({ type: addAddress.type, payload: { name, receiver, address } });
+      reset();
     }
   };
   const onRemove = (id: string) => {
