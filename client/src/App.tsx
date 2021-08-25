@@ -10,6 +10,7 @@ import {
   SIGNUP_URL,
   ORDER_LIST_URL,
   PAYMENT_URL,
+  CART_URL,
 } from 'constants/urls';
 
 import {
@@ -22,6 +23,7 @@ import {
   ItemDetailPage,
   MyOrderListPage,
   OrderPage,
+  CartPage,
 } from 'pages';
 import Theme from './styles/theme';
 
@@ -38,6 +40,7 @@ const App: React.FC = () => {
           <Route exact path={PAYMENT_URL} component={OrderPage} />
           <Route exact path={AUTH_URL} component={AuthPage} />
           <Route exact path={ORDER_LIST_URL} component={MyOrderListPage} />
+          <Route exact path={CART_URL} component={CartPage} />
           <Route path="" component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
