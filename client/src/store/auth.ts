@@ -20,7 +20,6 @@ const initialState: StateProps = {
   },
   user: {
     userId: null,
-    token: localStorage.getItem('user'),
     error: null,
   },
   logout: {
@@ -37,12 +36,8 @@ const authSlice = createSlice({
   reducers: {
     getLogin: state => state,
     getLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
-      const { userId, accessToken } = action.payload;
-      state.user.userId = userId;
-      if (accessToken) {
-        state.user.token = accessToken;
-        localStorage.setItem('user', accessToken);
-      }
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getLoginFail: (state, action: PayloadAction<string>) => {
@@ -51,12 +46,8 @@ const authSlice = createSlice({
     },
     getSignup: state => state,
     getSignupSuccess: (state, action: PayloadAction<IReceiveServer>) => {
-      const { userId, accessToken } = action.payload;
-      state.user.userId = userId;
-      if (accessToken) {
-        state.user.token = accessToken;
-        localStorage.setItem('user', accessToken);
-      }
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getSignupFail: (state, action: PayloadAction<string>) => {
@@ -65,19 +56,8 @@ const authSlice = createSlice({
     },
     getUser: state => state,
     getUserSuccess: (state, action: PayloadAction<IReceiveServer>) => {
-      const { userId, accessToken, newAccessToken } = action.payload;
-
-      if (userId && state.user.userId !== userId) {
-        state.user.userId = userId;
-      }
-      if (accessToken) {
-        localStorage.setItem('user', accessToken);
-        state.user.token = accessToken;
-      }
-      if (newAccessToken) {
-        localStorage.setItem('user', newAccessToken);
-        state.user.token = newAccessToken;
-      }
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getUserFail: (state, action: PayloadAction<string>) => {
@@ -88,7 +68,6 @@ const authSlice = createSlice({
     logout: state => state,
     logoutSuccess: state => {
       localStorage.removeItem('user');
-      state.user.token = null;
       state.user.userId = null;
       return state;
     },
@@ -106,12 +85,8 @@ const authSlice = createSlice({
     },
     getGithubLogin: state => state,
     getGithubLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
-      const { userId, accessToken } = action.payload;
-      state.user.userId = userId;
-      if (accessToken) {
-        state.user.token = accessToken;
-        localStorage.setItem('user', accessToken);
-      }
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getGithubLoginFail: (state, action: PayloadAction<string>) => {

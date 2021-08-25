@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
-import client from './client';
+import request from './request';
+import { ResponseType } from './types';
 
-export const getCategories = (): Promise<AxiosResponse> => client.get('/api/categories');
+export const getCategories = (): ResponseType => request('GET', '/api/categories');

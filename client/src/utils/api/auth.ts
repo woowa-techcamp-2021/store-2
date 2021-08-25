@@ -1,21 +1,13 @@
-import { AxiosResponse } from 'axios';
-import { IAuthState, IReceiveServer, IGithubCode } from 'types/auth';
-import client from './client';
+import { IAuthState, IGithubCode } from 'types/auth';
+import request from './request';
+import { ResponseType } from './types';
 
-export const login = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
-  client.post<IReceiveServer>('/api/auth', { id, password });
+export const login = ({ id, password }: IAuthState): ResponseType => request('POST', '/api/auth', { id, password });
 
-export const signup = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
-  client.post<IReceiveServer>('/api/users', { id, password });
+export const signup = ({ id, password }: IAuthState): ResponseType => request('POST', '/api/users', { id, password });
 
-export const logout = (): Promise<AxiosResponse> => client.delete('/api/auth');
+export const logout = (): ResponseType => request('DELETE', '/api/auth');
 
-export const checkAuth = (token: string): Promise<AxiosResponse> =>
-  client.get<IReceiveServer>('/api/auth', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const checkAuth = (): ResponseType => request('GET', '/api/auth');
 
-export const githubLogin = ({ code }: IGithubCode): Promise<AxiosResponse> =>
-  client.post<IReceiveServer>('/api/auth/github', { code });
+export const githubLogin = ({ code }: IGithubCode): ResponseType => request('POST', '/api/auth/github', { code });
