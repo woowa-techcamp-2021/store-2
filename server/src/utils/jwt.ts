@@ -14,7 +14,7 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || '';
 
 export const createToken = (type: TokenType, option: OptionType): string => {
-  const ACCESS_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 10;
+  const ACCESS_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 30;
   const REFRESH_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
 
   const expireDate = type === 'access' ? ACCESS_TOKEN_EXPIRE_DATE : REFRESH_TOKEN_EXPIRE_DATE;
