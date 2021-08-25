@@ -135,6 +135,6 @@ export function* itemSaga(): Generator {
   yield takeLatest(getListItem.type, getListItemSaga);
   yield takeLatest(getAutoComplete.type, autoCompleteSaga);
   yield takeLatest(getItem.type, getItemSaga);
-  yield takeLatest(addLike, addLikeSaga);
-  yield takeLatest(deleteLike, deleteLikeSaga);
+  yield takeLatest(addLike.type, addLikeSaga);
+  yield takeLatest(deleteLike.type, deleteLikeSaga);
 }

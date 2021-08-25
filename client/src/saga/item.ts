@@ -10,8 +10,10 @@ import { INNER_ERROR } from 'constants/index';
 import { IMainItem, IListItem, IItemState, IItemDetail } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import { IError } from 'types/error';
+import { IResetToken } from 'types/auth';
 import { finishLoading, startLoading } from 'store/loading';
 import * as itemStore from 'store/item';
+import * as authStore from 'store/auth';
 
 function* getMainItemSaga(): Generator {
   try {
@@ -63,13 +65,10 @@ function* autoCompleteSaga(action: PayloadAction): Generator {
   }
 }
 
-function* getItemSaga(action: PayloadAction): Generator {
+function* getItemSaga(action: PayloadAction<{ id: string }>): Generator {
   try {
     yield put(startLoading(itemStore.getItem));
-    const { data } = (yield call(
-      itemAPI.getItem,
-      action.payload as unknown as { id: string },
-    )) as AxiosResponse<IItemDetail>;
+    const { data } = (yield call(itemAPI.getItem, action.payload)) as AxiosResponse<IItemDetail>;
     yield put({ type: itemStore.getItemSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
@@ -83,29 +82,39 @@ function* getItemSaga(action: PayloadAction): Generator {
   }
 }
 
-function* addLikeSaga(action: PayloadAction): Generator {
+function* addLikeSaga(action: PayloadAction<number>): Generator {
   try {
-    yield call(likeAPI.addLike, action.payload as unknown as number);
-    yield put({
-      type: itemStore.addLikeSuccess,
-    });
+    let token = localStorage.getItem('user') || '';
+    const result = (yield call(likeAPI.addLike, action.payload, token)) as AxiosResponse;
+    if ('requestAgain' in result.data) {
+      token = (result.data as IResetToken).newAccessToken;
+      yield put({
+        type: authStore.getUserSuccess,
+        payload: { newAccessToken: token },
+      });
+      yield call(likeAPI.addLike, action.payload, token);
+    }
+    yield put({ type: itemStore.addLikeSuccess });
   } catch (e) {
-    yield put({
-      type: itemStore.addLikeFail,
-    });
+    yield put({ type: itemStore.addLikeFail });
   }
 }
 
-function* deleteLikeSaga(action: PayloadAction): Generator {
+function* deleteLikeSaga(action: PayloadAction<number>): Generator {
   try {
-    yield call(likeAPI.deleteLike, action.payload as unknown as number);
-    yield put({
-      type: itemStore.deleteLikeSuccess,
-    });
+    let token = localStorage.getItem('user') || '';
+    const result = (yield call(likeAPI.deleteLike, action.payload, token)) as AxiosResponse;
+    if ('requestAgain' in result.data) {
+      token = (result.data as IResetToken).newAccessToken;
+      yield put({
+        type: authStore.getUserSuccess,
+        payload: { newAccessToken: token },
+      });
+      yield call(likeAPI.deleteLike, action.payload, token);
+    }
+    yield put({ type: itemStore.deleteLikeSuccess });
   } catch (e) {
-    yield put({
-      type: itemStore.deleteLikeFail,
-    });
+    yield put({ type: itemStore.deleteLikeFail });
   }
 }
 

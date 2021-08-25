@@ -1,6 +1,17 @@
 import { AxiosResponse } from 'axios';
+import { IResetToken } from 'types/auth';
 import client from './client';
 
-export const addLike = (itemId: number): Promise<AxiosResponse> => client.post(`/api/likes/${itemId}`);
+export const addLike = (itemId: number, accessToken: string): Promise<AxiosResponse> =>
+  client.post<string | IResetToken>(`/api/likes/${itemId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-export const deleteLike = (itemId: number): Promise<AxiosResponse> => client.delete(`/api/likes/${itemId}`);
+export const deleteLike = (itemId: number, accessToken: string): Promise<AxiosResponse> =>
+  client.delete<string | IResetToken>(`/api/likes/${itemId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
