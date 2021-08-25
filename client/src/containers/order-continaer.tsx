@@ -139,9 +139,6 @@ const OrderContainer: FC = () => {
       setAddressError(addressValidation(address));
       return;
     }
-    if (!receiver) {
-      setReceiver(user);
-    }
     if (receiverValidation(receiver)) {
       setAddressError(receiverValidation(receiver));
       return;
@@ -156,7 +153,7 @@ const OrderContainer: FC = () => {
       user,
       phone: phone.replace(/-/g, ''),
       address,
-      receiver,
+      receiver: receiver || user,
       itemList,
     };
 
