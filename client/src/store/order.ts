@@ -35,7 +35,7 @@ const orderSlice = createSlice({
 
 const { actions, reducer: orderReducer } = orderSlice;
 export const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
-export { orderReducer };
+export { orderReducer, initialState };
 
 export function* orderSaga(): Generator {
   yield takeLatest(getOrders.type, getOrdersSaga);

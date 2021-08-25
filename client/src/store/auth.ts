@@ -36,13 +36,29 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     getLogin: state => state,
-    getLoginSuccess: state => state,
+    getLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      const { userId, accessToken } = action.payload;
+      state.user.userId = userId;
+      if (accessToken) {
+        state.user.token = accessToken;
+        localStorage.setItem('user', accessToken);
+      }
+      return state;
+    },
     getLoginFail: (state, action: PayloadAction<string>) => {
       state.login.error = action.payload;
       return state;
     },
     getSignup: state => state,
-    getSignupSuccess: state => state,
+    getSignupSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      const { userId, accessToken } = action.payload;
+      state.user.userId = userId;
+      if (accessToken) {
+        state.user.token = accessToken;
+        localStorage.setItem('user', accessToken);
+      }
+      return state;
+    },
     getSignupFail: (state, action: PayloadAction<string>) => {
       state.signup.error = action.payload;
       return state;
@@ -89,7 +105,15 @@ const authSlice = createSlice({
       return state;
     },
     getGithubLogin: state => state,
-    getGithubLoginSuccess: state => state,
+    getGithubLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      const { userId, accessToken } = action.payload;
+      state.user.userId = userId;
+      if (accessToken) {
+        state.user.token = accessToken;
+        localStorage.setItem('user', accessToken);
+      }
+      return state;
+    },
     getGithubLoginFail: (state, action: PayloadAction<string>) => {
       state.githubSignup.error = action.payload;
       return state;
@@ -119,12 +143,12 @@ export const {
   getGithubLoginFail,
 } = actions;
 
-export { authReducer };
+export { authReducer, initialState };
 
 export function* authSaga(): Generator {
-  yield takeLatest(getLogin, loginSaga);
-  yield takeLatest(getSignup, signupSaga);
-  yield takeLatest(getUser, checkAuthSaga);
-  yield takeLatest(logout, logoutSaga);
-  yield takeLatest(getGithubLogin, githubLoginSaga);
+  yield takeLatest(getLogin.type, loginSaga);
+  yield takeLatest(getSignup.type, signupSaga);
+  yield takeLatest(getUser.type, checkAuthSaga);
+  yield takeLatest(logout.type, logoutSaga);
+  yield takeLatest(getGithubLogin.type, githubLoginSaga);
 }
