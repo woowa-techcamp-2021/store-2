@@ -30,7 +30,8 @@ const addressSlice = createSlice({
       return state;
     },
     addAddress: state => state,
-    addAddressSuccess: state => {
+    addAddressSuccess: (state, action: PayloadAction<IListAddress[]>) => {
+      state.list = action.payload;
       state.error = null;
       return state;
     },
@@ -39,7 +40,8 @@ const addressSlice = createSlice({
       return state;
     },
     removeAddress: state => state,
-    removeAddressSuccess: state => {
+    removeAddressSuccess: (state, action: PayloadAction<IListAddress[]>) => {
+      state.list = action.payload;
       state.error = null;
       return state;
     },
