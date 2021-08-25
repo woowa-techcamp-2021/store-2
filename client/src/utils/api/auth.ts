@@ -10,7 +10,12 @@ export const signup = ({ id, password }: IAuthState): Promise<AxiosResponse> =>
 
 export const logout = (): Promise<AxiosResponse> => client.delete('/api/auth');
 
-export const checkAuth = (): Promise<AxiosResponse> => client.get<ICheckUser>('/api/auth');
+export const checkAuth = (token: string): Promise<AxiosResponse> =>
+  client.get<ICheckUser>('/api/auth', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
 export const githubLogin = ({ code }: IGithubCode): Promise<AxiosResponse> =>
   client.post<ICheckUser>('/api/auth/github', { code });

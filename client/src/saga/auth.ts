@@ -65,7 +65,7 @@ function* checkAuthSaga(): Generator {
     yield put(startLoading(authStore.getUser));
     const {
       data: { newAccessToken, userId },
-    } = (yield call(authAPI.checkAuth)) as AxiosResponse<ICheckUser>;
+    } = (yield call(authAPI.checkAuth, localStorage.getItem('user') || '')) as AxiosResponse<ICheckUser>;
 
     yield put({ type: authStore.getUserSuccess, payload: { userId, newAccessToken } });
   } catch (e) {
