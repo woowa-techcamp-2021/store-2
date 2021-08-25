@@ -1,6 +1,6 @@
-import React, { useEffect, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'lib/router';
+import { useParams, useHistory } from 'lib/router';
 
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
@@ -8,8 +8,12 @@ import Detail from 'components/item-detail/detail';
 import { RootState } from 'store';
 import { getItem } from 'store/item';
 
+import { PAYMENT_URL } from 'constants/urls';
+
 const MainItemContainer: FC = () => {
+  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { id } = useParams();
 
   const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ item }: RootState) => ({
@@ -32,7 +36,8 @@ const MainItemContainer: FC = () => {
   };
 
   const onBuy = () => {
-    // TODO: 상품 구매
+    window.localStorage.setItem('order', `${id}-${count}`);
+    history.push(PAYMENT_URL);
   };
 
   return (
@@ -45,6 +50,7 @@ const MainItemContainer: FC = () => {
         isSoldOut={isSoldOut}
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
+        setCount={setCount}
       />
       <Detail contents={contents} reviewCount={reviewCount} />
     </>
