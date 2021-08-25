@@ -12,7 +12,7 @@ import { finishLoading, startLoading } from 'store/loading';
 import * as authStore from 'store/auth';
 import * as authSaga from '../auth';
 
-const data = { accessToken: 'token', userId: 'guest' };
+const data = { userId: 'guest' };
 const account = { id: 'guest', password: 'guest' };
 
 describe('Login Saga', () => {
