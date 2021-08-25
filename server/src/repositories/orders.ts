@@ -76,8 +76,9 @@ const getUserOrders = async (
   return { orders, totalCount, pageCount };
 };
 
-const postOrder = async (uid: string, orderItems: PostOrder[]): Promise<void> => {
-  const createQueue = orderItems.map(({ address, receiver, quantity, itemId }) => {
+const postOrder = async (uid: string, orderItems: PostOrder): Promise<void> => {
+  const { address, receiver, phone, itemList } = orderItems;
+  const createQueue = itemList.map(({ quantity, itemId }) => {
     return db.Order.create({
       address,
       receiver,
@@ -87,7 +88,7 @@ const postOrder = async (uid: string, orderItems: PostOrder[]): Promise<void> =>
     });
   });
 
-  await Promise.all([createQueue, db.User.update({ phone: orderItems[0].phone }, { where: { id: uid } })]);
+  await Promise.all([createQueue, db.User.update({ phone }, { where: { id: uid } })]);
 };
 
 export default { getUserOrders, postOrder };

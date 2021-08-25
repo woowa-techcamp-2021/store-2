@@ -5,7 +5,7 @@ async function getOrders(uid: string, pageId = 1, prevDate: string, currentDate:
   return orderRepisitory.getUserOrders(uid, pageId, prevDate, currentDate);
 }
 
-async function postOrder(uid: string, orderItems: PostOrder[]): Promise<void> {
+async function postOrder(uid: string, orderItems: PostOrder): Promise<void> {
   await orderRepisitory.postOrder(uid, orderItems);
 }
 

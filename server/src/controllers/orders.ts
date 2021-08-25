@@ -14,11 +14,8 @@ export interface PostOrder {
   phone: string;
   receiver: string;
   address: string;
-  itemId: number;
-  quantity: number;
+  itemList: { itemId: number; quantity: number }[];
 }
-
-type PostOrderReqBody = PostOrder[];
 
 export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
   const { pageId, prevDate, currentDate } = req.query;
@@ -34,10 +31,7 @@ export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>,
   }
 };
 
-export const postOrder = async (
-  req: Request<unknown, unknown, PostOrderReqBody, unknown>,
-  res: Response,
-): Promise<void> => {
+export const postOrder = async (req: Request<unknown, unknown, PostOrder, unknown>, res: Response): Promise<void> => {
   try {
     const orderItems = req.body;
     const token = getAccessToken(req.headers.authorization);
