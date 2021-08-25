@@ -17,8 +17,8 @@ export const getAddress = async (req: Request<unknown, unknown, unknown, unknown
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
   try {
-    const address = await addressService.getAddress(uid);
-    res.status(200).json(address);
+    const adrs = await addressService.getAddress(uid);
+    res.status(200).json(adrs);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -34,8 +34,8 @@ export const addAddress = async (
   const { uid } = decodeToken('access', token);
   const { name, receiver, address } = req.body;
   try {
-    await addressService.addAddress(uid, name, receiver, address);
-    res.status(200).json({});
+    const adrs = await addressService.addAddress(uid, name, receiver, address);
+    res.status(200).json(adrs);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -51,8 +51,8 @@ export const removeAddress = async (
   const { uid } = decodeToken('access', token);
   const { id } = req.body;
   try {
-    await addressService.removeAddress(id, uid);
-    res.status(200).json({});
+    const address = await addressService.removeAddress(id, uid);
+    res.status(200).json(address);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
