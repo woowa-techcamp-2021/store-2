@@ -1,11 +1,10 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import useInputs from 'hooks/use-inputs';
 
 import { RootState } from 'store';
-import { getOrders } from 'store/order';
 import { addAddress, getListAddress, removeAddress } from 'store/address';
 import MyNav from 'components/my/my-nav';
 import MyAddressForm from 'components/my/my-address/my-address-form';
@@ -25,13 +24,17 @@ const MyAddressContainer: FC = () => {
     address: '',
   });
 
-  const { loading, user, userLoading, addressList, error } = useSelector(({ auth, loading, address }: RootState) => ({
-    loading: loading['address/getListAddress'],
-    user: auth.user.userId,
-    userLoading: loading['auth/getUser'],
-    addressList: address.list,
-    error: address.error,
-  }));
+  const { loading, addLoading, removeLoading, user, userLoading, addressList, error } = useSelector(
+    ({ auth, loading, address }: RootState) => ({
+      loading: loading['address/getListAddress'],
+      addLoading: loading['address/addAddress'],
+      removeLoading: loading['address/removeAddAddress'],
+      user: auth.user.userId,
+      userLoading: loading['auth/getUser'],
+      addressList: address.list,
+      error: address.error,
+    }),
+  );
 
   useEffect(() => {
     dispatch({ type: getListAddress.type });
@@ -73,9 +76,9 @@ const MyAddressContainer: FC = () => {
         receiverError={receiverError}
         addressError={addressError}
         addError={addError}
-        loading={loading}
+        loading={addLoading}
       />
-      <MyAddressTable loading={loading} addressList={addressList} onRemove={onRemove} />
+      <MyAddressTable loading={loading} addressList={addressList} onRemove={onRemove} removeLoading={removeLoading} />
     </>
   );
 };

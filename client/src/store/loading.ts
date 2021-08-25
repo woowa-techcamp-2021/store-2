@@ -10,7 +10,7 @@ const loadingSlice = createSlice({
     'item/getListItem': false,
     'order/getOrders': false,
     'address/getListAddress': false,
-    'address/getAddAddress': false,
+    'address/addAddress': false,
     'address/removeAddAddress': false,
   },
   reducers: {

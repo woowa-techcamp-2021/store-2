@@ -10,6 +10,7 @@ interface MyAddressTableProps {
   loading: boolean;
   addressList: IListAddress[];
   onRemove: (id: string) => void;
+  removeLoading: boolean;
 }
 
 const TableRowText = styled.div`
