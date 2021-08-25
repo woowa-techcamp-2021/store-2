@@ -3,12 +3,15 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import * as orderAPI from 'utils/api/order';
 import axios, { AxiosResponse } from 'axios';
 import { IError } from 'types/error';
-import { IOrderList, IOrderState } from 'types/order';
+import { IOrderList, IOrderState, IOrderItem } from 'types/order';
+import { postOrderSaga, getOrderItemsSaga } from 'saga/order';
 import { finishLoading, startLoading } from './loading';
 
 interface StateProps {
   list: IOrderList;
+  orderItems: IOrderItem[];
   error: null | string;
+  postError: null | string;
 }
 
 const initialState: StateProps = {
@@ -17,7 +20,9 @@ const initialState: StateProps = {
     pageCount: 0,
     totalCount: 0,
   },
+  orderItems: [],
   error: null,
+  postError: null,
 };
 
 const orderSlice = createSlice({
@@ -33,11 +38,33 @@ const orderSlice = createSlice({
       state.error = action.payload;
       return state;
     },
+    getOrderItems: state => state,
+    getOrderItemsSuccess: (state, action: PayloadAction<IOrderItem[]>) => {
+      state.orderItems = action.payload;
+      return state;
+    },
+    getOrderItemsFail: state => state,
+    postOrder: state => state,
+    postOrderSuccess: state => state,
+    postOrderFail: (state, action: PayloadAction<string>) => {
+      state.postError = action.payload;
+      return state;
+    },
   },
 });
 
 const { actions, reducer: orderReducer } = orderSlice;
-export const { getOrders, getOrdersSuccess, getOrdersFail } = actions;
+export const {
+  getOrders,
+  getOrdersSuccess,
+  getOrdersFail,
+  postOrder,
+  postOrderSuccess,
+  postOrderFail,
+  getOrderItems,
+  getOrderItemsSuccess,
+  getOrderItemsFail,
+} = actions;
 export { orderReducer };
 
 function* getOrdersSaga(action: PayloadAction): Generator {
@@ -62,4 +89,6 @@ function* getOrdersSaga(action: PayloadAction): Generator {
 
 export function* orderSaga(): Generator {
   yield takeLatest(getOrders, getOrdersSaga);
+  yield takeLatest(postOrder, postOrderSaga);
+  yield takeLatest(getOrderItems, getOrderItemsSaga);
 }

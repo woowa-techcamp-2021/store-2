@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { IMainItem, IListItem, IItemState } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
+import { IOrderItem } from 'types/order';
 import client from './client';
 
 export const getMainItem = (): Promise<AxiosResponse> => {
@@ -24,6 +25,9 @@ export const getListItem = ({ categoryId, pageId, type, search }: IItemState): P
 };
 
 export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => client.get(`/api/items/${id}`);
+
+export const getOrderItems = (itemIDs: string): Promise<AxiosResponse<IOrderItem[]>> =>
+  client.get(`/api/items/order?id=${itemIDs}`);
 
 export const getAutoComplete = ({ keyword }: ISearchState): Promise<AxiosResponse<AutoCompleteKeyword>> =>
   client.get(`/api/search?keyword=${keyword}`);
