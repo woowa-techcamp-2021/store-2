@@ -1,7 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
-import * as itemAPI from 'utils/api/item';
 import axios, { AxiosResponse } from 'axios';
+
+import * as itemAPI from 'utils/api/item';
+import { INNER_ERROR } from 'constants/index';
+
 import { IMainItem, IListItem, IItemState, IItemDetail } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import { IError } from 'types/error';
@@ -17,9 +20,7 @@ function* getMainItemSaga(): Generator {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
       yield put({ type: itemStore.getMainItemFail, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
+    } else yield put({ type: itemStore.getMainItemFail, payload: INNER_ERROR });
   } finally {
     yield put(finishLoading(itemStore.getMainItem));
   }
@@ -37,9 +38,7 @@ function* getListItemSaga(action: PayloadAction): Generator {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
       yield put({ type: itemStore.getListItemFail, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
+    } else yield put({ type: itemStore.getListItemFail, payload: INNER_ERROR });
   } finally {
     yield put(finishLoading(itemStore.getListItem));
   }
@@ -64,21 +63,21 @@ function* autoCompleteSaga(action: PayloadAction): Generator {
 
 function* getItemSaga(action: PayloadAction): Generator {
   try {
-    yield put(startLoading(itemStore.getItem.type));
+    yield put(startLoading(itemStore.getItem));
     const { data } = (yield call(
       itemAPI.getItem,
       action.payload as unknown as { id: string },
     )) as AxiosResponse<IItemDetail>;
-    yield put({ type: itemStore.getItemSuccess.type, payload: data });
+    yield put({ type: itemStore.getItemSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
-      yield put({ type: itemStore.getItemFail.type, payload: errorMessage });
+      yield put({ type: itemStore.getItemFail, payload: errorMessage });
     } else {
-      throw new Error(e);
+      yield put({ type: itemStore.getItemFail, payload: INNER_ERROR });
     }
   } finally {
-    yield put(finishLoading(itemStore.getItem.type));
+    yield put(finishLoading(itemStore.getItem));
   }
 }
 

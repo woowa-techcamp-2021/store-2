@@ -1,9 +1,14 @@
 import { ESortType } from 'types/item';
 import { ADDRESS_URL, ORDER_LIST_URL, REVIEW_URL } from 'constants/urls';
 
+export const MAX_TRY_COUNT = 10;
+export const DELAY_TIME = 1000;
+
 export const SMART_MENU_LARGE_WIDTH = 1200;
 export const SMART_MENU_SMALL_WIDTH = 600;
 export const SMART_MENU_BLOCK_DELAY = 100;
+
+export const INNER_ERROR = '알 수 없는 에러가 발생했습니다.';
 
 export const GITHUB_LOGIN_LINK = `http://${window.location.hostname}:3000/api/auth/github`;
 

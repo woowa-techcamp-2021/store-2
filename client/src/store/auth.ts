@@ -43,13 +43,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     getLogin: state => state,
-    getLoginSuccess: state => state,
+    getLoginSuccess: (state, action: PayloadAction<string>) => {
+      state.user.userId = action.payload;
+      return state;
+    },
     getLoginFail: (state, action: PayloadAction<string>) => {
       state.login.error = action.payload;
       return state;
     },
     getSignup: state => state,
-    getSignupSuccess: state => state,
+    getSignupSuccess: (state, action: PayloadAction<string>) => {
+      state.user.userId = action.payload;
+      return state;
+    },
     getSignupFail: (state, action: PayloadAction<string>) => {
       state.signup.error = action.payload;
       return state;
@@ -114,7 +120,7 @@ export const {
   getGithubLoginFail,
 } = actions;
 
-export { authReducer };
+export { authReducer, initialState };
 
 export function* authSaga(): Generator {
   yield takeLatest(getLogin, loginSaga);

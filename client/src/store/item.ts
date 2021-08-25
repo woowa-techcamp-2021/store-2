@@ -97,7 +97,7 @@ export const {
   getItemSuccess,
   getItemFail,
 } = actions;
-export { itemReducer };
+export { itemReducer, initialState };
 
 export function* itemSaga(): Generator {
   yield takeLatest(getMainItem, getMainItemSaga);
