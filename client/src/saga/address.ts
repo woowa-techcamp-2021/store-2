@@ -6,7 +6,7 @@ import * as addressAPI from 'utils/api/address';
 import { INNER_ERROR } from 'constants/index';
 
 import { IError } from 'types/error';
-import { IAddressState, IListAddress } from 'types/address';
+import { IAddressRemoveState, IAddressState, IListAddress } from 'types/address';
 import { startLoading, finishLoading } from 'store/loading';
 import * as addressStore from 'store/address';
 
@@ -64,4 +64,33 @@ function* addAddressSaga(action: PayloadAction): Generator {
   }
 }
 
-export { getAddressSaga, addAddressSaga };
+function* removeAddressSaga(action: PayloadAction): Generator {
+  try {
+    yield put(startLoading(addressStore.removeAddress));
+    const { data } = (yield call(
+      addressAPI.removeAddress,
+      action.payload as unknown as IAddressRemoveState,
+    )) as AxiosResponse<IListAddress[]>;
+    yield put({
+      type: addressStore.removeAddressSuccess,
+      payload: data,
+    });
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const { errorMessage } = e.response?.data as IError;
+      yield put({
+        type: addressStore.removeAddressFail,
+        payload: errorMessage,
+      });
+    } else {
+      yield put({
+        type: addressStore.removeAddressFail,
+        payload: INNER_ERROR,
+      });
+    }
+  } finally {
+    yield put(finishLoading(addressStore.removeAddress));
+  }
+}
+
+export { getAddressSaga, addAddressSaga, removeAddressSaga };
