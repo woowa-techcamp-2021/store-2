@@ -30,7 +30,7 @@ describe('Login Saga', () => {
         .put(finishLoading(authStore.getLogin))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
+          user: { ...authStore.initialState.user, userId: data.userId },
         })
         .run();
     } catch (e) {
@@ -68,7 +68,7 @@ describe('Signup Saga', () => {
         .put(finishLoading(authStore.getSignup))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
+          user: { ...authStore.initialState.user, userId: data.userId },
         })
         .run();
     } catch (e) {
@@ -97,12 +97,12 @@ describe('CheckAuth Saga', () => {
       return expectSaga(authSaga.checkAuthSaga)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getUser))
-        .provide([[call(authAPI.checkAuth, localStorage.getItem('user') || ''), { data }]])
+        .provide([[call(authAPI.checkAuth), { data }]])
         .put({ type: authStore.getUserSuccess, payload: data })
         .put(finishLoading(authStore.getUser))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
+          user: { ...authStore.initialState.user, userId: data.userId },
         })
         .run();
     } catch (e) {
@@ -115,7 +115,7 @@ describe('CheckAuth Saga', () => {
       return expectSaga(authSaga.checkAuthSaga)
         .withReducer(authStore.authReducer)
         .put(startLoading(authStore.getUser))
-        .provide([[call(authAPI.checkAuth, localStorage.getItem('user') || ''), throwError()]])
+        .provide([[call(authAPI.checkAuth), throwError()]])
         .put({ type: authStore.getUserFail, payload: INNER_ERROR })
         .put(finishLoading(authStore.getUser))
         .run();
@@ -167,7 +167,7 @@ describe('GithubLoginSaga Saga', () => {
         .put(finishLoading(authStore.getGithubLogin))
         .hasFinalState({
           ...authStore.initialState,
-          user: { ...authStore.initialState.user, userId: data.userId, token: data.accessToken },
+          user: { ...authStore.initialState.user, userId: data.userId },
         })
         .run();
     } catch (e) {
