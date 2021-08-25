@@ -1,10 +1,13 @@
 import React, { useState, useEffect, FC } from 'react';
+import { Link } from 'lib/router';
 import styled from 'lib/woowahan-components';
+
 import useWindowSize from 'hooks/use-window-size';
 
 import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
+import { CART_URL } from 'constants/urls';
 
 import TextButton from 'components/common/text-button';
 import ImageViewer from 'components/image-viewer';
@@ -16,7 +19,7 @@ export interface InfoSectionProps {
   price: number;
   isLike: boolean;
   isSoldOut: boolean;
-  onSubmitCart: () => void;
+  onSubmitCart: (count: number) => void;
   onBuy: () => void;
 }
 
@@ -203,7 +206,15 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isSoldOut,
               <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
-                <TextButton title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
+                <Link to={CART_URL}>
+                  <TextButton
+                    title="장바구니"
+                    type="button"
+                    styleType="white"
+                    onClick={() => onSubmitCart(totalPrice / price)}
+                  />
+                </Link>
+
                 <TextButton title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
             )}
