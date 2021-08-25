@@ -2,14 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
 import { IMainItem, IListItem, IItemDetail } from 'types/item';
 import { ISearch, AutoCompleteKeyword } from 'types/search';
-import {
-  autoCompleteSaga,
-  getItemSaga,
-  getListItemSaga,
-  getMainItemSaga,
-  addLikeSaga,
-  deleteLikeSaga,
-} from 'saga/item';
+import { autoCompleteSaga, getItemSaga, getListItemSaga, getMainItemSaga } from 'saga/item';
 
 interface StateProps {
   main: IMainItem;
@@ -86,24 +79,6 @@ const itemSlice = createSlice({
       state.error = action.payload;
       return state;
     },
-    addLike: state => state,
-    addLikeSuccess: state => {
-      state.item.isLike = true;
-      return state;
-    },
-    addLikeFail: state => {
-      state.item.isLike = false;
-      return state;
-    },
-    deleteLike: state => state,
-    deleteLikeSuccess: state => {
-      state.item.isLike = false;
-      return state;
-    },
-    deleteLikeFail: state => {
-      state.item.isLike = true;
-      return state;
-    },
   },
 });
 
@@ -121,12 +96,6 @@ export const {
   getItem,
   getItemSuccess,
   getItemFail,
-  addLike,
-  addLikeSuccess,
-  addLikeFail,
-  deleteLike,
-  deleteLikeSuccess,
-  deleteLikeFail,
 } = actions;
 export { itemReducer, initialState };
 
@@ -135,6 +104,4 @@ export function* itemSaga(): Generator {
   yield takeLatest(getListItem.type, getListItemSaga);
   yield takeLatest(getAutoComplete.type, autoCompleteSaga);
   yield takeLatest(getItem.type, getItemSaga);
-  yield takeLatest(addLike.type, addLikeSaga);
-  yield takeLatest(deleteLike.type, deleteLikeSaga);
 }

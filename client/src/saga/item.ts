@@ -7,7 +7,6 @@ import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import { IError } from 'types/error';
 
 import * as itemAPI from 'utils/api/item';
-import * as likeAPI from 'utils/api/like';
 import { INNER_ERROR } from 'constants/index';
 
 import { finishLoading, startLoading } from 'store/loading';
@@ -80,22 +79,4 @@ function* getItemSaga(action: PayloadAction<{ id: string }>): Generator {
   }
 }
 
-function* addLikeSaga(action: PayloadAction<number>): Generator {
-  try {
-    yield call(likeAPI.addLike, action.payload);
-    yield put({ type: itemStore.addLikeSuccess });
-  } catch (e) {
-    yield put({ type: itemStore.addLikeFail });
-  }
-}
-
-function* deleteLikeSaga(action: PayloadAction<number>): Generator {
-  try {
-    yield call(likeAPI.deleteLike, action.payload);
-    yield put({ type: itemStore.deleteLikeSuccess });
-  } catch (e) {
-    yield put({ type: itemStore.deleteLikeFail });
-  }
-}
-
-export { getMainItemSaga, getListItemSaga, autoCompleteSaga, getItemSaga, addLikeSaga, deleteLikeSaga };
+export { getMainItemSaga, getListItemSaga, autoCompleteSaga, getItemSaga };
