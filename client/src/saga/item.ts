@@ -1,19 +1,17 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
-import * as itemAPI from 'utils/api/item';
-import * as likeAPI from 'utils/api/like';
 import axios, { AxiosResponse } from 'axios';
-
-import * as itemAPI from 'utils/api/item';
-import { INNER_ERROR } from 'constants/index';
 
 import { IMainItem, IListItem, IItemState, IItemDetail } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import { IError } from 'types/error';
-import { IResetToken } from 'types/auth';
+
+import * as itemAPI from 'utils/api/item';
+import * as likeAPI from 'utils/api/like';
+import { INNER_ERROR } from 'constants/index';
+
 import { finishLoading, startLoading } from 'store/loading';
 import * as itemStore from 'store/item';
-import * as authStore from 'store/auth';
 
 function* getMainItemSaga(): Generator {
   try {
@@ -84,16 +82,7 @@ function* getItemSaga(action: PayloadAction<{ id: string }>): Generator {
 
 function* addLikeSaga(action: PayloadAction<number>): Generator {
   try {
-    let token = localStorage.getItem('user') || '';
-    const result = (yield call(likeAPI.addLike, action.payload, token)) as AxiosResponse;
-    if ('requestAgain' in result.data) {
-      token = (result.data as IResetToken).newAccessToken;
-      yield put({
-        type: authStore.getUserSuccess,
-        payload: { newAccessToken: token },
-      });
-      yield call(likeAPI.addLike, action.payload, token);
-    }
+    yield call(likeAPI.addLike, action.payload);
     yield put({ type: itemStore.addLikeSuccess });
   } catch (e) {
     yield put({ type: itemStore.addLikeFail });
@@ -102,16 +91,7 @@ function* addLikeSaga(action: PayloadAction<number>): Generator {
 
 function* deleteLikeSaga(action: PayloadAction<number>): Generator {
   try {
-    let token = localStorage.getItem('user') || '';
-    const result = (yield call(likeAPI.deleteLike, action.payload, token)) as AxiosResponse;
-    if ('requestAgain' in result.data) {
-      token = (result.data as IResetToken).newAccessToken;
-      yield put({
-        type: authStore.getUserSuccess,
-        payload: { newAccessToken: token },
-      });
-      yield call(likeAPI.deleteLike, action.payload, token);
-    }
+    yield call(likeAPI.deleteLike, action.payload);
     yield put({ type: itemStore.deleteLikeSuccess });
   } catch (e) {
     yield put({ type: itemStore.deleteLikeFail });
