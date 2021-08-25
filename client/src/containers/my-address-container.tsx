@@ -6,7 +6,7 @@ import useInputs from 'hooks/use-inputs';
 
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
-import { getListAddress } from 'store/address';
+import { addAddress, getListAddress } from 'store/address';
 import MyNav from 'components/my/my-nav';
 import MyAddressForm from 'components/my/my-address/my-address-form';
 import MyAddressTable from 'components/my/my-address/my-address-table';
@@ -25,6 +25,14 @@ const MyAddressContainer: FC = () => {
     address: '',
   });
 
+  const { loading, user, userLoading, addressList, error } = useSelector(({ auth, loading, address }: RootState) => ({
+    loading: loading['address/getListAddress'],
+    user: auth.user.userId,
+    userLoading: loading['auth/getUser'],
+    addressList: address.list,
+    error: address.error,
+  }));
+
   useEffect(() => {
     dispatch({ type: getListAddress.type });
   }, [dispatch]);
@@ -34,21 +42,14 @@ const MyAddressContainer: FC = () => {
     if (!name) setNameError('배송지를 입력하세요');
     if (!receiver) setReceiverError('받는분을 입력하세요');
     if (!address) setAddressError('주소를 입려갛세요');
-    if (name && receiver && address) {
-      // dispatch
+    if (addressList.length >= 3) setAddError('배송지는 최대 3개까지 입력할 수 있습니다');
+    if (name && receiver && address && addressList.length <= 3) {
+      dispatch({ type: addAddress.type, payload: { name, receiver, address } });
     }
   };
   const onRemove = (e: React.MouseEvent) => {
     // dispatch
   };
-
-  const { loading, user, userLoading, addressList, error } = useSelector(({ auth, loading, address }: RootState) => ({
-    loading: loading['address/getListAddress'],
-    user: auth.user.userId,
-    userLoading: loading['auth/getUser'],
-    addressList: address.list,
-    error: address.error,
-  }));
 
   useEffect(() => {
     if (error) setAddError(error);
