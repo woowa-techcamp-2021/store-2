@@ -19,7 +19,7 @@ async function postReview(
   contents: string,
   score: number,
   image: Express.Multer.File | undefined,
-): Promise<string> {
+): Promise<IReview> {
   let imgUrl = '';
 
   const isPaid = await orderRepository.checkPaidUser(uid, itemId);
@@ -44,9 +44,25 @@ async function postReview(
     imgUrl = imageLocation;
   }
 
-  await reviewRepository.postReview(uid, itemId, title, contents, score, imgUrl);
+  const { reviewData, totalCount } = await reviewRepository.postReview(uid, itemId, title, contents, score, imgUrl);
 
-  return imgUrl;
+  const reviews = reviewData.map(review => {
+    return {
+      title: review.getDataValue('title'),
+      score: review.getDataValue('score'),
+      contents: review.getDataValue('contents'),
+      imgUrl: review.getDataValue('imgUrl'),
+      userId: review.getDataValue('userId'),
+    };
+  });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
+
+  return {
+    reviews,
+    totalCount,
+    pageCount,
+  };
 }
 
 async function getReviews(itemId: number, pageId: number): Promise<IReview> {

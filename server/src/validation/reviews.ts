@@ -48,8 +48,14 @@ export const postReviewValidation = (
         'any.required': '잘못된 요청입니다',
       }),
     });
+    const body = {
+      title: req.body.title,
+      contents: req.body.contents,
+      score: req.body.score,
+      itemId: req.body.itemId,
+    };
 
-    const validationResult = schema.validate(req.body);
+    const validationResult = schema.validate(body);
 
     if (validationResult.error) {
       throw errorGenerator({

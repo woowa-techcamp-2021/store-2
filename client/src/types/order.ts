@@ -4,7 +4,7 @@ export interface IOrder {
   title: string;
   status: string;
   price: number;
-  count: number;
+  quantity: number;
 }
 
 export interface IOrderList {
