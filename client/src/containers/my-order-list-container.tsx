@@ -9,7 +9,7 @@ import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/da
 
 import { Pagination, PeriodSelector } from 'components';
 import MyNav from 'components/my/my-nav';
-import MyOrderTable from 'components/my/my-order-table';
+import MyOrderTable from 'components/my/my-order/my-order-table';
 
 const MyOrderListContainer: FC = () => {
   const today = getToday();
