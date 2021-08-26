@@ -12,7 +12,9 @@ interface IAddReqBody {
 }
 
 interface IRemoveReqBody {
-  id: string;
+  data: {
+    id: string;
+  };
 }
 
 export const addAddressValidation = (
@@ -81,7 +83,7 @@ export const removeAddressValidation = (
       }),
     });
 
-    const validationResult = schema.validate(req.body);
+    const validationResult = schema.validate(req.body.data);
 
     if (validationResult.error) {
       throw errorGenerator({
