@@ -3,9 +3,12 @@ import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
+import { cartValidator } from 'utils/validation/cart-validation';
+import { cartGenerator } from 'utils/cart-generator';
 
 import TextButton from 'components/common/text-button';
 import PriceCalculator from 'components/common/price-calculator';
+import Modal from 'components/common/modal';
 import { TableSection, CartItem } from './table-section';
 
 const Empty = styled.div`
@@ -41,97 +44,11 @@ const ButtonDiv = styled.div`
 
 const OrderButtonDiv = styled.div``;
 
-const cartValidator = (): boolean => {
-  const data = localStorage.getItem('cart') as string;
-  if (data !== null) {
-    const cartData = data.split(',');
-    try {
-      if (cartData.length !== 0 && cartData.length % 5 === 0) {
-        cartData.forEach((value, idx) => {
-          const valueSplit = value.split('.');
-
-          switch (idx % 5) {
-            case 0:
-              if (Number.isNaN(Number(value))) {
-                throw new Error('올바르지 않은 아이템 아이디');
-              }
-              break;
-            case 1:
-              if (
-                !(
-                  value.indexOf('https://storage.googleapis.com/bmart-5482b.appspot.com/') >= 0 &&
-                  (valueSplit[valueSplit.length - 1] === 'jpg' || valueSplit[valueSplit.length - 1] === 'png')
-                )
-              ) {
-                throw new Error('올바르지 않은 썸네일 주소');
-              }
-              break;
-            case 2:
-              break;
-            case 3:
-              if (Number.isNaN(Number(value))) {
-                throw new Error('올바르지 않은 갯수');
-              }
-              break;
-            case 4:
-              if (Number.isNaN(Number(value))) {
-                throw new Error('올바르지 않은 가격');
-              }
-              break;
-            default:
-              break;
-          }
-        });
-      } else {
-        throw new Error('카트 데이터 오류');
-      }
-
-      return true;
-    } catch (error) {
-      localStorage.removeItem('cart');
-      return false;
-    }
-  } else {
-    return false;
-  }
-};
-
-const cartGenerator = (): CartItem[] => {
-  if (cartValidator()) {
-    const cartItems: CartItem[] = [];
-    const data = localStorage.getItem('cart') as string;
-    const cartData = data.split(',');
-    cartData.forEach((value, idx) => {
-      const num = Math.floor(idx / 5);
-      switch (idx % 5) {
-        case 0:
-          cartItems.push({ id: value, thumbnail: '', title: '', count: 0, price: 0 });
-          break;
-        case 1:
-          cartItems[num].thumbnail = value;
-          break;
-        case 2:
-          cartItems[num].title = value;
-          break;
-        case 3:
-          cartItems[num].count = Number(value);
-          break;
-        case 4:
-          cartItems[num].price = Number(value);
-          break;
-        default:
-          break;
-      }
-    });
-    return cartItems;
-  }
-  return [];
-};
-
 const Cart: FC = () => {
   const [prices, setPrices] = useState([0]);
   const [totalCount, setTotalCount] = useState(0);
   const [cartItems, setCartItems] = useState(cartGenerator());
+  const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set<number>());
   const history = useHistory();
   const onClick = useCallback(() => history.goBack(), [history]);
@@ -151,6 +68,7 @@ const Cart: FC = () => {
     setCartItems(cartGenerator());
     setPrices([0]);
     setTotalCount(0);
+    setCheckAll(false);
     setCheckedItems(new Set<number>());
   };
 
@@ -181,8 +99,10 @@ const Cart: FC = () => {
           <TableSection
             cartItems={cartItems}
             checkedItems={checkedItems}
+            checkAll={checkAll}
             setPrices={setPrices}
             setTotalCount={setTotalCount}
+            setCheckAll={setCheckAll}
             setCheckedItems={setCheckedItems}
           />
           <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
