@@ -1,13 +1,14 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'lib/router';
 
+import { IReview } from 'types/review';
+
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
-
 import { RootState } from 'store';
 import { getItem } from 'store/item';
-import { IReview } from 'types/review';
+import ReviewPost from 'components/item-detail/review-post';
 
 const mockupReview: IReview[] = [
   {
@@ -29,20 +30,27 @@ const mockupReview: IReview[] = [
 ];
 
 const MainItemContainer: FC = () => {
+  const [postTitle, setPostTitle] = useState('');
+  const [postContent, setPostContent] = useState('');
+  const [file, setFile] = useState<null | File>(null);
+  const [star, setStar] = useState(5);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   // TODO: 리뷰 리스트, 리뷰 카운트
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ item }: RootState) => ({
-    thumbnail: item.item.thumbnail,
-    title: item.item.title,
-    price: item.item.price,
-    contents: item.item.contents,
-    salePercent: item.item.salePercent,
-    isLike: item.item.isLike,
-    isSoldOut: item.item.isSoldOut,
-    reviewCount: item.item.reviewCount,
-  }));
+  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount, userId } = useSelector(
+    ({ item, auth }: RootState) => ({
+      thumbnail: item.item.thumbnail,
+      title: item.item.title,
+      price: item.item.price,
+      contents: item.item.contents,
+      salePercent: item.item.salePercent,
+      isLike: item.item.isLike,
+      isSoldOut: item.item.isSoldOut,
+      reviewCount: item.item.reviewCount,
+      userId: auth.user.userId,
+    }),
+  );
 
   useEffect(() => {
     dispatch({ type: getItem.type, payload: { id } });
@@ -54,6 +62,13 @@ const MainItemContainer: FC = () => {
 
   const onBuy = () => {
     // TODO: 상품 구매
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('submit btn');
+    console.log(postTitle, postContent, file, star);
+    // TODO: dispatch
   };
 
   return (
@@ -68,6 +83,17 @@ const MainItemContainer: FC = () => {
         onBuy={onBuy}
       />
       <Detail contents={contents} reviewCount={reviewCount} reviews={mockupReview} />
+      <ReviewPost
+        userId={userId}
+        postTitle={postTitle}
+        postContent={postContent}
+        setPostTitle={setPostTitle}
+        setPostContent={setPostContent}
+        setFile={setFile}
+        star={star}
+        setStar={setStar}
+        onSubmit={onSubmit}
+      />
     </>
   );
 };
