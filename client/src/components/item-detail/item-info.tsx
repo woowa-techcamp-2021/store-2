@@ -60,8 +60,9 @@ const Thumbnail = styled.img`
   }
 
   ${({ theme }) => theme?.mobile} {
-    width: 100%;
+    width: 80%;
     height: auto;
+    align-self: center;
     margin-top: 10px;
     margin-right: 0;
     margin-bottom: 18px;
@@ -89,6 +90,13 @@ const Info = styled.div`
       margin-bottom: 12px;
     }
   }
+
+  ${({ theme }) => theme?.mobile} {
+    .top-wrapper img[alt='stars-title'] {
+      width: 100px;
+      height: auto;
+    }
+  }
 `;
 
 const ItemTitle = styled.div`
@@ -104,6 +112,14 @@ const ItemTitle = styled.div`
     font-size: 30px;
     font-family: ${({ theme }) => theme?.fontHanna};
     line-height: 32px;
+  }
+
+  ${({ theme }) => theme?.mobile} {
+    div {
+      padding: 8px;
+      font-size: 24px;
+      line-height: 28px;
+    }
   }
 `;
 
@@ -128,6 +144,17 @@ const ItemPrice = styled.div`
     font-size: 16px;
     font-family: ${({ theme }) => theme?.fontHannaAir};
   }
+
+  ${({ theme }) => theme?.mobile} {
+    .title,
+    .message {
+      font-size: 14px;
+    }
+
+    .price {
+      font-size: 20px;
+    }
+  }
 `;
 
 const PaymentWrapper = styled.form`
@@ -137,7 +164,6 @@ const PaymentWrapper = styled.form`
   width: 100%;
   border-top: 2px solid ${({ theme }) => theme?.colorFooter};
   padding: 8px 0 0;
-  gap: 18px;
 
   .row {
     display: flex;
@@ -175,9 +201,35 @@ const PaymentWrapper = styled.form`
     }
   }
 
-  .end {
+  .row.first {
+    margin-bottom: 18px;
+  }
+
+  .row.end {
     justify-content: flex-end;
-    gap: 8px;
+
+    button:first-child {
+      margin-right: 8px;
+    }
+  }
+
+  ${({ theme }) => theme?.mobile} {
+    margin-top: -10px;
+
+    .row.first {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .row.end {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .row .price,
+    .row input {
+      font-size: 26px;
+    }
   }
 `;
 
@@ -247,7 +299,7 @@ const ItemInfo: FC<ItemInfoProps> = ({
           <ItemCounter title={title} price={price} onChange={handleCounterChange} />
         </div>
         <PaymentWrapper>
-          <div className="row">
+          <div className="row first">
             <div className="title">총 합계금액</div>
             <div className="price">
               <input value={formatPrice(totalPrice)} readOnly size={7} />원
