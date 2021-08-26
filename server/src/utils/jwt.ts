@@ -109,6 +109,6 @@ export const checkTokenValidity = (type: TokenType, token: string): Promise<bool
   });
 };
 
-export const checkTokenExists = (req: Request): boolean => {
+export const checkTokenExists = (req: Request<unknown, unknown, unknown, unknown>): boolean => {
   return !!(req.headers.authorization && getAccessToken(req.headers.authorization));
 };
