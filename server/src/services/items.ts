@@ -109,7 +109,6 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
   return itemData;
 }
 
-
 async function matchUserLikeItem(
   itemList: Model<ItemAttributes, ItemCreationAttributes>[],
   userId?: string,
@@ -151,6 +150,6 @@ export default {
   mainItems,
   getItems,
   getItem,
-  getOrderItems,
   matchUserLikeItem,
+  getOrderItems,
 };
