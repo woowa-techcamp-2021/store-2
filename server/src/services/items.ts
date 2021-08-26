@@ -1,4 +1,5 @@
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
+import orderRepository from 'repositories/orders';
 import likeService from 'services/like';
 
 import errorGenerator from 'utils/error/error-generator';
@@ -21,6 +22,7 @@ export interface IGetItem {
   isSoldOut: boolean;
   isLike: boolean;
   reviewCount: number;
+  isPaid: boolean;
 }
 
 export interface IOrderItem {
@@ -93,6 +95,11 @@ async function getItems(
 
 async function getItem(id: string, userId?: string): Promise<IGetItem> {
   const item = await itemRepository.getItem(id);
+  let isPaid = false;
+
+  if (userId) {
+    isPaid = await orderRepository.checkPaidUser(userId, Number(id));
+  }
 
   const itemData: IGetItem = {
     thumbnail: item.getDataValue('thumbnail'),
@@ -102,6 +109,7 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
     isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
+    isPaid,
     // TODO: 리뷰 갯수
     reviewCount: 0,
   };

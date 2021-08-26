@@ -9,13 +9,7 @@ async function postOrder(uid: string, orderItems: PostOrder): Promise<void> {
   await orderRepisitory.postOrder(uid, orderItems);
 }
 
-async function checkPaidUser(uid: string, itemId: number): Promise<boolean> {
-  const isPaid = await orderRepisitory.checkPaidUser(uid, itemId);
-  return isPaid;
-}
-
 export default {
   getOrders,
   postOrder,
-  checkPaidUser,
 };
