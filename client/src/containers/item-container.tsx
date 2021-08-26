@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
@@ -16,7 +16,7 @@ interface ItemContainerProps {
 const ItemContainer: FC<ItemContainerProps> = ({ item }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(item.isLike);
 
   const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
 
