@@ -12,7 +12,7 @@ import * as orderStore from 'store/order';
 import { finishLoading, startLoading } from 'store/loading';
 import { MAIN_URL } from 'constants/urls';
 
-function* getOrdersSaga(action: PayloadAction): Generator {
+function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
   try {
     yield put(startLoading(orderStore.getOrders));
     const { data } = (yield call(
