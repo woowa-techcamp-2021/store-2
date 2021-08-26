@@ -15,7 +15,7 @@ const Label = styled.label`
   font-size: 14px;
 
   input[type='radio'] {
-    min-width: 13px;
+    width: 13px;
     margin-right: 8px;
   }
 `;
