@@ -3,12 +3,13 @@ import { Router } from 'express';
 import validateToken from 'middlewares/validateToken';
 import parseImageFile from 'middlewares/parseImageFile';
 
-import { postReviewValidation } from 'validation/reviews';
+import { postReviewValidation, getReviewsValidation } from 'validation/reviews';
 
-import { postReview } from 'controllers/reviews';
+import { postReview, getReviews } from 'controllers/reviews';
 
 const router = Router();
 
 router.post('/', validateToken, parseImageFile, postReviewValidation, postReview);
+router.get('/', getReviewsValidation, getReviews);
 
 export default router;
