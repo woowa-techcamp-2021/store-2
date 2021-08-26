@@ -1,7 +1,9 @@
-import React, { Fragment, FC, useState } from 'react';
+import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
+import { Link } from 'lib/router';
 
 import { formatPrice } from 'utils';
+import { ITEM_URL } from 'constants/urls';
 import { CartItem } from 'types/cart';
 
 import Table from 'components/common/table';
@@ -34,7 +36,12 @@ const TableRowTitle = styled.div`
       display: none;
     }
   }
+
+  .item-link {
+    color: ${({ theme }) => theme?.colorBlack};
+  }
 `;
+
 const TableRowText = styled.div`
   text-align: center;
 `;
@@ -118,11 +125,15 @@ const TableSection: FC<TableSectionProps> = ({
       {cartItems.map((item, idx) => {
         const { id, title, thumbnail, count, price } = item;
         return (
-          <Fragment key={id.toString()}>
+          <Fragment key={id}>
             <TableRowTitle>
               <CheckBox id={idx.toString()} text="" onChange={checkedItemHandler(idx)} check={checkedItems.has(idx)} />
-              <img src={thumbnail} alt={title} />
-              {title}
+              <div>
+                <Link className="item-link" to={`${ITEM_URL}/${id}`}>
+                  <img src={thumbnail} alt={title} />
+                  {title}
+                </Link>
+              </div>
             </TableRowTitle>
             <TableRowText>{count}개</TableRowText>
             <TableRowText>{formatPrice(price)}원</TableRowText>
