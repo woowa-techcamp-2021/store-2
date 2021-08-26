@@ -1,17 +1,30 @@
-import React, { useState, Fragment, FC } from 'react';
+import React, { useState, Fragment, FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 
-import useInputs from 'hooks/use-inputs';
-
-import {
-  userValidation,
-  addressValidation,
-  receiverValidation,
-  phoneValidation,
-} from 'utils/validation/order-validation';
-
 import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
-import TableSection from './table-section';
+import TableSection, { OrderItem } from './table-section';
+import RadioButton from './radio-button';
+
+interface OrderProps {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  orderItems: OrderItem[];
+  phone: string;
+  setPhone: Dispatch<SetStateAction<string>>;
+  userError: string;
+  phoneError: string;
+  receiverError: string;
+  addressError: string;
+  submitError: string;
+  user: string;
+  address: string;
+  receiver: string;
+  onChange: (id: 'user' | 'receiver' | 'address') => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  getLoading: boolean;
+  submitLoading: boolean;
+  addresses: { name: string; address: string }[];
+  pickAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  addressChecked: string;
+}
 
 const Title = styled.h2`
   width: 100%;
@@ -67,39 +80,33 @@ const InputErrorMessage = styled.div`
   color: ${({ theme }) => theme?.colorError};
 `;
 
-const mockData = {
-  orderItems: [
-    {
-      id: '1',
-      thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/341_main_063.jpg',
-      title: '재생지에 콩기름으로 인쇄한 일기장',
-      count: 2,
-      price: 3500,
-    },
-    {
-      id: '2',
-      thumbnail: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/156525120083s0.jpg',
-      title: '일기장. 쓰고 자자',
-      count: 2,
-      price: 3000,
-    },
-  ],
-  userId: 'gd',
-};
+const SubmitErrorMessage = styled.div`
+  font-size: 12px;
+  color: ${({ theme }) => theme?.colorError};
+  margin-top: 16px;
+`;
 
-const Order: FC = () => {
-  const { orderItems, userId } = mockData;
+const Order: FC<OrderProps> = ({
+  onSubmit,
+  orderItems,
+  phone,
+  setPhone,
+  userError,
+  phoneError,
+  receiverError,
+  addressError,
+  submitError,
+  user,
+  address,
+  receiver,
+  onChange,
+  getLoading,
+  submitLoading,
+  addresses,
+  pickAddress,
+  addressChecked,
+}) => {
   const [agreed, setAgreed] = useState(false);
-  const [userError, setUserError] = useState('');
-  const [phoneError, setPhoneError] = useState('');
-  const [receiverError, setReceiverError] = useState('');
-  const [addressError, setAddressError] = useState('');
-  const [phone, setPhone] = useState('');
-  const [{ user, receiver, address }, onChange] = useInputs({
-    user: userId,
-    receiver: '',
-    address: '',
-  });
 
   const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -120,32 +127,6 @@ const Order: FC = () => {
     return acc + cur.count;
   }, 0);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // TODO: HTML invalid 사용 검토
-    setUserError('');
-    setPhoneError('');
-    setReceiverError('');
-    setAddressError('');
-
-    if (userValidation(user)) {
-      setUserError(userValidation(user));
-      return;
-    }
-    if (phoneValidation(phone)) {
-      setPhoneError(phoneValidation(phone));
-      return;
-    }
-    if (addressValidation(address)) {
-      setAddressError(addressValidation(address));
-      return;
-    }
-    if (receiverValidation(receiver)) {
-      setAddressError(receiverValidation(receiver));
-    }
-  };
-
   const onAgree = () => {
     setAgreed(state => !state);
   };
@@ -154,12 +135,12 @@ const Order: FC = () => {
     <>
       <Title>주문서 작성 / 결제</Title>
       <SectionTitle>주문상세내역</SectionTitle>
-      <TableSection orderItems={orderItems} />
+      <TableSection orderItems={orderItems} loading={getLoading} />
       <Form onSubmit={onSubmit}>
         <SectionTitle>주문자 정보</SectionTitle>
         <GridForm titles={['주문하시는 분*', '전화번호*']}>
           <InputWrapper>
-            <input minLength={2} name="user" value={user} onChange={onChange} />
+            <input minLength={2} name="user" value={user} onChange={onChange('user')} />
             <InputErrorMessage>{userError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
@@ -170,14 +151,25 @@ const Order: FC = () => {
         <SectionTitle>배송정보</SectionTitle>
         <GridForm titles={['배송지 확인', '받는분', '받으실 곳 *']}>
           <InputWrapper>
-            <input name="" />
+            {addresses.map(v => {
+              return (
+                <RadioButton
+                  key={v.name}
+                  id={v.name}
+                  text={v.name}
+                  value={v.address}
+                  onChange={pickAddress}
+                  checked={addressChecked}
+                />
+              );
+            })}
           </InputWrapper>
           <InputWrapper>
-            <input name="receiver" value={receiver} onChange={onChange} />
+            <input name="receiver" value={receiver} onChange={onChange('receiver')} />
             <InputErrorMessage>{receiverError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input placeholder="주소" name="address" value={address} onChange={onChange} />
+            <input placeholder="주소" name="address" value={address} onChange={onChange('address')} />
             <InputErrorMessage>{addressError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
@@ -195,7 +187,8 @@ const Order: FC = () => {
             onChange={onAgree}
           />
         </Agree>
-        <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} />
+        <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
+        <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
       </Form>
     </>
   );

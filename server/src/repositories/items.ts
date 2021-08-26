@@ -282,6 +282,28 @@ const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAt
   return item;
 };
 
+const getOrderItems = async (itemIDs: string[]): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
+  const query = itemIDs.map(id => {
+    return { id };
+  });
+
+  const orderItems = await db.Item.findAll({
+    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent'],
+    where: {
+      [Op.or]: query,
+    },
+  });
+
+  if (!orderItems) {
+    throw errorGenerator({
+      message: 'GET /api/items/order - item not found',
+      code: 'items/item-not-found',
+    });
+  }
+
+  return orderItems;
+};
+
 export default {
   getMainItems,
   getCategoryItems,
@@ -289,4 +311,5 @@ export default {
   getItem,
   getRecommendItems,
   getCategoryRecommendItems,
+  getOrderItems,
 };

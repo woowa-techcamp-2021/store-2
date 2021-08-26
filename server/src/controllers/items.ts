@@ -66,3 +66,19 @@ export const getItem = async (req: Request<IParams, unknown, unknown, unknown>, 
     res.status(statusCode).json({ errorMessage });
   }
 };
+
+export const getOrderItems = async (
+  req: Request<unknown, unknown, unknown, { id: string }>,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { id } = req.query;
+    const items = await itemService.getOrderItems(id);
+
+    res.status(200).json(items);
+  } catch (err) {
+    console.log(err);
+    const { statusCode, errorMessage } = errorHandler(err);
+    res.status(statusCode).json({ errorMessage });
+  }
+};

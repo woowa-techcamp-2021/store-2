@@ -22,6 +22,7 @@ export interface ItemInfoProps {
   isSoldOut: boolean;
   onSubmitCart: () => void;
   onBuy: () => void;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Wrapper = styled.section`
@@ -183,12 +184,14 @@ const ItemInfo: FC<ItemInfoProps> = ({
   isSoldOut,
   onSubmitCart,
   onBuy,
+  setCount,
 }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const { width } = useWindowSize();
 
   const handleCounterChange = (v: number) => {
-    setTotalPrice(v);
+    setTotalPrice(price * v);
+    setCount(v);
   };
 
   useEffect(() => {

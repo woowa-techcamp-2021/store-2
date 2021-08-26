@@ -18,3 +18,18 @@ export interface IOrderState {
   prevDate: string;
   currentDate: string;
 }
+
+export interface IPostOrder {
+  user: string;
+  phone: string;
+  address: string;
+  receiver: string;
+  itemList: { itemId: number; quantity: number }[];
+}
+
+export interface IOrderItem {
+  id: string;
+  thumbnail: string;
+  title: string;
+  price: number;
+}

@@ -8,6 +8,8 @@ const loadingSlice = createSlice({
     'auth/getSignup': false,
     'item/getMainItem': false,
     'item/getListItem': false,
+    'order/getOrderItems': false,
+    'order/postOrder': false,
     'order/getOrders': false,
     'address/getListAddress': false,
     'address/addAddress': false,

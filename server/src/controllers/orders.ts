@@ -9,13 +9,12 @@ interface IQuery {
   currentDate: string;
 }
 
-export interface PostOrderReqBody {
+export interface PostOrder {
   user: string;
   phone: string;
   receiver: string;
   address: string;
-  itemId: number;
-  quantity: number;
+  itemList: { itemId: number; quantity: number }[];
 }
 
 export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
@@ -32,16 +31,13 @@ export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>,
   }
 };
 
-export const postOrder = async (
-  req: Request<unknown, unknown, PostOrderReqBody, unknown>,
-  res: Response,
-): Promise<void> => {
+export const postOrder = async (req: Request<unknown, unknown, PostOrder, unknown>, res: Response): Promise<void> => {
   try {
-    const { phone, receiver, address, itemId, quantity } = req.body;
+    const orderItems = req.body;
     const token = getAccessToken(req.headers.authorization);
     const { uid } = decodeToken('access', token);
 
-    await ordersService.postOrder(uid, phone, receiver, address, itemId, quantity);
+    await ordersService.postOrder(uid, orderItems);
 
     res.status(200).json({});
   } catch (err) {
