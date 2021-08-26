@@ -7,6 +7,7 @@ import { categoryReducer, categorySaga } from './category';
 import { orderReducer, orderSaga } from './order';
 import { addressReducer, addressSaga } from './address';
 import { reviewReducer, reviewSaga } from './review';
+import { likeReducer, likeSaga } from './like';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,13 +17,14 @@ const rootReducer = combineReducers({
   order: orderReducer,
   address: addressReducer,
   review: reviewReducer,
+  like: likeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 export function* rootSaga(): Generator {
   try {
-    yield all([authSaga(), itemSaga(), categorySaga(), orderSaga(), addressSaga(), reviewSaga()]);
+    yield all([authSaga(), itemSaga(), categorySaga(), orderSaga(), addressSaga(), reviewSaga(), likeSaga()]);
   } catch (e) {
     throw new Error(e);
   }

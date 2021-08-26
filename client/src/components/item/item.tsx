@@ -1,4 +1,4 @@
-import React, { FC, useState, MouseEvent } from 'react';
+import React, { FC, MouseEvent, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 
 import likeIcon from 'assets/icons/like.svg';
@@ -19,6 +19,9 @@ interface ItemProps {
   isNew?: boolean;
   salePercent?: number;
   originalPrice?: number;
+  likeShow: boolean;
+  isLiked: boolean;
+  setIsLiked: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
 }
 
@@ -211,11 +214,11 @@ const Item: FC<ItemProps> = ({
   isNew,
   salePercent,
   originalPrice,
+  likeShow,
+  isLiked,
+  setIsLiked,
   onClick,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const toggleLike = () => setIsLiked(!isLiked);
   const setVisitedItem = () => {
     if (!localStorage.getItem('visited')) {
       localStorage.setItem('visited', title);
@@ -259,13 +262,15 @@ const Item: FC<ItemProps> = ({
         {isNew && <img src={badgeNewIcon} alt="badge" />}
         {salePercent !== 0 && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
-      <LikeWrapper onClick={toggleLike}>
-        {isLiked ? (
-          <img className="like like-fill" src={likeFilledIcon} alt="like" />
-        ) : (
-          <img className="like like-empty" src={likeIcon} alt="like" />
-        )}
-      </LikeWrapper>
+      {likeShow && (
+        <LikeWrapper onClick={setIsLiked}>
+          {isLiked ? (
+            <img className="like like-fill" src={likeFilledIcon} alt="like" />
+          ) : (
+            <img className="like like-empty" src={likeIcon} alt="like" />
+          )}
+        </LikeWrapper>
+      )}
     </Container>
   );
 };

@@ -6,6 +6,10 @@ import reviewRepository from 'repositories/reviews';
 
 import uploadToS3 from 'utils/uploadToS3';
 
+import { IReview } from 'types/reviews';
+
+const LIMIT_COUNT = 10;
+
 async function postReview(
   uid: string,
   itemId: number,
@@ -33,6 +37,29 @@ async function postReview(
   return imgUrl;
 }
 
+async function getReviews(itemId: number, pageId: number): Promise<IReview> {
+  const { reviewData, totalCount } = await reviewRepository.getReviews(itemId, pageId);
+
+  const reviews = reviewData.map(review => {
+    return {
+      title: review.getDataValue('title'),
+      score: review.getDataValue('score'),
+      contents: review.getDataValue('contents'),
+      imgUrl: review.getDataValue('imgUrl'),
+      userId: review.getDataValue('userId'),
+    };
+  });
+
+  const pageCount = Math.ceil(totalCount / LIMIT_COUNT);
+
+  return {
+    reviews,
+    totalCount,
+    pageCount,
+  };
+}
+
 export default {
   postReview,
+  getReviews,
 };

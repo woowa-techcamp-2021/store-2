@@ -2,12 +2,13 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
 
-import * as itemAPI from 'utils/api/item';
-import { INNER_ERROR } from 'constants/index';
-
 import { IMainItem, IListItem, IItemState, IItemDetail } from 'types/item';
 import { ISearchState, AutoCompleteKeyword } from 'types/search';
 import { IError } from 'types/error';
+
+import * as itemAPI from 'utils/api/item';
+import { INNER_ERROR } from 'constants/index';
+
 import { finishLoading, startLoading } from 'store/loading';
 import * as itemStore from 'store/item';
 
@@ -61,13 +62,10 @@ function* autoCompleteSaga(action: PayloadAction): Generator {
   }
 }
 
-function* getItemSaga(action: PayloadAction): Generator {
+function* getItemSaga(action: PayloadAction<{ id: string }>): Generator {
   try {
     yield put(startLoading(itemStore.getItem));
-    const { data } = (yield call(
-      itemAPI.getItem,
-      action.payload as unknown as { id: string },
-    )) as AxiosResponse<IItemDetail>;
+    const { data } = (yield call(itemAPI.getItem, action.payload)) as AxiosResponse<IItemDetail>;
     yield put({ type: itemStore.getItemSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {

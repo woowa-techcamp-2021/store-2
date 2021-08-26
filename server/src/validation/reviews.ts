@@ -5,7 +5,7 @@ import errorGenerator from 'utils/error/error-generator';
 import errorHandler from 'utils/error/error-handler';
 
 import { REVIEW } from 'config/constants';
-import { IReviewBody } from 'types/reviews';
+import { IReviewBody, IReviewQuery } from 'types/reviews';
 
 export const postReviewValidation = (
   req: Request<unknown, unknown, IReviewBody>,
@@ -55,6 +55,40 @@ export const postReviewValidation = (
       throw errorGenerator({
         message: 'validation/review - invalid request body',
         code: 'req/invalid-body',
+        customMessage: validationResult.error.message,
+      });
+    }
+
+    next();
+  } catch (err) {
+    console.log(err);
+    const { statusCode, errorMessage } = errorHandler(err);
+    res.status(statusCode).json({ errorMessage });
+  }
+};
+
+export const getReviewsValidation = (
+  req: Request<unknown, unknown, unknown, IReviewQuery>,
+  res: Response,
+  next: NextFunction,
+): void => {
+  try {
+    const schema = Joi.object({
+      itemId: Joi.number().required().empty('').messages({
+        'any.required': '잘못된 요청입니다',
+      }),
+      pageId: Joi.number().min(1).required().empty('').messages({
+        'any.required': '잘못된 요청입니다',
+        'number.min': '잘못된 요청입니다',
+      }),
+    });
+
+    const validationResult = schema.validate(req.query);
+
+    if (validationResult.error) {
+      throw errorGenerator({
+        message: 'validation/review - invalid request query',
+        code: 'req/invalid-query',
         customMessage: validationResult.error.message,
       });
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
@@ -14,6 +14,9 @@ import { RootState } from 'store';
 import { getItem } from 'store/item';
 import ReviewPost from 'components/item-detail/review-post';
 import { postReview } from 'store/review';
+import { addLike, deleteLike } from 'store/like';
+
+import { cartGenerator } from 'utils/cart-generator';
 
 const mockupReview: IReview[] = [
   {
@@ -58,13 +61,55 @@ const MainItemContainer: FC = () => {
       error: review.error,
     }),
   );
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(isLike);
+  }, [isLike]);
 
   useEffect(() => {
     dispatch({ type: getItem.type, payload: { id } });
   }, [id, dispatch]);
 
-  const onSubmitCart = () => {
-    // TODO: 장바구니 추가
+  const toggleIsLiked = () => {
+    if (!isLiked) {
+      dispatch({ type: addLike.type, payload: id });
+      setIsLiked(true);
+    } else {
+      dispatch({ type: deleteLike.type, payload: id });
+      setIsLiked(false);
+    }
+  };
+
+  const onSubmitCart = (count: number) => {
+    let cartItemsString = '';
+
+    if (localStorage.getItem('cart') !== null) {
+      const cartItems = cartGenerator();
+
+      if (cartItems.some(item => item.id === id)) {
+        cartItems.forEach((item, index) => {
+          if (item.id === id) {
+            cartItems[index].count += count;
+          }
+        });
+      } else {
+        cartItems.push({
+          id,
+          thumbnail,
+          title,
+          count,
+          price,
+        });
+      }
+      cartItems.forEach(item => {
+        cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
+      });
+      cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
+    } else {
+      cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
+    }
+    localStorage.setItem('cart', cartItemsString);
   };
 
   const onBuy = () => {
@@ -89,14 +134,16 @@ const MainItemContainer: FC = () => {
       payload: { data },
     });
   };
-  console.log(error);
+
   return (
     <>
       <ItemInfo
         thumbnail={thumbnail}
         title={title}
         price={price}
-        isLike={isLike}
+        likeShow={!!userId}
+        isLiked={isLiked}
+        setIsLiked={toggleIsLiked}
         isSoldOut={isSoldOut}
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}

@@ -12,7 +12,7 @@ interface TextButtonProps {
   title: string;
   styleType: StyleType;
   size?: Size;
-  onClick?: () => void;
+  onClick?: ((count: number) => void) | (() => void);
   disabled?: boolean;
   isLoading?: boolean;
 }

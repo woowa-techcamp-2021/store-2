@@ -158,7 +158,7 @@ describe('GetItemSaga', () => {
   };
   it('should success', () => {
     try {
-      return expectSaga(itemSaga.getItemSaga, action as unknown as PayloadAction)
+      return expectSaga(itemSaga.getItemSaga, action as unknown as PayloadAction<{ id: string }>)
         .withReducer(itemStore.itemReducer)
         .put(startLoading(itemStore.getItem))
         .provide([[call(itemAPI.getItem, action.payload), { data }]])
@@ -176,7 +176,7 @@ describe('GetItemSaga', () => {
 
   it('should fail because of error', () => {
     try {
-      return expectSaga(itemSaga.getItemSaga, action as unknown as PayloadAction)
+      return expectSaga(itemSaga.getItemSaga, action as unknown as PayloadAction<{ id: string }>)
         .withReducer(itemStore.itemReducer)
         .put(startLoading(itemStore.getItem))
         .provide([[call(itemAPI.getItem, action.payload), throwError()]])

@@ -1,13 +1,10 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
-import { useHistory } from 'lib/router';
 
 import { IItem } from 'types/item';
 
-import { ITEM_URL } from 'constants/urls';
-
 import { ContentLoader } from 'components';
-import Item from './item';
+import ItemContainer from 'containers/item-container';
 
 interface IItemListProps {
   items: IItem[];
@@ -48,9 +45,6 @@ const Wrapper = styled.div`
 `;
 
 const ItemList: FC<IItemListProps> = ({ items, isLoading }) => {
-  const history = useHistory();
-
-  const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
   return (
     <Wrapper>
       {isLoading ? (
@@ -62,20 +56,7 @@ const ItemList: FC<IItemListProps> = ({ items, isLoading }) => {
         </>
       ) : (
         items.map(item => {
-          return (
-            <Item
-              key={item.id}
-              thumbnail={item.thumbnail}
-              title={item.title}
-              price={item.price}
-              isBest={item.isBest}
-              isGreen={item.isGreen}
-              isNew={item.isNew}
-              salePercent={item.salePercent}
-              originalPrice={item.originalPrice}
-              onClick={goDetailPage(item.id)}
-            />
-          );
+          return <ItemContainer key={item.id} item={item} />;
         })
       )}
     </Wrapper>

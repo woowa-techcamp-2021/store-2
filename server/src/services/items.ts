@@ -1,6 +1,10 @@
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
+import likeService from 'services/like';
+
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
+import { ItemAttributes, ItemCreationAttributes } from 'models/item';
+import { Model } from 'sequelize';
 
 interface IMainItems {
   popularItems: IItems;
@@ -34,6 +38,7 @@ async function mainItems(visited: string[]): Promise<IMainItems> {
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
     itemRepository.getRecommendItems(visited, false),
   ]);
+
   return { popularItems, newItems, recommendItems };
 }
 
@@ -86,7 +91,7 @@ async function getItems(
   return { items, totalCount, pageCount };
 }
 
-async function getItem(id: string): Promise<IGetItem> {
+async function getItem(id: string, userId?: string): Promise<IGetItem> {
   const item = await itemRepository.getItem(id);
 
   const itemData: IGetItem = {
@@ -96,13 +101,28 @@ async function getItem(id: string): Promise<IGetItem> {
     salePercent: item.getDataValue('salePercent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
-    // TODO: 좋아요
-    isLike: true,
+    isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
     // TODO: 리뷰 갯수
     reviewCount: 0,
   };
 
   return itemData;
+}
+
+async function matchUserLikeItem(
+  itemList: Model<ItemAttributes, ItemCreationAttributes>[],
+  userId?: string,
+): Promise<unknown[]> {
+  const result = await Promise.all(
+    itemList.map(async item => {
+      const itemId = parseInt(item.getDataValue('id'), 10);
+      return {
+        ...item.toJSON(),
+        isLike: userId ? await likeService.isUserLikeItem(userId, itemId) : false,
+      };
+    }),
+  );
+  return result;
 }
 
 async function getOrderItems(id: string): Promise<IOrderItem[]> {
@@ -130,5 +150,6 @@ export default {
   mainItems,
   getItems,
   getItem,
+  matchUserLikeItem,
   getOrderItems,
 };
