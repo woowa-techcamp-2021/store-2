@@ -79,7 +79,13 @@ const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
       {reviews.map((review, idx) => {
         const { score, title, imgUrl, contents, userId } = review;
         return (
-          <Review key={title + String(idx)} onClick={() => setState(idx)}>
+          <Review
+            key={title + String(idx)}
+            onClick={() => {
+              if (idx === state) setState(null);
+              else setState(idx);
+            }}
+          >
             <div>
               <div>
                 {makeStar(score).map((v, i) => {
