@@ -1,7 +1,7 @@
 export interface IReview {
   score: number;
   title: string;
-  content: string;
+  contents: string;
   imgUrl: string;
   userId: string;
 }
@@ -12,15 +12,11 @@ export interface IListReview {
   pageCount: number;
 }
 
-export interface IRieviewPost {
-  score: number;
-  title: string;
-  content: string;
-  file: File;
-  ItemId?: number;
-}
-
 export interface IReviewState {
   itemId: number;
   pageId?: number;
+}
+
+export interface IReviewData {
+  data: FormData;
 }
