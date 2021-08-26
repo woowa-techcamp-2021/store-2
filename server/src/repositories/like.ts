@@ -27,3 +27,14 @@ export const destroyLike = async (userId: string, itemId: number): Promise<boole
     return false;
   }
 };
+
+export const findIsUserLikeItem = async (userId: string, itemId: number): Promise<boolean> => {
+  const result = await db.Like.findOne({
+    where: {
+      UserId: userId,
+      ItemId: itemId,
+    },
+  });
+
+  return !!result;
+};
