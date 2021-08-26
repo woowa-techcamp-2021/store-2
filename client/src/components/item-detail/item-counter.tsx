@@ -63,7 +63,7 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
     if (newCount < 1) return;
 
     setCount(newCount);
-    onChange(price * newCount);
+    onChange(newCount);
   };
 
   return (

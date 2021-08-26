@@ -60,7 +60,7 @@ const BoxItem = styled.div`
 `;
 
 const PriceCalculator: FC<PriceCalculatorProps> = ({ prices, totalCount }) => {
-  const totalPrice = prices.reduce((acc, cur) => acc + cur);
+  const totalPrice = prices.reduce((acc, cur) => acc + cur, 0);
 
   return (
     <Box>

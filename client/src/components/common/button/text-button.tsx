@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
+import { CircleLoader } from 'components';
+
 type StyleType = 'black' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
 type Size = 'big' | 'small';
@@ -48,12 +50,11 @@ const TextButton: FC<TextButtonProps> = ({
     <Button
       type={type}
       onClick={onClick}
-      isLoading={isLoading}
       styleType={styleType}
       size={size}
-      disabled={disabled ? true : ''}
+      disabled={disabled || isLoading ? true : ''}
     >
-      {title}
+      {isLoading ? <CircleLoader size="20px" color="grey" /> : title}
     </Button>
   );
 };

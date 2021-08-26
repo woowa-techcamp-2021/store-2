@@ -5,7 +5,6 @@ import { Table } from 'components';
 
 import { formatPrice } from 'utils';
 import { IOrder } from 'types/order';
-import CircleLoader from 'components/common/loader/circle-loader';
 
 interface MyOrderTableProps {
   loading: boolean;
@@ -43,10 +42,8 @@ const tableHeaders = [
 ];
 
 const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
-  return loading ? (
-    <CircleLoader color="brown" size="100px" />
-  ) : (
-    <Table headers={tableHeaders}>
+  return (
+    <Table headers={tableHeaders} loading={loading}>
       {orders.map(order => {
         const { createdAt, title, thumbnail, price, quantity, status } = order;
         return (

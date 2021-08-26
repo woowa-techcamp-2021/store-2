@@ -33,10 +33,10 @@ describe('getOrders Saga', () => {
 
   it('should success', () => {
     try {
-      return expectSaga(orderSaga.getOrdersSaga, action)
+      return expectSaga(orderSaga.getOrdersSaga, action as unknown as PayloadAction)
         .withReducer(orderStore.orderReducer)
         .put(startLoading(orderStore.getOrders))
-        .provide([[call(orderAPI.getOrderList, action.payload, localStorage.getItem('user') || ''), { data }]])
+        .provide([[call(orderAPI.getOrderList, action.payload), { data }]])
         .put({ type: orderStore.getOrdersSuccess, payload: data })
         .put(finishLoading(orderStore.getOrders))
         .hasFinalState({
@@ -51,10 +51,10 @@ describe('getOrders Saga', () => {
 
   it('should fail because of error', () => {
     try {
-      return expectSaga(orderSaga.getOrdersSaga, action)
+      return expectSaga(orderSaga.getOrdersSaga, action as unknown as PayloadAction)
         .withReducer(orderStore.orderReducer)
         .put(startLoading(orderStore.getOrders))
-        .provide([[call(orderAPI.getOrderList, action.payload, localStorage.getItem('user') || ''), throwError()]])
+        .provide([[call(orderAPI.getOrderList, action.payload), throwError()]])
         .put({ type: orderStore.getOrdersFail, payload: INNER_ERROR })
         .put(finishLoading(orderStore.getOrders))
         .run();

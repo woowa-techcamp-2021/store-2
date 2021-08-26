@@ -1,11 +1,13 @@
-import React, { useEffect, FC, useState } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'lib/router';
+import { useParams, useHistory } from 'lib/router';
 
 import { IReview } from 'types/review';
 
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
+import { Modal } from 'components';
+
 import { RootState } from 'store';
 import { getItem } from 'store/item';
 import ReviewPost from 'components/item-detail/review-post';
@@ -29,12 +31,17 @@ const mockupReview: IReview[] = [
   },
 ];
 
+import { PAYMENT_URL } from 'constants/urls';
+
 const MainItemContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [file, setFile] = useState<null | File>(null);
   const [star, setStar] = useState(5);
+  const [count, setCount] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { id } = useParams();
 
   // TODO: 리뷰 리스트, 리뷰 카운트
@@ -61,7 +68,12 @@ const MainItemContainer: FC = () => {
   };
 
   const onBuy = () => {
-    // TODO: 상품 구매
+    if (userId) {
+      window.sessionStorage.setItem('order', `${id}-${count}`);
+      history.push(PAYMENT_URL);
+    } else {
+      setModalVisible(true);
+    }
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -81,6 +93,7 @@ const MainItemContainer: FC = () => {
         isSoldOut={isSoldOut}
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
+        setCount={setCount}
       />
       <Detail contents={contents} reviewCount={reviewCount} reviews={mockupReview} />
       <ReviewPost
@@ -94,6 +107,7 @@ const MainItemContainer: FC = () => {
         setStar={setStar}
         onSubmit={onSubmit}
       />
+      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };

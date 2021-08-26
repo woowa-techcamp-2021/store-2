@@ -1,8 +1,11 @@
 import React, { FC, Children, ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 
+import CircleLoader from './loader/circle-loader';
+
 interface TableProps {
   headers: TableColumn[];
+  loading: boolean;
 }
 
 interface TableColumn {
@@ -51,17 +54,20 @@ const TableCell = styled.td`
   }
 `;
 
-const EmptyCell = styled.td`
+const EmptyCell = styled.tr`
   width: 100%;
   color: ${({ theme }) => theme?.colorLine};
-  font-size: 80px !important;
-  padding: 32px 24px !important;
-  font-family: ${({ theme }) => theme?.fontEuljiro10};
   text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
+
+  td {
+    font-size: 80px;
+    padding: 32px 24px;
+    font-family: ${({ theme }) => theme?.fontEuljiro10};
+  }
 `;
 
-const Table: FC<TableProps> = ({ headers, children }) => {
+const Table: FC<TableProps> = ({ headers, children, loading }) => {
   return (
     <TableBody>
       <colgroup>
@@ -89,7 +95,15 @@ const Table: FC<TableProps> = ({ headers, children }) => {
             );
           })
         ) : (
-          <EmptyCell colspan="100">텅</EmptyCell>
+          <EmptyCell>
+            {loading ? (
+              <td colSpan={100}>
+                <CircleLoader color="brown" size="50px" />
+              </td>
+            ) : (
+              <td colSpan={100}>텅</td>
+            )}
+          </EmptyCell>
         )}
       </tbody>
     </TableBody>

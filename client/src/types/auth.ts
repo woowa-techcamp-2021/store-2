@@ -6,7 +6,6 @@ export interface IAuth {
 
 export interface IUser extends IAuth {
   userId: IUserId;
-  token: null | string;
 }
 
 export interface IAuthState {
@@ -20,11 +19,5 @@ export interface IGithubCode {
 
 export interface IReceiveServer {
   userId: string;
-  accessToken?: string;
-  newAccessToken?: string;
-}
-
-export interface IResetToken {
-  requestAgain: boolean;
-  newAccessToken: string;
+  accessToken: string;
 }
