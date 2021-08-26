@@ -3,8 +3,10 @@ import { Express } from 'express';
 import sharp from 'sharp';
 
 import reviewRepository from 'repositories/reviews';
+import orderRepository from 'repositories/orders';
 
 import uploadToS3 from 'utils/uploadToS3';
+import errorGenerator from 'utils/error/error-generator';
 
 import { IReview } from 'types/reviews';
 
@@ -19,6 +21,16 @@ async function postReview(
   image: Express.Multer.File | undefined,
 ): Promise<string> {
   let imgUrl = '';
+
+  const isPaid = await orderRepository.checkPaidUser(uid, itemId);
+
+  if (!isPaid) {
+    throw errorGenerator({
+      code: 'reviews/user-not-paid',
+      message: 'POST /api/reviews - need to buy item',
+      customMessage: '상품을 구매한 사용자만 후기를 작성할 수 있습니다',
+    });
+  }
 
   if (image) {
     const resizedImageBuffer = await sharp(image.buffer).resize(300, 300, { fit: 'cover' }).jpeg().toBuffer();

@@ -64,4 +64,15 @@ const getReviews = async (
   return { reviewData, totalCount };
 };
 
-export default { postReview, getReviews };
+const checkPaidUser = async (uid: string, itemId: number): Promise<boolean> => {
+  const paidCount = await db.Order.count({
+    where: {
+      ItemId: itemId,
+      UserId: uid,
+    },
+  });
+
+  return !!paidCount;
+};
+
+export default { postReview, getReviews, checkPaidUser };
