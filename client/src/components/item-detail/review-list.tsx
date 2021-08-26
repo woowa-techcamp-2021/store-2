@@ -50,6 +50,10 @@ const Review = styled.div`
       }
     }
   }
+  .star {
+    width: 18px;
+    height: 17px;
+  }
 `;
 
 const Empty = styled.div`
@@ -88,8 +92,9 @@ const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
             <div>
               <div>
                 {makeStar(score).map((star, i) => {
-                  if (star) return <img key={title + String(idx) + String(i)} src={starOff} alt="startOff" />;
-                  return <img key={title + String(idx) + String(i)} src={starOn} alt="startOff" />;
+                  if (star)
+                    return <img key={title + String(idx) + String(i)} src={starOff} className="star" alt="startOff" />;
+                  return <img key={title + String(idx) + String(i)} src={starOn} className="star" alt="startOff" />;
                 })}
               </div>
               <div>{title}</div>
