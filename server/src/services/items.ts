@@ -102,7 +102,6 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
     isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
-    // TODO: 리뷰 갯수
     reviewCount: 0,
   };
 

@@ -122,7 +122,6 @@ const OrderContainer: FC = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // TODO: HTML invalid 사용 검토
     setUserError('');
     setPhoneError('');
     setReceiverError('');

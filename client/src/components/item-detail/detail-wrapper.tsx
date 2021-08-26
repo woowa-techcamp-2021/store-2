@@ -31,8 +31,6 @@ const Marker = styled.div`
   border-bottom: none;
   color: ${({ theme }) => theme?.colorSoftBlack};
   transform: translateY(3px);
-  /* TODO: 사다리꼴 만들기 */
-  /* clip-path: polygon(0 0, 80% 0, 100% 100%, 0 100%); */
 
   span {
     color: ${({ theme }) => theme?.colorPrimary};
