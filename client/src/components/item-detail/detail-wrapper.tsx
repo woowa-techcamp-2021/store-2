@@ -49,8 +49,22 @@ const DetailWrapper: FC<DetailWrapperProps> = ({ children, select, reviewCount }
   return (
     <Container>
       <DetailHeader>
-        <Marker selected={select === 'detail' ? true : ''}>상품상세정보</Marker>
-        <Marker selected={select === 'review' ? true : ''}>
+        <Marker
+          selected={select === 'detail' ? true : ''}
+          id={select === 'detail' ? 'detail' : ''}
+          onClick={() => {
+            window.location.hash = 'detail';
+          }}
+        >
+          상품상세정보
+        </Marker>
+        <Marker
+          selected={select === 'review' ? true : ''}
+          id={select === 'review' ? 'review' : ''}
+          onClick={() => {
+            window.location.hash = 'review';
+          }}
+        >
           상품후기 <span>{reviewCount}</span>
         </Marker>
       </DetailHeader>
