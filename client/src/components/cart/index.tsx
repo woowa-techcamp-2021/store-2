@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
-import { PAYMENT_URL } from 'constants/urls';
+import { PAYMENT_URL, SIGNIN_URL } from 'constants/urls';
 import { cartGenerator } from 'utils/cart-generator';
 
 import { RootState } from 'store';
@@ -57,7 +57,12 @@ const Cart: FC = () => {
   const [checkedItems, setCheckedItems] = useState(new Set<number>());
   const [modalVisible, setModalVisible] = useState(false);
   const history = useHistory();
+
   const onClick = useCallback(() => history.goBack(), [history]);
+
+  const moveSignin = () => {
+    history.push(SIGNIN_URL);
+  };
 
   const { userId } = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
@@ -131,7 +136,14 @@ const Cart: FC = () => {
           <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
         </OrderButtonDiv>
       </ButtonDiv>
-      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
+      <Modal
+        type="confirm"
+        header={<div>로그인이 필요합니다</div>}
+        body={<div>로그인 페이지로 이동하시겠습니까?</div>}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onConfirm={moveSignin}
+      />
     </>
   );
 };
