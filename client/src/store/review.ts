@@ -30,6 +30,7 @@ const reviewSlice = createSlice({
     postReview: state => state,
     postReviewSuccess: (state, action: PayloadAction<IListReview>) => {
       state.list = action.payload;
+      state.error = null;
       return state;
     },
     postReviewsFail: (state, action: PayloadAction<string>) => {
