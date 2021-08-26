@@ -38,13 +38,19 @@ const MainItemContainer: FC = () => {
             cartItems[index].count += count;
           }
         });
+      } else {
+        cartItems.push({
+          id,
+          thumbnail,
+          title,
+          count,
+          price,
+        });
       }
       cartItems.forEach(item => {
         cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
       });
       cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
-    } else {
-      cartItemsString = `${id},${thumbnail},${title},${count},${price}`;
     }
     localStorage.setItem('cart', cartItemsString);
   };
