@@ -4,5 +4,5 @@ export const formatPrice = (price: string | number): string => {
 };
 
 export const filterId = (id: string) => {
-  return `${id.slice(3)}***`;
+  return `${id.slice(0, 3)}***`;
 };
