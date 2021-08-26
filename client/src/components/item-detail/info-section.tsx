@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { Link, useHistory } from 'lib/router';
+import { useHistory } from 'lib/router';
 import styled from 'lib/woowahan-components';
 
 import useWindowSize from 'hooks/use-window-size';

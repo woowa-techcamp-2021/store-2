@@ -3,22 +3,11 @@ import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
-import { cartValidator } from 'utils/validation/cart-validation';
 import { cartGenerator } from 'utils/cart-generator';
 
 import TextButton from 'components/common/text-button';
 import PriceCalculator from 'components/common/price-calculator';
-import Modal from 'components/common/modal';
 import { TableSection, CartItem } from './table-section';
-
-const Empty = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 80px;
-  font-family: ${props => props.theme?.fontEuljiro10};
-  color: ${props => props.theme?.colorLine};
-  font-size: 80px;
-`;
 
 const Title = styled.h2`
   width: 100%;
@@ -73,7 +62,6 @@ const Cart: FC = () => {
   };
 
   const orderCartItem = (isAll: boolean) => () => {
-    console.log;
     let selectCartItems: CartItem[] = [];
     if (isAll) {
       selectCartItems = cartItems;
