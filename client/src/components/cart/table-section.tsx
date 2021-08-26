@@ -2,6 +2,7 @@ import React, { Fragment, FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 
 import { formatPrice } from 'utils';
+import { CartItem } from 'types/cart';
 
 import Table from 'components/common/table';
 import { CheckBox } from 'components';
@@ -9,17 +10,11 @@ import { CheckBox } from 'components';
 interface TableSectionProps {
   cartItems: CartItem[];
   checkedItems: Set<number>;
+  checkAll: boolean;
   setPrices: React.Dispatch<React.SetStateAction<number[]>>;
   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
+  setCheckAll: React.Dispatch<React.SetStateAction<boolean>>;
   setCheckedItems: React.Dispatch<React.SetStateAction<Set<number>>>;
-}
-
-interface CartItem {
-  id: string;
-  thumbnail: string;
-  title: string;
-  count: number;
-  price: number;
 }
 
 const TableRowTitle = styled.div`
@@ -54,12 +49,12 @@ const tableHeaders = [
 const TableSection: FC<TableSectionProps> = ({
   cartItems,
   checkedItems,
+  checkAll,
   setPrices,
   setTotalCount,
+  setCheckAll,
   setCheckedItems,
 }) => {
-  const [checkAll, setCheckAll] = useState(false);
-
   const updatePrice = (set: Set<number>) => {
     const prices = [] as number[];
     let totalCount = 0;
@@ -95,13 +90,14 @@ const TableSection: FC<TableSectionProps> = ({
   };
 
   const checkAllHandler = () => {
+    const checkedSet = new Set<number>();
     if (checkAll) {
       setCheckAll(false);
-      setCheckedItems(new Set<number>());
+      setCheckedItems(checkedSet);
+      updatePrice(checkedSet);
       localStorage.setItem('select', '');
     } else {
       setCheckAll(true);
-      const checkedSet = new Set<number>();
       cartItems.forEach((item, index) => checkedSet.add(index));
       setCheckedItems(checkedSet);
       updatePrice(checkedSet);
@@ -122,7 +118,7 @@ const TableSection: FC<TableSectionProps> = ({
       {cartItems.map((item, idx) => {
         const { id, title, thumbnail, count, price } = item;
         return (
-          <Fragment key={id.toString() + idx.toString()}>
+          <Fragment key={id.toString()}>
             <TableRowTitle>
               <CheckBox id={idx.toString()} text="" onChange={checkedItemHandler(idx)} check={checkedItems.has(idx)} />
               <img src={thumbnail} alt={title} />
