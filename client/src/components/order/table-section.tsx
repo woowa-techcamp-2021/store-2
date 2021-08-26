@@ -36,8 +36,17 @@ const TableRowTitle = styled.div`
     }
   }
 `;
+
 const TableRowText = styled.div`
   text-align: center;
+`;
+
+const ItemTitle = styled.div`
+  font-size: 14px;
+
+  ${({ theme }) => theme?.mobile} {
+    font-size: 12px;
+  }
 `;
 
 const tableHeaders = [
@@ -55,8 +64,10 @@ const TableSection: FC<TableSectionProps> = ({ orderItems, loading }) => {
         return (
           <Fragment key={id}>
             <TableRowTitle>
-              <img src={thumbnail} alt={title} />
-              {title}
+              <ItemTitle>
+                <img src={thumbnail} alt={title} />
+                {title}
+              </ItemTitle>
             </TableRowTitle>
             <TableRowText>{count}개</TableRowText>
             <TableRowText>{formatPrice(price)}원</TableRowText>
