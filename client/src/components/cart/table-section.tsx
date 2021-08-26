@@ -50,6 +50,14 @@ const CheckBoxDiv = styled.div`
   margin-bottom: 20px;
 `;
 
+const ItemTitle = styled.div`
+  font-size: 14px;
+
+  ${({ theme }) => theme?.mobile} {
+    font-size: 12px;
+  }
+`;
+
 const tableHeaders = [
   { column: '상품/옵션 정보', span: 1 },
   { column: '수량', span: 1 },
@@ -136,8 +144,10 @@ const TableSection: FC<TableSectionProps> = ({
             <TableRowTitle>
               <div>
                 <Link className="item-link" to={`${ITEM_URL}/${id}`}>
-                  <img src={thumbnail} alt={title} />
-                  {title}
+                  <ItemTitle>
+                    <img src={thumbnail} alt={title} />
+                    {title}
+                  </ItemTitle>
                 </Link>
               </div>
             </TableRowTitle>
