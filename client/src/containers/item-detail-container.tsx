@@ -46,12 +46,15 @@ const MainItemContainer: FC = () => {
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: getItem.type, payload: { id } });
-    dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
     setPostTitle('');
     setPostContent('');
     setFile(null);
     setStar(5);
+  }, [reviews]);
+
+  useEffect(() => {
+    dispatch({ type: getItem.type, payload: { id } });
+    dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
   }, [id, dispatch, pageId]);
 
   useEffect(() => {
