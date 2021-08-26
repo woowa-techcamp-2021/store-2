@@ -5,6 +5,7 @@ import { IListReview } from 'types/review';
 
 interface StateProps {
   list: IListReview;
+  error: null | string;
 }
 
 export const initialState: StateProps = {
@@ -13,6 +14,7 @@ export const initialState: StateProps = {
     pageCount: 0,
     totalCount: 0,
   },
+  error: null,
 };
 
 const reviewSlice = createSlice({
@@ -30,7 +32,10 @@ const reviewSlice = createSlice({
       state.list = action.payload;
       return state;
     },
-    postReviewsFail: state => state,
+    postReviewsFail: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      return state;
+    },
   },
 });
 
