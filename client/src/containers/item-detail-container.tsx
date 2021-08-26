@@ -30,7 +30,7 @@ const MainItemContainer: FC = () => {
   const onSubmitCart = (count: number) => {
     let cartItemsString = '';
 
-    if (localStorage.getItem('cart')) {
+    if (localStorage.getItem('cart') !== null) {
       const cartItems = cartGenerator();
       if (cartItems.some(item => item.id === id)) {
         cartItems.forEach((item, index) => {
