@@ -7,6 +7,6 @@ const router = Router();
 
 router.post('/main', checkExistHeader, getMainItems);
 router.post('/', checkExistHeader, getItems);
-router.get('/:id', getItem);
+router.get('/:id', checkExistHeader, getItem);
 
 export default router;

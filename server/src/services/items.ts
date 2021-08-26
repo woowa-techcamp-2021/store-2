@@ -84,7 +84,7 @@ async function getItems(
   return { items, totalCount, pageCount };
 }
 
-async function getItem(id: string): Promise<IGetItem> {
+async function getItem(id: string, userId?: string): Promise<IGetItem> {
   const item = await itemRepository.getItem(id);
 
   const itemData: IGetItem = {
@@ -94,8 +94,7 @@ async function getItem(id: string): Promise<IGetItem> {
     salePercent: item.getDataValue('salePercent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
-    // TODO: 좋아요
-    isLike: true,
+    isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
     // TODO: 리뷰 갯수
     reviewCount: 0,
   };

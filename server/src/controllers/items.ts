@@ -55,8 +55,11 @@ export const getItems = async (req: Request<unknown, unknown, string[], IQuery>,
 export const getItem = async (req: Request<IParams, unknown, unknown, unknown>, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const items = await itemService.getItem(id);
-    res.status(200).json(items);
+    let uid;
+    if (checkTokenExists(req)) uid = getUIDFromToken(getAccessToken(req.headers.authorization));
+
+    const item = await itemService.getItem(id, uid);
+    res.status(200).json(item);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
