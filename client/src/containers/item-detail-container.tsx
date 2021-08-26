@@ -33,24 +33,9 @@ const MainItemContainer: FC = () => {
   );
   const [isLiked, setIsLiked] = useState(false);
 
-
   useEffect(() => {
     setIsLiked(isLike);
   }, [isLike]);
-
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount, userId } = useSelector(
-    ({ item, auth }: RootState) => ({
-      thumbnail: item.item.thumbnail,
-      title: item.item.title,
-      price: item.item.price,
-      contents: item.item.contents,
-      salePercent: item.item.salePercent,
-      isLike: item.item.isLike,
-      isSoldOut: item.item.isSoldOut,
-      reviewCount: item.item.reviewCount,
-      userId: auth.user.userId,
-    }),
-  );
 
   useEffect(() => {
     dispatch({ type: getItem.type, payload: { id } });
