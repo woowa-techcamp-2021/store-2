@@ -73,6 +73,7 @@ const Cart: FC = () => {
   };
 
   const orderCartItem = (isAll: boolean) => () => {
+    console.log;
     let selectCartItems: CartItem[] = [];
     if (isAll) {
       selectCartItems = cartItems;
@@ -94,32 +95,26 @@ const Cart: FC = () => {
   return (
     <>
       <Title>장바구니</Title>
-      {cartValidator() ? (
-        <>
-          <TableSection
-            cartItems={cartItems}
-            checkedItems={checkedItems}
-            checkAll={checkAll}
-            setPrices={setPrices}
-            setTotalCount={setTotalCount}
-            setCheckAll={setCheckAll}
-            setCheckedItems={setCheckedItems}
-          />
-          <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
-          <PriceCalculator prices={prices} totalCount={totalCount} />
-          <ButtonDiv>
-            <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
-            <OrderButtonDiv>
-              <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={orderCartItem(false)} />
-              <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={orderCartItem(true)} />
-            </OrderButtonDiv>
-          </ButtonDiv>
-        </>
-      ) : (
-        <Empty>
-          <div>텅</div>
-        </Empty>
-      )}
+      <>
+        <TableSection
+          cartItems={cartItems}
+          checkedItems={checkedItems}
+          checkAll={checkAll}
+          setPrices={setPrices}
+          setTotalCount={setTotalCount}
+          setCheckAll={setCheckAll}
+          setCheckedItems={setCheckedItems}
+        />
+        <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
+        <PriceCalculator prices={prices} totalCount={totalCount} />
+        <ButtonDiv>
+          <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
+          <OrderButtonDiv>
+            <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={orderCartItem(false)} />
+            <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={orderCartItem(true)} />
+          </OrderButtonDiv>
+        </ButtonDiv>
+      </>
     </>
   );
 };
