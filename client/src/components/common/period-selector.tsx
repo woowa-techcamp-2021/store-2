@@ -15,12 +15,13 @@ interface PeriodSelectorProps {
 }
 
 const Wrapper = styled.div`
+  margin-bottom: 40px;
   h3 {
     font-size: 16px;
     font-weight: 700;
     padding: 16px;
   }
-  padding: 35px 40px;
+  padding: 20px 25px;
   border: 2px solid ${props => props.theme?.colorLineLight};
   ${props => props.theme?.mobile} {
     padding: 0;
