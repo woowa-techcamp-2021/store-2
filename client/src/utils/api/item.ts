@@ -26,5 +26,8 @@ export const getListItem = ({ categoryId, pageId, type, search }: IItemState): P
 
 export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => request('GET', `/api/items/${id}`);
 
+export const getOrderItems = (itemIDs: string): Promise<AxiosResponse> =>
+  request('GET', `/api/items/order?id=${itemIDs}`);
+
 export const getAutoComplete = ({ keyword }: ISearchState): Promise<AxiosResponse> =>
   request('GET', `/api/search?keyword=${keyword}`);

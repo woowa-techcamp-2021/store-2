@@ -19,6 +19,13 @@ export interface IGetItem {
   reviewCount: number;
 }
 
+export interface IOrderItem {
+  id: string;
+  title: string;
+  thumbnail: string;
+  price: number;
+}
+
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
 
 async function mainItems(visited: string[]): Promise<IMainItems> {
@@ -98,8 +105,30 @@ async function getItem(id: string): Promise<IGetItem> {
   return itemData;
 }
 
+async function getOrderItems(id: string): Promise<IOrderItem[]> {
+  const itemIDs = id.split(',');
+  const items = await itemRepository.getOrderItems(itemIDs);
+
+  const itemData: IOrderItem[] = items.map(item => {
+    const salePercent = item.getDataValue('salePercent');
+    const price = Number(item.getDataValue('price'));
+
+    const saledPrice = Math.floor(price - (price * salePercent) / 100);
+
+    return {
+      id: item.getDataValue('id'),
+      title: item.getDataValue('title'),
+      thumbnail: item.getDataValue('thumbnail'),
+      price: saledPrice,
+    };
+  });
+
+  return itemData;
+}
+
 export default {
   mainItems,
   getItems,
   getItem,
+  getOrderItems,
 };

@@ -6,7 +6,7 @@ import errorHandler from 'utils/error/error-handler';
 
 import { ORDER } from 'config/constants';
 
-import { PostOrderReqBody } from 'controllers/orders';
+import { PostOrder } from 'controllers/orders';
 
 interface IQuery {
   pageId: number;
@@ -55,7 +55,7 @@ export const getOrdersValidation = (
 };
 
 export const postOrderValidation = (
-  req: Request<unknown, unknown, PostOrderReqBody, unknown>,
+  req: Request<unknown, unknown, PostOrder, unknown>,
   res: Response,
   next: NextFunction,
 ): void => {
@@ -90,15 +90,19 @@ export const postOrderValidation = (
           'string.min': `주소는 ${ORDER.ADDRESS_MIN_LENGTH}자 이상 입력해주세요`,
           'string.max': `주소는 ${ORDER.ADDRESS_MAX_LENGTH}자 이하로 입력해주세요`,
         }),
-      itemId: Joi.string().required().empty('').messages({
-        'any.required': '잘못된 요청입니다',
-      }),
-      quantity: Joi.number().required().empty('').min(ORDER.QUANTITY_MIN).integer().messages({
-        'any.required': '잘못된 요청입니다',
-        'number.base': '숫자만 입력가능합니다',
-        'number.min': '1개 이상만 구매할 수 있습니다',
-        'number.integer': '소수는 멈춰!',
-      }),
+      itemList: Joi.array().items(
+        Joi.object({
+          itemId: Joi.number().required().empty('').messages({
+            'any.required': '잘못된 요청입니다',
+          }),
+          quantity: Joi.number().required().empty('').min(ORDER.QUANTITY_MIN).integer().messages({
+            'any.required': '잘못된 요청입니다',
+            'number.base': '숫자만 입력가능합니다',
+            'number.min': '1개 이상만 구매할 수 있습니다',
+            'number.integer': '소수는 멈춰!',
+          }),
+        }),
+      ),
     });
 
     const validationResult = schema.validate(req.body);

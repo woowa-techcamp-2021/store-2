@@ -4,7 +4,6 @@ import styled from 'lib/woowahan-components';
 import { Table } from 'components';
 
 import { IListAddress } from 'types/address';
-import CircleLoader from 'components/common/loader/circle-loader';
 
 interface MyAddressTableProps {
   loading: boolean;
@@ -32,10 +31,8 @@ const tableHeaders = [
 ];
 
 const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList, onRemove }) => {
-  return loading ? (
-    <CircleLoader color="brown" size="100px" />
-  ) : (
-    <Table headers={tableHeaders}>
+  return (
+    <Table headers={tableHeaders} loading={loading}>
       {addressList.map(adrs => {
         const { id, name, receiver, address } = adrs;
         return (

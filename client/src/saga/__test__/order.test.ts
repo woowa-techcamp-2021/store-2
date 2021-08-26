@@ -1,6 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { throwError } from 'redux-saga-test-plan/providers';
 import { call } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 import * as orderAPI from 'utils/api/order';
 import { INNER_ERROR } from 'constants/index';
@@ -32,7 +33,7 @@ describe('getOrders Saga', () => {
 
   it('should success', () => {
     try {
-      return expectSaga(orderSaga.getOrdersSaga, action)
+      return expectSaga(orderSaga.getOrdersSaga, action as unknown as PayloadAction)
         .withReducer(orderStore.orderReducer)
         .put(startLoading(orderStore.getOrders))
         .provide([[call(orderAPI.getOrderList, action.payload), { data }]])
@@ -50,7 +51,7 @@ describe('getOrders Saga', () => {
 
   it('should fail because of error', () => {
     try {
-      return expectSaga(orderSaga.getOrdersSaga, action)
+      return expectSaga(orderSaga.getOrdersSaga, action as unknown as PayloadAction)
         .withReducer(orderStore.orderReducer)
         .put(startLoading(orderStore.getOrders))
         .provide([[call(orderAPI.getOrderList, action.payload), throwError()]])
