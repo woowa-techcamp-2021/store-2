@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
@@ -7,6 +8,8 @@ import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
 import { CART_URL } from 'constants/urls';
+
+import { RootState } from 'store';
 
 import { TextButton } from 'components';
 import ImageViewer from 'components/image-viewer';
@@ -166,17 +169,26 @@ const PaymentWrapper = styled.form`
 
 const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy, setCount }) => {
   const [totalPrice, setTotalPrice] = useState(price);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [cartModalVisible, setCartModalVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const history = useHistory();
   const { width } = useWindowSize();
+
+  const { userId } = useSelector(({ auth }: RootState) => ({
+    userId: auth.user.userId,
+  }));
 
   const movePayPage = () => {
     history.push(CART_URL);
   };
 
   const onClickCart = () => {
-    onSubmitCart(totalPrice / price);
-    setModalVisible(true);
+    if (userId) {
+      onSubmitCart(totalPrice / price);
+      setCartModalVisible(true);
+    } else {
+      setLoginModalVisible(true);
+    }
   };
 
   const handleCounterChange = (v: number) => {
@@ -230,9 +242,15 @@ const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSub
         type="confirm"
         header={<div>장바구니에 상품이 담겼습니다.</div>}
         body={<p>바로 이동하시겠습니까?</p>}
-        visible={modalVisible}
-        setVisible={setModalVisible}
+        visible={cartModalVisible}
+        setVisible={setCartModalVisible}
         onConfirm={movePayPage}
+      />
+      <Modal
+        type="alert"
+        header={<div>로그인이 필요합니다</div>}
+        visible={loginModalVisible}
+        setVisible={setLoginModalVisible}
       />
     </Wrapper>
   );

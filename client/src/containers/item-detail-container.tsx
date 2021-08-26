@@ -90,7 +90,7 @@ const MainItemContainer: FC = () => {
         setCount={setCount}
       />
       <Detail contents={contents} reviewCount={reviewCount} />
-      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
+      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };
