@@ -34,7 +34,6 @@ const Counter = styled.div`
   gap: 24px;
 
   .price {
-    width: 70px;
     text-overflow: clip;
     text-align: end;
   }
