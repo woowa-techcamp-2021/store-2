@@ -29,7 +29,7 @@ const ContinueLink = styled.div`
   color: ${({ theme }) => theme?.colorSoftBlack};
 
   &:hover {
-    border-bottom: 1px solid #000;
+    color: ${({ theme }) => theme?.colorGreyMid};
   }
 `;
 
