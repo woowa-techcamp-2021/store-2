@@ -6,3 +6,10 @@ export interface IReview {
   imgUrl: string;
   userId: string;
 }
+
+export interface IRieviewPost {
+  score: number;
+  title: string;
+  content: string;
+  file: File;
+}
