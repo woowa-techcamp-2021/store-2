@@ -6,6 +6,7 @@ import ItemDetail from 'components/item-detail';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
+import { cartGenerator } from 'utils/cart-generator';
 
 const MainItemContainer: FC = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,25 @@ const MainItemContainer: FC = () => {
   }, [id, dispatch]);
 
   const onSubmitCart = (count: number) => {
-    if (!localStorage.getItem('cart')) {
-      localStorage.setItem('cart', `${id},${thumbnail},${title},${count},${price}`);
+    let cartItemsString = '';
+
+    if (localStorage.getItem('cart')) {
+      const cartItems = cartGenerator();
+      if (cartItems.some(item => item.id === id)) {
+        cartItems.forEach((item, index) => {
+          if (item.id === id) {
+            cartItems[index].count += count;
+          }
+        });
+      }
+      cartItems.forEach(item => {
+        cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
+      });
+      cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
     } else {
-      const data = localStorage.getItem('cart') as string;
-      localStorage.setItem('cart', `${data},${id},${thumbnail},${title},${count},${price}`);
+      cartItemsString = `${id},${thumbnail},${title},${count},${price}`;
     }
+    localStorage.setItem('cart', cartItemsString);
   };
 
   const onBuy = () => {
