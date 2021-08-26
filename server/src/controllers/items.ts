@@ -52,7 +52,7 @@ export const getItems = async (req: Request<unknown, unknown, string[], IQuery>,
   }
 };
 
-export const getItem = async (req: Request<IParams, unknown, unknown, unknown>, res: Response): Promise<void> => {
+export const getItem = async (req: Request<IParams>, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
     let uid;

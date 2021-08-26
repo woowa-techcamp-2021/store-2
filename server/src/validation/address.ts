@@ -18,7 +18,7 @@ interface IRemoveReqBody {
 }
 
 export const addAddressValidation = (
-  req: Request<unknown, unknown, IAddReqBody, unknown>,
+  req: Request<unknown, unknown, IAddReqBody>,
   res: Response,
   next: NextFunction,
 ): void => {
@@ -75,7 +75,7 @@ export const addAddressValidation = (
 };
 
 export const removeAddressValidation = (
-  req: Request<unknown, unknown, IRemoveReqBody, unknown>,
+  req: Request<unknown, unknown, IRemoveReqBody>,
   res: Response,
   next: NextFunction,
 ): void => {

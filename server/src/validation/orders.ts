@@ -55,7 +55,7 @@ export const getOrdersValidation = (
 };
 
 export const postOrderValidation = (
-  req: Request<unknown, unknown, PostOrder, unknown>,
+  req: Request<unknown, unknown, PostOrder>,
   res: Response,
   next: NextFunction,
 ): void => {
