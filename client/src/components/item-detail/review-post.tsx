@@ -17,6 +17,7 @@ interface IReviewPostProps {
   setStar: (star: number) => void;
   onSubmit: (e: React.FormEvent) => void;
   error: null | string;
+  reviewSubmitLoading: boolean;
 }
 
 const Wrapper = styled.div`
@@ -88,6 +89,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
   setStar,
   onSubmit,
   error,
+  reviewSubmitLoading,
 }) => {
   if (!userId) return null;
   return (
@@ -146,7 +148,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
           </GridForm>
           <InputErrorMessage>{error}</InputErrorMessage>
           <Flex>
-            <TextButton type="submit" styleType="black" title="저장" />
+            <TextButton type="submit" styleType="black" title="저장" isLoading={reviewSubmitLoading} />
           </Flex>
         </form>
       </Padding>

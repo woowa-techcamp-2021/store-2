@@ -28,21 +28,38 @@ const MainItemContainer: FC = () => {
   const history = useHistory();
   const { id } = useParams();
 
-  const { thumbnail, title, price, contents, isLike, isSoldOut, userId, error, reviews, pageCount, totalCount } =
-    useSelector(({ item, auth, review }: RootState) => ({
-      thumbnail: item.item.thumbnail,
-      title: item.item.title,
-      price: item.item.price,
-      contents: item.item.contents,
-      salePercent: item.item.salePercent,
-      isLike: item.item.isLike,
-      isSoldOut: item.item.isSoldOut,
-      userId: auth.user.userId,
-      error: review.error,
-      reviews: review.list.reviews,
-      pageCount: review.list.pageCount,
-      totalCount: review.list.totalCount,
-    }));
+  const {
+    thumbnail,
+    title,
+    price,
+    contents,
+    isLike,
+    isSoldOut,
+    userId,
+    error,
+    reviews,
+    pageCount,
+    totalCount,
+    reviewLoading,
+    reviewSubmitLoading,
+    itemLoading,
+  } = useSelector(({ item, auth, review, loading }: RootState) => ({
+    thumbnail: item.item.thumbnail,
+    title: item.item.title,
+    price: item.item.price,
+    contents: item.item.contents,
+    salePercent: item.item.salePercent,
+    isLike: item.item.isLike,
+    isSoldOut: item.item.isSoldOut,
+    userId: auth.user.userId,
+    error: review.error,
+    reviews: review.list.reviews,
+    pageCount: review.list.pageCount,
+    totalCount: review.list.totalCount,
+    reviewLoading: loading['review/getReviews'],
+    reviewSubmitLoading: loading['review/postReview'],
+    itemLoading: loading['item/getItem'],
+  }));
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -139,7 +156,13 @@ const MainItemContainer: FC = () => {
         onBuy={onBuy}
         setCount={setCount}
       />
-      <Detail contents={contents} reviewCount={totalCount} reviews={reviews} />
+      <Detail
+        contents={contents}
+        reviewCount={totalCount}
+        reviews={reviews}
+        itemLoading={itemLoading}
+        reviewLoading={reviewLoading}
+      />
       <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
       <ReviewPost
         userId={userId}
@@ -152,6 +175,7 @@ const MainItemContainer: FC = () => {
         setStar={setStar}
         onSubmit={onSubmit}
         error={error}
+        reviewSubmitLoading={reviewSubmitLoading}
       />
       <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>
