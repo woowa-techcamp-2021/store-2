@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/main', checkExistHeader, getMainItems);
 router.post('/', checkExistHeader, getItems);
-router.get('/:id', checkExistHeader, getItem);
 router.get('/order', getOrderItems);
+router.get('/:id', checkExistHeader, getItem);
 
 export default router;
