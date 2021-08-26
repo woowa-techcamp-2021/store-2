@@ -41,7 +41,6 @@ const Cart: FC = () => {
   const [checkedItems, setCheckedItems] = useState(new Set<number>());
   const history = useHistory();
   const onClick = useCallback(() => history.goBack(), [history]);
-  console.log('cart render', checkedItems);
 
   const deleteSelectCartItem = () => {
     const data = localStorage.getItem('select') as string;

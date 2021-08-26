@@ -62,7 +62,6 @@ const TableSection: FC<TableSectionProps> = ({
   setCheckAll,
   setCheckedItems,
 }) => {
-  console.log('table section render', checkedItems);
   const updatePrice = (set: Set<number>) => {
     const prices = [] as number[];
     let totalCount = 0;
