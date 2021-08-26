@@ -23,7 +23,7 @@ const TableBody = styled.table`
 
     th {
       padding: 16px 24px;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: ${({ theme }) => theme?.weightBold};
       vertical-align: middle;
     }
@@ -47,7 +47,7 @@ const TableBody = styled.table`
 
 const TableCell = styled.td`
   padding: 12px 24px;
-  font-size: 16px;
+  font-size: 14px;
   vertical-align: middle;
 
   ${({ theme }) => theme?.mobile} {
