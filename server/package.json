@@ -13,8 +13,8 @@
   "author": "woowa-techcamp-store-2",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json'",
-    "lint:fix": "eslint ./src --ext .js,.ts --parser-options=project:'./tsconfig.json' --fix",
+    "lint": "eslint ./src --ext .ts --parser-options=project:'./tsconfig.json'",
+    "lint:fix": "eslint ./src --ext .ts --parser-options=project:'./tsconfig.json' --fix",
     "sequelize": "NODE_ENV=development sequelize $*",
     "start": "export NODE_ENV=development && nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
     "build": "export NODE_ENV=production && eslint && tsc",
