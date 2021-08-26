@@ -1,6 +1,10 @@
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
+import likeService from 'services/like';
+
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
+import { ItemAttributes, ItemCreationAttributes } from 'models/item';
+import { Model } from 'sequelize';
 
 interface IMainItems {
   popularItems: IItems;
@@ -27,6 +31,7 @@ async function mainItems(visited: string[]): Promise<IMainItems> {
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
     itemRepository.getRecommendItems(visited, false),
   ]);
+
   return { popularItems, newItems, recommendItems };
 }
 
@@ -98,8 +103,25 @@ async function getItem(id: string): Promise<IGetItem> {
   return itemData;
 }
 
+async function matchUserLikeItem(
+  itemList: Model<ItemAttributes, ItemCreationAttributes>[],
+  userId?: string,
+): Promise<unknown[]> {
+  const result = await Promise.all(
+    itemList.map(async item => {
+      const itemId = parseInt(item.getDataValue('id'), 10);
+      return {
+        ...item.toJSON(),
+        isLike: userId ? await likeService.isUserLikeItem(userId, itemId) : false,
+      };
+    }),
+  );
+  return result;
+}
+
 export default {
   mainItems,
   getItems,
   getItem,
+  matchUserLikeItem,
 };
