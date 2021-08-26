@@ -2,38 +2,19 @@ import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
-import { IReview } from 'types/review';
-
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
-import { Modal } from 'components';
+import { Modal, Pagination } from 'components';
 
 import { PAYMENT_URL } from 'constants/urls';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
 import ReviewPost from 'components/item-detail/review-post';
-import { postReview } from 'store/review';
+import { getReviews, postReview } from 'store/review';
 import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
-
-const mockupReview: IReview[] = [
-  {
-    score: 5,
-    title: '후기제목',
-    contents: '아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요',
-    imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
-    userId: 'guest',
-  },
-  {
-    score: 4,
-    title: '후기제목',
-    contents: '내요옹',
-    imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
-    userId: 'abcd',
-  },
-];
 
 const MainItemContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -41,14 +22,14 @@ const MainItemContainer: FC = () => {
   const [file, setFile] = useState<null | File>(null);
   const [star, setStar] = useState(5);
   const [count, setCount] = useState(1);
+  const [pageId, setPageId] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
 
-  // TODO: 리뷰 리스트, 리뷰 카운트
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount, userId, error } = useSelector(
-    ({ item, auth, review }: RootState) => ({
+  const { thumbnail, title, price, contents, isLike, isSoldOut, userId, error, reviews, pageCount, totalCount } =
+    useSelector(({ item, auth, review }: RootState) => ({
       thumbnail: item.item.thumbnail,
       title: item.item.title,
       price: item.item.price,
@@ -56,20 +37,26 @@ const MainItemContainer: FC = () => {
       salePercent: item.item.salePercent,
       isLike: item.item.isLike,
       isSoldOut: item.item.isSoldOut,
-      reviewCount: item.item.reviewCount,
       userId: auth.user.userId,
       error: review.error,
-    }),
-  );
+      reviews: review.list.reviews,
+      pageCount: review.list.pageCount,
+      totalCount: review.list.totalCount,
+    }));
   const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    dispatch({ type: getItem.type, payload: { id } });
+    dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
+    setPostTitle('');
+    setPostContent('');
+    setFile(null);
+    setStar(5);
+  }, [id, dispatch, pageId]);
 
   useEffect(() => {
     setIsLiked(isLike);
   }, [isLike]);
-
-  useEffect(() => {
-    dispatch({ type: getItem.type, payload: { id } });
-  }, [id, dispatch]);
 
   const toggleIsLiked = () => {
     if (!isLiked) {
@@ -149,7 +136,8 @@ const MainItemContainer: FC = () => {
         onBuy={onBuy}
         setCount={setCount}
       />
-      <Detail contents={contents} reviewCount={reviewCount} reviews={mockupReview} />
+      <Detail contents={contents} reviewCount={totalCount} reviews={reviews} />
+      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
       <ReviewPost
         userId={userId}
         postTitle={postTitle}
