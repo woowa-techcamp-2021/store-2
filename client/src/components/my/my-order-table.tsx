@@ -48,7 +48,7 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
   ) : (
     <Table headers={tableHeaders}>
       {orders.map(order => {
-        const { createdAt, title, thumbnail, price, count, status } = order;
+        const { createdAt, title, thumbnail, price, quantity, status } = order;
         return (
           <Fragment key={title}>
             <TableRowText>{createdAt}</TableRowText>
@@ -57,7 +57,7 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
               {title}
             </TableRowTitle>
             <TableRowText>
-              {formatPrice(price)}원 / {count}개
+              {formatPrice(price)}원 / {quantity}개
             </TableRowText>
             <TableRowText>{status}</TableRowText>
           </Fragment>
