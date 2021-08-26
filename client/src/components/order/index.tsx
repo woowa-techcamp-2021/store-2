@@ -40,6 +40,7 @@ const Term = styled.p`
   line-height: 17px;
   margin-bottom: 12px;
   align-self: center;
+  text-align: center;
 
   ${({ theme }) => theme?.mobile} {
     width: 100%;
@@ -79,6 +80,10 @@ const SubmitErrorMessage = styled.div`
   font-size: 12px;
   color: ${({ theme }) => theme?.colorError};
   margin-top: 16px;
+`;
+
+const ButtonDiv = styled.div`
+  margin-bottom: 34px;
 `;
 
 const Order: FC<OrderProps> = ({
@@ -183,8 +188,10 @@ const Order: FC<OrderProps> = ({
             />
           </CheckBoxDiv>
         </Agree>
-        <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
-        <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
+        <ButtonDiv>
+          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
+          <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
+        </ButtonDiv>
       </Form>
     </>
   );
