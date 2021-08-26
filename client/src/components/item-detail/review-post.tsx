@@ -118,11 +118,20 @@ const ReviewPost: FC<IReviewPostProps> = ({
                 );
               })}
             </div>
-            <input value={postTitle} onChange={e => setPostTitle(e.target.value)} name="postTitle" />
+            <input
+              value={postTitle}
+              onChange={e => setPostTitle(e.target.value)}
+              name="postTitle"
+              required
+              minLength={2}
+              maxLength={30}
+            />
             <textarea
               value={postContent}
               onChange={e => setPostContent(e.target.value)}
               name="postContent"
+              required
+              minLength={5}
               maxLength={100}
             />
             <input
