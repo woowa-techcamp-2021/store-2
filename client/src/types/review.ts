@@ -1,5 +1,4 @@
 export interface IReview {
-  id: number;
   score: number;
   title: string;
   content: string;
@@ -7,9 +6,21 @@ export interface IReview {
   userId: string;
 }
 
+export interface IListReview {
+  reviews: IReview[];
+  totalCount: number;
+  pageCount: number;
+}
+
 export interface IRieviewPost {
   score: number;
   title: string;
   content: string;
   file: File;
+  ItemId?: number;
+}
+
+export interface IReviewState {
+  itemId: number;
+  pageId?: number;
 }
