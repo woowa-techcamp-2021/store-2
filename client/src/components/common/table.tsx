@@ -5,7 +5,7 @@ import CircleLoader from './loader/circle-loader';
 
 interface TableProps {
   headers: TableColumn[];
-  loading: boolean;
+  loading?: boolean;
 }
 
 interface TableColumn {

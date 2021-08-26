@@ -10,6 +10,7 @@ import { RootState } from 'store';
 import { getItem } from 'store/item';
 import { addLike, deleteLike } from 'store/like';
 
+import { cartGenerator } from 'utils/cart-generator';
 import { PAYMENT_URL } from 'constants/urls';
 
 const MainItemContainer: FC = () => {
@@ -51,8 +52,35 @@ const MainItemContainer: FC = () => {
     }
   };
 
-  const onSubmitCart = () => {
-    // TODO: 장바구니 추가
+  const onSubmitCart = (count: number) => {
+    let cartItemsString = '';
+
+    if (localStorage.getItem('cart') !== null) {
+      const cartItems = cartGenerator();
+
+      if (cartItems.some(item => item.id === id)) {
+        cartItems.forEach((item, index) => {
+          if (item.id === id) {
+            cartItems[index].count += count;
+          }
+        });
+      } else {
+        cartItems.push({
+          id,
+          thumbnail,
+          title,
+          count,
+          price,
+        });
+      }
+      cartItems.forEach(item => {
+        cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
+      });
+      cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
+    } else {
+      cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
+    }
+    localStorage.setItem('cart', cartItemsString);
   };
 
   const onBuy = () => {
@@ -79,7 +107,7 @@ const MainItemContainer: FC = () => {
         setCount={setCount}
       />
       <Detail contents={contents} reviewCount={reviewCount} />
-      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
+      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };

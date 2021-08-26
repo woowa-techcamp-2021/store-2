@@ -11,6 +11,7 @@ import {
   ORDER_LIST_URL,
   PAYMENT_URL,
   ADDRESS_URL,
+  CART_URL,
 } from 'constants/urls';
 
 import {
@@ -24,6 +25,7 @@ import {
   MyOrderListPage,
   OrderPage,
   MyAddressPage,
+  CartPage,
 } from 'pages';
 import Theme from './styles/theme';
 
@@ -39,6 +41,7 @@ const App: React.FC = () => {
           <Route exact path={ITEM_LIST_URL} component={ItemListPage} />
           <Route exact path={`${ITEM_URL}/:id`} component={ItemDetailPage} />
           <Route exact path={ORDER_LIST_URL} component={MyOrderListPage} />
+          <Route exact path={CART_URL} component={CartPage} />
           <Route exact path={ADDRESS_URL} component={MyAddressPage} />
           <Route exact path={PAYMENT_URL} component={OrderPage} />
           <Route path="" component={NotFoundPage} />
