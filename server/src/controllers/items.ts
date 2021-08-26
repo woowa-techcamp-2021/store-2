@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import itemService, { ItemType } from 'services/items';
 
 import errorHandler from 'utils/error/error-handler';
+import { getUIDFromToken, getAccessToken, checkTokenExists } from 'utils/jwt';
 
 interface IQuery {
   categoryId: string;
@@ -17,10 +18,16 @@ interface IParams {
 
 export const getMainItems = async (req: Request, res: Response): Promise<void> => {
   try {
+    let uid;
+    if (checkTokenExists(req)) uid = getUIDFromToken(getAccessToken(req.headers.authorization));
+
     const { popularItems, newItems, recommendItems } = await itemService.mainItems(req.body);
-    res
-      .status(200)
-      .json({ popularItems: popularItems.items, newItems: newItems.items, recommendItems: recommendItems.items });
+
+    res.status(200).json({
+      popularItems: await itemService.matchUserLikeItem(popularItems.items, uid),
+      newItems: await itemService.matchUserLikeItem(newItems.items, uid),
+      recommendItems: await itemService.matchUserLikeItem(recommendItems.items, uid),
+    });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -31,9 +38,13 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
 export const getItems = async (req: Request<unknown, unknown, string[], IQuery>, res: Response): Promise<void> => {
   const { categoryId, pageId, type, search } = req.query;
   try {
+    let uid;
+    if (checkTokenExists(req)) uid = getUIDFromToken(getAccessToken(req.headers.authorization));
+
     const data = await itemService.getItems(categoryId, pageId, type, search, req.body);
     const { items, totalCount, pageCount } = data;
-    res.status(200).json({ items, totalCount, pageCount });
+
+    res.status(200).json({ items: await itemService.matchUserLikeItem(items, uid), totalCount, pageCount });
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);
@@ -44,8 +55,11 @@ export const getItems = async (req: Request<unknown, unknown, string[], IQuery>,
 export const getItem = async (req: Request<IParams, unknown, unknown, unknown>, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const items = await itemService.getItem(id);
-    res.status(200).json(items);
+    let uid;
+    if (checkTokenExists(req)) uid = getUIDFromToken(getAccessToken(req.headers.authorization));
+
+    const item = await itemService.getItem(id, uid);
+    res.status(200).json(item);
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);

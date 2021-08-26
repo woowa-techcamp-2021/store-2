@@ -1,8 +1,10 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 
 import starsTitle from 'assets/icons/stars_title.png';
+import likeIcon from 'assets/icons/like.svg';
+import likeFilledIcon from 'assets/icons/like_filled.svg';
 
 import { formatPrice } from 'utils';
 
@@ -14,7 +16,9 @@ export interface ItemInfoProps {
   thumbnail: string;
   title: string;
   price: number;
-  isLike: boolean;
+  likeShow: boolean;
+  isLiked: boolean;
+  setIsLiked: Dispatch<SetStateAction<boolean>>;
   isSoldOut: boolean;
   onSubmitCart: () => void;
   onBuy: () => void;
@@ -161,7 +165,27 @@ const PaymentWrapper = styled.form`
   }
 `;
 
-const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy, setCount }) => {
+const LikeWrapper = styled.div`
+  cursor: pointer;
+  margin-right: 5px;
+
+  img {
+    width: 30px;
+  }
+`;
+
+const ItemInfo: FC<ItemInfoProps> = ({
+  thumbnail,
+  title,
+  price,
+  likeShow,
+  isLiked,
+  setIsLiked,
+  isSoldOut,
+  onSubmitCart,
+  onBuy,
+  setCount,
+}) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const { width } = useWindowSize();
 
@@ -205,6 +229,15 @@ const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSub
               <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
+                {likeShow && (
+                  <LikeWrapper onClick={setIsLiked}>
+                    {isLiked ? (
+                      <img className="like like-fill" src={likeFilledIcon} alt="like" />
+                    ) : (
+                      <img className="like like-empty" src={likeIcon} alt="like" />
+                    )}
+                  </LikeWrapper>
+                )}
                 <TextButton title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
                 <TextButton title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
