@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
-import { IMainItem, IListItem, IItemState } from 'types/item';
-import { ISearchState, AutoCompleteKeyword } from 'types/search';
-import client from './client';
+import { IItemState } from 'types/item';
+import { ISearchState } from 'types/search';
+import request from './request';
 
 export const getMainItem = (): Promise<AxiosResponse> => {
   const visited = localStorage.getItem('visited')?.split(',');
 
-  return client.post<IMainItem>('/api/items/main', visited);
+  return request<string[]>('POST', '/api/items/main', visited);
 };
 
 export const getListItem = ({ categoryId, pageId, type, search }: IItemState): Promise<AxiosResponse> => {
@@ -20,10 +20,11 @@ export const getListItem = ({ categoryId, pageId, type, search }: IItemState): P
   if (search) arr.push(`search=${search}&`);
   url += arr.join('');
   url = url.slice(0, url.length - 1);
-  return client.post<IListItem>(url, visited);
+
+  return request<string[]>('POST', url, visited);
 };
 
-export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => client.get(`/api/items/${id}`);
+export const getItem = ({ id }: { id: string }): Promise<AxiosResponse> => request('GET', `/api/items/${id}`);
 
-export const getAutoComplete = ({ keyword }: ISearchState): Promise<AxiosResponse<AutoCompleteKeyword>> =>
-  client.get(`/api/search?keyword=${keyword}`);
+export const getAutoComplete = ({ keyword }: ISearchState): Promise<AxiosResponse> =>
+  request('GET', `/api/search?keyword=${keyword}`);

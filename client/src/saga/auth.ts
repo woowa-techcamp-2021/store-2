@@ -62,11 +62,7 @@ function* signupSaga(action: PayloadAction<IAuthState>): Generator {
 function* checkAuthSaga(): Generator {
   try {
     yield put(startLoading(authStore.getUser));
-    const { data } = (yield call(
-      authAPI.checkAuth,
-      localStorage.getItem('user') || '',
-    )) as AxiosResponse<IReceiveServer>;
-
+    const { data } = (yield call(authAPI.checkAuth)) as AxiosResponse<IReceiveServer>;
     yield put({ type: authStore.getUserSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
