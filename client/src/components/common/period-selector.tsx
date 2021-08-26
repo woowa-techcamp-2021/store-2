@@ -113,7 +113,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
         <h3>조회기간</h3>
         <RegionFlex>
           {btn.map(([text, fn], idx) => (
-            <button key={idx.toString()} type="button" onClick={fn} className={select === idx ? 'active' : ''}>
+            <button key={text} type="button" onClick={fn} className={select === idx ? 'active' : ''}>
               {text}
             </button>
           ))}
