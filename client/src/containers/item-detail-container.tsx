@@ -7,11 +7,32 @@ import Detail from 'components/item-detail/detail';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
+import { IReview } from 'types/review';
+
+const mockupReview: IReview[] = [
+  {
+    id: 1,
+    score: 5,
+    title: '후기제목',
+    content: '아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요',
+    imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
+    userId: 'guest',
+  },
+  {
+    id: 2,
+    score: 4,
+    title: '후기제목',
+    content: '내요옹',
+    imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
+    userId: 'abcd',
+  },
+];
 
 const MainItemContainer: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  // TODO: 리뷰 리스트, 리뷰 카운트
   const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ item }: RootState) => ({
     thumbnail: item.item.thumbnail,
     title: item.item.title,
@@ -46,7 +67,7 @@ const MainItemContainer: FC = () => {
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
       />
-      <Detail contents={contents} reviewCount={reviewCount} />
+      <Detail contents={contents} reviewCount={reviewCount} reviews={mockupReview} />
     </>
   );
 };
