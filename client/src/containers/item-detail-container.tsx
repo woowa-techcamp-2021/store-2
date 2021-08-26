@@ -32,6 +32,7 @@ const MainItemContainer: FC = () => {
 
     if (localStorage.getItem('cart') !== null) {
       const cartItems = cartGenerator();
+
       if (cartItems.some(item => item.id === id)) {
         cartItems.forEach((item, index) => {
           if (item.id === id) {
@@ -51,6 +52,8 @@ const MainItemContainer: FC = () => {
         cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
       });
       cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
+    } else {
+      cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
     }
     localStorage.setItem('cart', cartItemsString);
   };
