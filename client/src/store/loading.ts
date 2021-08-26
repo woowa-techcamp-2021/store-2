@@ -14,6 +14,8 @@ const loadingSlice = createSlice({
     'address/getListAddress': false,
     'address/addAddress': false,
     'address/removeAddAddress': false,
+    'review/getReviews': false,
+    'review/postReview': false,
   },
   reducers: {
     startLoading: (state, action) => ({ ...state, [action.payload]: true }),
