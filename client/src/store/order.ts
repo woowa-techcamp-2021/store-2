@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
+
 import { IOrderList, IOrderItem } from 'types/order';
 import { postOrderSaga, getOrderItemsSaga, getOrdersSaga } from 'saga/order';
 
@@ -50,6 +51,7 @@ const orderSlice = createSlice({
 });
 
 const { actions, reducer: orderReducer } = orderSlice;
+
 export const {
   getOrders,
   getOrdersSuccess,

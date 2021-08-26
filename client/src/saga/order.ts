@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
+
 import * as orderAPI from 'utils/api/order';
 import * as itemAPI from 'utils/api/item';
 import axios, { AxiosResponse } from 'axios';
@@ -15,10 +16,7 @@ import { MAIN_URL } from 'constants/urls';
 function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
   try {
     yield put(startLoading(orderStore.getOrders));
-    const { data } = (yield call(
-      orderAPI.getOrderList,
-      action.payload as unknown as IOrderState,
-    )) as AxiosResponse<IOrderList>;
+    const { data } = (yield call(orderAPI.getOrderList, action.payload)) as AxiosResponse<IOrderList>;
     yield put({ type: orderStore.getOrdersSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
