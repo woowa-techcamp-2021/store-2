@@ -13,13 +13,12 @@ import Modal from 'components/common/modal';
 import PriceCalculator from 'components/common/price-calculator';
 import { TableSection, CartItem } from './table-section';
 
-const Title = styled.h2`
+const SectionTitle = styled.h4`
   width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme?.weightBold};
-  padding-bottom: 30px;
-  border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
-  margin-bottom: 24px;
+  padding-bottom: 12px;
+  margin-top: 5px;
 `;
 
 const ContinueLink = styled.div`
@@ -31,8 +30,13 @@ const ContinueLink = styled.div`
 
 const ButtonDiv = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 50px;
+  @media all and (max-width: 800px) {
+    gap: 14px;
+    justify-content: center;
+  }
 `;
 
 const OrderButtonDiv = styled.div``;
@@ -100,27 +104,25 @@ const Cart: FC = () => {
 
   return (
     <>
-      <Title>장바구니</Title>
-      <>
-        <TableSection
-          cartItems={cartItems}
-          checkedItems={checkedItems}
-          checkAll={checkAll}
-          setPrices={setPrices}
-          setTotalCount={setTotalCount}
-          setCheckAll={setCheckAll}
-          setCheckedItems={setCheckedItems}
-        />
-        <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
-        <PriceCalculator prices={prices} totalCount={totalCount} />
-        <ButtonDiv>
-          <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
-          <OrderButtonDiv>
-            <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={onClickOrder(false)} />
-            <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
-          </OrderButtonDiv>
-        </ButtonDiv>
-      </>
+      <SectionTitle> </SectionTitle>
+      <TableSection
+        cartItems={cartItems}
+        checkedItems={checkedItems}
+        checkAll={checkAll}
+        setPrices={setPrices}
+        setTotalCount={setTotalCount}
+        setCheckAll={setCheckAll}
+        setCheckedItems={setCheckedItems}
+      />
+      <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
+      <PriceCalculator prices={prices} totalCount={totalCount} />
+      <ButtonDiv>
+        <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
+        <OrderButtonDiv>
+          <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={onClickOrder(false)} />
+          <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
+        </OrderButtonDiv>
+      </ButtonDiv>
       <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
