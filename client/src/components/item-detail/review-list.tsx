@@ -11,6 +11,7 @@ import { filterId } from 'utils';
 
 interface IReviewListProps {
   reviews: IReview[];
+  reviewLoading: boolean;
 }
 
 const Wrapper = styled.div`
@@ -52,6 +53,15 @@ const Review = styled.div`
   }
 `;
 
+const Empty = styled.div`
+  font-size: 80px;
+  color: ${({ theme }) => theme?.colorLine};
+  text-align: center;
+  font-family: ${({ theme }) => theme?.fontEuljiro10};
+
+  padding: 30px 0;
+`;
+
 const makeStar = (score: number): boolean[] => {
   const star: boolean[] = [];
   while (star.length !== 5) {
@@ -61,10 +71,11 @@ const makeStar = (score: number): boolean[] => {
   return star;
 };
 
-const ReviewList: FC<IReviewListProps> = ({ reviews }) => {
+const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
   const [state, setState] = useState<null | number>(null);
   return (
     <Wrapper>
+      {!reviewLoading && reviews.length === 0 && <Empty>텅</Empty>}
       {reviews.map((review, idx) => {
         const { score, title, imgUrl, contents, userId } = review;
         return (

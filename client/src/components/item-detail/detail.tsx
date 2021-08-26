@@ -51,7 +51,7 @@ const Detail: FC<DetailProps> = ({ contents, itemLoading, reviewCount, reviews, 
         </DetailImageWrapper>
       </DetailWrapper>
       <DetailWrapper select="review" reviewCount={reviewCount}>
-        <ReviewList reviews={reviews} />
+        <ReviewList reviews={reviews} reviewLoading={reviewLoading} />
       </DetailWrapper>
     </Container>
   );
