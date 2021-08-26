@@ -55,6 +55,8 @@ function errorHandler(err: CustomError): ErrorType {
       };
     case 'likes/no-delete':
       return { statusCode: 400, errorMessage: err.customMessage || '좋아요를 누른 적이 없는 아이템입니다.' };
+    case 'reviews/user-not-paid':
+      return { statusCode: 403, errorMessage: err.customMessage || '잘못된 요청입니다' };
 
     default:
       return { statusCode: 500, errorMessage: '다시 시도해주세요.' };

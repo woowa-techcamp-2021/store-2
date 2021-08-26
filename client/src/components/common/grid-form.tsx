@@ -8,16 +8,36 @@ interface GridFormProps {
 const FormContainer = styled.div`
   width: 100%;
 
-  input {
+  textarea {
+    resize: none;
+    height: 300px;
+    outline: none;
+  }
+  input,
+  textarea {
     font-size: 14ox;
     padding: 6px 12px;
     border: 1px solid ${({ theme }) => theme?.colorLineLight};
-    min-width: 220px;
+    width: 240px;
   }
 
   ${({ theme }) => theme?.mobile} {
-    input {
-      min-width: 100%;
+    input,
+    textarea {
+      width: 100%;
+    }
+    textarea {
+      height: 120px;
+    }
+  }
+  ${({ theme }) => theme?.tablet} {
+    input,
+    textarea {
+      width: 100%;
+      max-width: 220px;
+    }
+    textarea {
+      height: 200px;
     }
   }
 `;

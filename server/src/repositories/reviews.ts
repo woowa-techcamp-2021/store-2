@@ -10,24 +10,6 @@ interface ReviewData extends ReviewAttribures {
 
 const LIMIT_COUNT = 10;
 
-const postReview = async (
-  uid: string,
-  itemId: number,
-  title: string,
-  contents: string,
-  score: number,
-  imgUrl: string,
-): Promise<void> => {
-  await db.Review.create({
-    title,
-    contents,
-    score,
-    imgUrl,
-    ItemId: itemId,
-    UserId: uid,
-  });
-};
-
 const getReviews = async (
   itemId: number,
   pageId: number,
@@ -64,4 +46,34 @@ const getReviews = async (
   return { reviewData, totalCount };
 };
 
-export default { postReview, getReviews };
+const checkPaidUser = async (uid: string, itemId: number): Promise<boolean> => {
+  const paidCount = await db.Order.count({
+    where: {
+      ItemId: itemId,
+      UserId: uid,
+    },
+  });
+
+  return !!paidCount;
+};
+
+const postReview = async (
+  uid: string,
+  itemId: number,
+  title: string,
+  contents: string,
+  score: number,
+  imgUrl: string,
+): Promise<{ reviewData: Model<ReviewData, ReviewCreationAttributes>[]; totalCount: number }> => {
+  await db.Review.create({
+    title,
+    contents,
+    score,
+    imgUrl,
+    ItemId: itemId,
+    UserId: uid,
+  });
+  return getReviews(itemId, 1);
+};
+
+export default { postReview, getReviews, checkPaidUser };

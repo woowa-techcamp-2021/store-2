@@ -17,6 +17,10 @@ export interface PostOrder {
   itemList: { itemId: number; quantity: number }[];
 }
 
+export interface CheckPaidUserQuery {
+  itemId: number;
+}
+
 export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>, res: Response): Promise<void> => {
   const { pageId, prevDate, currentDate } = req.query;
   const token = getAccessToken(req.headers.authorization);
