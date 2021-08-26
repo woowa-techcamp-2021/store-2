@@ -12,10 +12,13 @@ import * as orderStore from 'store/order';
 import { finishLoading, startLoading } from 'store/loading';
 import { MAIN_URL } from 'constants/urls';
 
-function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
+function* getOrdersSaga(action: PayloadAction): Generator {
   try {
     yield put(startLoading(orderStore.getOrders));
-    const { data } = (yield call(orderAPI.getOrderList, action.payload)) as AxiosResponse<IOrderList>;
+    const { data } = (yield call(
+      orderAPI.getOrderList,
+      action.payload as unknown as IOrderState,
+    )) as AxiosResponse<IOrderList>;
     yield put({ type: orderStore.getOrdersSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
@@ -40,7 +43,7 @@ function* postOrderSaga(action: PayloadAction): Generator {
       const { errorMessage } = err.response?.data as IError;
       yield put({ type: orderStore.postOrderFail, payload: errorMessage });
     } else {
-      yield put({ type: orderStore.postOrderFail, payload: '알 수 없는 에러가 발생했습니다.' });
+      yield put({ type: orderStore.postOrderFail, payload: INNER_ERROR });
     }
   } finally {
     yield put(finishLoading(orderStore.getOrders));
@@ -59,7 +62,7 @@ function* getOrderItemsSaga(action: PayloadAction): Generator {
       const { errorMessage } = err.response?.data as IError;
       yield put({ type: orderStore.getOrderItemsFail, payload: errorMessage });
     } else {
-      yield put({ type: orderStore.getOrderItemsFail, payload: '알 수 없는 에러가 발생했습니다.' });
+      yield put({ type: orderStore.getOrderItemsFail, payload: INNER_ERROR });
     }
   } finally {
     yield put(finishLoading(orderStore.getOrderItems));
