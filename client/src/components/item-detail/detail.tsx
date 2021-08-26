@@ -30,6 +30,11 @@ const DetailImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
+  .detail-empty {
+    font-size: 18px;
+    font-family: ${({ theme }) => theme?.fontHannaAir};
+  }
+
   img {
     ${({ theme }) => theme?.tablet} {
       width: 100%;
@@ -60,9 +65,13 @@ const Detail: FC<DetailProps> = ({ contents, itemLoading, reviewCount, reviews, 
         reviewExecuteScroll={reviewExecuteScroll}
       >
         <DetailImageWrapper>
-          {contents.map((v, i) => {
-            return <img src={v} key={v} alt={`${i}`} />;
-          })}
+          {!contents || contents.length === 0 ? (
+            <div className="detail-empty">상품 상세 정보를 준비 중입니다.</div>
+          ) : (
+            contents.map((content, i) => {
+              return <img src={content} key={content} alt={`${i}`} />;
+            })
+          )}
         </DetailImageWrapper>
       </DetailWrapper>
       <DetailWrapper

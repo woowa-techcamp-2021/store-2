@@ -28,6 +28,7 @@ const DetailContent = styled.div`
   border: 3px solid ${({ theme }) => theme?.colorLine};
   background-color: white;
   padding: 5%;
+  min-height: 100px;
 `;
 
 const Marker = styled.div`

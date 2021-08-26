@@ -7,6 +7,7 @@ import useWindowSize from 'hooks/use-window-size';
 import starsTitle from 'assets/icons/stars_title.png';
 import likeIcon from 'assets/icons/like.svg';
 import likeFilledIcon from 'assets/icons/like_filled.svg';
+import noImg from 'assets/images/no_image.png';
 
 import { formatPrice } from 'utils';
 import { CART_URL } from 'constants/urls';
@@ -215,10 +216,10 @@ const ItemInfo: FC<ItemInfoProps> = ({
 
   return (
     <Wrapper>
-      {width >= 1200 ? (
+      {thumbnail && width >= 1200 ? (
         <ImageViewer className="image-viewer" imgSrc={thumbnail} imgWidth={450} imgHeight={527} />
       ) : (
-        <Thumbnail src={thumbnail} alt={title} />
+        <Thumbnail src={thumbnail || noImg} alt={title} />
       )}
       <Info>
         <div className="top-wrapper">

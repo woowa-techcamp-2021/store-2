@@ -14,8 +14,7 @@ interface IReviewListProps {
 }
 
 const Wrapper = styled.div`
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin: 20px 0;
   display: flex;
   flex-direction: column;
 `;
@@ -61,8 +60,6 @@ const Empty = styled.div`
   color: ${({ theme }) => theme?.colorLine};
   text-align: center;
   font-family: ${({ theme }) => theme?.fontEuljiro10};
-
-  padding: 30px 0;
 `;
 
 const makeStar = (score: number): boolean[] => {
