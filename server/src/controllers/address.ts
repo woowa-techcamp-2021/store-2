@@ -10,7 +10,9 @@ interface IAddReqBody {
 }
 
 interface IRemoveReqBody {
-  id: string;
+  data: {
+    id: string;
+  };
 }
 
 export const getAddress = async (req: Request<unknown, unknown, unknown, unknown>, res: Response): Promise<void> => {
@@ -49,7 +51,7 @@ export const removeAddress = async (
 ): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
-  const { id } = req.body;
+  const { id } = req.body.data;
   try {
     const address = await addressService.removeAddress(id, uid);
     res.status(200).json(address);
