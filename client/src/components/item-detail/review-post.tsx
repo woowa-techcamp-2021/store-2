@@ -33,6 +33,9 @@ const Wrapper = styled.div`
     width: 18px;
     height: 17px;
   }
+  input[type='button'] {
+    cursor: pointer;
+  }
   .star {
     width: 18px;
     height: 17px;
