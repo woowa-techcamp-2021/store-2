@@ -1,13 +1,16 @@
 import React, { useState, useEffect, FC } from 'react';
+import { useHistory } from 'lib/router';
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 
 import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
+import { CART_URL } from 'constants/urls';
 
 import { TextButton } from 'components';
 import ImageViewer from 'components/image-viewer';
+import Modal from 'components/common/modal';
 import ItemCounter from './item-counter';
 
 export interface ItemInfoProps {
@@ -16,7 +19,7 @@ export interface ItemInfoProps {
   price: number;
   isLike: boolean;
   isSoldOut: boolean;
-  onSubmitCart: () => void;
+  onSubmitCart: (count: number) => void;
   onBuy: () => void;
   setCount: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -163,7 +166,18 @@ const PaymentWrapper = styled.form`
 
 const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy, setCount }) => {
   const [totalPrice, setTotalPrice] = useState(price);
+  const [modalVisible, setModalVisible] = useState(false);
+  const history = useHistory();
   const { width } = useWindowSize();
+
+  const movePayPage = () => {
+    history.push(CART_URL);
+  };
+
+  const onClickCart = () => {
+    onSubmitCart(totalPrice / price);
+    setModalVisible(true);
+  };
 
   const handleCounterChange = (v: number) => {
     setTotalPrice(price * v);
@@ -205,13 +219,21 @@ const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSub
               <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
-                <TextButton title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
+                <TextButton title="장바구니" type="button" styleType="white" onClick={onClickCart} />
                 <TextButton title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
             )}
           </div>
         </PaymentWrapper>
       </Info>
+      <Modal
+        type="confirm"
+        header={<div>장바구니에 상품이 담겼습니다.</div>}
+        body={<p>바로 이동하시겠습니까?</p>}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onConfirm={movePayPage}
+      />
     </Wrapper>
   );
 };
