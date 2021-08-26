@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'lib/woowahan-components';
 
+import noImage from 'assets/images/no_image.png';
 import starOn from 'assets/icons/star_on.png';
 import starOff from 'assets/icons/star_off.png';
 
@@ -80,7 +81,7 @@ const ReviewList: FC<IReviewListProps> = ({ reviews }) => {
             </div>
             {idx === state && (
               <div>
-                <img src={imgUrl} alt="후기 이미지" />
+                <img src={imgUrl || noImage} alt="후기 이미지" />
                 <div>{contents}</div>
               </div>
             )}
