@@ -11,6 +11,7 @@ const FormContainer = styled.div`
   textarea {
     resize: none;
     height: 300px;
+    outline: none;
   }
   input,
   textarea {
