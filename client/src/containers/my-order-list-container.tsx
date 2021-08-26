@@ -9,8 +9,6 @@ import { getLastMonth, getLastThreeMonth, getLastWeek, getNextDay, getToday } fr
 
 import { Pagination, PeriodSelector } from 'components';
 import MyNav from 'components/my/my-nav';
-// import MyOrderList from 'components/my/my-order-list';
-// import MyStatusBar from 'components/my/my-status-bar';
 import MyOrderTable from 'components/my/my-order/my-order-table';
 
 const MyOrderListContainer: FC = () => {

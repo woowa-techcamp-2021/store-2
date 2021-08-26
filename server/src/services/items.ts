@@ -110,7 +110,6 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
     isSoldOut: item.getDataValue('amount') < 1,
     isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
     isPaid,
-    // TODO: 리뷰 갯수
     reviewCount: 0,
   };
 

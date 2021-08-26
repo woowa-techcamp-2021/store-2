@@ -22,9 +22,10 @@ const TableBody = styled.table`
     background: ${({ theme }) => theme?.colorFooter};
 
     th {
-      padding: 16px 12px;
-      font-size: 16px;
+      padding: 16px 24px;
+      font-size: 14px;
       font-weight: ${({ theme }) => theme?.weightBold};
+      vertical-align: middle;
     }
   }
 
@@ -38,6 +39,7 @@ const TableBody = styled.table`
     thead {
       th {
         font-size: 12px;
+        padding: 8px 6px;
       }
     }
   }
@@ -45,11 +47,11 @@ const TableBody = styled.table`
 
 const TableCell = styled.td`
   padding: 12px 24px;
-  font-size: 16px;
+  font-size: 14px;
   vertical-align: middle;
 
   ${({ theme }) => theme?.mobile} {
-    padding: 12px 12px;
+    padding: 12px 6px;
     font-size: 12px;
   }
 `;

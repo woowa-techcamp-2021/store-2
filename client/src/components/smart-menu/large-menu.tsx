@@ -106,14 +106,12 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
             <LargeItem
               key={largeId}
               onMouseMove={(e: React.MouseEvent) => {
-                if (isLaptop) {
-                  setTimeout(() => {
-                    if (e.clientX < position.x + 10) {
-                      setLargeId(largeId);
-                    }
-                    setPosition({ x: e.clientX, y: e.clientY });
-                  }, SMART_MENU_BLOCK_DELAY);
-                }
+                setTimeout(() => {
+                  if (e.clientX < position.x + 10) {
+                    setLargeId(largeId);
+                  }
+                  setPosition({ x: e.clientX, y: e.clientY });
+                }, SMART_MENU_BLOCK_DELAY);
               }}
               onClick={() => {
                 if (!isLaptop) {

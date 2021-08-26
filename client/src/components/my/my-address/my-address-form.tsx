@@ -34,6 +34,7 @@ const ButtonWrapper = styled.div`
   margin-bottom: 30px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   > div {
     font-size: 12px;
     color: ${({ theme }) => theme?.colorError};
@@ -70,7 +71,7 @@ const MyAddressForm: FC<MyAddressFormProps> = ({
         </InputWrapper>
       </GridForm>
       <ButtonWrapper>
-        <TextButton type="submit" styleType="black" title="배송지 추가" size="small" isLoading={loading} />
+        <TextButton type="submit" styleType="black" title="배송지 추가" size="tiny" isLoading={loading} />
         <div>{addError}</div>
       </ButtonWrapper>
     </form>

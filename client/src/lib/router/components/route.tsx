@@ -12,7 +12,6 @@ interface IRoute {
 const Route: FC<IRoute> = ({ component, path, exact }) => {
   const { currentPath } = useHistory();
 
-  // TODO: 좀 더 세련된 방법으로
   const pathSplit = path.split('/');
   const currentPathSplit = currentPath.split('?')[0].split('/');
 

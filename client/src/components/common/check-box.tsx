@@ -10,7 +10,6 @@ interface CheckBoxProps {
 
 const Label = styled.label`
   cursor: pointer;
-  margin-bottom: 20px;
   position: relative;
   display: flex;
   font-family: ${props => props.theme?.fontHannaAir};
@@ -35,7 +34,7 @@ const Label = styled.label`
   }
 `;
 
-const CheckMark = styled.span`
+const CheckMark = styled.div`
   height: 14px;
   width: 14px;
   background-color: ${props => props.theme?.colorOffWhite};

@@ -46,8 +46,20 @@ const TableRowText = styled.div`
   text-align: center;
 `;
 
+const CheckBoxDiv = styled.div`
+  margin-bottom: 20px;
+`;
+
+const ItemTitle = styled.div`
+  font-size: 14px;
+
+  ${({ theme }) => theme?.mobile} {
+    font-size: 12px;
+  }
+`;
+
 const tableHeaders = [
-  { column: '상품/옵션 정보', span: 6 },
+  { column: '상품/옵션 정보', span: 1 },
   { column: '수량', span: 1 },
   { column: '상품금액', span: 1 },
   { column: '배송비', span: 1 },
@@ -126,12 +138,16 @@ const TableSection: FC<TableSectionProps> = ({
         const { id, title, thumbnail, count, price } = item;
         return (
           <Fragment key={id}>
-            <TableRowTitle>
+            <CheckBoxDiv className="dd">
               <CheckBox id={idx.toString()} text="" onChange={checkedItemHandler(idx)} check={checkedItems.has(idx)} />
+            </CheckBoxDiv>
+            <TableRowTitle>
               <div>
                 <Link className="item-link" to={`${ITEM_URL}/${id}`}>
-                  <img src={thumbnail} alt={title} />
-                  {title}
+                  <ItemTitle>
+                    <img src={thumbnail} alt={title} />
+                    {title}
+                  </ItemTitle>
                 </Link>
               </div>
             </TableRowTitle>

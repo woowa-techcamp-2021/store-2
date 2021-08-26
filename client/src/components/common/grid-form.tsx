@@ -63,7 +63,7 @@ const RowHead = styled.div`
 
   ${({ theme }) => theme?.mobile} {
     width: 110px;
-    padding: 16px 18px;
+    padding: 16px 14px;
   }
 `;
 

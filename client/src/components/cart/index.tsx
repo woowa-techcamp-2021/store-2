@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
-import { PAYMENT_URL } from 'constants/urls';
+import { PAYMENT_URL, SIGNIN_URL } from 'constants/urls';
 import { cartGenerator } from 'utils/cart-generator';
 
 import { RootState } from 'store';
@@ -13,29 +13,41 @@ import Modal from 'components/common/modal';
 import PriceCalculator from 'components/common/price-calculator';
 import { TableSection, CartItem } from './table-section';
 
-const Title = styled.h2`
+const SectionTitle = styled.h4`
   width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme?.weightBold};
-  padding-bottom: 30px;
-  border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
-  margin-bottom: 24px;
+  padding-bottom: 12px;
+  margin-top: 5px;
 `;
 
 const ContinueLink = styled.div`
   cursor: pointer;
+  width: 80px;
   padding-top: 20px;
   font-size: 12px;
   color: ${({ theme }) => theme?.colorSoftBlack};
+
+  &:hover {
+    color: ${({ theme }) => theme?.colorGreyMid};
+  }
 `;
 
 const ButtonDiv = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 50px;
+  @media all and (max-width: 800px) {
+    gap: 14px;
+    justify-content: center;
+  }
 `;
 
-const OrderButtonDiv = styled.div``;
+const OrderButtonDiv = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
 const Cart: FC = () => {
   const [prices, setPrices] = useState([0]);
@@ -45,7 +57,12 @@ const Cart: FC = () => {
   const [checkedItems, setCheckedItems] = useState(new Set<number>());
   const [modalVisible, setModalVisible] = useState(false);
   const history = useHistory();
+
   const onClick = useCallback(() => history.goBack(), [history]);
+
+  const moveSignin = () => {
+    history.push(SIGNIN_URL);
+  };
 
   const { userId } = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
@@ -100,28 +117,33 @@ const Cart: FC = () => {
 
   return (
     <>
-      <Title>장바구니</Title>
-      <>
-        <TableSection
-          cartItems={cartItems}
-          checkedItems={checkedItems}
-          checkAll={checkAll}
-          setPrices={setPrices}
-          setTotalCount={setTotalCount}
-          setCheckAll={setCheckAll}
-          setCheckedItems={setCheckedItems}
-        />
-        <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
-        <PriceCalculator prices={prices} totalCount={totalCount} />
-        <ButtonDiv>
-          <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
-          <OrderButtonDiv>
-            <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={onClickOrder(false)} />
-            <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
-          </OrderButtonDiv>
-        </ButtonDiv>
-      </>
-      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
+      <SectionTitle> </SectionTitle>
+      <TableSection
+        cartItems={cartItems}
+        checkedItems={checkedItems}
+        checkAll={checkAll}
+        setPrices={setPrices}
+        setTotalCount={setTotalCount}
+        setCheckAll={setCheckAll}
+        setCheckedItems={setCheckedItems}
+      />
+      <ContinueLink onClick={onClick}>{'<'} 쇼핑 계속하기</ContinueLink>
+      <PriceCalculator prices={prices} totalCount={totalCount} />
+      <ButtonDiv>
+        <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
+        <OrderButtonDiv>
+          <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={onClickOrder(false)} />
+          <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
+        </OrderButtonDiv>
+      </ButtonDiv>
+      <Modal
+        type="confirm"
+        header={<div>로그인이 필요합니다</div>}
+        body={<div>로그인 페이지로 이동하시겠습니까?</div>}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onConfirm={moveSignin}
+      />
     </>
   );
 };

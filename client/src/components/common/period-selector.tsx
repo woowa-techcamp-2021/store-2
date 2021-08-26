@@ -15,12 +15,13 @@ interface PeriodSelectorProps {
 }
 
 const Wrapper = styled.div`
+  margin-bottom: 40px;
   h3 {
     font-size: 16px;
     font-weight: 700;
     padding: 16px;
   }
-  padding: 35px 40px;
+  padding: 20px 25px 10px 25px;
   border: 2px solid ${props => props.theme?.colorLineLight};
   ${props => props.theme?.mobile} {
     padding: 0;
@@ -39,7 +40,7 @@ const Wrapper = styled.div`
 
 const Form = styled.form`
   display: flex;
-  align-items: baselin;
+  align-items: baseline;
   flex-wrap: wrap;
   > div {
     margin-right: 10px;
@@ -108,8 +109,8 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
   ];
   return (
     <Wrapper>
-      <h3>조회기간</h3>
       <Form>
+        <h3>조회기간</h3>
         <RegionFlex>
           {btn.map(([text, fn], idx) => (
             <button key={text} type="button" onClick={fn} className={select === idx ? 'active' : ''}>

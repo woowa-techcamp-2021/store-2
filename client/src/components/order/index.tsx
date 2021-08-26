@@ -26,21 +26,12 @@ interface OrderProps {
   addressChecked: string;
 }
 
-const Title = styled.h2`
-  width: 100%;
-  font-size: 28px;
-  font-weight: ${({ theme }) => theme?.weightBold};
-  padding-bottom: 30px;
-  border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
-  margin-bottom: 24px;
-`;
-
 const SectionTitle = styled.h4`
   width: 100%;
   font-size: 18px;
   font-weight: ${({ theme }) => theme?.weightBold};
   padding-bottom: 12px;
-  margin: 50px 0 10px;
+  margin: 30px 0 10px;
 `;
 
 const Term = styled.p`
@@ -49,6 +40,7 @@ const Term = styled.p`
   line-height: 17px;
   margin-bottom: 12px;
   align-self: center;
+  text-align: center;
 
   ${({ theme }) => theme?.mobile} {
     width: 100%;
@@ -59,6 +51,10 @@ const Agree = styled.div`
   display: flex;
   align-items: center;
   align-self: center;
+`;
+
+const CheckBoxDiv = styled.div`
+  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -84,6 +80,10 @@ const SubmitErrorMessage = styled.div`
   font-size: 12px;
   color: ${({ theme }) => theme?.colorError};
   margin-top: 16px;
+`;
+
+const ButtonDiv = styled.div`
+  margin-bottom: 34px;
 `;
 
 const Order: FC<OrderProps> = ({
@@ -133,7 +133,6 @@ const Order: FC<OrderProps> = ({
 
   return (
     <>
-      <Title>주문서 작성 / 결제</Title>
       <SectionTitle>주문상세내역</SectionTitle>
       <TableSection orderItems={orderItems} loading={getLoading} />
       <Form onSubmit={onSubmit}>
@@ -181,14 +180,18 @@ const Order: FC<OrderProps> = ({
           않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다.
         </Term>
         <Agree>
-          <CheckBox
-            id="term"
-            text="(필수) 구매하실 상품의 결제정보를 확인하였으며, 구매진행에 동의합니다"
-            onChange={onAgree}
-          />
+          <CheckBoxDiv>
+            <CheckBox
+              id="term"
+              text="(필수) 구매하실 상품의 결제정보를 확인하였으며, 구매진행에 동의합니다"
+              onChange={onAgree}
+            />
+          </CheckBoxDiv>
         </Agree>
-        <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
-        <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
+        <ButtonDiv>
+          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
+          <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
+        </ButtonDiv>
       </Form>
     </>
   );
