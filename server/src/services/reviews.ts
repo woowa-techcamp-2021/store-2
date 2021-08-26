@@ -13,7 +13,7 @@ async function postReview(
   contents: string,
   score: number,
   image: Express.Multer.File | undefined,
-): Promise<void> {
+): Promise<string> {
   let imgUrl = '';
 
   if (image) {
@@ -29,6 +29,8 @@ async function postReview(
   }
 
   await reviewRepository.postReview(uid, itemId, title, contents, score, imgUrl);
+
+  return imgUrl;
 }
 
 export default {
