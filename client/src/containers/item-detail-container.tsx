@@ -8,30 +8,29 @@ import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
 import { Modal } from 'components';
 
+import { PAYMENT_URL } from 'constants/urls';
+
 import { RootState } from 'store';
 import { getItem } from 'store/item';
 import ReviewPost from 'components/item-detail/review-post';
+import { postReview } from 'store/review';
 
 const mockupReview: IReview[] = [
   {
-    id: 1,
     score: 5,
     title: '후기제목',
-    content: '아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요',
+    contents: '아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요아니 너무 좋아요',
     imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
     userId: 'guest',
   },
   {
-    id: 2,
     score: 4,
     title: '후기제목',
-    content: '내요옹',
+    contents: '내요옹',
     imgUrl: 'https://storage.googleapis.com/bmart-5482b.appspot.com/008/342_main_016.jpg',
     userId: 'abcd',
   },
 ];
-
-import { PAYMENT_URL } from 'constants/urls';
 
 const MainItemContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -45,8 +44,8 @@ const MainItemContainer: FC = () => {
   const { id } = useParams();
 
   // TODO: 리뷰 리스트, 리뷰 카운트
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount, userId } = useSelector(
-    ({ item, auth }: RootState) => ({
+  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount, userId, error } = useSelector(
+    ({ item, auth, review }: RootState) => ({
       thumbnail: item.item.thumbnail,
       title: item.item.title,
       price: item.item.price,
@@ -56,6 +55,7 @@ const MainItemContainer: FC = () => {
       isSoldOut: item.item.isSoldOut,
       reviewCount: item.item.reviewCount,
       userId: auth.user.userId,
+      error: review.error,
     }),
   );
 
@@ -78,11 +78,18 @@ const MainItemContainer: FC = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('submit btn');
-    console.log(postTitle, postContent, file, star);
-    // TODO: dispatch
+    const data = new FormData();
+    data.append('title', postTitle);
+    data.append('contents', postContent);
+    data.append('image', file as unknown as Blob);
+    data.append('score', String(star));
+    data.append('itemId', id);
+    dispatch({
+      type: postReview.type,
+      payload: { data },
+    });
   };
-
+  console.log(error);
   return (
     <>
       <ItemInfo
@@ -106,6 +113,7 @@ const MainItemContainer: FC = () => {
         star={star}
         setStar={setStar}
         onSubmit={onSubmit}
+        error={error}
       />
       <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>
