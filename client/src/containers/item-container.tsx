@@ -1,13 +1,15 @@
 import React, { FC, useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import { IItem } from 'types/item';
 
 import { ITEM_URL } from 'constants/urls';
 
-import Item from 'components/item/item';
+import { RootState } from 'store';
 import { addLike, deleteLike } from 'store/like';
+
+import Item from 'components/item/item';
 
 interface ItemContainerProps {
   item: IItem;
@@ -17,6 +19,9 @@ const ItemContainer: FC<ItemContainerProps> = ({ item }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(item.isLike);
+  const { userId } = useSelector(({ auth }: RootState) => ({
+    userId: auth.user.userId,
+  }));
 
   const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
 
@@ -40,6 +45,7 @@ const ItemContainer: FC<ItemContainerProps> = ({ item }) => {
       isNew={item.isNew}
       salePercent={item.salePercent}
       originalPrice={item.originalPrice}
+      likeShow={!!userId}
       isLiked={isLiked}
       setIsLiked={toggleIsLiked}
       onClick={goDetailPage(item.id)}

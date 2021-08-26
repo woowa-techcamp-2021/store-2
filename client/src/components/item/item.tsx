@@ -19,6 +19,7 @@ interface ItemProps {
   isNew?: boolean;
   salePercent?: number;
   originalPrice?: number;
+  likeShow: boolean;
   isLiked: boolean;
   setIsLiked: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
@@ -213,6 +214,7 @@ const Item: FC<ItemProps> = ({
   isNew,
   salePercent,
   originalPrice,
+  likeShow,
   isLiked,
   setIsLiked,
   onClick,
@@ -260,13 +262,15 @@ const Item: FC<ItemProps> = ({
         {isNew && <img src={badgeNewIcon} alt="badge" />}
         {salePercent !== 0 && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
-      <LikeWrapper onClick={setIsLiked}>
-        {isLiked ? (
-          <img className="like like-fill" src={likeFilledIcon} alt="like" />
-        ) : (
-          <img className="like like-empty" src={likeIcon} alt="like" />
-        )}
-      </LikeWrapper>
+      {likeShow && (
+        <LikeWrapper onClick={setIsLiked}>
+          {isLiked ? (
+            <img className="like like-fill" src={likeFilledIcon} alt="like" />
+          ) : (
+            <img className="like like-empty" src={likeIcon} alt="like" />
+          )}
+        </LikeWrapper>
+      )}
     </Container>
   );
 };

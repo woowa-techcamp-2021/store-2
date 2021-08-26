@@ -12,16 +12,19 @@ import { addLike, deleteLike } from 'store/like';
 const MainItemContainer: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(({ item }: RootState) => ({
-    thumbnail: item.item.thumbnail,
-    title: item.item.title,
-    price: item.item.price,
-    contents: item.item.contents,
-    salePercent: item.item.salePercent,
-    isLike: item.item.isLike,
-    isSoldOut: item.item.isSoldOut,
-    reviewCount: item.item.reviewCount,
-  }));
+  const { userId, thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(
+    ({ auth, item }: RootState) => ({
+      userId: auth.user.userId,
+      thumbnail: item.item.thumbnail,
+      title: item.item.title,
+      price: item.item.price,
+      contents: item.item.contents,
+      salePercent: item.item.salePercent,
+      isLike: item.item.isLike,
+      isSoldOut: item.item.isSoldOut,
+      reviewCount: item.item.reviewCount,
+    }),
+  );
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
@@ -56,6 +59,7 @@ const MainItemContainer: FC = () => {
         thumbnail={thumbnail}
         title={title}
         price={price}
+        likeShow={!!userId}
         isLiked={isLiked}
         setIsLiked={toggleIsLiked}
         isSoldOut={isSoldOut}

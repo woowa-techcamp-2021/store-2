@@ -16,6 +16,7 @@ export interface ItemInfoProps {
   thumbnail: string;
   title: string;
   price: number;
+  likeShow: boolean;
   isLiked: boolean;
   setIsLiked: Dispatch<SetStateAction<boolean>>;
   isSoldOut: boolean;
@@ -176,6 +177,7 @@ const ItemInfo: FC<ItemInfoProps> = ({
   thumbnail,
   title,
   price,
+  likeShow,
   isLiked,
   setIsLiked,
   isSoldOut,
@@ -224,13 +226,15 @@ const ItemInfo: FC<ItemInfoProps> = ({
               <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
-                <LikeWrapper onClick={setIsLiked}>
-                  {isLiked ? (
-                    <img className="like like-fill" src={likeFilledIcon} alt="like" />
-                  ) : (
-                    <img className="like like-empty" src={likeIcon} alt="like" />
-                  )}
-                </LikeWrapper>
+                {likeShow && (
+                  <LikeWrapper onClick={setIsLiked}>
+                    {isLiked ? (
+                      <img className="like like-fill" src={likeFilledIcon} alt="like" />
+                    ) : (
+                      <img className="like like-empty" src={likeIcon} alt="like" />
+                    )}
+                  </LikeWrapper>
+                )}
                 <TextButton title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
                 <TextButton title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
