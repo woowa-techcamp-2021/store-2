@@ -5,7 +5,7 @@ import { CircleLoader } from 'components';
 
 type StyleType = 'black' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
-type Size = 'big' | 'small';
+type Size = 'big' | 'small' | 'tiny';
 
 interface TextButtonProps {
   type: ButtonType;
@@ -20,6 +20,7 @@ interface TextButtonProps {
 const Button = styled.button`
   padding: ${({ styleType }) => (styleType === 'black' ? '16px 55px' : '16px 40px')};
   background: ${({ styleType }) => (styleType === 'black' ? 'black' : 'white')};
+  line-height: ${({ size }) => (size === 'tiny' ? '10px' : '20px')};
   font-family: ${({ theme }) => theme?.fontEuljiro};
   font-size: ${({ size }) => (size === 'big' ? '20px' : '16px')};
   border: 1px solid ${({ styleType, theme }) => (styleType === 'black' ? 'black' : theme?.colorTextBeige)};
