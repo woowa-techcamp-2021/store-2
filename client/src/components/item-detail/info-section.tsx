@@ -7,7 +7,7 @@ import useWindowSize from 'hooks/use-window-size';
 import starsTitle from 'assets/icons/stars_title.png';
 
 import { formatPrice } from 'utils';
-import { CART_URL, PAYMENT_URL } from 'constants/urls';
+import { CART_URL } from 'constants/urls';
 
 import TextButton from 'components/common/text-button';
 import ImageViewer from 'components/image-viewer';
@@ -171,12 +171,12 @@ const InfoSection: FC<InfoSectionProps> = ({ thumbnail, title, price, isSoldOut,
   const { width } = useWindowSize();
 
   const movePayPage = () => {
-    history.push(PAYMENT_URL);
+    history.push(CART_URL);
   };
 
   const onClickCart = () => {
-    setModalVisible(true);
     onSubmitCart(totalPrice / price);
+    setModalVisible(true);
   };
 
   const handleCounterChange = (v: number) => {
