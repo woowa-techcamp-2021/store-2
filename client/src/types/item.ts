@@ -47,4 +47,5 @@ export interface IItemDetail {
   isSoldOut: boolean;
   isLike: boolean;
   reviewCount: number;
+  isPaid: boolean;
 }

@@ -43,6 +43,7 @@ const MainItemContainer: FC = () => {
     reviewLoading,
     reviewSubmitLoading,
     itemLoading,
+    isPaid,
   } = useSelector(({ item, auth, review, loading }: RootState) => ({
     thumbnail: item.item.thumbnail,
     title: item.item.title,
@@ -59,6 +60,7 @@ const MainItemContainer: FC = () => {
     reviewLoading: loading['review/getReviews'],
     reviewSubmitLoading: loading['review/postReview'],
     itemLoading: loading['item/getItem'],
+    isPaid: item.item.isPaid,
   }));
   const [isLiked, setIsLiked] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -179,6 +181,7 @@ const MainItemContainer: FC = () => {
         error={error}
         reviewSubmitLoading={reviewSubmitLoading}
         fileRef={fileRef}
+        isPaid={isPaid}
       />
       <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>
