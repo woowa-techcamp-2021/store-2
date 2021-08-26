@@ -47,7 +47,7 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
       {orders.map(order => {
         const { createdAt, title, thumbnail, price, count, status } = order;
         return (
-          <Fragment key={title}>
+          <Fragment key={title + createdAt}>
             <TableRowText>{createdAt}</TableRowText>
             <TableRowTitle>
               <img src={thumbnail} alt={title} />
