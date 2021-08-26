@@ -87,8 +87,8 @@ const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
           >
             <div>
               <div>
-                {makeStar(score).map((v, i) => {
-                  if (v) return <img key={title + String(idx) + String(i)} src={starOff} alt="startOff" />;
+                {makeStar(score).map((star, i) => {
+                  if (star) return <img key={title + String(idx) + String(i)} src={starOff} alt="startOff" />;
                   return <img key={title + String(idx) + String(i)} src={starOn} alt="startOff" />;
                 })}
               </div>
