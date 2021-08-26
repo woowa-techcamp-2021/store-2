@@ -28,6 +28,7 @@ export const addAddressValidation = (
         .min(ADDRESS.NAME_MIN_LENGTH)
         .max(ADDRESS.NAME_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `이름은 ${ADDRESS.NAME_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `이름은 ${ADDRESS.NAME_MAX_LENGTH}자를 넘길 수 없습니다.`,
@@ -37,6 +38,7 @@ export const addAddressValidation = (
         .min(ADDRESS.RECEIVER_MIN_LENGTH)
         .max(ADDRESS.RECEIVER_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자를 넘길 수 없습니다.`,
@@ -46,6 +48,7 @@ export const addAddressValidation = (
         .min(ADDRESS.ADDRESS_MIN_LENGTH)
         .max(ADDRESS.ADDRESS_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
@@ -78,7 +81,7 @@ export const removeAddressValidation = (
 ): void => {
   try {
     const schema = Joi.object({
-      id: Joi.number().min(1).required().messages({
+      id: Joi.number().min(1).required().empty('').messages({
         'any.required': '아이디를 입력해주세요.',
       }),
     });
