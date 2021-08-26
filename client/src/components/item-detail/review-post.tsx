@@ -16,6 +16,7 @@ interface IReviewPostProps {
   star: number;
   setStar: (star: number) => void;
   onSubmit: (e: React.FormEvent) => void;
+  error: null | string;
 }
 
 const Wrapper = styled.div`
@@ -60,6 +61,13 @@ const Flex = styled.div`
   }
 `;
 
+const InputErrorMessage = styled.div`
+  font-size: 13px;
+  color: ${({ theme }) => theme?.colorError};
+  text-align: center;
+  margin-top: 10px;
+`;
+
 const makeStar = (star: number): boolean[] => {
   const arr = [];
   for (let i = 1; i <= 5; i += 1) {
@@ -79,6 +87,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
   star,
   setStar,
   onSubmit,
+  error,
 }) => {
   if (!userId) return null;
   return (
@@ -126,6 +135,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
               accept=".jpg, .png, .jpeg"
             />
           </GridForm>
+          <InputErrorMessage>{error}</InputErrorMessage>
           <Flex>
             <TextButton type="submit" styleType="black" title="저장" />
           </Flex>
