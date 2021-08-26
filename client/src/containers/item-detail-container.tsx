@@ -81,7 +81,7 @@ const MainItemContainer: FC = () => {
       cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
     }
     localStorage.setItem('cart', cartItemsString);
- };
+  };
 
   const onBuy = () => {
     if (userId) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
-        
+
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 
