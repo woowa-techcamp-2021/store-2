@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
@@ -61,12 +61,14 @@ const MainItemContainer: FC = () => {
     itemLoading: loading['item/getItem'],
   }));
   const [isLiked, setIsLiked] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setPostTitle('');
     setPostContent('');
     setFile(null);
     setStar(5);
+    if (fileRef.current) fileRef.current.value = '';
   }, [reviews]);
 
   useEffect(() => {
@@ -176,6 +178,7 @@ const MainItemContainer: FC = () => {
         onSubmit={onSubmit}
         error={error}
         reviewSubmitLoading={reviewSubmitLoading}
+        fileRef={fileRef}
       />
       <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>

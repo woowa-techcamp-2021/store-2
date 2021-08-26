@@ -18,6 +18,7 @@ interface IReviewPostProps {
   onSubmit: (e: React.FormEvent) => void;
   error: null | string;
   reviewSubmitLoading: boolean;
+  fileRef: React.RefObject<HTMLInputElement>;
 }
 
 const Wrapper = styled.div`
@@ -93,6 +94,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
   onSubmit,
   error,
   reviewSubmitLoading,
+  fileRef,
 }) => {
   if (!userId) return null;
   return (
@@ -141,6 +143,7 @@ const ReviewPost: FC<IReviewPostProps> = ({
             />
             <input
               type="file"
+              ref={fileRef}
               onChange={e => {
                 const target = e.target as HTMLInputElement;
                 const files = target.files as FileList;
