@@ -28,14 +28,14 @@ const Empty = styled.div`
 
 const MyOrderList: FC<MyOrderListProps> = ({ loading, orders, totalCount }) => {
   const inner = totalCount ? (
-    orders.map(({ createdAt, title, thumbnail, price, count, status }) => (
+    orders.map(({ createdAt, title, thumbnail, price, quantity, status }) => (
       <MyOrder
         key={title}
         createdAt={createdAt}
         title={title}
         thumbnail={thumbnail}
         price={price}
-        count={count}
+        quantity={quantity}
         status={status}
       />
     ))

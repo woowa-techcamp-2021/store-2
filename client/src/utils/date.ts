@@ -29,3 +29,9 @@ export const getLastThreeMonth = (): string => {
   dateObj.setMonth(dateObj.getMonth() - 3);
   return formatDate(dateObj);
 };
+
+export const getNextDay = (date: string): string => {
+  const dateObj = new Date(date);
+  dateObj.setDate(dateObj.getDate() + 1);
+  return formatDate(dateObj);
+};

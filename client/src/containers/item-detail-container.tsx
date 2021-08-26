@@ -1,46 +1,84 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
-import { Modal } from 'components';
+import { Modal, Pagination } from 'components';
+
+import { PAYMENT_URL } from 'constants/urls';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
+import ReviewPost from 'components/item-detail/review-post';
+import { getReviews, postReview } from 'store/review';
 import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
-import { PAYMENT_URL } from 'constants/urls';
 
 const MainItemContainer: FC = () => {
+  const [postTitle, setPostTitle] = useState('');
+  const [postContent, setPostContent] = useState('');
+  const [file, setFile] = useState<null | File>(null);
+  const [star, setStar] = useState(5);
   const [count, setCount] = useState(1);
+  const [pageId, setPageId] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { userId, thumbnail, title, price, contents, isLike, isSoldOut, reviewCount } = useSelector(
-    ({ auth, item }: RootState) => ({
-      userId: auth.user.userId,
-      thumbnail: item.item.thumbnail,
-      title: item.item.title,
-      price: item.item.price,
-      contents: item.item.contents,
-      salePercent: item.item.salePercent,
-      isLike: item.item.isLike,
-      isSoldOut: item.item.isSoldOut,
-      reviewCount: item.item.reviewCount,
-    }),
-  );
+
+  const {
+    thumbnail,
+    title,
+    price,
+    contents,
+    isLike,
+    isSoldOut,
+    userId,
+    error,
+    reviews,
+    pageCount,
+    totalCount,
+    reviewLoading,
+    reviewSubmitLoading,
+    itemLoading,
+  } = useSelector(({ item, auth, review, loading }: RootState) => ({
+    thumbnail: item.item.thumbnail,
+    title: item.item.title,
+    price: item.item.price,
+    contents: item.item.contents,
+    salePercent: item.item.salePercent,
+    isLike: item.item.isLike,
+    isSoldOut: item.item.isSoldOut,
+    userId: auth.user.userId,
+    error: review.error,
+    reviews: review.list.reviews,
+    pageCount: review.list.pageCount,
+    totalCount: review.list.totalCount,
+    reviewLoading: loading['review/getReviews'],
+    reviewSubmitLoading: loading['review/postReview'],
+    itemLoading: loading['item/getItem'],
+  }));
   const [isLiked, setIsLiked] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setPostTitle('');
+    setPostContent('');
+    setFile(null);
+    setStar(5);
+    if (fileRef.current) fileRef.current.value = '';
+  }, [reviews]);
+
+  useEffect(() => {
+    dispatch({ type: getItem.type, payload: { id } });
+    dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
+  }, [id, dispatch, pageId]);
 
   useEffect(() => {
     setIsLiked(isLike);
   }, [isLike]);
-
-  useEffect(() => {
-    dispatch({ type: getItem.type, payload: { id } });
-  }, [id, dispatch]);
 
   const toggleIsLiked = () => {
     if (!isLiked) {
@@ -92,6 +130,20 @@ const MainItemContainer: FC = () => {
     }
   };
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('title', postTitle);
+    data.append('contents', postContent);
+    data.append('image', file as unknown as Blob);
+    data.append('score', String(star));
+    data.append('itemId', id);
+    dispatch({
+      type: postReview.type,
+      payload: { data },
+    });
+  };
+
   return (
     <>
       <ItemInfo
@@ -106,8 +158,29 @@ const MainItemContainer: FC = () => {
         onBuy={onBuy}
         setCount={setCount}
       />
-      <Detail contents={contents} reviewCount={reviewCount} />
-      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
+      <Detail
+        contents={contents}
+        reviewCount={totalCount}
+        reviews={reviews}
+        itemLoading={itemLoading}
+        reviewLoading={reviewLoading}
+      />
+      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+      <ReviewPost
+        userId={userId}
+        postTitle={postTitle}
+        postContent={postContent}
+        setPostTitle={setPostTitle}
+        setPostContent={setPostContent}
+        setFile={setFile}
+        star={star}
+        setStar={setStar}
+        onSubmit={onSubmit}
+        error={error}
+        reviewSubmitLoading={reviewSubmitLoading}
+        fileRef={fileRef}
+      />
+      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };

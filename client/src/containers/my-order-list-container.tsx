@@ -5,13 +5,13 @@ import { useHistory } from 'lib/router';
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
 
-import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
+import { getLastMonth, getLastThreeMonth, getLastWeek, getNextDay, getToday } from 'utils/date';
 
 import { Pagination, PeriodSelector } from 'components';
 import MyNav from 'components/my/my-nav';
 // import MyOrderList from 'components/my/my-order-list';
 // import MyStatusBar from 'components/my/my-status-bar';
-import MyOrderTable from 'components/my/my-order-table';
+import MyOrderTable from 'components/my/my-order/my-order-table';
 
 const MyOrderListContainer: FC = () => {
   const today = getToday();
@@ -34,7 +34,8 @@ const MyOrderListContainer: FC = () => {
   );
 
   useEffect(() => {
-    if (prevDate && currentDate) dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
+    if (prevDate && currentDate)
+      dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate: getNextDay(currentDate) } });
   }, [dispatch, pageId, prevDate, currentDate]);
 
   useEffect(() => {

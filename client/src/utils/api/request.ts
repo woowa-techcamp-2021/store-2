@@ -12,15 +12,16 @@ const client: AxiosInstance = axios.create();
 client.defaults.baseURL = process.env.NODE_ENV === 'development' ? '/' : `http://${window.location.hostname}:3000`;
 client.defaults.withCredentials = true;
 
-async function request<T>(method: Method, url: string, body?: T): Promise<AxiosResponse> {
+async function request<T>(method: Method, url: string, body?: T, multipart?: boolean): Promise<AxiosResponse> {
+  const headerOption = multipart && { 'Content-Type': 'multipart/form-data' };
   try {
     const accessToken = window.localStorage.getItem('user') || '';
-
     const res = await client({
       method,
       url,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        ...headerOption,
       },
       ...(body && { data: body }),
     });
