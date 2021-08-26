@@ -4,6 +4,10 @@ import styled from 'lib/woowahan-components';
 interface DetailWrapperProps {
   select: 'detail' | 'review';
   reviewCount: number;
+  detailRef: React.RefObject<HTMLDivElement>;
+  detailExecuteScroll: () => void;
+  reviewRef?: React.RefObject<HTMLDivElement>;
+  reviewExecuteScroll: () => void;
 }
 
 const Container = styled.div`
@@ -46,28 +50,29 @@ const Marker = styled.div`
   }
 `;
 
-const DetailWrapper: FC<DetailWrapperProps> = ({ children, select, reviewCount }) => {
+const DetailWrapper: FC<DetailWrapperProps> = ({
+  children,
+  select,
+  reviewCount,
+  detailRef,
+  detailExecuteScroll,
+  reviewRef,
+  reviewExecuteScroll,
+}) => {
+  const refs = select === 'detail' ? detailRef : reviewRef;
   return (
     <Container>
       <DetailHeader>
-        <Marker
-          selected={select === 'detail' ? true : ''}
-          id={select === 'detail' ? 'detail' : ''}
-          onClick={() => {
-            window.location.hash = 'detail';
-          }}
-        >
-          상품상세정보
-        </Marker>
-        <Marker
-          selected={select === 'review' ? true : ''}
-          id={select === 'review' ? 'review' : ''}
-          onClick={() => {
-            window.location.hash = 'review';
-          }}
-        >
-          상품후기 <span>{reviewCount}</span>
-        </Marker>
+        <div ref={refs}>
+          <Marker selected={select === 'detail' ? true : ''} onClick={() => detailExecuteScroll()}>
+            상품상세정보
+          </Marker>
+        </div>
+        <div>
+          <Marker selected={select === 'review' ? true : ''} onClick={() => reviewExecuteScroll()}>
+            상품후기 <span>{reviewCount}</span>
+          </Marker>
+        </div>
       </DetailHeader>
       <DetailContent>{children}</DetailContent>
     </Container>
