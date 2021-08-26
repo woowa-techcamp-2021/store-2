@@ -13,10 +13,13 @@ import * as orderStore from 'store/order';
 import { finishLoading, startLoading } from 'store/loading';
 import { MAIN_URL } from 'constants/urls';
 
-function* getOrdersSaga(action: PayloadAction<IOrderState>): Generator {
+function* getOrdersSaga(action: PayloadAction): Generator {
   try {
     yield put(startLoading(orderStore.getOrders));
-    const { data } = (yield call(orderAPI.getOrderList, action.payload)) as AxiosResponse<IOrderList>;
+    const { data } = (yield call(
+      orderAPI.getOrderList,
+      action.payload as unknown as IOrderState,
+    )) as AxiosResponse<IOrderList>;
     yield put({ type: orderStore.getOrdersSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
