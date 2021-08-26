@@ -217,7 +217,6 @@ const Item: FC<ItemProps> = ({
   setIsLiked,
   onClick,
 }) => {
-  const toggleLike = () => setIsLiked(!isLiked);
   const setVisitedItem = () => {
     if (!localStorage.getItem('visited')) {
       localStorage.setItem('visited', title);
@@ -261,7 +260,7 @@ const Item: FC<ItemProps> = ({
         {isNew && <img src={badgeNewIcon} alt="badge" />}
         {salePercent !== 0 && <img src={badgeSaleIcon} alt="badge" />}
       </BadgeWrapper>
-      <LikeWrapper onClick={toggleLike}>
+      <LikeWrapper onClick={setIsLiked}>
         {isLiked ? (
           <img className="like like-fill" src={likeFilledIcon} alt="like" />
         ) : (
