@@ -21,7 +21,7 @@ async function postReview(
 
     const imageLocation = await uploadToS3({
       Bucket: process.env.AWS_BUCKET || '',
-      Key: `reviews/${uid}-${itemId}-${Date.now().toString()}.jpg`,
+      Key: `reviews/${itemId}-${Date.now().toString()}.jpg`,
       Body: resizedImageBuffer,
       ACL: 'public-read',
     });
