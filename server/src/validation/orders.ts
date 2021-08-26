@@ -6,7 +6,7 @@ import errorHandler from 'utils/error/error-handler';
 
 import { ORDER } from 'config/constants';
 
-import { PostOrder } from 'controllers/orders';
+import { PostOrder, CheckPaidUserQuery } from 'controllers/orders';
 
 interface IQuery {
   pageId: number;
@@ -111,6 +111,36 @@ export const postOrderValidation = (
       throw errorGenerator({
         message: 'validation/post-order - invalid request body',
         code: 'req/invalid-body',
+        customMessage: validationResult.error.message,
+      });
+    }
+
+    next();
+  } catch (err) {
+    console.log(err);
+    const { statusCode, errorMessage } = errorHandler(err);
+    res.status(statusCode).json({ errorMessage });
+  }
+};
+
+export const checkPaidUserValidation = (
+  req: Request<unknown, unknown, unknown, CheckPaidUserQuery>,
+  res: Response,
+  next: NextFunction,
+): void => {
+  try {
+    const schema = Joi.object({
+      itemId: Joi.number().required().empty('').messages({
+        'any.required': '잘못된 요청입니다',
+      }),
+    });
+
+    const validationResult = schema.validate(req.query);
+
+    if (validationResult.error) {
+      throw errorGenerator({
+        message: 'validation/check-user-paid - invalid request query',
+        code: 'req/invalid-query',
         customMessage: validationResult.error.message,
       });
     }

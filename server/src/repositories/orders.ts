@@ -91,4 +91,15 @@ const postOrder = async (uid: string, orderItems: PostOrder): Promise<void> => {
   await Promise.all([createQueue, db.User.update({ phone }, { where: { id: uid } })]);
 };
 
-export default { getUserOrders, postOrder };
+const checkPaidUser = async (uid: string, itemId: number): Promise<boolean> => {
+  const paidCount = await db.Order.count({
+    where: {
+      ItemId: itemId,
+      UserId: uid,
+    },
+  });
+
+  return !!paidCount;
+};
+
+export default { getUserOrders, postOrder, checkPaidUser };
