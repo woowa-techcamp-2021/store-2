@@ -42,6 +42,7 @@ const Wrapper = styled.section`
   ${({ theme }) => theme?.tablet} {
     flex-direction: column;
   }
+
   ${({ theme }) => theme?.mobile} {
     flex-direction: column;
   }
@@ -91,14 +92,19 @@ const Info = styled.div`
 `;
 
 const ItemTitle = styled.div`
-  border-top: 6px double black;
-  border-bottom: 6px double black;
   width: 100%;
-  padding: 12px;
-  text-align: center;
-  font-size: 30px;
-  font-family: ${({ theme }) => theme?.fontHanna};
-  line-height: 31px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
+  div {
+    border-top: 7px double black;
+    border-bottom: 7px double black;
+    padding: 12px;
+    text-align: center;
+    font-size: 30px;
+    font-family: ${({ theme }) => theme?.fontHanna};
+    line-height: 32px;
+  }
 `;
 
 const ItemPrice = styled.div`
@@ -109,13 +115,18 @@ const ItemPrice = styled.div`
   margin-bottom: 32px;
 
   .title {
-    margin: 24px 0 12px;
+    margin: 24px 0 14px;
     color: ${({ theme }) => theme?.colorGreyDark};
   }
 
   .price {
     font-size: 24px;
     font-family: ${({ theme }) => theme?.fontHanna};
+  }
+
+  .message {
+    font-size: 16px;
+    font-family: ${({ theme }) => theme?.fontHannaAir};
   }
 `;
 
@@ -224,12 +235,14 @@ const ItemInfo: FC<ItemInfoProps> = ({
       <Info>
         <div className="top-wrapper">
           <img src={starsTitle} alt="stars-title" />
-          <ItemTitle>{title}</ItemTitle>
+          <ItemTitle>
+            <div>{title}</div>
+          </ItemTitle>
           <ItemPrice>
             <div className="title">판매가격</div>
             <div className="price">{formatPrice(price)}원</div>
             <div className="title">배송정보</div>
-            <div>데모기념 오늘만 배송비 무료!!!</div>
+            <div className="message">데모기념 오늘만 배송비 무료!!!</div>
           </ItemPrice>
           <ItemCounter title={title} price={price} onChange={handleCounterChange} />
         </div>

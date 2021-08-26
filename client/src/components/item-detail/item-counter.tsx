@@ -24,6 +24,7 @@ const Container = styled.div`
 
     .title {
       align-self: flex-start;
+      margin-top: 5px;
     }
   }
 `;
@@ -49,8 +50,23 @@ const ButtonBox = styled.div`
   align-items: center;
 
   button {
-    background: ${({ theme }) => theme?.colorTextBrownLight};
+    background: ${({ theme }) => theme?.colorPointBeigeLight};
     width: 24px;
+    height: 20px;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &:hover {
+      background: ${({ theme }) => theme?.colorBg};
+    }
   }
 `;
 
