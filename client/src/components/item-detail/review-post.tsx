@@ -19,6 +19,7 @@ interface IReviewPostProps {
   error: null | string;
   reviewSubmitLoading: boolean;
   fileRef: React.RefObject<HTMLInputElement>;
+  isPaid: boolean;
 }
 
 const Wrapper = styled.div`
@@ -95,8 +96,9 @@ const ReviewPost: FC<IReviewPostProps> = ({
   error,
   reviewSubmitLoading,
   fileRef,
+  isPaid,
 }) => {
-  if (!userId) return null;
+  if (!userId || !isPaid) return null;
   return (
     <Wrapper>
       <Padding>

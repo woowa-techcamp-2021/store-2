@@ -32,6 +32,7 @@ const initialState: StateProps = {
     isSoldOut: false,
     isLike: false,
     reviewCount: 0,
+    isPaid: false,
   },
   search: {
     autoComplete: null,
