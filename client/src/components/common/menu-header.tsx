@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
-import back from 'assets/icons/back.png';
+import back from 'assets/icons/back.svg';
 
 interface MenuHeaderProps {
   title: string;
@@ -28,6 +28,10 @@ const MobileWrapper = styled.div`
   }
 `;
 
+const BackButton = styled.img`
+  width: 30px;
+`;
+
 const Wrapper = styled.div`
   padding-top: 50px;
   padding-bottom: 30px;
@@ -43,7 +47,7 @@ const MenuHeader: FC<MenuHeaderProps> = ({ title, isMobile }) => {
     return (
       <MobileWrapper className="mobile-wrapper">
         <button type="button" onClick={onClick}>
-          <img src={back} alt="뒤로가기" />
+          <BackButton src={back} alt="뒤로가기" />
         </button>
         <div className="title">{title}</div>
         <div className="empty" />
