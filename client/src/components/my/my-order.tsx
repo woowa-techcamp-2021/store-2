@@ -58,7 +58,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MyOrder: FC<IOrder> = ({ createdAt, title, thumbnail, price, count, status }) => {
+const MyOrder: FC<IOrder> = ({ createdAt, title, thumbnail, price, quantity, status }) => {
   return (
     <Wrapper>
       <div>{createdAt}</div>
@@ -69,7 +69,7 @@ const MyOrder: FC<IOrder> = ({ createdAt, title, thumbnail, price, count, status
         <div>{title}</div>
       </div>
       <div>
-        {formatPrice(price)}원 / {count}개
+        {formatPrice(price)}원 / {quantity}개
       </div>
       <div>{status}</div>
     </Wrapper>
