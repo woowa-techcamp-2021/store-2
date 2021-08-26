@@ -23,9 +23,14 @@ const SectionTitle = styled.h4`
 
 const ContinueLink = styled.div`
   cursor: pointer;
+  width: 80px;
   padding-top: 20px;
   font-size: 12px;
   color: ${({ theme }) => theme?.colorSoftBlack};
+
+  &:hover {
+    border-bottom: 1px solid #000;
+  }
 `;
 
 const ButtonDiv = styled.div`
@@ -39,7 +44,10 @@ const ButtonDiv = styled.div`
   }
 `;
 
-const OrderButtonDiv = styled.div``;
+const OrderButtonDiv = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
 const Cart: FC = () => {
   const [prices, setPrices] = useState([0]);
