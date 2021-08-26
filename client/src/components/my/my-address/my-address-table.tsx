@@ -12,6 +12,10 @@ interface MyAddressTableProps {
   removeLoading: boolean;
 }
 
+const Wrapper = styled.div`
+  margin-bottom: 80px;
+`;
+
 const TableRowText = styled.div`
   text-align: center;
 `;
@@ -32,23 +36,25 @@ const tableHeaders = [
 
 const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList, onRemove }) => {
   return (
-    <Table headers={tableHeaders} loading={loading}>
-      {addressList.map(adrs => {
-        const { id, name, receiver, address } = adrs;
-        return (
-          <Fragment key={id}>
-            <TableRowText>{name}</TableRowText>
-            <TableRowText>{receiver}</TableRowText>
-            <TableRowText>{address}</TableRowText>
-            <TableRowText>
-              <RemoveButton type="button" onClick={() => onRemove(id)}>
-                삭제
-              </RemoveButton>
-            </TableRowText>
-          </Fragment>
-        );
-      })}
-    </Table>
+    <Wrapper>
+      <Table headers={tableHeaders} loading={loading}>
+        {addressList.map(adrs => {
+          const { id, name, receiver, address } = adrs;
+          return (
+            <Fragment key={id}>
+              <TableRowText>{name}</TableRowText>
+              <TableRowText>{receiver}</TableRowText>
+              <TableRowText>{address}</TableRowText>
+              <TableRowText>
+                <RemoveButton type="button" onClick={() => onRemove(id)}>
+                  삭제
+                </RemoveButton>
+              </TableRowText>
+            </Fragment>
+          );
+        })}
+      </Table>
+    </Wrapper>
   );
 };
 export default MyAddressTable;
