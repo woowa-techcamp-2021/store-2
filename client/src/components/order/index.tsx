@@ -150,7 +150,20 @@ const Order: FC<OrderProps> = ({
         </GridForm>
         <SectionTitle>배송정보</SectionTitle>
         <GridForm titles={['배송지 확인', '받는분', '받으실 곳 *']}>
-          <InputWrapper>{/* TODO: 배송지 불러오기 API와 연동필요 */}</InputWrapper>
+          <InputWrapper>
+            {addresses.map(v => {
+              return (
+                <RadioButton
+                  key={v.name}
+                  id={v.name}
+                  text={v.name}
+                  value={v.address}
+                  onChange={pickAddress}
+                  checked={addressChecked}
+                />
+              );
+            })}
+          </InputWrapper>
           <InputWrapper>
             <input name="receiver" value={receiver} onChange={onChange('receiver')} />
             <InputErrorMessage>{receiverError}</InputErrorMessage>

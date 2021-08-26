@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import { RootState } from 'store';
 import { postOrder, getOrderItems } from 'store/order';
+import { getListAddress } from 'store/address';
 
 import Order from 'components/order';
 
@@ -57,13 +57,13 @@ const OrderContainer: FC = () => {
   const [address, setAddress] = useState('');
   const [addressChecked, setaddressChecked] = useState('');
   const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
-    ({ auth, order, loading }: RootState) => ({
+    ({ auth, order, loading, address }: RootState) => ({
       userId: auth.user.userId || '',
       submitError: order.postError || '',
       itemsData: order.orderItems,
       getLoading: loading['order/getOrderItems'],
       submitLoading: loading['order/postOrder'],
-      addresses: [{ name: '', address: '' }],
+      addresses: address.list,
     }),
   );
 
@@ -90,12 +90,13 @@ const OrderContainer: FC = () => {
       const orderParamsString = window.sessionStorage.getItem('order') || '';
       const { itemIDs } = parseOrderParams(orderParamsString);
       dispatch({ type: getOrderItems.type, payload: itemIDs });
+      dispatch({ type: getListAddress.type });
     } catch (err) {
       setOrderItems([]);
       window.sessionStorage.removeItem('order');
       history.goBack();
     }
-  }, []);
+  }, [dispatch, history]);
 
   const onChange = (id: 'user' | 'receiver' | 'address') => (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (id) {
