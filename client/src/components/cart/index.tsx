@@ -1,11 +1,15 @@
 import React, { useState, useCallback, Fragment, FC } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
 import { cartGenerator } from 'utils/cart-generator';
 
+import { RootState } from 'store';
+
 import { TextButton } from 'components';
+import Modal from 'components/common/modal';
 import PriceCalculator from 'components/common/price-calculator';
 import { TableSection, CartItem } from './table-section';
 
@@ -39,8 +43,13 @@ const Cart: FC = () => {
   const [cartItems, setCartItems] = useState(cartGenerator());
   const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set<number>());
+  const [modalVisible, setModalVisible] = useState(false);
   const history = useHistory();
   const onClick = useCallback(() => history.goBack(), [history]);
+
+  const { userId } = useSelector(({ auth }: RootState) => ({
+    userId: auth.user.userId,
+  }));
 
   const deleteSelectCartItem = () => {
     const data = localStorage.getItem('select') as string;
@@ -61,13 +70,14 @@ const Cart: FC = () => {
     setCheckedItems(new Set<number>());
   };
 
-  const orderCartItem = (isAll: boolean) => () => {
+  const orderCartItem = (isAll: boolean) => {
     let selectCartItems: CartItem[] = [];
     if (isAll) {
       selectCartItems = cartItems;
     } else {
       Array.from(checkedItems).forEach(index => selectCartItems.push(cartItems[index]));
     }
+
     let selectCartItemsString = '';
     selectCartItems.forEach(item => {
       selectCartItemsString += `${item.id}-${item.count},`;
@@ -77,6 +87,14 @@ const Cart: FC = () => {
     if (selectCartItemsString !== '') {
       sessionStorage.setItem('order', selectCartItemsString);
       history.push(PAYMENT_URL);
+    }
+  };
+
+  const onClickOrder = (isAll: boolean) => () => {
+    if (userId) {
+      orderCartItem(isAll);
+    } else {
+      setModalVisible(true);
     }
   };
 
@@ -98,11 +116,12 @@ const Cart: FC = () => {
         <ButtonDiv>
           <TextButton title="선택 상품 삭제" type="submit" styleType="white" onClick={deleteSelectCartItem} />
           <OrderButtonDiv>
-            <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={orderCartItem(false)} />
-            <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={orderCartItem(true)} />
+            <TextButton title="선택 상품 주문" type="submit" styleType="white" onClick={onClickOrder(false)} />
+            <TextButton title="전체 상품 주문" type="submit" styleType="black" onClick={onClickOrder(true)} />
           </OrderButtonDiv>
         </ButtonDiv>
       </>
+      <Modal type="alert" header={<div>로그인이 필요합니다</div>} visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };
