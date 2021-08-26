@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import useWindowSize from 'hooks/use-window-size';
 import NavbarContainer from 'containers/navbar-container';
 import { Layout } from 'components';
-import OrderContainer from 'containers/order-continaer';
+import OrderContainer from 'containers/order-container';
 
 const OrderPage = (): ReactElement => {
   const { width } = useWindowSize();
