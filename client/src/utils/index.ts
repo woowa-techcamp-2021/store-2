@@ -3,6 +3,6 @@ export const formatPrice = (price: string | number): string => {
   return parsePrice.toLocaleString('ko-KR');
 };
 
-export const filterId = (id: string) => {
+export const filterId = (id: string): string => {
   return `${id.slice(0, 3)}***`;
 };
