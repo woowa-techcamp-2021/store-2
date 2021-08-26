@@ -23,6 +23,10 @@ const BrowserRouter: FC = ({ children }) => {
     window.addEventListener('popstate', handlePopState);
   }, [handlePopState]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPath]);
+
   const push = useCallback((url: string) => {
     const pathname = url.split('?')[0];
     const search = url.split('?')[1];

@@ -5,12 +5,11 @@ import { useHistory } from 'lib/router';
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
 
-import { getLastMonth, getLastThreeMonth, getLastWeek, getToday } from 'utils/date';
+import { getLastMonth, getLastThreeMonth, getLastWeek, getNextDay, getToday } from 'utils/date';
 
 import { Pagination, PeriodSelector } from 'components';
 import MyNav from 'components/my/my-nav';
-import MyOrderList from 'components/my/my-order-list';
-import MyStatusBar from 'components/my/my-status-bar';
+import MyOrderTable from 'components/my/my-order/my-order-table';
 
 const MyOrderListContainer: FC = () => {
   const today = getToday();
@@ -23,7 +22,7 @@ const MyOrderListContainer: FC = () => {
 
   const { loading, user, orders, pageCount, totalCount, userLoading } = useSelector(
     ({ auth, loading, order }: RootState) => ({
-      loading: loading['order/getListOrder'],
+      loading: loading['order/getOrders'],
       user: auth.user.userId,
       orders: order.list.orders,
       pageCount: order.list.pageCount,
@@ -33,7 +32,8 @@ const MyOrderListContainer: FC = () => {
   );
 
   useEffect(() => {
-    if (prevDate && currentDate) dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate } });
+    if (prevDate && currentDate)
+      dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate: getNextDay(currentDate) } });
   }, [dispatch, pageId, prevDate, currentDate]);
 
   useEffect(() => {
@@ -81,8 +81,9 @@ const MyOrderListContainer: FC = () => {
         onClickThreeMonth={onClickThreeMonth}
         select={select}
       />
-      <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
-      <MyOrderList loading={loading} orders={orders} totalCount={totalCount} />
+      <MyOrderTable loading={loading} orders={orders} totalCount={totalCount} />
+      {/* <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
+      <MyOrderList loading={loading} orders={orders} totalCount={totalCount} /> */}
       <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
     </>
   );

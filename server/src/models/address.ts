@@ -1,10 +1,12 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
+import { ADDRESS } from 'config/constants';
 
 export interface AddressAttribures {
   id: string;
   name: string;
   address: string;
   receiver: string;
+  UserId: string;
 }
 
 export type AddressCreationAttributes = Optional<AddressAttribures, 'id'>;
@@ -17,15 +19,15 @@ const addressSchema = (sequelize: Sequelize): ModelCtor<Model<AddressAttribures,
       autoIncrement: true,
     },
     name: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(ADDRESS.NAME_MAX_LENGTH),
       allowNull: false,
     },
     address: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(ADDRESS.ADDRESS_MAX_LENGTH),
       allowNull: false,
     },
     receiver: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(ADDRESS.RECEIVER_MAX_LENGTH),
       allowNull: false,
     },
   });

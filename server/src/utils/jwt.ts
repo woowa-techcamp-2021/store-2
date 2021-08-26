@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 
 import errorGenerator from 'utils/error/error-generator';
@@ -106,4 +107,8 @@ export const checkTokenValidity = (type: TokenType, token: string): Promise<bool
       resolve(false);
     });
   });
+};
+
+export const checkTokenExists = (req: Request<unknown, unknown, unknown, unknown>): boolean => {
+  return !!(req.headers.authorization && getAccessToken(req.headers.authorization));
 };

@@ -1,10 +1,13 @@
 import { Router } from 'express';
 
-import { getItems, getMainItems, getItem } from 'controllers/items';
+import checkExistHeader from 'middlewares/checkExistHeader';
+import { getItems, getMainItems, getItem, getOrderItems } from 'controllers/items';
 
 const router = Router();
-router.post('/main', getMainItems);
-router.get('/:id', getItem);
-router.post('/', getItems);
+
+router.post('/main', checkExistHeader, getMainItems);
+router.post('/', checkExistHeader, getItems);
+router.get('/order', getOrderItems);
+router.get('/:id', checkExistHeader, getItem);
 
 export default router;

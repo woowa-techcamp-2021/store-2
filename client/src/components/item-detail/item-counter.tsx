@@ -34,7 +34,6 @@ const Counter = styled.div`
   gap: 24px;
 
   .price {
-    width: 70px;
     text-overflow: clip;
     text-align: end;
   }
@@ -63,7 +62,7 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
     if (newCount < 1) return;
 
     setCount(newCount);
-    onChange(price * newCount);
+    onChange(newCount);
   };
 
   return (

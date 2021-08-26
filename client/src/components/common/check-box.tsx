@@ -5,11 +5,11 @@ interface CheckBoxProps {
   id: string;
   text: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  check?: boolean;
 }
 
 const Label = styled.label`
   cursor: pointer;
-  margin-bottom: 20px;
   position: relative;
   display: flex;
   font-family: ${props => props.theme?.fontHannaAir};
@@ -18,23 +18,23 @@ const Label = styled.label`
   &:hover .checkmark {
     background-color: ${props => props.theme?.colorPointBeigeLight};
   }
+
+  input[type='checkbox'] {
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkmark {
+      background-color: ${props => props.theme?.colorLine};
+    }
+
+    &:checked ~ .checkmark:after {
+      display: block;
+    }
+  }
 `;
 
-const CheckBoxInput = styled.input`
-  opacity: 0;
-  height: 0;
-  width: 0;
-
-  &:checked ~ .checkmark {
-    background-color: ${props => props.theme?.colorLine};
-  }
-
-  &:checked ~ .checkmark:after {
-    display: block;
-  }
-`;
-
-const CheckMark = styled.span`
+const CheckMark = styled.div`
   height: 14px;
   width: 14px;
   background-color: ${props => props.theme?.colorOffWhite};
@@ -57,10 +57,10 @@ const CheckMark = styled.span`
   }
 `;
 
-const CheckBox: FC<CheckBoxProps> = ({ id, text, onChange }) => {
+const CheckBox: FC<CheckBoxProps> = ({ id, text, onChange, check }) => {
   return (
     <Label htmlFor={id}>
-      <CheckBoxInput type="checkbox" id={id} onChange={onChange} />
+      <input type="checkbox" id={id} checked={check} onChange={onChange} />
       <CheckMark className="checkmark" />
       {text}
     </Label>

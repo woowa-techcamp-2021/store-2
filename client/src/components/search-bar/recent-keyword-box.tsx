@@ -17,7 +17,7 @@ const Container = styled.ul`
   padding: 4px;
   top: 40px;
   left: 0;
-  border: 8px solid ${props => props.theme?.colorLineLight};
+  border: 4px solid ${props => props.theme?.colorLineLight};
   border-top: none;
   width: 100%;
   display: ${props => (props.isopen ? 'flex' : 'none')};

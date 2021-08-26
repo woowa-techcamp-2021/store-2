@@ -1,23 +1,32 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, Dispatch, SetStateAction } from 'react';
+import { useHistory } from 'lib/router';
+
 import styled from 'lib/woowahan-components';
 import useWindowSize from 'hooks/use-window-size';
 
 import starsTitle from 'assets/icons/stars_title.png';
+import likeIcon from 'assets/icons/like.svg';
+import likeFilledIcon from 'assets/icons/like_filled.svg';
 
 import { formatPrice } from 'utils';
+import { CART_URL } from 'constants/urls';
 
 import { TextButton } from 'components';
 import ImageViewer from 'components/image-viewer';
+import Modal from 'components/common/modal';
 import ItemCounter from './item-counter';
 
 export interface ItemInfoProps {
   thumbnail: string;
   title: string;
   price: number;
-  isLike: boolean;
+  likeShow: boolean;
+  isLiked: boolean;
+  setIsLiked: Dispatch<SetStateAction<boolean>>;
   isSoldOut: boolean;
-  onSubmitCart: () => void;
+  onSubmitCart: (count: number) => void;
   onBuy: () => void;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Wrapper = styled.section`
@@ -160,12 +169,44 @@ const PaymentWrapper = styled.form`
   }
 `;
 
-const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSubmitCart, onBuy }) => {
+const LikeWrapper = styled.div`
+  cursor: pointer;
+  margin-right: 5px;
+
+  img {
+    width: 30px;
+  }
+`;
+
+const ItemInfo: FC<ItemInfoProps> = ({
+  thumbnail,
+  title,
+  price,
+  likeShow,
+  isLiked,
+  setIsLiked,
+  isSoldOut,
+  onSubmitCart,
+  onBuy,
+  setCount,
+}) => {
   const [totalPrice, setTotalPrice] = useState(price);
+  const [modalVisible, setModalVisible] = useState(false);
+  const history = useHistory();
   const { width } = useWindowSize();
 
+  const movePayPage = () => {
+    history.push(CART_URL);
+  };
+
+  const onClickCart = () => {
+    onSubmitCart(totalPrice / price);
+    setModalVisible(true);
+  };
+
   const handleCounterChange = (v: number) => {
-    setTotalPrice(v);
+    setTotalPrice(price * v);
+    setCount(v);
   };
 
   useEffect(() => {
@@ -203,13 +244,30 @@ const ItemInfo: FC<ItemInfoProps> = ({ thumbnail, title, price, isSoldOut, onSub
               <TextButton title="다 팔렸읍니다" type="button" styleType="black" disabled />
             ) : (
               <>
-                <TextButton title="장바구니" type="button" styleType="white" onClick={onSubmitCart} />
+                {likeShow && (
+                  <LikeWrapper onClick={setIsLiked}>
+                    {isLiked ? (
+                      <img className="like like-fill" src={likeFilledIcon} alt="like" />
+                    ) : (
+                      <img className="like like-empty" src={likeIcon} alt="like" />
+                    )}
+                  </LikeWrapper>
+                )}
+                <TextButton title="장바구니" type="button" styleType="white" onClick={onClickCart} />
                 <TextButton title="바로구매" type="button" styleType="black" onClick={onBuy} />
               </>
             )}
           </div>
         </PaymentWrapper>
       </Info>
+      <Modal
+        type="confirm"
+        header={<div>장바구니에 상품이 담겼습니다.</div>}
+        body={<p>바로 이동하시겠습니까?</p>}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onConfirm={movePayPage}
+      />
     </Wrapper>
   );
 };

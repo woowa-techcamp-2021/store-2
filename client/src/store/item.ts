@@ -32,6 +32,7 @@ const initialState: StateProps = {
     isSoldOut: false,
     isLike: false,
     reviewCount: 0,
+    isPaid: false,
   },
   search: {
     autoComplete: null,
@@ -97,11 +98,11 @@ export const {
   getItemSuccess,
   getItemFail,
 } = actions;
-export { itemReducer };
+export { itemReducer, initialState };
 
 export function* itemSaga(): Generator {
-  yield takeLatest(getMainItem, getMainItemSaga);
-  yield takeLatest(getListItem, getListItemSaga);
-  yield takeLatest(getAutoComplete, autoCompleteSaga);
-  yield takeLatest(getItem, getItemSaga);
+  yield takeLatest(getMainItem.type, getMainItemSaga);
+  yield takeLatest(getListItem.type, getListItemSaga);
+  yield takeLatest(getAutoComplete.type, autoCompleteSaga);
+  yield takeLatest(getItem.type, getItemSaga);
 }

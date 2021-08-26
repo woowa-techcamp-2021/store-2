@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
 import { checkAuthSaga, githubLoginSaga, loginSaga, logoutSaga, signupSaga } from 'saga/auth';
-
-interface IAuth {
-  error: null | string;
-}
-
-interface IUser {
-  userId: string | null;
-  error: null | string;
-}
+import { IAuth, IUser, IReceiveServer } from 'types/auth';
 
 interface StateProps {
   login: IAuth;
@@ -43,28 +35,40 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     getLogin: state => state,
-    getLoginSuccess: state => state,
+    getLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
+      return state;
+    },
     getLoginFail: (state, action: PayloadAction<string>) => {
       state.login.error = action.payload;
       return state;
     },
     getSignup: state => state,
-    getSignupSuccess: state => state,
+    getSignupSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
+      return state;
+    },
     getSignupFail: (state, action: PayloadAction<string>) => {
       state.signup.error = action.payload;
       return state;
     },
     getUser: state => state,
-    getUserSuccess: (state, action: PayloadAction<string>) => {
-      state.user.userId = action.payload;
+    getUserSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      const { userId, accessToken } = action.payload;
+      if (userId && state.user.userId !== userId) state.user.userId = action.payload.userId;
+      if (accessToken) localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getUserFail: (state, action: PayloadAction<string>) => {
+      localStorage.removeItem('user');
       state.user.error = action.payload;
       return state;
     },
     logout: state => state,
     logoutSuccess: state => {
+      localStorage.removeItem('user');
       state.user.userId = null;
       return state;
     },
@@ -81,12 +85,13 @@ const authSlice = createSlice({
       return state;
     },
     getGithubLogin: state => state,
-    getGithubLoginSuccess: (state, action: PayloadAction<string>) => {
-      state.user.userId = action.payload;
+    getGithubLoginSuccess: (state, action: PayloadAction<IReceiveServer>) => {
+      state.user.userId = action.payload.userId;
+      localStorage.setItem('user', action.payload.accessToken);
       return state;
     },
     getGithubLoginFail: (state, action: PayloadAction<string>) => {
-      state.signup.error = action.payload;
+      state.githubSignup.error = action.payload;
       return state;
     },
   },
@@ -114,12 +119,12 @@ export const {
   getGithubLoginFail,
 } = actions;
 
-export { authReducer };
+export { authReducer, initialState };
 
 export function* authSaga(): Generator {
-  yield takeLatest(getLogin, loginSaga);
-  yield takeLatest(getSignup, signupSaga);
-  yield takeLatest(getUser, checkAuthSaga);
-  yield takeLatest(logout, logoutSaga);
-  yield takeLatest(getGithubLogin, githubLoginSaga);
+  yield takeLatest(getLogin.type, loginSaga);
+  yield takeLatest(getSignup.type, signupSaga);
+  yield takeLatest(getUser.type, checkAuthSaga);
+  yield takeLatest(logout.type, logoutSaga);
+  yield takeLatest(getGithubLogin.type, githubLoginSaga);
 }

@@ -1,0 +1,7 @@
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve(__dirname, './src/config/db-seeder-config.js'),
+  'models-path': path.resolve(__dirname, './src/models'),
+  'seeders-path': path.resolve(__dirname, './src/seeders')
+};

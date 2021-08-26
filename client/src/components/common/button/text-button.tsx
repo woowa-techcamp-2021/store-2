@@ -1,16 +1,18 @@
 import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
+import { CircleLoader } from 'components';
+
 type StyleType = 'black' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
-type Size = 'big' | 'small';
+type Size = 'big' | 'small' | 'tiny';
 
 interface TextButtonProps {
   type: ButtonType;
   title: string;
   styleType: StyleType;
   size?: Size;
-  onClick?: () => void;
+  onClick?: ((count: number) => void) | (() => void);
   disabled?: boolean;
   isLoading?: boolean;
 }
@@ -18,6 +20,7 @@ interface TextButtonProps {
 const Button = styled.button`
   padding: ${({ styleType }) => (styleType === 'black' ? '16px 55px' : '16px 40px')};
   background: ${({ styleType }) => (styleType === 'black' ? 'black' : 'white')};
+  line-height: ${({ size }) => (size === 'tiny' ? '10px' : '20px')};
   font-family: ${({ theme }) => theme?.fontEuljiro};
   font-size: ${({ size }) => (size === 'big' ? '20px' : '16px')};
   border: 1px solid ${({ styleType, theme }) => (styleType === 'black' ? 'black' : theme?.colorTextBeige)};
@@ -48,12 +51,11 @@ const TextButton: FC<TextButtonProps> = ({
     <Button
       type={type}
       onClick={onClick}
-      isLoading={isLoading}
       styleType={styleType}
       size={size}
-      disabled={disabled ? true : ''}
+      disabled={disabled || isLoading ? true : ''}
     >
-      {title}
+      {isLoading ? <CircleLoader size="20px" color="grey" /> : title}
     </Button>
   );
 };

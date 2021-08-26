@@ -36,5 +36,5 @@ export const { getCategories, getCategoriesSuccess, getCategoriesFail } = action
 export { categoryReducer };
 
 export function* categorySaga(): Generator {
-  yield takeLatest(getCategories, getCategorySaga);
+  yield takeLatest(getCategories.type, getCategorySaga);
 }

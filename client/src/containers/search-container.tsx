@@ -24,9 +24,9 @@ const SearchContainer: FC = () => {
     const savedRecentKeywords = window.localStorage.getItem('recent') || '';
     const recentKeywords = savedRecentKeywords.split(',');
     if (!recentKeywords.includes(keyword)) {
-      recentKeywords.push(keyword);
+      recentKeywords.unshift(keyword);
     }
-    window.localStorage.setItem('recent', recentKeywords.slice(-5).toString());
+    window.localStorage.setItem('recent', recentKeywords.slice(0, 5).toString());
   };
 
   const loadRecentKeywords = () => {
@@ -36,7 +36,7 @@ const SearchContainer: FC = () => {
     }
     const keywords = recentKeywords
       .split(',')
-      .slice(-5)
+      .slice(0, 5)
       .filter(keyword => keyword);
 
     setKeywords(keywords);

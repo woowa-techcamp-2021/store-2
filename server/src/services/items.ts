@@ -1,6 +1,11 @@
 import itemRepository, { IItems, IItemsData } from 'repositories/items';
+import orderRepository from 'repositories/orders';
+import likeService from 'services/like';
+
 import errorGenerator from 'utils/error/error-generator';
 import { getRegExp, engToKor } from 'korean-regexp';
+import { ItemAttributes, ItemCreationAttributes } from 'models/item';
+import { Model } from 'sequelize';
 
 interface IMainItems {
   popularItems: IItems;
@@ -17,6 +22,14 @@ export interface IGetItem {
   isSoldOut: boolean;
   isLike: boolean;
   reviewCount: number;
+  isPaid: boolean;
+}
+
+export interface IOrderItem {
+  id: string;
+  title: string;
+  thumbnail: string;
+  price: number;
 }
 
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
@@ -27,6 +40,7 @@ async function mainItems(visited: string[]): Promise<IMainItems> {
     itemRepository.getMainItems([['updatedAt', 'DESC']], 8),
     itemRepository.getRecommendItems(visited, false),
   ]);
+
   return { popularItems, newItems, recommendItems };
 }
 
@@ -79,8 +93,13 @@ async function getItems(
   return { items, totalCount, pageCount };
 }
 
-async function getItem(id: string): Promise<IGetItem> {
+async function getItem(id: string, userId?: string): Promise<IGetItem> {
   const item = await itemRepository.getItem(id);
+  let isPaid = false;
+
+  if (userId) {
+    isPaid = await orderRepository.checkPaidUser(userId, Number(id));
+  }
 
   const itemData: IGetItem = {
     thumbnail: item.getDataValue('thumbnail'),
@@ -89,11 +108,47 @@ async function getItem(id: string): Promise<IGetItem> {
     salePercent: item.getDataValue('salePercent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
-    // TODO: 좋아요
-    isLike: true,
-    // TODO: 리뷰 갯수
+    isLike: userId ? await likeService.isUserLikeItem(userId, parseInt(id, 10)) : false,
+    isPaid,
     reviewCount: 0,
   };
+
+  return itemData;
+}
+
+async function matchUserLikeItem(
+  itemList: Model<ItemAttributes, ItemCreationAttributes>[],
+  userId?: string,
+): Promise<unknown[]> {
+  const result = await Promise.all(
+    itemList.map(async item => {
+      const itemId = parseInt(item.getDataValue('id'), 10);
+      return {
+        ...item.toJSON(),
+        isLike: userId ? await likeService.isUserLikeItem(userId, itemId) : false,
+      };
+    }),
+  );
+  return result;
+}
+
+async function getOrderItems(id: string): Promise<IOrderItem[]> {
+  const itemIDs = id.split(',');
+  const items = await itemRepository.getOrderItems(itemIDs);
+
+  const itemData: IOrderItem[] = items.map(item => {
+    const salePercent = item.getDataValue('salePercent');
+    const price = Number(item.getDataValue('price'));
+
+    const saledPrice = Math.floor(price - (price * salePercent) / 100);
+
+    return {
+      id: item.getDataValue('id'),
+      title: item.getDataValue('title'),
+      thumbnail: item.getDataValue('thumbnail'),
+      price: saledPrice,
+    };
+  });
 
   return itemData;
 }
@@ -102,4 +157,6 @@ export default {
   mainItems,
   getItems,
   getItem,
+  matchUserLikeItem,
+  getOrderItems,
 };

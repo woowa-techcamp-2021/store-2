@@ -1,4 +1,4 @@
-const REGEX_PHONE = /^\d{3}-\d{3,4}-\d{4}$/;
+const REGEX_PHONE = /^010-\d{4}-\d{4}$/;
 
 const PHONE_EMPTY = '전화번호를 입력해주세요';
 const PHONE_INVALID = '전화번호 형식을 확인해주세요';

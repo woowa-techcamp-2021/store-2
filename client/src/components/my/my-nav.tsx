@@ -5,7 +5,7 @@ import { Link, useHistory } from 'lib/router';
 import { MY_PAGE_NAV } from 'constants/index';
 
 const Wrapper = styled.nav`
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 10px;
   a {
     font-size: 18px;

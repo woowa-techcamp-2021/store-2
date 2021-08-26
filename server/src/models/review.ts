@@ -1,13 +1,15 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
-import { MAX_SCORE } from 'config/constants';
+import { REVIEW } from 'config/constants';
 
 export interface ReviewAttribures {
-  id: string;
+  id: number;
   score: number;
   title: string;
   contents: string;
   imgUrl: string;
+  ItemId: number;
+  UserId: string;
 }
 
 export type ReviewCreationAttributes = Optional<ReviewAttribures, 'id'>;
@@ -21,13 +23,13 @@ const reviewSchema = (sequelize: Sequelize): ModelCtor<Model<ReviewAttribures, R
     },
     score: {
       type: DataTypes.INTEGER,
-      defaultValue: MAX_SCORE,
+      defaultValue: REVIEW.MAX_SCORE,
     },
     title: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(REVIEW.TITLE_MAX_LENGTH),
     },
     contents: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.TEXT,
     },
     imgUrl: {
       type: DataTypes.TEXT,

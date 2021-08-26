@@ -44,6 +44,19 @@ function errorHandler(err: CustomError): ErrorType {
       return { statusCode: 500, errorMessage: err.customMessage || '쿼리스트링을 확인해주세요.' };
     case 'orders/orders-not-found':
       return { statusCode: 500, errorMessage: err.customMessage || '주문내역 데이터가 없습니다.' };
+    case 'address/address-error':
+      return { statusCode: 500, errorMessage: err.customMessage || 'db 오류' };
+    case 'address/maximun address':
+      return { statusCode: 409, errorMessage: err.customMessage || '배송지는 최대 3개까지 입력할 수 있습니다' };
+    case 'likes/no-create':
+      return {
+        statusCode: 400,
+        errorMessage: err.customMessage || '존재하지 않는 아이템이거나 이미 좋아요를 누른 아이템입니다.',
+      };
+    case 'likes/no-delete':
+      return { statusCode: 400, errorMessage: err.customMessage || '좋아요를 누른 적이 없는 아이템입니다.' };
+    case 'reviews/user-not-paid':
+      return { statusCode: 403, errorMessage: err.customMessage || '잘못된 요청입니다' };
 
     default:
       return { statusCode: 500, errorMessage: '다시 시도해주세요.' };

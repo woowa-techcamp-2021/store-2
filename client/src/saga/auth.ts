@@ -1,132 +1,124 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
+import axios, { AxiosResponse } from 'axios';
+
 import * as authAPI from 'utils/api/auth';
+import { INNER_ERROR } from 'constants/index';
+
 import { IError } from 'types/error';
+import { IAuthState, IGithubCode, IReceiveServer } from 'types/auth';
 import { startLoading, finishLoading } from 'store/loading';
 import * as authStore from 'store/auth';
-import { IAuthState, ICheckUser, IGithubCode, IReceiveServer } from 'types/auth';
 
-function* loginSaga(action: PayloadAction): Generator {
+function* loginSaga(action: PayloadAction<IAuthState>): Generator {
   try {
-    yield put(startLoading(authStore.getLogin.type));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.login, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
-    yield put({
-      type: authStore.getLoginSuccess.type,
-    });
-    localStorage.setItem('user', accessToken);
-    yield put({
-      type: authStore.getUserSuccess.type,
-      payload: userId,
-    });
+    yield put(startLoading(authStore.getLogin));
+    const { data } = (yield call(authAPI.login, action.payload)) as AxiosResponse<IReceiveServer>;
+    yield put({ type: authStore.getLoginSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
       yield put({
-        type: authStore.getLoginFail.type,
+        type: authStore.getLoginFail,
         payload: errorMessage,
       });
     } else {
-      throw new Error(e);
+      yield put({
+        type: authStore.getLoginFail,
+        payload: INNER_ERROR,
+      });
     }
   } finally {
-    yield put(finishLoading(authStore.getLogin.type));
+    yield put(finishLoading(authStore.getLogin));
   }
 }
 
-function* signupSaga(action: PayloadAction): Generator {
+function* signupSaga(action: PayloadAction<IAuthState>): Generator {
   try {
-    yield put(startLoading(authStore.getSignup.type));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.signup, action.payload as unknown as IAuthState)) as AxiosResponse<IReceiveServer>;
+    yield put(startLoading(authStore.getSignup));
+    const { data } = (yield call(authAPI.signup, action.payload)) as AxiosResponse<IReceiveServer>;
     yield put({
-      type: authStore.getSignupSuccess.type,
+      type: authStore.getSignupSuccess,
+      payload: data,
     });
-    localStorage.setItem('user', accessToken);
-    yield put({ type: authStore.getUserSuccess.type, payload: userId });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
       yield put({
-        type: authStore.getSignupFail.type,
+        type: authStore.getSignupFail,
         payload: errorMessage,
       });
     } else {
-      throw new Error(e);
+      yield put({
+        type: authStore.getSignupFail,
+        payload: INNER_ERROR,
+      });
     }
   } finally {
-    yield put(finishLoading(authStore.getSignup.type));
+    yield put(finishLoading(authStore.getSignup));
   }
 }
 
 function* checkAuthSaga(): Generator {
   try {
-    yield put(startLoading(authStore.getUser.type));
-    const {
-      data: { newAccessToken, userId },
-    } = (yield call(authAPI.checkAuth)) as AxiosResponse<ICheckUser>;
-    if (newAccessToken) localStorage.setItem('user', newAccessToken);
-
-    yield put({ type: authStore.getUserSuccess.type, payload: userId });
+    yield put(startLoading(authStore.getUser));
+    const { data } = (yield call(authAPI.checkAuth)) as AxiosResponse<IReceiveServer>;
+    yield put({ type: authStore.getUserSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      localStorage.removeItem('user');
       const { errorMessage } = e.response?.data as IError;
-      yield put({ type: authStore.getUserFail.type, payload: errorMessage });
+      yield put({ type: authStore.getUserFail, payload: errorMessage });
     } else {
-      throw new Error(e);
+      yield put({
+        type: authStore.getUserFail,
+        payload: INNER_ERROR,
+      });
     }
   } finally {
-    yield put(finishLoading(authStore.getUser.type));
+    yield put(finishLoading(authStore.getUser));
   }
 }
 
 function* logoutSaga(): Generator {
   try {
-    yield put(startLoading(authStore.logout.type));
-    (yield call(authAPI.logout)) as AxiosResponse<ICheckUser>;
-    localStorage.removeItem('user');
-    yield put({ type: authStore.logoutSuccess.type });
+    yield put(startLoading(authStore.logout));
+    yield call(authAPI.logout);
+    yield put({ type: authStore.logoutSuccess });
     window.location.href = '/';
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      localStorage.removeItem('user');
       const { errorMessage } = e.response?.data as IError;
-      yield put({ type: authStore.logoutFail.type, payload: errorMessage });
-    } else {
-      throw new Error(e);
-    }
+      yield put({ type: authStore.logoutFail, payload: errorMessage });
+    } else
+      yield put({
+        type: authStore.logoutFail,
+        payload: INNER_ERROR,
+      });
   } finally {
-    yield put(finishLoading(authStore.logout.type));
+    yield put(finishLoading(authStore.logout));
   }
 }
 
-function* githubLoginSaga(action: PayloadAction): Generator {
+function* githubLoginSaga(action: PayloadAction<IGithubCode>): Generator {
   try {
-    yield put(startLoading(authStore.getGithubLogin.type));
-    const {
-      data: { accessToken, userId },
-    } = (yield call(authAPI.githubLogin, action.payload as unknown as IGithubCode)) as AxiosResponse<IReceiveServer>;
-    yield put({
-      type: authStore.getGithubLoginSuccess.type,
-    });
-    localStorage.setItem('user', accessToken);
-    yield put({ type: authStore.getUserSuccess.type, payload: userId });
+    yield put(startLoading(authStore.getGithubLogin));
+    const { data } = (yield call(authAPI.githubLogin, action.payload)) as AxiosResponse<IReceiveServer>;
+    yield put({ type: authStore.getGithubLoginSuccess, payload: data });
   } catch (e) {
     if (axios.isAxiosError(e)) {
       const { errorMessage } = e.response?.data as IError;
       yield put({
-        type: authStore.getGithubLoginFail.type,
+        type: authStore.getGithubLoginFail,
         payload: errorMessage,
       });
     } else {
-      throw new Error(e);
+      yield put({
+        type: authStore.getGithubLoginFail,
+        payload: INNER_ERROR,
+      });
     }
   } finally {
-    yield put(finishLoading(authStore.getGithubLogin.type));
+    yield put(finishLoading(authStore.getGithubLogin));
   }
 }
 

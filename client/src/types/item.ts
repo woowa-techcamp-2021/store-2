@@ -8,6 +8,7 @@ export interface IItem {
   isNew?: boolean;
   salePercent: number;
   originalPrice?: number;
+  isLike: boolean;
 }
 
 export interface IListItem {
@@ -46,4 +47,5 @@ export interface IItemDetail {
   isSoldOut: boolean;
   isLike: boolean;
   reviewCount: number;
+  isPaid: boolean;
 }

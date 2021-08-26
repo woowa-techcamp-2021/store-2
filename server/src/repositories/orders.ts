@@ -2,6 +2,8 @@ import { db } from 'models';
 import { OrderAttributes, OrderCreationAttributes } from 'models/order';
 import { Op, Model, Sequelize } from 'sequelize';
 
+import { PostOrder } from 'controllers/orders';
+
 import errorGenerator from 'utils/error/error-generator';
 
 const LIMIT_COUNT = 10;
@@ -73,4 +75,31 @@ const getUserOrders = async (
 
   return { orders, totalCount, pageCount };
 };
-export default { getUserOrders };
+
+const postOrder = async (uid: string, orderItems: PostOrder): Promise<void> => {
+  const { address, receiver, phone, itemList } = orderItems;
+  const createQueue = itemList.map(({ quantity, itemId }) => {
+    return db.Order.create({
+      address,
+      receiver,
+      quantity,
+      ItemId: itemId,
+      UserId: uid,
+    });
+  });
+
+  await Promise.all([createQueue, db.User.update({ phone }, { where: { id: uid } })]);
+};
+
+const checkPaidUser = async (uid: string, itemId: number): Promise<boolean> => {
+  const paidCount = await db.Order.count({
+    where: {
+      ItemId: itemId,
+      UserId: uid,
+    },
+  });
+
+  return !!paidCount;
+};
+
+export default { getUserOrders, postOrder, checkPaidUser };

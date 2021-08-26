@@ -1,20 +1,21 @@
 import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
 
-import { Table } from 'components';
-
 import { formatPrice } from 'utils';
 
-interface TableSectionProps {
-  orderItems: OrderItem[];
-}
+import { Table } from 'components';
 
-interface OrderItem {
+export interface OrderItem {
   id: string;
   thumbnail: string;
   title: string;
   count: number;
   price: number;
+}
+
+interface TableSectionProps {
+  orderItems: OrderItem[];
+  loading: boolean;
 }
 
 const TableRowTitle = styled.div`
@@ -35,8 +36,17 @@ const TableRowTitle = styled.div`
     }
   }
 `;
+
 const TableRowText = styled.div`
   text-align: center;
+`;
+
+const ItemTitle = styled.div`
+  font-size: 14px;
+
+  ${({ theme }) => theme?.mobile} {
+    font-size: 12px;
+  }
 `;
 
 const tableHeaders = [
@@ -46,16 +56,18 @@ const tableHeaders = [
   { column: '배송비', span: 1 },
 ];
 
-const TableSection: FC<TableSectionProps> = ({ orderItems }) => {
+const TableSection: FC<TableSectionProps> = ({ orderItems, loading }) => {
   return (
-    <Table headers={tableHeaders}>
+    <Table headers={tableHeaders} loading={loading}>
       {orderItems.map(item => {
         const { id, title, thumbnail, count, price } = item;
         return (
           <Fragment key={id}>
             <TableRowTitle>
-              <img src={thumbnail} alt={title} />
-              {title}
+              <ItemTitle>
+                <img src={thumbnail} alt={title} />
+                {title}
+              </ItemTitle>
             </TableRowTitle>
             <TableRowText>{count}개</TableRowText>
             <TableRowText>{formatPrice(price)}원</TableRowText>
