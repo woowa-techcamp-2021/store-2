@@ -8,9 +8,12 @@ const loadingSlice = createSlice({
     'auth/getSignup': false,
     'item/getMainItem': false,
     'item/getListItem': false,
-    'order/getListOrder': false,
     'order/getOrderItems': false,
     'order/postOrder': false,
+    'order/getOrders': false,
+    'address/getListAddress': false,
+    'address/addAddress': false,
+    'address/removeAddAddress': false,
   },
   reducers: {
     startLoading: (state, action) => ({ ...state, [action.payload]: true }),

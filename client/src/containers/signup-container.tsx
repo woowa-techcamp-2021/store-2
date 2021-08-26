@@ -4,8 +4,6 @@ import { useHistory } from 'lib/router';
 
 import useInputs from 'hooks/use-inputs';
 
-import { IAuth } from 'types/auth';
-
 import authValidation from 'utils/validation/auth-validation';
 import { MAIN_URL } from 'constants/urls';
 
@@ -21,7 +19,7 @@ const SignupContainer: FC = () => {
   const [authError, setAuthError] = useState<null | string>(null);
   const [check, setCheck] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { loading, error, userId, userLoading }: IAuth = useSelector(({ auth, loading }: RootState) => ({
+  const { loading, error, userId, userLoading } = useSelector(({ auth, loading }: RootState) => ({
     loading: loading['auth/getSignup'],
     error: auth.signup.error,
     userId: auth.user.userId,

@@ -1,8 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { IUser } from 'types/auth';
-
 import { Navbar } from 'components';
 import AuthLogoutModal from 'components/auth/logout-modal';
 
@@ -16,7 +14,7 @@ interface NavbarProps {
 
 const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { userId }: IUser = useSelector(({ auth }: RootState) => ({
+  const { userId } = useSelector(({ auth }: RootState) => ({
     userId: auth.user.userId,
   }));
   const dispatch = useDispatch();
