@@ -1,6 +1,8 @@
 import React, { FC, Children, ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 
+import CircleLoader from './loader/circle-loader';
+
 interface TableProps {
   headers: TableColumn[];
   loading: boolean;
@@ -94,7 +96,13 @@ const Table: FC<TableProps> = ({ headers, children, loading }) => {
           })
         ) : (
           <EmptyCell>
-            <td colSpan={100}>텅</td>
+            {loading ? (
+              <td colSpan={100}>
+                <CircleLoader color="brown" size="50px" />
+              </td>
+            ) : (
+              <td colSpan={100}>텅</td>
+            )}
           </EmptyCell>
         )}
       </tbody>
