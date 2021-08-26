@@ -16,7 +16,7 @@ import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
 
-const MainItemContainer: FC = () => {
+const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [file, setFile] = useState<null | File>(null);
@@ -188,4 +188,4 @@ const MainItemContainer: FC = () => {
   );
 };
 
-export default MainItemContainer;
+export default ItemDetailContainer;
