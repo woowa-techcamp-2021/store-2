@@ -105,8 +105,8 @@ const ReviewPost: FC<IReviewPostProps> = ({
           <GridForm titles={['작성자', '평가', '제목', '본문', '첨부파일']}>
             <div>{userId}</div>
             <div>
-              {makeStar(star).map((v, i) => {
-                if (v)
+              {makeStar(star).map((star, i) => {
+                if (star)
                   return (
                     <input
                       className="star starOn"
