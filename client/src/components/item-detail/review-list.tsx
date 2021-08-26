@@ -65,14 +65,14 @@ const ReviewList: FC<IReviewListProps> = ({ reviews }) => {
   return (
     <Wrapper>
       {reviews.map((review, idx) => {
-        const { id, score, title, imgUrl, content, userId } = review;
+        const { score, title, imgUrl, contents, userId } = review;
         return (
-          <Review key={id} onClick={() => setState(idx)}>
+          <Review key={title + String(idx)} onClick={() => setState(idx)}>
             <div>
               <div>
                 {makeStar(score).map((v, i) => {
-                  if (v) return <img key={title.concat(i.toString())} src={starOff} alt="startOff" />;
-                  return <img key={title.concat(i.toString())} src={starOn} alt="startOff" />;
+                  if (v) return <img key={title + String(idx) + String(i)} src={starOff} alt="startOff" />;
+                  return <img key={title + String(idx) + String(i)} src={starOn} alt="startOff" />;
                 })}
               </div>
               <div>{title}</div>
@@ -81,7 +81,7 @@ const ReviewList: FC<IReviewListProps> = ({ reviews }) => {
             {idx === state && (
               <div>
                 <img src={imgUrl} alt="후기 이미지" />
-                <div>{content}</div>
+                <div>{contents}</div>
               </div>
             )}
           </Review>
