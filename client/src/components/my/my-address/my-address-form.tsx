@@ -71,8 +71,8 @@ const MyAddressForm: FC<MyAddressFormProps> = ({
         </InputWrapper>
       </GridForm>
       <ButtonWrapper>
-        <TextButton type="submit" styleType="black" title="배송지 추가" size="tiny" isLoading={loading} />
         <div>{addError}</div>
+        <TextButton type="submit" styleType="black" title="배송지 추가" size="tiny" isLoading={loading} />
       </ButtonWrapper>
     </form>
   );
