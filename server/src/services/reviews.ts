@@ -40,6 +40,7 @@ async function postReview(
       Key: `reviews/${itemId}-${Date.now().toString()}.jpg`,
       Body: resizedImageBuffer,
       ACL: 'public-read',
+      ContentType: 'image/jpeg',
     });
     imgUrl = imageLocation;
   }

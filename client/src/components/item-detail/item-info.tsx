@@ -7,6 +7,7 @@ import useWindowSize from 'hooks/use-window-size';
 import starsTitle from 'assets/icons/stars_title.png';
 import likeIcon from 'assets/icons/like.svg';
 import likeFilledIcon from 'assets/icons/like_filled.svg';
+import noImg from 'assets/images/no_image.png';
 
 import { formatPrice } from 'utils';
 import { CART_URL } from 'constants/urls';
@@ -41,6 +42,7 @@ const Wrapper = styled.section`
   ${({ theme }) => theme?.tablet} {
     flex-direction: column;
   }
+
   ${({ theme }) => theme?.mobile} {
     flex-direction: column;
   }
@@ -58,8 +60,9 @@ const Thumbnail = styled.img`
   }
 
   ${({ theme }) => theme?.mobile} {
-    width: 100%;
+    width: 80%;
     height: auto;
+    align-self: center;
     margin-top: 10px;
     margin-right: 0;
     margin-bottom: 18px;
@@ -87,17 +90,37 @@ const Info = styled.div`
       margin-bottom: 12px;
     }
   }
+
+  ${({ theme }) => theme?.mobile} {
+    .top-wrapper img[alt='stars-title'] {
+      width: 100px;
+      height: auto;
+    }
+  }
 `;
 
 const ItemTitle = styled.div`
-  border-top: 6px double black;
-  border-bottom: 6px double black;
   width: 100%;
-  padding: 12px;
-  text-align: center;
-  font-size: 30px;
-  font-family: ${({ theme }) => theme?.fontHanna};
-  line-height: 31px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
+  div {
+    border-top: 7px double black;
+    border-bottom: 7px double black;
+    padding: 12px;
+    text-align: center;
+    font-size: 30px;
+    font-family: ${({ theme }) => theme?.fontHanna};
+    line-height: 32px;
+  }
+
+  ${({ theme }) => theme?.mobile} {
+    div {
+      padding: 8px;
+      font-size: 24px;
+      line-height: 28px;
+    }
+  }
 `;
 
 const ItemPrice = styled.div`
@@ -108,13 +131,29 @@ const ItemPrice = styled.div`
   margin-bottom: 32px;
 
   .title {
-    margin: 24px 0 12px;
+    margin: 24px 0 14px;
     color: ${({ theme }) => theme?.colorGreyDark};
   }
 
   .price {
     font-size: 24px;
     font-family: ${({ theme }) => theme?.fontHanna};
+  }
+
+  .message {
+    font-size: 16px;
+    font-family: ${({ theme }) => theme?.fontHannaAir};
+  }
+
+  ${({ theme }) => theme?.mobile} {
+    .title,
+    .message {
+      font-size: 14px;
+    }
+
+    .price {
+      font-size: 20px;
+    }
   }
 `;
 
@@ -125,7 +164,6 @@ const PaymentWrapper = styled.form`
   width: 100%;
   border-top: 2px solid ${({ theme }) => theme?.colorFooter};
   padding: 8px 0 0;
-  gap: 18px;
 
   .row {
     display: flex;
@@ -163,9 +201,35 @@ const PaymentWrapper = styled.form`
     }
   }
 
-  .end {
+  .row.first {
+    margin-bottom: 18px;
+  }
+
+  .row.end {
     justify-content: flex-end;
-    gap: 8px;
+
+    button {
+      margin-left: 8px;
+    }
+  }
+
+  ${({ theme }) => theme?.mobile} {
+    margin-top: -10px;
+
+    .row.first {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .row.end {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .row .price,
+    .row input {
+      font-size: 26px;
+    }
   }
 `;
 
@@ -215,25 +279,27 @@ const ItemInfo: FC<ItemInfoProps> = ({
 
   return (
     <Wrapper>
-      {width >= 1200 ? (
+      {thumbnail && width >= 1200 ? (
         <ImageViewer className="image-viewer" imgSrc={thumbnail} imgWidth={450} imgHeight={527} />
       ) : (
-        <Thumbnail src={thumbnail} alt={title} />
+        <Thumbnail src={thumbnail || noImg} alt={title} />
       )}
       <Info>
         <div className="top-wrapper">
           <img src={starsTitle} alt="stars-title" />
-          <ItemTitle>{title}</ItemTitle>
+          <ItemTitle>
+            <div>{title}</div>
+          </ItemTitle>
           <ItemPrice>
             <div className="title">판매가격</div>
             <div className="price">{formatPrice(price)}원</div>
             <div className="title">배송정보</div>
-            <div>데모기념 오늘만 배송비 무료!!!</div>
+            <div className="message">데모기념 오늘만 배송비 무료!!!</div>
           </ItemPrice>
           <ItemCounter title={title} price={price} onChange={handleCounterChange} />
         </div>
         <PaymentWrapper>
-          <div className="row">
+          <div className="row first">
             <div className="title">총 합계금액</div>
             <div className="price">
               <input value={formatPrice(totalPrice)} readOnly size={7} />원
