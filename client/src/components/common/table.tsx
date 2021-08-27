@@ -71,11 +71,6 @@ const Table: FC<TableProps> = ({ headers, children, loading }) => {
 
   return (
     <TableBody>
-      <colgroup>
-        {headers.map(({ span }, i) => (
-          <col span={span} key={headers[i].column.toString()} />
-        ))}
-      </colgroup>
       <thead>
         <tr>
           {headers.map(({ column, span }) => {
