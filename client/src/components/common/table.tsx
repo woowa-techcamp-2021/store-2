@@ -41,7 +41,7 @@ const TableHead = styled.th`
     padding: 8px 6px;
   }
   ${({ theme }) => theme?.mobile} {
-    font-size: 12px;
+    font-size: 10px;
     padding: 8px 6px;
   }
 `;
@@ -57,7 +57,7 @@ const TableCell = styled.td`
   }
   ${({ theme }) => theme?.mobile} {
     padding: 12px 6px;
-    font-size: 12px;
+    font-size: 10px;
   }
 `;
 

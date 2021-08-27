@@ -35,10 +35,10 @@ const TableRowText = styled.div`
 `;
 
 const tableHeaders = [
-  { column: '주문일자', span: 2 },
-  { column: '상품명', span: 4 },
-  { column: '상품금액/수량', span: 2 },
-  { column: '주문상태', span: 2 },
+  { column: '주문일자', span: 4 },
+  { column: '상품명', span: 5 },
+  { column: '상품금액/수량', span: 4 },
+  { column: '주문상태', span: 3 },
 ];
 
 const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
