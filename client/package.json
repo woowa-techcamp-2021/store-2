@@ -1,6 +1,6 @@
 {
   "name": "store-2-client",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "배민문구사 클라이언트",
   "main": "src/index.tsx",
   "type": "module",
