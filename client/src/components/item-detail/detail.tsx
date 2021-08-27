@@ -54,16 +54,7 @@ const DetailImageWrapper = styled.div`
   }
 `;
 
-const Detail: FC<DetailProps> = ({
-  contents,
-  itemLoading,
-  reviewCount,
-  reviews,
-  reviewLoading,
-  pageCount,
-  pageId,
-  setPageId,
-}) => {
+const Detail: FC<DetailProps> = ({ contents, reviewCount, reviews, reviewLoading, pageCount, pageId, setPageId }) => {
   const detailRef = useRef<HTMLDivElement>(null);
   const detailExecuteScroll = () => {
     if (detailRef.current) detailRef.current.scrollIntoView();

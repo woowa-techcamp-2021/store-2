@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import styled from 'lib/woowahan-components';
 
 import starOn from 'assets/icons/star_on.png';
@@ -86,21 +86,23 @@ const makeStar = (score: number): boolean[] => {
 
 const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
   const [state, setState] = useState<null | number>(null);
+
+  const handleReviewClick = useCallback(
+    idx => {
+      if (idx === state) setState(null);
+      else setState(idx);
+    },
+    [state],
+  );
+
   return (
     <Wrapper>
       {!reviewLoading && reviews.length === 0 && <Empty>텅</Empty>}
       {reviews.map((review, idx) => {
         const { score, title, imgUrl, contents, userId } = review;
         return (
-          <Review
-            key={title + String(idx)}
-            onClick={() => {
-              if (idx === state) setState(null);
-              else setState(idx);
-            }}
-            isSelected={idx === state}
-          >
-            <div className="review-header">
+          <Review key={title + String(idx)} isSelected={idx === state}>
+            <div className="review-header" onClick={() => handleReviewClick(idx)} aria-hidden="true">
               <div className="star-area">
                 {makeStar(score).map((star, i) => {
                   if (star)
