@@ -150,13 +150,13 @@ const Order: FC<OrderProps> = ({
         <SectionTitle>배송정보</SectionTitle>
         <GridForm titles={['배송지 확인', '받는분', '받으실 곳 *']}>
           <InputWrapper>
-            {addresses.map(v => {
+            {addresses.map(address => {
               return (
                 <RadioButton
-                  key={v.name}
-                  id={v.name}
-                  text={v.name}
-                  value={v.address}
+                  key={address.name}
+                  id={address.name}
+                  text={address.name}
+                  value={address.address}
                   onChange={pickAddress}
                   checked={addressChecked}
                 />
