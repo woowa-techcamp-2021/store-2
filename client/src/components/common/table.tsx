@@ -36,6 +36,10 @@ const TableHead = styled.th`
   vertical-align: middle;
   width: ${props => `${Math.floor((props.span as number) * 100)}%`};
 
+  ${({ theme }) => theme?.tablet} {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
   ${({ theme }) => theme?.mobile} {
     font-size: 12px;
     padding: 8px 6px;
@@ -47,6 +51,10 @@ const TableCell = styled.td`
   font-size: 14px;
   vertical-align: middle;
 
+  ${({ theme }) => theme?.tablet} {
+    padding: 12px 6px;
+    font-size: 12px;
+  }
   ${({ theme }) => theme?.mobile} {
     padding: 12px 6px;
     font-size: 12px;
