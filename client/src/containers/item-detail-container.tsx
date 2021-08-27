@@ -11,10 +11,10 @@ import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
 
-import { Modal } from 'components';
 import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
 import ReviewPost from 'components/item-detail/review-post';
+import LoginModal from 'components/auth/login-modal';
 
 const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -185,7 +185,7 @@ const ItemDetailContainer: FC = () => {
         fileRef={fileRef}
         isPaid={isPaid}
       />
-      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
+      <LoginModal visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };
