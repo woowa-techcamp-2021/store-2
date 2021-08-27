@@ -50,9 +50,9 @@ const ItemTitle = styled.div`
 `;
 
 const tableHeaders = [
-  { column: '상품/옵션 정보', span: 6 },
+  { column: '상품/옵션 정보', span: 5 },
   { column: '수량', span: 1 },
-  { column: '상품금액', span: 1 },
+  { column: '상품금액', span: 2 },
   { column: '배송비', span: 1 },
 ];
 
