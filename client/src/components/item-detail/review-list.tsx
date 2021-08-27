@@ -20,27 +20,39 @@ const Wrapper = styled.div`
 `;
 
 const Review = styled.div`
-  border-top: 1px solid #dbdbdb;
-  padding: 10px;
   margin: 0 20px;
+  padding: 20px 15px;
+  border-bottom: 1px solid ${props => props.theme?.colorGreyLight};
+
   &:first-child {
-    border-top: 2px solid #999999;
+    border-top: 3px solid ${props => props.theme?.colorGreyLight};
   }
-  > div:first-child {
+
+  .review-header {
+    cursor: pointer;
     display: flex;
+
+    .star-area {
+      margin-right: 15px;
+    }
+
+    .title-area {
+      font-weight: ${props => (props.isSelected ? props.theme?.weightBold : 'normal')};
+    }
+
+    .user-area {
+      margin-left: auto;
+    }
   }
-  > div:first-child > div:first-child {
-    margin-right: 15px;
-  }
-  > div:first-child > div:last-child {
-    margin-left: auto;
-  }
-  > div:last-child {
+
+  .review-content {
     margin-top: 20px;
     display: flex;
-    > img {
+
+    img {
       width: 200px;
       margin-right: 30px;
+
       ${({ theme }) => theme?.mobile} {
         width: 100px;
       }
@@ -49,6 +61,7 @@ const Review = styled.div`
       }
     }
   }
+
   .star {
     width: 18px;
     height: 17px;
@@ -85,20 +98,21 @@ const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
               if (idx === state) setState(null);
               else setState(idx);
             }}
+            isSelected={idx === state}
           >
-            <div>
-              <div>
+            <div className="review-header">
+              <div className="star-area">
                 {makeStar(score).map((star, i) => {
                   if (star)
                     return <img key={title + String(idx) + String(i)} src={starOff} className="star" alt="startOff" />;
                   return <img key={title + String(idx) + String(i)} src={starOn} className="star" alt="startOff" />;
                 })}
               </div>
-              <div>{title}</div>
-              <div>{filterId(userId)}</div>
+              <div className="title-area">{title}</div>
+              <div className="user-area">{filterId(userId)}</div>
             </div>
             {idx === state && (
-              <div>
+              <div className="review-content">
                 {imgUrl && <img src={imgUrl} alt="후기 이미지" />}
                 <div>{contents}</div>
               </div>
