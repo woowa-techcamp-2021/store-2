@@ -60,6 +60,11 @@ const Review = styled.div`
         width: 150px;
       }
     }
+
+    div {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
 
   .star {
