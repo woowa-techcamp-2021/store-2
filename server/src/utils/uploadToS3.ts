@@ -7,6 +7,7 @@ interface IParams {
   Key: string;
   Body: Buffer;
   ACL: string;
+  ContentType: string;
 }
 
 const s3Config = {

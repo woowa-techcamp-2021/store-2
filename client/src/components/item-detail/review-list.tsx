@@ -115,7 +115,11 @@ const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
             </div>
             {idx === state && (
               <div className="review-content">
-                {imgUrl && <img src={imgUrl} alt="후기 이미지" />}
+                {imgUrl && (
+                  <a target="_blank" rel="noreferrer" href={imgUrl}>
+                    <img src={imgUrl} alt="후기 이미지" />
+                  </a>
+                )}
                 <div>{contents}</div>
               </div>
             )}
