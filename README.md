@@ -5,7 +5,7 @@
   <img alt="banner" src="https://user-images.githubusercontent.com/35324795/129211840-c90d2f8e-3c28-4d22-8edf-e6de6e4339f3.png">
 
 ![License](https://img.shields.io/badge/License-MIT-red)
-![Version](https://img.shields.io/badge/Version-0.1.0-green)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/woowa-techcamp-2021/store-2?color=green&label=Version)
 
 </h6>
 
