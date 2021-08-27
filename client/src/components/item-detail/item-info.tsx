@@ -208,8 +208,8 @@ const PaymentWrapper = styled.form`
   .row.end {
     justify-content: flex-end;
 
-    button:first-child {
-      margin-right: 8px;
+    button {
+      margin-left: 8px;
     }
   }
 
