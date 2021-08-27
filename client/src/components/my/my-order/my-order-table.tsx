@@ -1,10 +1,13 @@
 import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
+import { Link } from 'lib/router';
 
-import { Table } from 'components';
+import { IOrder } from 'types/order';
 
 import { formatPrice } from 'utils';
-import { IOrder } from 'types/order';
+import { ITEM_URL } from 'constants/urls';
+
+import { Table } from 'components';
 
 interface MyOrderTableProps {
   loading: boolean;
@@ -45,13 +48,15 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
   return (
     <Table headers={tableHeaders} loading={loading}>
       {orders.map(order => {
-        const { createdAt, title, thumbnail, price, quantity, status } = order;
+        const { createdAt, id, title, thumbnail, price, quantity, status } = order;
         return (
           <Fragment key={title + createdAt}>
             <TableRowText>{createdAt}</TableRowText>
             <TableRowTitle>
-              <img src={thumbnail} alt={title} />
-              {title}
+              <Link className="item-link" to={`${ITEM_URL}/${id}`}>
+                <img src={thumbnail} alt={title} />
+                {title}
+              </Link>
             </TableRowTitle>
             <TableRowText>
               {formatPrice(price)}원 / {quantity}개

@@ -88,6 +88,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a {
+    color: black;
     text-decoration: none;
   }
 

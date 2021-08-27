@@ -1,5 +1,6 @@
 export interface IOrder {
   createdAt: string;
+  id: number;
   thumbnail: string;
   title: string;
   status: string;

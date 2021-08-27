@@ -26,6 +26,7 @@ const getUserOrders = async (
   const orders = await db.Order.findAll({
     attributes: [
       [Sequelize.fn('date_format', Sequelize.col('Order.createdAt'), '%Y-%m-%d'), 'createdAt'],
+      [Sequelize.col('Item.id'), 'id'],
       [Sequelize.col('Item.thumbnail'), 'thumbnail'],
       [Sequelize.col('Item.title'), 'title'],
       'quantity',
