@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import styled from 'lib/woowahan-components';
 
 import starOn from 'assets/icons/star_on.png';
@@ -14,34 +14,45 @@ interface IReviewListProps {
 }
 
 const Wrapper = styled.div`
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin: 20px 0;
   display: flex;
   flex-direction: column;
 `;
 
 const Review = styled.div`
-  border-top: 1px solid #dbdbdb;
-  padding: 10px;
   margin: 0 20px;
+  padding: 20px 15px;
+  border-bottom: 1px solid ${props => props.theme?.colorGreyLight};
+
   &:first-child {
-    border-top: 2px solid #999999;
+    border-top: 3px solid ${props => props.theme?.colorGreyLight};
   }
-  > div:first-child {
+
+  .review-header {
+    cursor: pointer;
     display: flex;
+
+    .star-area {
+      margin-right: 15px;
+    }
+
+    .title-area {
+      font-weight: ${props => (props.isSelected ? props.theme?.weightBold : 'normal')};
+    }
+
+    .user-area {
+      margin-left: auto;
+    }
   }
-  > div:first-child > div:first-child {
-    margin-right: 15px;
-  }
-  > div:first-child > div:last-child {
-    margin-left: auto;
-  }
-  > div:last-child {
+
+  .review-content {
     margin-top: 20px;
     display: flex;
-    > img {
+
+    img {
       width: 200px;
       margin-right: 30px;
+
       ${({ theme }) => theme?.mobile} {
         width: 100px;
       }
@@ -49,7 +60,13 @@ const Review = styled.div`
         width: 150px;
       }
     }
+
+    div {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
+
   .star {
     width: 18px;
     height: 17px;
@@ -61,8 +78,6 @@ const Empty = styled.div`
   color: ${({ theme }) => theme?.colorLine};
   text-align: center;
   font-family: ${({ theme }) => theme?.fontEuljiro10};
-
-  padding: 30px 0;
 `;
 
 const makeStar = (score: number): boolean[] => {
@@ -76,33 +91,40 @@ const makeStar = (score: number): boolean[] => {
 
 const ReviewList: FC<IReviewListProps> = ({ reviews, reviewLoading }) => {
   const [state, setState] = useState<null | number>(null);
+
+  const handleReviewClick = useCallback(
+    idx => {
+      if (idx === state) setState(null);
+      else setState(idx);
+    },
+    [state],
+  );
+
   return (
     <Wrapper>
       {!reviewLoading && reviews.length === 0 && <Empty>텅</Empty>}
       {reviews.map((review, idx) => {
         const { score, title, imgUrl, contents, userId } = review;
         return (
-          <Review
-            key={title + String(idx)}
-            onClick={() => {
-              if (idx === state) setState(null);
-              else setState(idx);
-            }}
-          >
-            <div>
-              <div>
+          <Review key={title + String(idx)} isSelected={idx === state}>
+            <div className="review-header" onClick={() => handleReviewClick(idx)} aria-hidden="true">
+              <div className="star-area">
                 {makeStar(score).map((star, i) => {
                   if (star)
                     return <img key={title + String(idx) + String(i)} src={starOff} className="star" alt="startOff" />;
                   return <img key={title + String(idx) + String(i)} src={starOn} className="star" alt="startOff" />;
                 })}
               </div>
-              <div>{title}</div>
-              <div>{filterId(userId)}</div>
+              <div className="title-area">{title}</div>
+              <div className="user-area">{filterId(userId)}</div>
             </div>
             {idx === state && (
-              <div>
-                {imgUrl && <img src={imgUrl} alt="후기 이미지" />}
+              <div className="review-content">
+                {imgUrl && (
+                  <a target="_blank" rel="noreferrer" href={imgUrl}>
+                    <img src={imgUrl} alt="후기 이미지" />
+                  </a>
+                )}
                 <div>{contents}</div>
               </div>
             )}

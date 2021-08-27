@@ -29,7 +29,11 @@ const addAddress = async (
   receiver: string,
   address: string,
 ): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> => {
-  const count = await db.Address.count();
+  const count = await db.Address.count({
+    where: {
+      UserId: uid,
+    },
+  });
   if (count >= 3) {
     throw errorGenerator({
       message: 'POST /api/address - maximun address',

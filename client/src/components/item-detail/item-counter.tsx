@@ -18,12 +18,19 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 15px 30px;
 
+  .title {
+    flex: 1;
+  }
+
   ${({ theme }) => theme?.mobile} {
     flex-direction: column;
-    row-gap: 12px;
 
     .title {
       align-self: flex-start;
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      font-size: 14px;
     }
   }
 `;
@@ -31,7 +38,10 @@ const Container = styled.div`
 const Counter = styled.div`
   display: flex;
   align-items: center;
-  gap: 24px;
+
+  .count {
+    margin-right: 24px;
+  }
 
   .price {
     text-overflow: clip;
@@ -47,10 +57,26 @@ const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 24px;
 
   button {
-    background: ${({ theme }) => theme?.colorTextBrownLight};
+    background: ${({ theme }) => theme?.colorPointBeigeLight};
     width: 24px;
+    height: 20px;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &:hover {
+      background: ${({ theme }) => theme?.colorBg};
+    }
   }
 `;
 

@@ -1,10 +1,14 @@
 import React, { FC } from 'react';
+import { useHistory } from 'lib/router';
 import styled from 'lib/woowahan-components';
 
 import bannerImg from 'assets/images/beer.png';
 import tagImg from 'assets/icons/tag.png';
 
+import { ITEM_URL } from 'constants/urls';
+
 const Container = styled.div`
+  cursor: pointer;
   height: 500px;
   margin: 0 16px;
   box-sizing: border-box;
@@ -76,8 +80,14 @@ const Item = styled.div`
 `;
 
 const Banner: FC = () => {
+  const history = useHistory();
+
+  const goBannerItemPage = () => {
+    history.push(`${ITEM_URL}/73`);
+  };
+
   return (
-    <Container>
+    <Container onClick={goBannerItemPage}>
       <Inner>
         <div />
       </Inner>

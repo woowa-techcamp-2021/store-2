@@ -87,5 +87,4 @@ export const CATEGORY_DATA = [
   { id: '140000', name: '책' },
   { id: '160000', name: '선물세트' },
   { id: '180000', name: '을지로에디션' },
-  { id: '190000', name: '배민그린' },
 ];

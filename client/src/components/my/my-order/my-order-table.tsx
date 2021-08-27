@@ -1,10 +1,13 @@
 import React, { Fragment, FC } from 'react';
 import styled from 'lib/woowahan-components';
+import { Link } from 'lib/router';
 
-import { Table } from 'components';
+import { IOrder } from 'types/order';
 
 import { formatPrice } from 'utils';
-import { IOrder } from 'types/order';
+import { ITEM_URL } from 'constants/urls';
+
+import { Table } from 'components';
 
 interface MyOrderTableProps {
   loading: boolean;
@@ -30,28 +33,39 @@ const TableRowTitle = styled.div`
     }
   }
 `;
+
 const TableRowText = styled.div`
   text-align: center;
 `;
 
+const ItemTitle = styled.div`
+  display: flex;
+  align-items: center;
+  word-break: keep-all;
+`;
+
 const tableHeaders = [
-  { column: '주문일자', span: 1.4 },
-  { column: '상품명', span: 3 },
-  { column: '상품금액/수량', span: 1.7 },
-  { column: '주문상태', span: 1 },
+  { column: '주문일자', span: 4 },
+  { column: '상품명', span: 5 },
+  { column: '상품금액/수량', span: 4 },
+  { column: '주문상태', span: 3 },
 ];
 
 const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
   return (
     <Table headers={tableHeaders} loading={loading}>
       {orders.map(order => {
-        const { createdAt, title, thumbnail, price, quantity, status } = order;
+        const { createdAt, id, title, thumbnail, price, quantity, status } = order;
         return (
           <Fragment key={title + createdAt}>
             <TableRowText>{createdAt}</TableRowText>
             <TableRowTitle>
-              <img src={thumbnail} alt={title} />
-              {title}
+              <Link className="item-link" to={`${ITEM_URL}/${id}`}>
+                <ItemTitle>
+                  <img src={thumbnail} alt={title} />
+                  {title}
+                </ItemTitle>
+              </Link>
             </TableRowTitle>
             <TableRowText>
               {formatPrice(price)}원 / {quantity}개

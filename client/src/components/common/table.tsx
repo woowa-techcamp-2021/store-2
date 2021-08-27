@@ -20,13 +20,6 @@ const TableBody = styled.table`
     border-top: 1px solid ${({ theme }) => theme?.colorLineLight};
     border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
     background: ${({ theme }) => theme?.colorFooter};
-
-    th {
-      padding: 16px 24px;
-      font-size: 14px;
-      font-weight: ${({ theme }) => theme?.weightBold};
-      vertical-align: middle;
-    }
   }
 
   tbody {
@@ -34,14 +27,22 @@ const TableBody = styled.table`
       border-bottom: 1px solid ${({ theme }) => theme?.colorLineLight};
     }
   }
+`;
 
+const TableHead = styled.th`
+  padding: 16px 24px;
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme?.weightBold};
+  vertical-align: middle;
+  width: ${props => `${Math.floor((props.span as number) * 100)}%`};
+
+  ${({ theme }) => theme?.tablet} {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
   ${({ theme }) => theme?.mobile} {
-    thead {
-      th {
-        font-size: 12px;
-        padding: 8px 6px;
-      }
-    }
+    font-size: 10px;
+    padding: 8px 6px;
   }
 `;
 
@@ -50,9 +51,13 @@ const TableCell = styled.td`
   font-size: 14px;
   vertical-align: middle;
 
-  ${({ theme }) => theme?.mobile} {
+  ${({ theme }) => theme?.tablet} {
     padding: 12px 6px;
     font-size: 12px;
+  }
+  ${({ theme }) => theme?.mobile} {
+    padding: 12px 6px;
+    font-size: 10px;
   }
 `;
 
@@ -70,17 +75,18 @@ const EmptyCell = styled.tr`
 `;
 
 const Table: FC<TableProps> = ({ headers, children, loading }) => {
+  const totalSpan = headers.reduce((acc, cur) => acc + cur.span, 0);
+
   return (
     <TableBody>
-      <colgroup>
-        {headers.map(({ span }, i) => (
-          <col span={span} key={headers[i].column.toString()} />
-        ))}
-      </colgroup>
       <thead>
         <tr>
-          {headers.map(({ column }) => {
-            return <th key={column.toString()}>{column}</th>;
+          {headers.map(({ column, span }) => {
+            return (
+              <TableHead key={column.toString()} span={span / totalSpan}>
+                {column}
+              </TableHead>
+            );
           })}
         </tr>
       </thead>

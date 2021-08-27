@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState, Dispatch, SetStateAction } from 'reac
 import styled from 'lib/woowahan-components';
 
 interface PaginationProps {
+  className?: string;
   pageCount: number;
   showCnt?: number;
   activePage: number;
@@ -32,7 +33,7 @@ const Button = styled.button`
   }
 `;
 
-const Pagination: FC<PaginationProps> = ({ pageCount, showCnt = 5, activePage, setActivePage }) => {
+const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 5, activePage, setActivePage }) => {
   const [startPage, setStartPage] = useState(1);
 
   const goNextPage = useCallback(() => {
@@ -70,7 +71,7 @@ const Pagination: FC<PaginationProps> = ({ pageCount, showCnt = 5, activePage, s
   };
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {startPage > 1 && (
         <Button type="button" onClick={goPrevPage}>
           이전

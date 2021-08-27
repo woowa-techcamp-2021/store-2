@@ -2,21 +2,21 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
-import ItemInfo from 'components/item-detail/item-info';
-import Detail from 'components/item-detail/detail';
-import { Modal, Pagination } from 'components';
-
 import { PAYMENT_URL } from 'constants/urls';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
-import ReviewPost from 'components/item-detail/review-post';
 import { getReviews, postReview } from 'store/review';
 import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
 
-const MainItemContainer: FC = () => {
+import ItemInfo from 'components/item-detail/item-info';
+import Detail from 'components/item-detail/detail';
+import ReviewPost from 'components/item-detail/review-post';
+import LoginModal from 'components/auth/login-modal';
+
+const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [file, setFile] = useState<null | File>(null);
@@ -166,8 +166,10 @@ const MainItemContainer: FC = () => {
         reviews={reviews}
         itemLoading={itemLoading}
         reviewLoading={reviewLoading}
+        pageCount={pageCount}
+        pageId={pageId}
+        setPageId={setPageId}
       />
-      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
       <ReviewPost
         userId={userId}
         postTitle={postTitle}
@@ -183,9 +185,9 @@ const MainItemContainer: FC = () => {
         fileRef={fileRef}
         isPaid={isPaid}
       />
-      <Modal type="alert" body="로그인이 필요합니다" visible={modalVisible} setVisible={setModalVisible} />
+      <LoginModal visible={modalVisible} setVisible={setModalVisible} />
     </>
   );
 };
 
-export default MainItemContainer;
+export default ItemDetailContainer;

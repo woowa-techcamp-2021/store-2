@@ -14,6 +14,8 @@ import {
   receiverValidation,
   phoneValidation,
 } from 'utils/validation/order-validation';
+import { cartGenerator } from 'utils/cart-generator';
+import { CartItem } from 'types/cart';
 
 interface IOrderItems {
   id: string;
@@ -114,9 +116,33 @@ const OrderContainer: FC = () => {
   };
 
   const pickAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { address } = addresses.find(v => v.name === e.target.value) || { address: '' };
+    const { address, receiver } = addresses.find(address => address.name === e.target.value) || {
+      address: '',
+      receiver: '',
+    };
+    setReceiver(receiver);
     setAddress(address);
     setaddressChecked(e.target.value);
+  };
+
+  const updateCart = () => {
+    const data = sessionStorage.getItem('order') as string;
+    const selectedItems = data.split(',');
+    const selectedItemIds: string[] = [];
+    selectedItems.forEach(item => selectedItemIds.push(item.split('-')[0]));
+    const cartItems = cartGenerator();
+    const updateItems: CartItem[] = [];
+    cartItems.forEach(item => {
+      if (!selectedItemIds.includes(item.id)) {
+        updateItems.push(item);
+      }
+    });
+    let cartItemsString = '';
+    updateItems.forEach(item => {
+      cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
+    });
+    cartItemsString = cartItemsString.substring(0, cartItemsString.length - 1);
+    localStorage.setItem('cart', cartItemsString);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -158,6 +184,7 @@ const OrderContainer: FC = () => {
     };
 
     dispatch({ type: postOrder.type, payload });
+    updateCart();
   };
 
   return (

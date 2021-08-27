@@ -22,10 +22,11 @@ interface IReviewPostProps {
   isPaid: boolean;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   border: 3px solid ${({ theme }) => theme?.colorLine};
   background-color: white;
-  margin-top: 30px;
+  margin-bottom: 80px;
+
   h3 {
     font-size: 20px;
     margin-bottom: 20px;
@@ -52,6 +53,11 @@ const Wrapper = styled.div`
   }
   .starOff {
     background-image: url(${starOff});
+  }
+
+  textarea {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 `;
 
