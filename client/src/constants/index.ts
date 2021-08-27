@@ -1,5 +1,5 @@
 import { ESortType } from 'types/item';
-import { ADDRESS_URL, ORDER_LIST_URL, REVIEW_URL } from 'constants/urls';
+import { ADDRESS_URL, ORDER_LIST_URL } from 'constants/urls';
 
 export const MAX_TRY_COUNT = 10;
 export const DELAY_TIME = 1000;
@@ -23,5 +23,4 @@ export const SORT = [
 export const MY_PAGE_NAV = [
   { link: ORDER_LIST_URL, name: '주문목록 조회' },
   { link: ADDRESS_URL, name: '배송지 관리' },
-  // { link: REVIEW_URL, name: '나의 후기' },
 ];
