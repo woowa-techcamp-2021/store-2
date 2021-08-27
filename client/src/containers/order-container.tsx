@@ -116,7 +116,11 @@ const OrderContainer: FC = () => {
   };
 
   const pickAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { address } = addresses.find(address => address.name === e.target.value) || { address: '' };
+    const { address, receiver } = addresses.find(address => address.name === e.target.value) || {
+      address: '',
+      receiver: '',
+    };
+    setReceiver(receiver);
     setAddress(address);
     setaddressChecked(e.target.value);
   };
