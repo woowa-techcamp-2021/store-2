@@ -53,6 +53,7 @@ const CheckBoxDiv = styled.div`
 const ItemTitle = styled.div`
   display: flex;
   align-items: center;
+  word-break: keep-all;
   font-size: 14px;
 
   ${({ theme }) => theme?.mobile} {

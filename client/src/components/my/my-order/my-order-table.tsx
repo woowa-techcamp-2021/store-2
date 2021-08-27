@@ -33,8 +33,15 @@ const TableRowTitle = styled.div`
     }
   }
 `;
+
 const TableRowText = styled.div`
   text-align: center;
+`;
+
+const ItemTitle = styled.div`
+  display: flex;
+  align-items: center;
+  word-break: keep-all;
 `;
 
 const tableHeaders = [
@@ -54,8 +61,10 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
             <TableRowText>{createdAt}</TableRowText>
             <TableRowTitle>
               <Link className="item-link" to={`${ITEM_URL}/${id}`}>
-                <img src={thumbnail} alt={title} />
-                {title}
+                <ItemTitle>
+                  <img src={thumbnail} alt={title} />
+                  {title}
+                </ItemTitle>
               </Link>
             </TableRowTitle>
             <TableRowText>
