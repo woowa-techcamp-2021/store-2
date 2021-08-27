@@ -51,6 +51,8 @@ const CheckBoxDiv = styled.div`
 `;
 
 const ItemTitle = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 14px;
 
   ${({ theme }) => theme?.mobile} {
@@ -59,10 +61,10 @@ const ItemTitle = styled.div`
 `;
 
 const tableHeaders = [
-  { column: '상품/옵션 정보', span: 1 },
-  { column: '수량', span: 1 },
-  { column: '상품금액', span: 1 },
-  { column: '배송비', span: 1 },
+  { column: '상품/옵션 정보', span: 6 },
+  { column: '수량', span: 3 },
+  { column: '상품금액', span: 4 },
+  { column: '배송비', span: 3 },
 ];
 
 const TableSection: FC<TableSectionProps> = ({
@@ -146,7 +148,7 @@ const TableSection: FC<TableSectionProps> = ({
                 <Link className="item-link" to={`${ITEM_URL}/${id}`}>
                   <ItemTitle>
                     <img src={thumbnail} alt={title} />
-                    {title}
+                    <div>{title}</div>
                   </ItemTitle>
                 </Link>
               </div>
