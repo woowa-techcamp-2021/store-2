@@ -13,9 +13,11 @@ const FormContainer = styled.div`
     height: 300px;
     outline: none;
   }
+
   input,
   textarea {
-    font-size: 14ox;
+    font-size: 14px;
+    font-family: ${({ theme }) => theme?.fontBasic};
     padding: 6px 12px;
     border: 1px solid ${({ theme }) => theme?.colorLineLight};
     width: 240px;

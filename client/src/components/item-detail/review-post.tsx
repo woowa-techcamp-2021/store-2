@@ -54,6 +54,11 @@ const Wrapper = styled.section`
   .starOff {
     background-image: url(${starOff});
   }
+
+  textarea {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 `;
 
 const Padding = styled.div`
