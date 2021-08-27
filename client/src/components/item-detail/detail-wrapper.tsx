@@ -15,7 +15,7 @@ const Container = styled.div`
   margin-top: 80px;
 
   &:last-child {
-    margin-bottom: 100px;
+    margin-bottom: 80px;
   }
 `;
 
