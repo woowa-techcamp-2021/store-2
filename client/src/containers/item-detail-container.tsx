@@ -2,19 +2,19 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
-import ItemInfo from 'components/item-detail/item-info';
-import Detail from 'components/item-detail/detail';
-import { Modal, Pagination } from 'components';
-
 import { PAYMENT_URL } from 'constants/urls';
 
 import { RootState } from 'store';
 import { getItem } from 'store/item';
-import ReviewPost from 'components/item-detail/review-post';
 import { getReviews, postReview } from 'store/review';
 import { addLike, deleteLike } from 'store/like';
 
 import { cartGenerator } from 'utils/cart-generator';
+
+import { Modal } from 'components';
+import ItemInfo from 'components/item-detail/item-info';
+import Detail from 'components/item-detail/detail';
+import ReviewPost from 'components/item-detail/review-post';
 
 const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -166,8 +166,10 @@ const ItemDetailContainer: FC = () => {
         reviews={reviews}
         itemLoading={itemLoading}
         reviewLoading={reviewLoading}
+        pageCount={pageCount}
+        pageId={pageId}
+        setPageId={setPageId}
       />
-      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
       <ReviewPost
         userId={userId}
         postTitle={postTitle}
