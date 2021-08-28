@@ -82,8 +82,6 @@ const MyOrderListContainer: FC = () => {
         select={select}
       />
       <MyOrderTable loading={loading} orders={orders} totalCount={totalCount} />
-      {/* <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
-      <MyOrderList loading={loading} orders={orders} totalCount={totalCount} /> */}
       <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
     </>
   );
