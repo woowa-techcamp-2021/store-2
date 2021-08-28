@@ -25,11 +25,14 @@ interface IAddressData {
   roadAddress: string;
 }
 
+const Form = styled.form`
+  margin-top: 10px;
+`;
+
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
 `;
 
 const InputErrorMessage = styled.div`
@@ -74,7 +77,7 @@ const MyAddressForm: FC<MyAddressFormProps> = ({
   }, [address]);
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <GridForm titles={['배송지이름*', '받는분*', '주소*', '상세주소*']}>
           <InputWrapper>
             <input name="name" value={name} onChange={onChange} maxLength={10} placeholder="우형집" />
@@ -109,7 +112,7 @@ const MyAddressForm: FC<MyAddressFormProps> = ({
           <div>{addError}</div>
           <TextButton type="submit" styleType="black" title="배송지 추가" size="tiny" isLoading={loading} />
         </ButtonWrapper>
-      </form>
+      </Form>
       {modal && <AddressModal handleComplete={handleComplete} setModal={setModal} />}
     </>
   );
