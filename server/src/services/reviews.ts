@@ -28,7 +28,6 @@ async function postReview(
     throw errorGenerator({
       code: 'reviews/user-not-paid',
       message: 'POST /api/reviews - need to buy item',
-      customMessage: '상품을 구매한 사용자만 후기를 작성할 수 있습니다',
     });
   }
 

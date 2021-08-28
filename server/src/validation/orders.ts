@@ -40,8 +40,8 @@ export const getOrdersValidation = (
 
     if (validationResult.error) {
       throw errorGenerator({
-        message: 'validation/auth - invalid request body',
-        code: 'req/invalid-body',
+        message: 'validation/auth - invalid request query',
+        code: 'req/invalid-query',
         customMessage: validationResult.error.message,
       });
     }

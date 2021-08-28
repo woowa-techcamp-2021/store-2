@@ -185,7 +185,7 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
 
@@ -227,7 +227,7 @@ const getCategoryRecommendItems = async (
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
 
@@ -268,7 +268,7 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
 
@@ -308,7 +308,7 @@ const getOrderItems = async (itemIDs: string[]): Promise<Model<ItemAttributes, I
   if (!orderItems) {
     throw errorGenerator({
       message: 'GET /api/items/order - item not found',
-      code: 'items/item-not-found',
+      code: 'items/items-not-found',
     });
   }
 

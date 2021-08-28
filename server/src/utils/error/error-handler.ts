@@ -11,54 +11,136 @@ interface ErrorType {
 }
 
 function errorHandler(err: CustomError): ErrorType {
-  switch (err.code) {
-    case 'req/invalid-body':
-      return { statusCode: 400, errorMessage: err.customMessage || '잘못된 요청입니다' };
-    case 'req/invalid-query':
-      return { statusCode: 400, errorMessage: err.customMessage || '잘못된 요청입니다' };
-    case 'req/no-token':
-      return { statusCode: 401, errorMessage: err.customMessage || '다시 로그인해주세요' };
-    case 'req/invalid-date':
-      return { statusCode: 409, errorMessage: err.customMessage || '올바른 날짜를 입력해주세요' };
-    case 'auth/wrong-password':
-      return { statusCode: 409, errorMessage: err.customMessage || '비밀번호를 확인해주세요' };
-    case 'auth/account-not-found':
-      return { statusCode: 404, errorMessage: err.customMessage || '없는 계정입니다' };
-    case 'auth/token-expired':
-      return { statusCode: 401, errorMessage: err.customMessage || '다시 로그인해주세요' };
-    case 'auth/invalid-token':
-      return { statusCode: 401, errorMessage: err.customMessage || '다시 로그인해주세요' };
-    case 'auth/existing-user':
-      return { statusCode: 409, errorMessage: err.customMessage || '이미 가입된 아이디입니다' };
-    case 'auth/unauthorized-token':
-      return { statusCode: 409, errorMessage: err.customMessage || '다시 로그인해주세요' };
-    case 'auth/need-re-signin':
-      return { statusCode: 409, errorMessage: err.customMessage || '다시 로그인해주세요' };
-    case 'categories/categories-not-found':
-      return { statusCode: 500, errorMessage: err.customMessage || '카테고리 데이터가 없습니다.' };
-    case 'items/items-not-found':
-      return { statusCode: 500, errorMessage: err.customMessage || '아이템 데이터가 없습니다.' };
-    case 'items/item-not-found':
-      return { statusCode: 404, errorMessage: err.customMessage || '존재하지 않는 상품입니다.' };
-    case 'item/no-exist-querystring':
-      return { statusCode: 500, errorMessage: err.customMessage || '쿼리스트링을 확인해주세요.' };
-    case 'address/address-error':
-      return { statusCode: 500, errorMessage: err.customMessage || 'db 오류' };
-    case 'address/maximun address':
-      return { statusCode: 409, errorMessage: err.customMessage || '배송지는 최대 3개까지 입력할 수 있습니다' };
-    case 'likes/fail-to-create':
-      return {
-        statusCode: 400,
-        errorMessage: err.customMessage || '존재하지 않는 아이템이거나 이미 좋아요를 누른 아이템입니다.',
-      };
-    case 'likes/fail-to-delete':
-      return { statusCode: 400, errorMessage: err.customMessage || '좋아요를 누른 적이 없는 아이템입니다.' };
-    case 'reviews/user-not-paid':
-      return { statusCode: 403, errorMessage: err.customMessage || '잘못된 요청입니다' };
+  let statusCode = 500;
+  let errorMessage = '다시 시도해주세요';
 
+  switch (err.code) {
+    /**
+     * Req Errors
+     */
+    case 'req/invalid-body':
+      statusCode = 400;
+      errorMessage = '잘못된 요청입니다';
+      break;
+    case 'req/invalid-query':
+      statusCode = 400;
+      errorMessage = '잘못된 요청입니다';
+      break;
+    case 'req/no-token':
+      statusCode = 401;
+      errorMessage = '다시 로그인해주세요';
+      break;
+    case 'req/invalid-date':
+      statusCode = 409;
+      errorMessage = '올바른 날짜를 입력해주세요';
+      break;
+
+    /**
+     * Auth Errors
+     */
+    case 'auth/wrong-password':
+      statusCode = 409;
+      errorMessage = '비밀번호를 확인해주세요';
+      break;
+    case 'auth/account-not-found':
+      statusCode = 404;
+      errorMessage = '없는 계정입니다';
+      break;
+    case 'auth/token-expired':
+      statusCode = 401;
+      errorMessage = '다시 로그인해주세요';
+      break;
+    case 'auth/invalid-token':
+      statusCode = 401;
+      errorMessage = '다시 로그인해주세요';
+      break;
+    case 'auth/existing-user':
+      statusCode = 409;
+      errorMessage = '이미 가입된 아이디입니다';
+      break;
+    case 'auth/unauthorized-token':
+      statusCode = 401;
+      errorMessage = '다시 로그인해주세요';
+      break;
+    case 'auth/need-re-signin':
+      statusCode = 401;
+      errorMessage = '다시 로그인해주세요';
+      break;
+
+    /**
+     * Categories Errors
+     */
+    case 'categories/categories-not-found':
+      statusCode = 404;
+      errorMessage = '카테고리 데이터가 없습니다';
+      break;
+
+    /**
+     * Items Errors
+     */
+    case 'items/items-not-found':
+      statusCode = 404;
+      errorMessage = '아이템 데이터가 없습니다';
+      break;
+    case 'items/item-not-found':
+      statusCode = 404;
+      errorMessage = '존재하지 않는 상품입니다';
+      break;
+    case 'item/no-exist-querystring':
+      statusCode = 400;
+      errorMessage = '잘못된 요청입니다';
+      break;
+
+    /**
+     * Address Errors
+     */
+    case 'address/maximun address':
+      statusCode = 409;
+      errorMessage = '배송지는 최대 3개까지 입력할 수 있습니다';
+      break;
+
+    /**
+     * Likes Errors
+     */
+    case 'likes/fail-to-create':
+      statusCode = 409;
+      errorMessage = '존재하지 않는 아이템이거나 이미 좋아요를 누른 아이템입니다';
+      break;
+    case 'likes/fail-to-delete':
+      statusCode = 409;
+      errorMessage = '좋아요를 누른 적이 없는 아이템입니다';
+      break;
+
+    /**
+     * Orders Errors
+     */
+    case 'orders/fail-to-load-orders':
+      statusCode = 403;
+      errorMessage = '잘못된 요청입니다';
+      break;
+
+    /**
+     * Reviews Errors
+     */
+    case 'reviews/user-not-paid':
+      statusCode = 409;
+      errorMessage = '상품을 구매한 사용자만 후기를 작성할 수 있습니다';
+      break;
+
+    /**
+     * Default Errors
+     */
     default:
-      return { statusCode: 500, errorMessage: '다시 시도해주세요.' };
+      statusCode = 500;
+      errorMessage = '다시 시도해주세요';
+      break;
   }
+
+  if (err.customMessage) {
+    errorMessage = err.customMessage;
+  }
+
+  return { statusCode, errorMessage };
 }
 
 export default errorHandler;
