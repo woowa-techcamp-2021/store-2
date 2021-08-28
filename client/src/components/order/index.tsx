@@ -1,5 +1,6 @@
 import React, { useState, Fragment, FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
+import { Link } from 'lib/router';
 
 import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
 import TableSection, { OrderItem } from './table-section';
@@ -147,7 +148,7 @@ const Order: FC<OrderProps> = ({
           </InputWrapper>
         </GridForm>
         <SectionTitle>배송정보</SectionTitle>
-        <GridForm titles={['배송지 확인', '받는분', '받으실 곳 *']}>
+        <GridForm titles={['배송지 확인', '받는분', '주소 *']}>
           <InputWrapper>
             {addresses.map(address => {
               return (
@@ -161,13 +162,33 @@ const Order: FC<OrderProps> = ({
                 />
               );
             })}
+            <RadioButton
+              key="기타"
+              id="기타"
+              text="기타"
+              value="기타"
+              onChange={pickAddress}
+              checked={addressChecked}
+            />
           </InputWrapper>
           <InputWrapper>
-            <input name="receiver" value={receiver} onChange={onChange('receiver')} />
+            <input
+              placeholder="홍길동"
+              name="receiver"
+              value={receiver}
+              onChange={onChange('receiver')}
+              readOnly={!!address}
+            />
             <InputErrorMessage>{receiverError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input placeholder="주소" name="address" value={address} onChange={onChange('address')} />
+            <input
+              placeholder="주소"
+              name="address"
+              value={address}
+              onChange={onChange('address')}
+              readOnly={!!address}
+            />
             <InputErrorMessage>{addressError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
