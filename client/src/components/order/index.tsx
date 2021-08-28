@@ -1,6 +1,5 @@
-import React, { useState, Fragment, FC, Dispatch, SetStateAction } from 'react';
+import React, { useState, FC, Dispatch, SetStateAction } from 'react';
 import styled from 'lib/woowahan-components';
-import { Link } from 'lib/router';
 
 import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
 import TableSection, { OrderItem } from './table-section';
@@ -25,6 +24,7 @@ interface OrderProps {
   addresses: { name: string; address: string }[];
   pickAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addressChecked: string;
+  onFocusOutPhone: () => void;
 }
 
 const SectionTitle = styled.h4`
@@ -105,8 +105,10 @@ const Order: FC<OrderProps> = ({
   addresses,
   pickAddress,
   addressChecked,
+  onFocusOutPhone,
 }) => {
   const [agreed, setAgreed] = useState(false);
+  const agr = agreed && user && phone && address && addresses;
 
   const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -143,7 +145,7 @@ const Order: FC<OrderProps> = ({
             <InputErrorMessage>{userError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input name="phone" value={phone} onChange={onChangePhone} maxLength={13} />
+            <input name="phone" value={phone} onChange={onChangePhone} maxLength={13} onBlur={onFocusOutPhone} />
             <InputErrorMessage>{phoneError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
@@ -209,7 +211,7 @@ const Order: FC<OrderProps> = ({
           </CheckBoxDiv>
         </Agree>
         <ButtonDiv>
-          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
+          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agr} isLoading={submitLoading} />
           <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
         </ButtonDiv>
       </Form>

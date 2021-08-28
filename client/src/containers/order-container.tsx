@@ -145,6 +145,10 @@ const OrderContainer: FC = () => {
     localStorage.setItem('cart', cartItemsString);
   };
 
+  const onFocusOutPhone = () => {
+    if (phoneValidation(phone)) setPhoneError(phoneValidation(phone));
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -207,6 +211,7 @@ const OrderContainer: FC = () => {
       addresses={addresses}
       pickAddress={pickAddress}
       addressChecked={addressChecked}
+      onFocusOutPhone={onFocusOutPhone}
     />
   );
 };
