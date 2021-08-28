@@ -57,7 +57,7 @@ const OrderContainer: FC = () => {
   const [user, setUser] = useState('');
   const [receiver, setReceiver] = useState('');
   const [address, setAddress] = useState('');
-  const [addressChecked, setaddressChecked] = useState('');
+  const [addressChecked, setaddressChecked] = useState('기타');
   const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
     ({ auth, order, loading, address }: RootState) => ({
       userId: auth.user.userId || '',
