@@ -6,14 +6,14 @@ import errorHandler from 'utils/error/error-handler';
 
 import { REFRESH_TOKEN_NAME } from 'config/constants';
 
-interface IReqBody {
+interface ReqBody {
   id: string;
   password: string;
 }
 
-export const signUp = async (req: Request, res: Response): Promise<void> => {
+export const signUp = async (req: Request<unknown, unknown, ReqBody>, res: Response): Promise<void> => {
   try {
-    const { id, password } = req.body as IReqBody;
+    const { id, password } = req.body;
 
     const { accessToken, refreshToken, userId } = await userService.signUp(id, false, password);
 
