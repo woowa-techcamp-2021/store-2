@@ -23,10 +23,16 @@ export const getMainItems = async (req: Request, res: Response): Promise<void> =
 
     const { popularItems, newItems, recommendItems } = await itemService.mainItems(req.body);
 
+    const [popularItemsWithLike, newItemsWithLike, recommendItemsWithLike] = await Promise.all([
+      itemService.matchUserLikeItem(popularItems.items, uid),
+      itemService.matchUserLikeItem(newItems.items, uid),
+      itemService.matchUserLikeItem(recommendItems.items, uid),
+    ]);
+
     res.status(200).json({
-      popularItems: await itemService.matchUserLikeItem(popularItems.items, uid),
-      newItems: await itemService.matchUserLikeItem(newItems.items, uid),
-      recommendItems: await itemService.matchUserLikeItem(recommendItems.items, uid),
+      popularItems: popularItemsWithLike,
+      newItems: newItemsWithLike,
+      recommendItems: recommendItemsWithLike,
     });
   } catch (err) {
     console.log(err);

@@ -19,23 +19,34 @@ export interface IScore {
   score: number;
 }
 
+export interface Item {
+  id: number;
+  title: string;
+  tumbnail: string;
+  price: number;
+  salePercent: number;
+  amount: number;
+  isGreen: boolean;
+  isBest: boolean;
+  updatedAt: string;
+  isLike: boolean;
+}
+
 const LIMIT_COUNT = 12;
 
-const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
-  items.forEach(item => {
-    const standardDate = new Date();
-    standardDate.setMonth(standardDate.getMonth() - 6);
-    const itemDate = new Date(item.getDataValue('updatedAt'));
-    if (standardDate < itemDate) item.setDataValue('isNew', true);
-
-    const salePercent = item.getDataValue('salePercent');
-    const price = parseInt(item.getDataValue('price') as string, 10);
-    if (salePercent !== 0) {
-      item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
-      item.setDataValue('originalPrice', price);
-    }
-  });
-};
+const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]): Item[] =>
+  items.map(item => ({
+    id: item.getDataValue('id'),
+    title: item.getDataValue('title'),
+    tumbnail: item.getDataValue('thumbnail'),
+    price: item.getDataValue('price'),
+    salePercent: item.getDataValue('salePercent'),
+    amount: item.getDataValue('amount'),
+    isGreen: item.getDataValue('isGreen'),
+    isBest: item.getDataValue('isBest'),
+    updatedAt: item.getDataValue('updatedAt'),
+    isLike: false,
+  }));
 
 const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Promise<IItems> => {
   if (visited.length > 0) {

@@ -1,11 +1,11 @@
 import { Sequelize, DataTypes, ModelCtor, Model, Optional } from 'sequelize';
 
 export interface ItemAttributes {
-  id: string;
+  id: number;
   title: string;
   thumbnail: string;
   contents: string;
-  price: string | number;
+  price: number;
   originalPrice: number;
   salePercent: number;
   amount: number;
@@ -13,6 +13,7 @@ export interface ItemAttributes {
   updatedAt: string;
   CategoryId: string;
   isNew: boolean;
+  isBest: boolean;
 }
 
 export type ItemCreationAttributes = Optional<ItemAttributes, 'id' | 'amount'>;
