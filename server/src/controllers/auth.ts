@@ -8,18 +8,11 @@ import { getAccessToken, getRefreshToken } from 'utils/jwt';
 
 import { REFRESH_TOKEN_NAME } from 'config/constants';
 
-interface IReqBody {
-  id: string;
-  password: string;
-}
+import { ISigninReqBody, IGithub } from 'types/auth';
 
-interface IGithub {
-  code: string;
-}
-
-export const signIn = async (req: Request, res: Response): Promise<void> => {
+export const signIn = async (req: Request<unknown, unknown, ISigninReqBody>, res: Response): Promise<void> => {
   try {
-    const { id, password } = req.body as IReqBody;
+    const { id, password } = req.body;
 
     const { accessToken, refreshToken } = await authService.signIn(id, false, password);
 
@@ -65,9 +58,9 @@ export const signInGithub = (req: Request, res: Response): void => {
   res.redirect(url);
 };
 
-export const handleGithubAuth = async (req: Request, res: Response): Promise<void> => {
+export const handleGithubAuth = async (req: Request<unknown, unknown, IGithub>, res: Response): Promise<void> => {
   try {
-    const { code } = req.body as IGithub;
+    const { code } = req.body;
 
     const { isUserExists, userId } = await authService.handleGithubAuth(code);
     if (isUserExists) {

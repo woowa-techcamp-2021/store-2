@@ -5,17 +5,7 @@ import { ADDRESS } from 'config/constants';
 import errorGenerator from 'utils/error/error-generator';
 import errorHandler from 'utils/error/error-handler';
 
-interface IAddReqBody {
-  name: string;
-  receiver: string;
-  address: string;
-}
-
-interface IRemoveReqBody {
-  data: {
-    id: string;
-  };
-}
+import { IAddReqBody, IRemoveReqBody } from 'types/address';
 
 export const addAddressValidation = (
   req: Request<unknown, unknown, IAddReqBody>,

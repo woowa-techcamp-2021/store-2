@@ -7,29 +7,7 @@ import errorGenerator from 'utils/error/error-generator';
 import { checkTokenExpiration, decodeToken, createToken } from 'utils/jwt';
 import { checkPassword } from 'utils/crypto';
 
-interface IToken {
-  accessToken: string;
-  refreshToken: string;
-}
-
-interface ICheckAuth {
-  isAccessTokenExpired: boolean;
-  newAccessToken: string;
-  userId: string;
-}
-
-interface IHandleGithubAuth {
-  isUserExists: boolean;
-  userId: string;
-}
-
-interface IGithubAccessToken {
-  access_token: string;
-}
-
-interface IGithubId {
-  login: string;
-}
+import { IToken, ICheckAuth, IHandleGithubAuth, IGithubAccessToken, IGithubId } from 'types/auth';
 
 async function signIn(userId: string, isOAuth: boolean, password: string): Promise<IToken> {
   const userSnapshot = await getUser(userId);

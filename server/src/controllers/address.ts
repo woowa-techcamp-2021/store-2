@@ -3,17 +3,7 @@ import addressService from 'services/address';
 import errorHandler from 'utils/error/error-handler';
 import { decodeToken, getAccessToken } from 'utils/jwt';
 
-interface IAddReqBody {
-  name: string;
-  receiver: string;
-  address: string;
-}
-
-interface IRemoveReqBody {
-  data: {
-    id: string;
-  };
-}
+import { IAddReqBody, IRemoveReqBody } from 'types/address';
 
 export const getAddress = async (req: Request, res: Response): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
