@@ -14,14 +14,16 @@ const MyAddressContainer: FC = () => {
   const [nameError, setNameError] = useState('');
   const [receiverError, setReceiverError] = useState('');
   const [addressError, setAddressError] = useState('');
+  const [addressDetailError, setAddressDetailError] = useState('');
   const [addError, setAddError] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
+  const [address, setAddress] = useState('');
 
-  const [{ name, receiver, address }, onChange, reset] = useInputs({
+  const [{ name, receiver, addressDetail }, onChange, reset] = useInputs({
     name: '',
     receiver: '',
-    address: '',
+    addressDetail: '',
   });
 
   const { loading, addLoading, removeLoading, user, userLoading, addressList, error } = useSelector(
@@ -49,9 +51,10 @@ const MyAddressContainer: FC = () => {
     if (!name) setNameError('배송지를 입력하세요');
     if (!receiver) setReceiverError('받는분을 입력하세요');
     if (!address) setAddressError('주소를 입력하세요');
+    if (!addressDetail) setAddressDetailError('상세주소를 입력하세요');
     if (addressList.length >= 3) setAddError('배송지는 최대 3개까지 입력할 수 있습니다');
-    if (name && receiver && address && addressList.length < 3) {
-      dispatch({ type: addAddress.type, payload: { name, receiver, address } });
+    if (name && receiver && addressDetail && addressList.length < 3) {
+      dispatch({ type: addAddress.type, payload: { name, receiver, address: `${address} ${addressDetail}` } });
       reset();
     }
   };
@@ -75,11 +78,14 @@ const MyAddressContainer: FC = () => {
         name={name}
         receiver={receiver}
         address={address}
+        setAddress={setAddress}
+        addressDetail={addressDetail}
         onChange={onChange}
         onSubmit={onSubmit}
         nameError={nameError}
         receiverError={receiverError}
         addressError={addressError}
+        addressDetailError={addressDetailError}
         addError={addError}
         loading={addLoading}
       />
