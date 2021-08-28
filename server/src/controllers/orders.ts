@@ -43,7 +43,7 @@ export const postOrder = async (req: Request<unknown, unknown, PostOrder>, res: 
 
     await ordersService.postOrder(uid, orderItems);
 
-    res.status(200).json({});
+    res.status(200).json();
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);

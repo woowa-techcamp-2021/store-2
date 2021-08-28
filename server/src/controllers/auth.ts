@@ -82,5 +82,5 @@ export const handleGithubAuth = async (req: Request<unknown, unknown, IGithub>, 
 
 export const signOut = (req: Request, res: Response): void => {
   res.clearCookie(REFRESH_TOKEN_NAME);
-  res.status(200).json({});
+  res.status(200).json();
 };
