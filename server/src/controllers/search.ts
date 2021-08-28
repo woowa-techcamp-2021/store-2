@@ -4,9 +4,14 @@ import searchService from 'services/search';
 
 import errorHandler from 'utils/error/error-handler';
 
-export const getKeywords = async (req: Request, res: Response): Promise<void> => {
+interface ReqQuery {
+  keyword: string;
+}
+
+export const getKeywords = async (req: Request<unknown, unknown, unknown, ReqQuery>, res: Response): Promise<void> => {
   try {
-    const keywords = await searchService.getKeywords(req);
+    const { keyword } = req.query;
+    const keywords = await searchService.getKeywords(keyword);
     res.status(200).json(keywords);
   } catch (err) {
     console.log(err);
