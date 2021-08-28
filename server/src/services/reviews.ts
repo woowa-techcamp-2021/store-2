@@ -53,7 +53,7 @@ async function postReview(
       score: review.getDataValue('score'),
       contents: review.getDataValue('contents'),
       imgUrl: review.getDataValue('imgUrl'),
-      userId: review.getDataValue('userId'),
+      userId: review.getDataValue('UserId'),
     };
   });
 
@@ -75,7 +75,7 @@ async function getReviews(itemId: number, pageId: number): Promise<IReview> {
       score: review.getDataValue('score'),
       contents: review.getDataValue('contents'),
       imgUrl: review.getDataValue('imgUrl'),
-      userId: review.getDataValue('userId'),
+      userId: review.getDataValue('UserId'),
     };
   });
 
