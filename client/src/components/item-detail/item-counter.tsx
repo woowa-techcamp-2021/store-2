@@ -14,13 +14,8 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme?.colorFooter};
   border-radius: 17px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 15px 30px;
-
-  .title {
-    flex: 1;
-  }
 
   ${({ theme }) => theme?.mobile} {
     flex-direction: column;
@@ -33,44 +28,38 @@ const Container = styled.div`
       font-size: 14px;
     }
   }
+
+  .price {
+    margin-top: 20px;
+    font-weight: ${props => props.theme?.weightBold};
+    font-size: 18px;
+  }
 `;
 
 const Counter = styled.div`
   display: flex;
   align-items: center;
-
   .count {
-    margin-right: 24px;
-  }
-
-  .price {
-    text-overflow: clip;
-    text-align: end;
+    margin: 0 15px;
   }
 
   ${({ theme }) => theme?.mobile} {
     align-self: flex-end;
   }
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 24px;
 
   button {
     background: ${({ theme }) => theme?.colorPointBeigeLight};
-    width: 24px;
-    height: 20px;
+    width: 34px;
+    height: 30px;
+    font-size: 20px;
 
     &:first-child {
       border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-bottom-left-radius: 5px;
     }
 
     &:last-child {
-      border-bottom-left-radius: 5px;
+      border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
     }
 
@@ -78,6 +67,12 @@ const ButtonBox = styled.div`
       background: ${({ theme }) => theme?.colorBg};
     }
   }
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCounterProps) => {
@@ -93,19 +88,19 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
 
   return (
     <Container>
-      <div className="title">{title}</div>
-      <Counter>
-        <div className="count">{count}</div>
-        <ButtonBox>
+      <Flex>
+        <div className="title">{title}</div>
+        <Counter>
           <button type="button" onClick={handleCounterChange(true)}>
             +
           </button>
+          <div className="count">{count}</div>
           <button type="button" onClick={handleCounterChange(false)}>
             -
           </button>
-        </ButtonBox>
-        <div className="text price">{formatPrice(count * price)}원</div>
-      </Counter>
+        </Counter>
+      </Flex>
+      <div className="text price">{formatPrice(count * price)}원</div>
     </Container>
   );
 };
