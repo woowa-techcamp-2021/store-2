@@ -139,6 +139,7 @@ const Cart: FC = () => {
 
   useEffect(() => {
     updatePrice(checkedItems);
+    localStorage.setItem('select', Array.from(checkedItems).join(','));
   }, [updatePrice, checkedItems]);
 
   return (
