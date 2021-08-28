@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import { RootState } from 'store';
@@ -67,6 +67,7 @@ const OrderContainer: FC = () => {
       submitLoading: loading['order/postOrder'],
       addresses: address.list,
     }),
+    shallowEqual,
   );
 
   const history = useHistory();

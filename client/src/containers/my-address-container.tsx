@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import useInputs from 'hooks/use-inputs';
@@ -36,6 +36,7 @@ const MyAddressContainer: FC = () => {
       addressList: address.list,
       error: address.error,
     }),
+    shallowEqual,
   );
 
   useEffect(() => {

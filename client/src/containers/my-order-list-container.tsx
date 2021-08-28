@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import { RootState } from 'store';
@@ -29,6 +29,7 @@ const MyOrderListContainer: FC = () => {
       totalCount: order.list.totalCount,
       userLoading: loading['auth/getUser'],
     }),
+    shallowEqual,
   );
 
   useEffect(() => {
