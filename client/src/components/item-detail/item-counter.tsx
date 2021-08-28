@@ -14,12 +14,15 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme?.colorFooter};
   border-radius: 17px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   padding: 15px 30px;
+  margin-top: 15px;
 
   ${({ theme }) => theme?.mobile} {
     flex-direction: column;
-
+    justify-content: normal;
+    align-items: normal;
     .title {
       align-self: flex-start;
       width: 100%;
@@ -30,14 +33,15 @@ const Container = styled.div`
   }
 
   .price {
-    margin-top: 20px;
     font-weight: ${props => props.theme?.weightBold};
     font-size: 18px;
+    margin-left: 15px;
   }
 `;
 
 const Counter = styled.div`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   .count {
     margin: 0 15px;
@@ -73,6 +77,9 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${props => props.theme?.mobile} {
+    justify-content: flex-end;
+  }
 `;
 
 const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCounterProps) => {
@@ -88,8 +95,8 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
 
   return (
     <Container>
+      <div className="title">{title}</div>
       <Flex>
-        <div className="title">{title}</div>
         <Counter>
           <button type="button" onClick={handleCounterChange(true)}>
             +
@@ -99,8 +106,8 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
             -
           </button>
         </Counter>
+        <div className="text price">{formatPrice(count * price)}원</div>
       </Flex>
-      <div className="text price">{formatPrice(count * price)}원</div>
     </Container>
   );
 };
