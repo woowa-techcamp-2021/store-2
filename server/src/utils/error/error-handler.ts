@@ -42,8 +42,6 @@ function errorHandler(err: CustomError): ErrorType {
       return { statusCode: 404, errorMessage: err.customMessage || '존재하지 않는 상품입니다.' };
     case 'item/no-exist-querystring':
       return { statusCode: 500, errorMessage: err.customMessage || '쿼리스트링을 확인해주세요.' };
-    case 'orders/orders-not-found':
-      return { statusCode: 500, errorMessage: err.customMessage || '주문내역 데이터가 없습니다.' };
     case 'address/address-error':
       return { statusCode: 500, errorMessage: err.customMessage || 'db 오류' };
     case 'address/maximun address':
