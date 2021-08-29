@@ -21,6 +21,7 @@ export interface ItemInfoProps {
   thumbnail: string;
   title: string;
   price: number;
+  originalPrice: number;
   likeShow: boolean;
   isLiked: boolean;
   setIsLiked: Dispatch<SetStateAction<boolean>>;
@@ -28,6 +29,7 @@ export interface ItemInfoProps {
   onSubmitCart: (count: number) => void;
   onBuy: () => void;
   setCount: React.Dispatch<React.SetStateAction<number>>;
+  salePercent: number;
 }
 
 const Wrapper = styled.section`
@@ -133,6 +135,15 @@ const ItemPrice = styled.div`
   .title {
     margin: 24px 0 14px;
     color: ${({ theme }) => theme?.colorGreyDark};
+  }
+
+  .original-price {
+    font-size: 18px;
+    font-family: ${({ theme }) => theme?.fontHanna};
+    color: ${({ theme }) => theme?.colorPrimary};
+    color: rgb(174, 174, 174);
+    text-decoration: line-through;
+    margin-bottom: 10px;
   }
 
   .price {
@@ -246,6 +257,7 @@ const ItemInfo: FC<ItemInfoProps> = ({
   thumbnail,
   title,
   price,
+  originalPrice,
   likeShow,
   isLiked,
   setIsLiked,
@@ -253,6 +265,7 @@ const ItemInfo: FC<ItemInfoProps> = ({
   onSubmitCart,
   onBuy,
   setCount,
+  salePercent,
 }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const [modalVisible, setModalVisible] = useState(false);
@@ -292,6 +305,8 @@ const ItemInfo: FC<ItemInfoProps> = ({
           </ItemTitle>
           <ItemPrice>
             <div className="title">판매가격</div>
+            {/* {salePercent && <div className="original-price">{formatPrice(originalPrice)}원</div>} */}
+            <div className="original-price">{formatPrice(originalPrice)}원</div>
             <div className="price">{formatPrice(price)}원</div>
             <div className="title">배송정보</div>
             <div className="message">데모기념 오늘만 배송비 무료!!!</div>
