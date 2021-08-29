@@ -75,12 +75,12 @@ const DetailWrapper: FC<DetailWrapperProps> = ({
     <Container>
       <DetailHeader>
         <div ref={refs}>
-          <Marker selected={select === 'detail' ? true : ''} onClick={() => detailExecuteScroll()}>
+          <Marker selected={select === 'detail'} onClick={() => detailExecuteScroll()}>
             상품상세정보
           </Marker>
         </div>
         <div>
-          <Marker selected={select === 'review' ? true : ''} onClick={() => reviewExecuteScroll()}>
+          <Marker selected={select === 'review'} onClick={() => reviewExecuteScroll()}>
             상품후기 <span>{reviewCount}</span>
           </Marker>
         </div>

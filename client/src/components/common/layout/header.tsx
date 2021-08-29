@@ -45,7 +45,7 @@ const LogoWrapper = styled.div`
   padding: 25px 0;
 `;
 
-const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
+const Header: FC<HeaderProps> = React.memo(({ displayMain, isMobile }) => {
   const renderLogo = () => {
     if (isMobile) {
       if (displayMain) return <Tent />;
@@ -71,6 +71,8 @@ const Header: FC<HeaderProps> = ({ displayMain, isMobile }) => {
   };
 
   return <Wrapper>{renderLogo()}</Wrapper>;
-};
+});
+
+Header.displayName = 'header';
 
 export default Header;

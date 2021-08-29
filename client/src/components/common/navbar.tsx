@@ -69,7 +69,7 @@ const Wrapper = styled.nav`
   }
 `;
 
-const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) => {
+const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onLogout }) => {
   return (
     <Wrapper white={displayMain}>
       {isMobile && (
@@ -98,6 +98,8 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
       </div>
     </Wrapper>
   );
-};
+});
+
+Navbar.displayName = 'navbar';
 
 export default Navbar;
