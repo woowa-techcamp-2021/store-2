@@ -305,8 +305,7 @@ const ItemInfo: FC<ItemInfoProps> = ({
           </ItemTitle>
           <ItemPrice>
             <div className="title">판매가격</div>
-            {/* {salePercent && <div className="original-price">{formatPrice(originalPrice)}원</div>} */}
-            <div className="original-price">{formatPrice(originalPrice)}원</div>
+            {salePercent !== 0 && <div className="original-price">{formatPrice(originalPrice)}원</div>}
             <div className="price">{formatPrice(price)}원</div>
             <div className="title">배송정보</div>
             <div className="message">데모기념 오늘만 배송비 무료!!!</div>
