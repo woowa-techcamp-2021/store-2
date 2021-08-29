@@ -17,6 +17,7 @@ export interface IGetItem {
   thumbnail: string;
   title: string;
   price: number;
+  originalPrice: number;
   contents: string[];
   salePercent: number;
   isSoldOut: boolean;
@@ -38,6 +39,7 @@ export interface Item {
   id: number;
   title: string;
   tumbnail: string;
+  originalPrice?: number;
   price: number;
   salePercent: number;
   amount: number;
@@ -118,6 +120,7 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
     thumbnail: item.getDataValue('thumbnail'),
     title: item.getDataValue('title'),
     price: Number.parseInt(`${item.getDataValue('price')}`, 10),
+    originalPrice: Number.parseInt(`${item.getDataValue('originalPrice')}`, 10),
     salePercent: item.getDataValue('salePercent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
@@ -153,7 +156,7 @@ async function getOrderItems(id: string): Promise<IOrderItem[]> {
     const salePercent = item.getDataValue('salePercent');
     const price = Number(item.getDataValue('price'));
 
-    const saledPrice = Math.floor(price - (price * salePercent) / 100);
+    const saledPrice = Math.round(price - (price * salePercent) / 100);
 
     return {
       id: item.getDataValue('id'),
