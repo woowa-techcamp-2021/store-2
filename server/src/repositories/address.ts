@@ -6,7 +6,7 @@ import errorGenerator from 'utils/error/error-generator';
 
 const getAddress = async (uid: string): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> => {
   const address = await db.Address.findAll({
-    attributes: ['id', 'name', 'receiver', 'address'],
+    attributes: ['id', 'name', 'receiver', 'address', 'addressDetail'],
     where: {
       UserId: uid,
     },
@@ -28,6 +28,7 @@ const addAddress = async (
   name: string,
   receiver: string,
   address: string,
+  addressDetail: string,
 ): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> => {
   const count = await db.Address.count({
     where: {
@@ -44,6 +45,7 @@ const addAddress = async (
     name,
     receiver,
     address,
+    addressDetail,
     UserId: uid,
   });
   return getAddress(uid);

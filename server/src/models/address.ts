@@ -5,6 +5,7 @@ export interface AddressAttribures {
   id: string;
   name: string;
   address: string;
+  addressDetail: string;
   receiver: string;
   UserId: string;
 }
@@ -23,6 +24,10 @@ const addressSchema = (sequelize: Sequelize): ModelCtor<Model<AddressAttribures,
       allowNull: false,
     },
     address: {
+      type: DataTypes.STRING(ADDRESS.ADDRESS_MAX_LENGTH),
+      allowNull: false,
+    },
+    addressDetail: {
       type: DataTypes.STRING(ADDRESS.ADDRESS_MAX_LENGTH),
       allowNull: false,
     },

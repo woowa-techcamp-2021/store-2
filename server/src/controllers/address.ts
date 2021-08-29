@@ -21,9 +21,9 @@ export const getAddress = async (req: Request, res: Response): Promise<void> => 
 export const addAddress = async (req: Request<unknown, unknown, IAddReqBody>, res: Response): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
-  const { name, receiver, address } = req.body;
+  const { name, receiver, address, addressDetail } = req.body;
   try {
-    const adrs = await addressService.addAddress(uid, name, receiver, address);
+    const adrs = await addressService.addAddress(uid, name, receiver, address, addressDetail);
     res.status(200).json(adrs);
   } catch (err) {
     console.log(err);
