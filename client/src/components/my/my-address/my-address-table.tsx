@@ -39,12 +39,12 @@ const MyAddressTable: FC<MyAddressTableProps> = ({ loading, addressList, onRemov
     <Wrapper>
       <Table headers={tableHeaders} loading={loading}>
         {addressList.map(adrs => {
-          const { id, name, receiver, address } = adrs;
+          const { id, name, receiver, address, addressDetail } = adrs;
           return (
             <Fragment key={id}>
               <TableRowText>{name}</TableRowText>
               <TableRowText>{receiver}</TableRowText>
-              <TableRowText>{address}</TableRowText>
+              <TableRowText>{`${address} ${addressDetail}`}</TableRowText>
               <TableRowText>
                 <RemoveButton type="button" onClick={() => onRemove(id)}>
                   삭제

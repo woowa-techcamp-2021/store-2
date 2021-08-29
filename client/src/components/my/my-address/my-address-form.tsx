@@ -33,6 +33,7 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 8px;
 `;
 
 const InputErrorMessage = styled.div`

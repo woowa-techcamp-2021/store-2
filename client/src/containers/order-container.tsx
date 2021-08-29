@@ -13,6 +13,7 @@ import {
   addressValidation,
   receiverValidation,
   phoneValidation,
+  addressDetailValidation,
 } from 'utils/validation/order-validation';
 import { cartGenerator } from 'utils/cart-generator';
 import { CartItem } from 'types/cart';
@@ -53,10 +54,12 @@ const OrderContainer: FC = () => {
   const [phoneError, setPhoneError] = useState('');
   const [receiverError, setReceiverError] = useState('');
   const [addressError, setAddressError] = useState('');
+  const [addressDetailError, setAddressDetailError] = useState('');
   const [orderItems, setOrderItems] = useState<IOrderItems[]>([]);
   const [user, setUser] = useState('');
   const [receiver, setReceiver] = useState('');
   const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
   const [addressChecked, setaddressChecked] = useState('기타');
   const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
     ({ auth, order, loading, address }: RootState) => ({
@@ -101,28 +104,31 @@ const OrderContainer: FC = () => {
     }
   }, [dispatch, history]);
 
-  const onChange = (id: 'user' | 'receiver' | 'address') => (e: React.ChangeEvent<HTMLInputElement>) => {
-    switch (id) {
-      case 'user':
-        setUser(e.target.value);
-        break;
-      case 'receiver':
-        setReceiver(e.target.value);
-        break;
-      case 'address':
-        setAddress(e.target.value);
-        break;
-      default:
-    }
-  };
+  const onChange =
+    (id: 'user' | 'receiver' | 'address' | 'addressDetail') => (e: React.ChangeEvent<HTMLInputElement>) => {
+      switch (id) {
+        case 'user':
+          setUser(e.target.value);
+          break;
+        case 'receiver':
+          setReceiver(e.target.value);
+          break;
+        case 'addressDetail':
+          setAddressDetail(e.target.value);
+          break;
+        default:
+      }
+    };
 
   const pickAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { address, receiver } = addresses.find(address => address.name === e.target.value) || {
+    const { address, addressDetail, receiver } = addresses.find(address => address.name === e.target.value) || {
       address: '',
+      addressDetail: '',
       receiver: '',
     };
     setReceiver(receiver);
     setAddress(address);
+    setAddressDetail(addressDetail);
     setaddressChecked(e.target.value);
   };
 
@@ -157,6 +163,7 @@ const OrderContainer: FC = () => {
     setPhoneError('');
     setReceiverError('');
     setAddressError('');
+    setAddressDetailError('');
 
     if (userValidation(user)) {
       setUserError(userValidation(user));
@@ -168,6 +175,10 @@ const OrderContainer: FC = () => {
     }
     if (addressValidation(address)) {
       setAddressError(addressValidation(address));
+      return;
+    }
+    if (addressDetailValidation(addressDetail)) {
+      setAddressError(addressDetailValidation(addressDetail));
       return;
     }
     if (receiverValidation(receiver)) {
@@ -213,6 +224,9 @@ const OrderContainer: FC = () => {
       pickAddress={pickAddress}
       addressChecked={addressChecked}
       onFocusOutPhone={onFocusOutPhone}
+      addressDetail={addressDetail}
+      addressDetailError={addressDetailError}
+      setAddress={setAddress}
     />
   );
 };
