@@ -8,6 +8,7 @@ import { orderReducer, orderSaga } from './order';
 import { addressReducer, addressSaga } from './address';
 import { reviewReducer, reviewSaga } from './review';
 import { likeReducer, likeSaga } from './like';
+import { cartReducer } from './cart';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   review: reviewReducer,
   like: likeReducer,
+  cart: cartReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
