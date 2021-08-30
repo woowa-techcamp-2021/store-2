@@ -80,6 +80,7 @@ async function getItems(
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
   else if (type === 'expensive') order.push(['price', 'DESC']);
+  order.push(['id', 'ASC']);
 
   let data: IItemsData;
   if (categoryId) {
