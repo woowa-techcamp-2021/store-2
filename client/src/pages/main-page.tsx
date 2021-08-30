@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
+import { Helmet } from 'react-helmet-async';
 
 import useWindowSize from 'hooks/use-window-size';
 
@@ -30,6 +31,9 @@ const MainPage = (): ReactElement => {
 
   return (
     <>
+      <Helmet>
+        <title>배민문구사</title>
+      </Helmet>
       <NavbarContainer displayMain isMobile={isMobile} />
       <Layout displayMain isMobile={isMobile}>
         <SmartMenuContainer />
