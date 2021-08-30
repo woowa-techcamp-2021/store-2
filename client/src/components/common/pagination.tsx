@@ -59,7 +59,7 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
   const handleClickPage = useCallback(page => goPage(page), [goPage]);
 
   useEffect(() => {
-    const { pageId } = query;
+    const { pageId = 1 } = query;
     const temp = Math.floor(Number(pageId) / showCnt);
     setStartPage((Number(pageId) % showCnt === 0 ? temp - 1 : temp) * showCnt + 1);
   }, [query, showCnt]);
@@ -71,7 +71,7 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
         <Button
           type="button"
           key={page}
-          className={Number(query.pageId) === page && 'active'}
+          className={(Number(query.pageId) || 1) === page && 'active'}
           onClick={() => handleClickPage(page)}
         >
           {page}

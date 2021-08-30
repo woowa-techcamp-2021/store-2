@@ -1,8 +1,9 @@
 import React, { FC, ReactNode, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
+import { useHistory, useQuery } from 'lib/router';
 
 import { SORT } from 'constants/index';
-import { useHistory, useQuery } from 'lib/router';
+import { ESortType } from 'types/item';
 
 interface FilterProps {
   total: number;
@@ -78,7 +79,7 @@ const Filter: FC<FilterProps> = ({ total }) => {
             <button
               key={sort.type}
               type="button"
-              className={query.type === sort.type ? 'active' : ''}
+              className={(query.type || ESortType.RECOMMEND) === sort.type ? 'active' : ''}
               onClick={() => handleClickSort(sort.type)}
             >
               {sort.value}
