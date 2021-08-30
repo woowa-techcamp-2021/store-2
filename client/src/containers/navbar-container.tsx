@@ -13,8 +13,9 @@ interface NavbarProps {
 }
 const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { userId } = useSelector(({ auth }: RootState) => ({
+  const { userId, cart } = useSelector(({ auth, cart }: RootState) => ({
     userId: auth.user.userId,
+    cart: cart.cart,
   }));
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => 
 
   return (
     <>
-      <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
+      <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} cart={cart} />
       {modalVisible && <AuthLogoutModal visible={modalVisible} setVisible={setModalVisible} onConfirm={handleLogout} />}
     </>
   );

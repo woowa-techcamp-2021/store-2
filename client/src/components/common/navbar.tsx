@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Link } from 'lib/router';
 import styled from 'lib/woowahan-components';
 
@@ -17,6 +17,7 @@ interface NavbarProps {
   isMobile: boolean;
   userId: string | null | undefined;
   onLogout: () => void;
+  cart: string;
 }
 
 const Wrapper = styled.nav`
@@ -76,12 +77,11 @@ const Wrapper = styled.nav`
   }
 `;
 
-const cartCount = (): number => {
-  const cartItems = cartGenerator();
-  return cartItems.length;
-};
-
-const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onLogout }) => {
+const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onLogout, cart }) => {
+  const cartCount = useCallback((): number => {
+    const cartItems = cartGenerator(cart);
+    return cartItems.length;
+  }, [cart]);
   return (
     <Wrapper white={displayMain}>
       {isMobile && (

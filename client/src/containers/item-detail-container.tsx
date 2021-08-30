@@ -17,6 +17,7 @@ import ReviewPost from 'components/item-detail/review-post';
 import LoginModal from 'components/auth/login-modal';
 import { Helmet } from 'react-helmet-async';
 import { TITLE } from 'constants/index';
+import { setCart } from 'store/cart';
 
 const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -48,8 +49,9 @@ const ItemDetailContainer: FC = () => {
     reviewSubmitLoading,
     itemLoading,
     isPaid,
+    cart,
   } = useSelector(
-    ({ item, auth, review, loading }: RootState) => ({
+    ({ item, auth, review, loading, cart }: RootState) => ({
       thumbnail: item.item.thumbnail,
       title: item.item.title,
       price: item.item.price,
@@ -67,6 +69,7 @@ const ItemDetailContainer: FC = () => {
       reviewSubmitLoading: loading['review/postReview'],
       itemLoading: loading['item/getItem'],
       isPaid: item.item.isPaid,
+      cart: cart.cart,
     }),
     shallowEqual,
   );
@@ -104,8 +107,8 @@ const ItemDetailContainer: FC = () => {
   const onSubmitCart = (count: number) => {
     let cartItemsString = '';
 
-    if (localStorage.getItem('cart') !== null) {
-      const cartItems = cartGenerator();
+    if (cart !== null) {
+      const cartItems = cartGenerator(cart);
 
       if (cartItems.some(item => item.id === id)) {
         cartItems.forEach((item, index) => {
@@ -129,7 +132,7 @@ const ItemDetailContainer: FC = () => {
     } else {
       cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
     }
-    localStorage.setItem('cart', cartItemsString);
+    dispatch({ type: setCart.type, payload: cartItemsString });
   };
 
   const onBuy = () => {
