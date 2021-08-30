@@ -343,8 +343,6 @@ const getOrderItems = async (itemIDs: string[]): Promise<Model<ItemAttributes, I
         Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
         'price',
       ],
-      ['price', 'originalPrice'],
-      'salePercent',
     ],
     where: {
       [Op.or]: query,

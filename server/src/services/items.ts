@@ -149,25 +149,10 @@ async function matchUserLikeItem(
   return result;
 }
 
-async function getOrderItems(id: string): Promise<IOrderItem[]> {
+async function getOrderItems(id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> {
   const itemIDs = id.split(',');
   const items = await itemRepository.getOrderItems(itemIDs);
-
-  const itemData: IOrderItem[] = items.map(item => {
-    const salePercent = item.getDataValue('salePercent');
-    const price = Number(item.getDataValue('price'));
-
-    const saledPrice = Math.round(price - (price * salePercent) / 100);
-
-    return {
-      id: item.getDataValue('id'),
-      title: item.getDataValue('title'),
-      thumbnail: item.getDataValue('thumbnail'),
-      price: saledPrice,
-    };
-  });
-
-  return itemData;
+  return items;
 }
 
 export default {
