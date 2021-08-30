@@ -1,4 +1,4 @@
-import React, { FC, useRef, Dispatch, SetStateAction } from 'react';
+import React, { FC, useRef } from 'react';
 import styled from 'lib/woowahan-components';
 
 import { IReview } from 'types/review';
