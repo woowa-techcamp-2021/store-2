@@ -55,12 +55,12 @@ const MyOrderTable: FC<MyOrderTableProps> = ({ loading, orders }) => {
   return (
     <Table headers={tableHeaders} loading={loading}>
       {orders.map(order => {
-        const { createdAt, id, title, thumbnail, price, quantity, status } = order;
+        const { id, createdAt, itemId, title, thumbnail, price, quantity, status } = order;
         return (
-          <Fragment key={title + createdAt}>
+          <Fragment key={id}>
             <TableRowText>{createdAt}</TableRowText>
             <TableRowTitle>
-              <Link className="item-link" to={`${ITEM_URL}/${id}`}>
+              <Link className="item-link" to={`${ITEM_URL}/${itemId}`}>
                 <ItemTitle>
                   <img src={thumbnail} alt={title} />
                   {title}
