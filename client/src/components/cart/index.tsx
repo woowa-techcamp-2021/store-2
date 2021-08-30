@@ -42,7 +42,8 @@ const ButtonDiv = styled.div`
     justify-content: center;
 
     > button:first-child {
-      margin-bottom: 14px;
+      margin: 14px;
+      margin-top: 0;
     }
   }
 `;
