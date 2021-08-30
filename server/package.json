@@ -1,6 +1,6 @@
 {
   "name": "store-2-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "배민문구사 API 서버",
   "main": "app.ts",
   "repository": "https://github.com/woowa-techcamp-2021/store-2.git",
