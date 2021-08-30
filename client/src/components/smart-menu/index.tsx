@@ -6,7 +6,8 @@ import useWindowSize from 'hooks/use-window-size';
 
 import { IMenu } from 'types/category';
 
-import { SMART_MENU_LARGE_WIDTH, SMART_MENU_SMALL_WIDTH, SMART_MENU_BLOCK_DELAY } from 'constants/index';
+import { SMART_MENU_BLOCK_DELAY } from 'constants/index';
+import { isLaptop, isSmall, isMobile } from 'utils/checkWidth';
 
 import LargeMenu from './large-menu';
 import MediumMenu from './medium-menu';
@@ -53,14 +54,6 @@ const MenuTitle = styled.div`
   }
 `;
 
-const isLaptop = (width: number) => {
-  return width >= SMART_MENU_LARGE_WIDTH;
-};
-
-const isSmall = (width: number) => {
-  return width <= SMART_MENU_SMALL_WIDTH;
-};
-
 const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   const [isOpen, setOpenStatus] = useState(false);
   const [selectedLargeId, setLargeId] = useState('');
@@ -90,14 +83,20 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           setLargeId('');
         }, SMART_MENU_BLOCK_DELAY);
       }}
+      onClick={() => {
+        if (isSmall(width)) {
+          setOpenStatus(!isOpen);
+        }
+      }}
     >
       {isOpen && (
         <LargeMenu
           menu={menu}
           position={position}
           selectedLargeId={selectedLargeId}
-          isLaptop={isLaptop(width)}
+          isMobile={isMobile(width)}
           setLargeId={setLargeId}
+          setMediumId={setMediumId}
           setPosition={setPosition}
         />
       )}
@@ -106,6 +105,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           menu={menu}
           selectedLargeId={selectedLargeId}
           selectedMediumId={selectedMediumId}
+          isMobile={isMobile(width)}
           setMediumId={setMediumId}
         />
       )}
