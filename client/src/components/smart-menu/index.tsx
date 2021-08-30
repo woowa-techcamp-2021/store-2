@@ -73,7 +73,9 @@ const SmartMenu: FC<SmartMenuProps> = React.memo(({ currentMenu, menu }) => {
   return (
     <MenuDiv
       onMouseEnter={() => {
-        setOpenStatus(true);
+        if (isLaptop(width)) {
+          setOpenStatus(true);
+        }
       }}
       onMouseLeave={() => {
         setOpenStatus(false);
@@ -84,7 +86,7 @@ const SmartMenu: FC<SmartMenuProps> = React.memo(({ currentMenu, menu }) => {
         }, SMART_MENU_BLOCK_DELAY);
       }}
       onClick={() => {
-        if (isSmall(width)) {
+        if (!isLaptop(width)) {
           setOpenStatus(!isOpen);
         }
       }}
