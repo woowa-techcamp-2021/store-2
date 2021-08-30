@@ -26,13 +26,26 @@ export interface IGetItem {
 }
 
 export interface IOrderItem {
-  id: string;
+  id: number;
   title: string;
   thumbnail: string;
   price: number;
 }
 
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
+
+export interface Item {
+  id: number;
+  title: string;
+  tumbnail: string;
+  price: number;
+  salePercent: number;
+  amount: number;
+  isGreen: boolean;
+  isBest: boolean;
+  updatedAt: string;
+  isLike: boolean;
+}
 
 async function mainItems(visited: string[]): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
@@ -122,7 +135,7 @@ async function matchUserLikeItem(
 ): Promise<unknown[]> {
   const result = await Promise.all(
     itemList.map(async item => {
-      const itemId = parseInt(item.getDataValue('id'), 10);
+      const itemId = item.getDataValue('id');
       return {
         ...item.toJSON(),
         isLike: userId ? await likeService.isUserLikeItem(userId, itemId) : false,

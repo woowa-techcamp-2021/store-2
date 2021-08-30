@@ -3,19 +3,9 @@ import addressService from 'services/address';
 import errorHandler from 'utils/error/error-handler';
 import { decodeToken, getAccessToken } from 'utils/jwt';
 
-interface IAddReqBody {
-  name: string;
-  receiver: string;
-  address: string;
-}
+import { IAddReqBody, IRemoveReqBody } from 'types/address';
 
-interface IRemoveReqBody {
-  data: {
-    id: string;
-  };
-}
-
-export const getAddress = async (req: Request<unknown, unknown, unknown, unknown>, res: Response): Promise<void> => {
+export const getAddress = async (req: Request, res: Response): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
   try {
@@ -28,10 +18,7 @@ export const getAddress = async (req: Request<unknown, unknown, unknown, unknown
   }
 };
 
-export const addAddress = async (
-  req: Request<unknown, unknown, IAddReqBody, unknown>,
-  res: Response,
-): Promise<void> => {
+export const addAddress = async (req: Request<unknown, unknown, IAddReqBody>, res: Response): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
   const { name, receiver, address } = req.body;
@@ -45,10 +32,7 @@ export const addAddress = async (
   }
 };
 
-export const removeAddress = async (
-  req: Request<unknown, unknown, IRemoveReqBody, unknown>,
-  res: Response,
-): Promise<void> => {
+export const removeAddress = async (req: Request<unknown, unknown, IRemoveReqBody>, res: Response): Promise<void> => {
   const token = getAccessToken(req.headers.authorization);
   const { uid } = decodeToken('access', token);
   const { id } = req.body.data;

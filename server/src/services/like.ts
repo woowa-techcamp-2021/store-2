@@ -1,15 +1,17 @@
 import { createLike, destroyLike, findIsUserLikeItem } from 'repositories/like';
 
-function addLike(userId: string, itemId: number): Promise<boolean> {
-  return createLike(userId, itemId);
+async function addLike(userId: string, itemId: number): Promise<void> {
+  await createLike(userId, itemId);
 }
 
-function deleteLike(userId: string, itemId: number): Promise<boolean> {
-  return destroyLike(userId, itemId);
+async function deleteLike(userId: string, itemId: number): Promise<void> {
+  await destroyLike(userId, itemId);
 }
 
-function isUserLikeItem(userId: string, itemId: number): Promise<boolean> {
-  return findIsUserLikeItem(userId, itemId);
+async function isUserLikeItem(userId: string, itemId: number): Promise<boolean> {
+  const isLike = await findIsUserLikeItem(userId, itemId);
+
+  return isLike;
 }
 
 export default { addLike, deleteLike, isUserLikeItem };
