@@ -53,19 +53,10 @@ const Counter = styled.div`
 
   button {
     background: ${({ theme }) => theme?.colorPointBeigeLight};
-    width: 34px;
-    height: 30px;
+    width: 28px;
+    height: 24px;
     font-size: 20px;
-
-    &:first-child {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
+    border-radius: 5px;
 
     &:hover {
       background: ${({ theme }) => theme?.colorBg};
