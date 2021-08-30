@@ -36,7 +36,6 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
   const history = useHistory();
   const query = useQuery();
   const [startPage, setStartPage] = useState(1);
-  const [activePage, setActivePage] = useState(1);
 
   const goPage = useCallback(
     (pageId: number) => {
@@ -49,29 +48,20 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
 
   const goNextPage = useCallback(() => {
     setStartPage(startPage + showCnt);
-    setActivePage(startPage + showCnt);
     goPage(startPage + showCnt);
   }, [showCnt, startPage, goPage]);
 
   const goPrevPage = useCallback(() => {
     setStartPage(startPage - showCnt);
-    setActivePage(startPage - showCnt);
     goPage(startPage - showCnt);
   }, [showCnt, startPage, goPage]);
 
-  const handleClickPage = useCallback(
-    page => {
-      setActivePage(page);
-      goPage(page);
-    },
-    [goPage],
-  );
+  const handleClickPage = useCallback(page => goPage(page), [goPage]);
 
   useEffect(() => {
     const { pageId } = query;
     const temp = Math.floor(Number(pageId) / showCnt);
     setStartPage((Number(pageId) % showCnt === 0 ? temp - 1 : temp) * showCnt + 1);
-    setActivePage(Number(pageId));
   }, [query, showCnt]);
 
   const renderPage = () => {
@@ -81,7 +71,7 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
         <Button
           type="button"
           key={page}
-          className={activePage === page && 'active'}
+          className={Number(query.pageId) === page && 'active'}
           onClick={() => handleClickPage(page)}
         >
           {page}
