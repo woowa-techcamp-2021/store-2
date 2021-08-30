@@ -13,8 +13,6 @@ const getCategories = async (): Promise<CategoryModel> => {
     raw: true,
   });
 
-  console.log(categorySnapshot);
-
   if (!categorySnapshot || categorySnapshot.length === 0) {
     throw errorGenerator({
       message: 'GET /api/categories - categories not found',
