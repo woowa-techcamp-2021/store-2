@@ -5,7 +5,6 @@ import { useHistory } from 'lib/router';
 import arrow from 'assets/icons/arrow_forward.svg';
 
 import { IMenu } from 'types/category';
-import { ESortType } from 'types/item';
 
 import { SMART_MENU_BLOCK_DELAY } from 'constants/index';
 import { ITEM_LIST_URL } from 'constants/urls';
@@ -103,7 +102,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
 }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
-    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}&pageId=1&type=${ESortType.RECOMMEND}`),
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
     [history],
   );
 
@@ -129,7 +128,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
                   setLargeId(largeId);
                   e.stopPropagation();
                 } else {
-                  history.push(`${ITEM_LIST_URL}?categoryId=${large.code}&pageId=1&type=${ESortType.RECOMMEND}`);
+                  history.push(`${ITEM_LIST_URL}?categoryId=${large.code}`);
                 }
               }}
               isSelected={selectedLargeId === largeId}

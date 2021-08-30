@@ -57,7 +57,7 @@ const SearchContainer: FC = () => {
   const moveToSearchPage = (keyword: string) => {
     setSearch(keyword);
     saveRecentKeywords(keyword);
-    history.push(`${ITEM_LIST_URL}?search=${keyword}&pageId=1`);
+    history.push(`${ITEM_LIST_URL}?search=${keyword}`);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
