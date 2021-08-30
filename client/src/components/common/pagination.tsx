@@ -41,7 +41,7 @@ const Pagination: FC<PaginationProps> = ({ className = '', pageCount, showCnt = 
     (pageId: number) => {
       const searchParams = new URLSearchParams(window.location.search);
       searchParams.set('pageId', pageId.toString());
-      history.push(`${window.location.pathname}?${searchParams.toString()}`);
+      history.push(`${history.currentPath}?${searchParams.toString()}`);
     },
     [history],
   );

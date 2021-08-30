@@ -65,7 +65,7 @@ const Filter: FC<FilterProps> = ({ total }) => {
       const searchParams = new URLSearchParams(window.location.search);
       searchParams.set('type', sortType);
       searchParams.set('pageId', '1');
-      history.push(`${window.location.pathname}?${searchParams.toString()}`);
+      history.push(`${history.currentPath}?${searchParams.toString()}`);
     },
     [history],
   );
