@@ -49,6 +49,7 @@ const MyAddressContainer: FC = () => {
     setReceiverError('');
     setAddressError('');
     setAddError('');
+    setAddressDetailError('');
     if (!name) setNameError('배송지를 입력하세요');
     if (!receiver) setReceiverError('받는분을 입력하세요');
     if (!address) setAddressError('주소를 입력하세요');
@@ -57,6 +58,7 @@ const MyAddressContainer: FC = () => {
     if (name && receiver && addressDetail && addressList.length < 3) {
       dispatch({ type: addAddress.type, payload: { name, receiver, address, addressDetail } });
       reset();
+      setAddress('');
     }
   };
   const onRemove = (id: string) => {
