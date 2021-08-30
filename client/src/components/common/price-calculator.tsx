@@ -17,6 +17,9 @@ const Box = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  ${props => props.theme?.mobile} {
+    justify-content: center;
+  }
   align-items: center;
   border: 2px solid ${({ theme }) => theme?.colorLineLight};
   margin: 50px 0 30px;
@@ -45,6 +48,9 @@ const BoxItem = styled.div`
 
   .title {
     font-size: 16px;
+    ${props => props.theme?.mobile} {
+      font-size: 12px;
+    }
     color: ${({ theme }) => theme?.colorSoftBlack};
   }
 
@@ -52,6 +58,9 @@ const BoxItem = styled.div`
     font-size: 18px;
     font-weight: ${({ theme }) => theme?.weightBold};
     color: ${({ theme }) => theme?.colorSoftBlack};
+    ${props => props.theme?.mobile} {
+      font-size: 14px;
+    }
   }
 
   span {

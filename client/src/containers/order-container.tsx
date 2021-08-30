@@ -57,7 +57,7 @@ const OrderContainer: FC = () => {
   const [user, setUser] = useState('');
   const [receiver, setReceiver] = useState('');
   const [address, setAddress] = useState('');
-  const [addressChecked, setaddressChecked] = useState('');
+  const [addressChecked, setaddressChecked] = useState('기타');
   const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
     ({ auth, order, loading, address }: RootState) => ({
       userId: auth.user.userId || '',
@@ -145,6 +145,10 @@ const OrderContainer: FC = () => {
     localStorage.setItem('cart', cartItemsString);
   };
 
+  const onFocusOutPhone = () => {
+    if (phoneValidation(phone)) setPhoneError(phoneValidation(phone));
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -207,6 +211,7 @@ const OrderContainer: FC = () => {
       addresses={addresses}
       pickAddress={pickAddress}
       addressChecked={addressChecked}
+      onFocusOutPhone={onFocusOutPhone}
     />
   );
 };

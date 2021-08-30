@@ -57,11 +57,11 @@ const DetailImageWrapper = styled.div`
 const Detail: FC<DetailProps> = ({ contents, reviewCount, reviews, reviewLoading, pageCount, pageId, setPageId }) => {
   const detailRef = useRef<HTMLDivElement>(null);
   const detailExecuteScroll = () => {
-    if (detailRef.current) detailRef.current.scrollIntoView();
+    if (detailRef.current) detailRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const reviewRef = useRef<HTMLDivElement>(null);
   const reviewExecuteScroll = () => {
-    if (reviewRef.current) reviewRef.current.scrollIntoView();
+    if (reviewRef.current) reviewRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   return (
     <Container>

@@ -19,7 +19,7 @@ interface NavbarProps {
 }
 
 const Wrapper = styled.nav`
-  background-color: ${props => (props.white ? props.theme?.colorWhite : props.theme?.colorBg)};
+  background-color: ${props => props.theme?.colorBg};
   border-bottom: 1px solid ${props => props.theme?.colorLineLight};
   padding: 12px 10%;
   display: flex;
