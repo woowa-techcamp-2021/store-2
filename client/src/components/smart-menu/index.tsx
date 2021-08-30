@@ -7,7 +7,7 @@ import useWindowSize from 'hooks/use-window-size';
 import { IMenu } from 'types/category';
 
 import { SMART_MENU_BLOCK_DELAY } from 'constants/index';
-import { isLaptop, isSmall } from 'utils/checkWidth';
+import { isLaptop, isSmall, isMobile } from 'utils/checkWidth';
 
 import LargeMenu from './large-menu';
 import MediumMenu from './medium-menu';
@@ -73,9 +73,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
   return (
     <MenuDiv
       onMouseEnter={() => {
-        if (isLaptop(width)) {
-          setOpenStatus(true);
-        }
+        setOpenStatus(true);
       }}
       onMouseLeave={() => {
         setOpenStatus(false);
@@ -96,7 +94,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           menu={menu}
           position={position}
           selectedLargeId={selectedLargeId}
-          isLaptop={isLaptop(width)}
+          isMobile={isMobile(width)}
           setLargeId={setLargeId}
           setMediumId={setMediumId}
           setPosition={setPosition}
@@ -107,7 +105,7 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
           menu={menu}
           selectedLargeId={selectedLargeId}
           selectedMediumId={selectedMediumId}
-          isLaptop={isLaptop(width)}
+          isMobile={isMobile(width)}
           setMediumId={setMediumId}
         />
       )}

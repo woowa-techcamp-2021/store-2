@@ -13,7 +13,7 @@ interface LargeMenuProps {
   menu: IMenu;
   position: { x: number; y: number };
   selectedLargeId: string;
-  isLaptop: boolean;
+  isMobile: boolean;
   setLargeId: React.Dispatch<React.SetStateAction<string>>;
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
   setPosition: React.Dispatch<
@@ -95,7 +95,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
   menu,
   position,
   selectedLargeId,
-  isLaptop,
+  isMobile,
   setLargeId,
   setMediumId,
   setPosition,
@@ -115,18 +115,16 @@ const LargeMenu: FC<LargeMenuProps> = ({
             <LargeItem
               key={largeId}
               onMouseMove={(e: React.MouseEvent) => {
-                if (isLaptop) {
-                  setMediumId('');
-                  setTimeout(() => {
-                    if (e.clientX < position.x + 10) {
-                      setLargeId(largeId);
-                    }
-                    setPosition({ x: e.clientX, y: e.clientY });
-                  }, SMART_MENU_BLOCK_DELAY);
-                }
+                setMediumId('');
+                setTimeout(() => {
+                  if (e.clientX < position.x + 10) {
+                    setLargeId(largeId);
+                  }
+                  setPosition({ x: e.clientX, y: e.clientY });
+                }, SMART_MENU_BLOCK_DELAY);
               }}
               onClick={(e: React.MouseEvent) => {
-                if (!isLaptop) {
+                if (isMobile) {
                   setLargeId(largeId);
                   e.stopPropagation();
                 } else {
@@ -134,7 +132,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
                 }
               }}
               isSelected={selectedLargeId === largeId}
-              isLaptop={isLaptop}
+              isLaptop={isMobile}
             >
               <LargeTitle>{large.name}</LargeTitle>
               <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>

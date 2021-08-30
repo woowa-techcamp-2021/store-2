@@ -12,7 +12,7 @@ interface MediumMenuProps {
   menu: IMenu;
   selectedLargeId: string;
   selectedMediumId: string;
-  isLaptop: boolean;
+  isMobile: boolean;
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -74,7 +74,7 @@ const Image = styled.img`
   }
 `;
 
-const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, isLaptop, setMediumId }) => {
+const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, isMobile, setMediumId }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
     (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
@@ -91,14 +91,16 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
               <MediumItem
                 key={selectedLargeId + mediumId}
                 onMouseEnter={(e: React.MouseEvent) => {
-                  if (isLaptop) {
-                    setMediumId(mediumId);
-                    e.stopPropagation();
-                  }
+                  setMediumId(mediumId);
+                  e.stopPropagation();
                 }}
                 onClick={(e: React.MouseEvent) => {
-                  history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}`);
-                  e.stopPropagation();
+                  if (isMobile) {
+                    setMediumId(mediumId);
+                    e.stopPropagation();
+                  } else {
+                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}`);
+                  }
                 }}
                 isSelected={selectedMediumId === mediumId}
               >
