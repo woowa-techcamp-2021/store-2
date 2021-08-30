@@ -76,6 +76,10 @@ const Cart: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    setCartItems(cartGenerator(cart));
+  }, [cart]);
+
   const onClick = useCallback(() => history.goBack(), [history]);
 
   const deleteSelectCartItem = useCallback(() => {
@@ -88,9 +92,8 @@ const Cart: FC = () => {
       cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
     });
     cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
-    dispatch({ type: setCart, cartItemsString });
+    dispatch({ type: setCart, payload: cartItemsString });
     localStorage.removeItem('select');
-    setCartItems(cartGenerator(cart));
     setPrices([0]);
     setTotalCount(0);
     setCheckAll(false);
