@@ -62,8 +62,8 @@ const woowahanComponent =
 
       Object.entries(props).forEach(([key, value]) => {
         if (typeof value === 'boolean') {
-          if (!reactProps.includes(key)) newProps[key.toLowerCase()] = value.toString();
-          else newProps[key] = value.toString();
+          if (!reactProps.includes(key)) newProps[key.toLowerCase()] = value ? 'true' : '';
+          else newProps[key] = value;
         } else if (!reactProps.includes(key)) {
           newProps[key.toLowerCase()] = value;
         } else {
