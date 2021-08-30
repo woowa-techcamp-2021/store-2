@@ -5,6 +5,7 @@ import { useHistory } from 'lib/router';
 import arrow from 'assets/icons/arrow_forward.svg';
 
 import { IMenu } from 'types/category';
+import { ESortType } from 'types/item';
 
 import { ITEM_LIST_URL } from 'constants/urls';
 
@@ -77,7 +78,7 @@ const Image = styled.img`
 const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, isMobile, setMediumId }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
-    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}&pageId=1`),
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}&pageId=1&type=${ESortType.RECOMMEND}`),
     [history],
   );
 
@@ -99,7 +100,7 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
                     setMediumId(mediumId);
                     e.stopPropagation();
                   } else {
-                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}&pageId=1`);
+                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}&pageId=1&type=${ESortType.RECOMMEND}`);
                   }
                 }}
                 isSelected={selectedMediumId === mediumId}

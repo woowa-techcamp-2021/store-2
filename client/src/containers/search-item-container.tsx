@@ -1,8 +1,6 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'lib/router';
-
-import { ESortType } from 'types/item';
 
 import SearchItemWrapper from 'components/item/search-item/search-item-wrapper';
 
@@ -11,7 +9,6 @@ import { getListItem } from 'store/item';
 
 const SearchItemContainer: FC = () => {
   const query = useQuery();
-  const [sortType, setSortType] = useState(ESortType.RECOMMEND);
   const dispatch = useDispatch();
 
   const { items, totalCount, pageCount, loading } = useSelector(
@@ -25,27 +22,14 @@ const SearchItemContainer: FC = () => {
   );
 
   useEffect(() => {
-    setSortType(ESortType.RECOMMEND);
-  }, [query]);
-
-  useEffect(() => {
-    const { categoryId, search, pageId } = query;
+    const { categoryId, search, pageId, type } = query;
     if ((categoryId || search) && pageId) {
-      dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
+      dispatch({ type: getListItem.type, payload: { categoryId, pageId, type, search } });
       window.scrollTo(0, 0);
     }
-  }, [query, sortType, dispatch]);
+  }, [query, dispatch]);
 
-  return (
-    <SearchItemWrapper
-      items={items}
-      loading={loading}
-      pageCount={pageCount}
-      totalCount={totalCount}
-      sortType={sortType}
-      setSortType={setSortType}
-    />
-  );
+  return <SearchItemWrapper items={items} loading={loading} pageCount={pageCount} totalCount={totalCount} />;
 };
 
 export default SearchItemContainer;
