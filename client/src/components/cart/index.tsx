@@ -1,5 +1,5 @@
 import React, { useState, useCallback, Fragment, FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
@@ -9,6 +9,7 @@ import { cartGenerator } from 'utils/cart-generator';
 import { RootState } from 'store';
 
 import { TextButton, PriceCalculator } from 'components';
+import { setCart } from 'store/cart';
 import LoginModal from 'components/auth/login-modal';
 import { TableSection, CartItem } from './table-section';
 
@@ -55,47 +56,49 @@ const OrderButtonDiv = styled.div`
     margin-right: 10px;
   }
 `;
-
-const getCartItemIndexes = () => {
-  const cartItems = cartGenerator();
-  const indexes: number[] = [];
-  cartItems.forEach((item, index) => indexes.push(index));
-  return indexes;
-};
-
 const Cart: FC = () => {
+  const { userId, cart } = useSelector(({ auth, cart }: RootState) => ({
+    userId: auth.user.userId,
+    cart: cart.cart,
+  }));
+  const getCartItemIndexes = () => {
+    const cartItems = cartGenerator(cart);
+    const indexes: number[] = [];
+    cartItems.forEach((item, index) => indexes.push(index));
+    return indexes;
+  };
   const [prices, setPrices] = useState([0]);
   const [totalCount, setTotalCount] = useState(0);
-  const [cartItems, setCartItems] = useState(cartGenerator());
+  const [cartItems, setCartItems] = useState(cartGenerator(cart));
   const [checkAll, setCheckAll] = useState(true);
   const [checkedItems, setCheckedItems] = useState(new Set<number>(getCartItemIndexes()));
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    setCartItems(cartGenerator(cart));
+  }, [cart]);
 
   const onClick = useCallback(() => history.goBack(), [history]);
 
-  const { userId } = useSelector(({ auth }: RootState) => ({
-    userId: auth.user.userId,
-  }));
-
-  const deleteSelectCartItem = () => {
+  const deleteSelectCartItem = useCallback(() => {
     const data = localStorage.getItem('select') as string;
     const select = data.split(',');
-    let cartItems = cartGenerator();
+    let cartItems = cartGenerator(cart);
     cartItems = cartItems.filter((item, index) => select.indexOf(index.toString()) < 0);
     let cartItemsString = '';
     cartItems.forEach(item => {
       cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
     });
     cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
-    localStorage.setItem('cart', cartItemsString);
+    dispatch({ type: setCart, payload: cartItemsString });
     localStorage.removeItem('select');
-    setCartItems(cartGenerator());
     setPrices([0]);
     setTotalCount(0);
     setCheckAll(false);
     setCheckedItems(new Set<number>());
-  };
+  }, [cart, dispatch]);
 
   const orderCartItem = (isAll: boolean) => {
     let selectCartItems: CartItem[] = [];
@@ -128,7 +131,7 @@ const Cart: FC = () => {
 
   const updatePrice = useCallback(
     (set: Set<number>) => {
-      const cartItems = cartGenerator();
+      const cartItems = cartGenerator(cart);
       const prices = [] as number[];
       let totalCount = 0;
       Array.from(set).forEach(index => {
@@ -142,7 +145,7 @@ const Cart: FC = () => {
       setPrices(prices);
       setTotalCount(totalCount);
     },
-    [setPrices, setTotalCount],
+    [setPrices, setTotalCount, cart],
   );
 
   useEffect(() => {

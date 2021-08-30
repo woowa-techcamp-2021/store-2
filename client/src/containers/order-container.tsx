@@ -17,6 +17,7 @@ import {
 } from 'utils/validation/order-validation';
 import { cartGenerator } from 'utils/cart-generator';
 import { CartItem } from 'types/cart';
+import { setCart } from 'store/cart';
 
 interface IOrderItems {
   id: string;
@@ -61,14 +62,15 @@ const OrderContainer: FC = () => {
   const [address, setAddress] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
   const [addressChecked, setaddressChecked] = useState('기타');
-  const { userId, submitError, itemsData, getLoading, submitLoading, addresses } = useSelector(
-    ({ auth, order, loading, address }: RootState) => ({
+  const { userId, submitError, itemsData, getLoading, submitLoading, addresses, cart } = useSelector(
+    ({ auth, order, loading, address, cart }: RootState) => ({
       userId: auth.user.userId || '',
       submitError: order.postError || '',
       itemsData: order.orderItems,
       getLoading: loading['order/getOrderItems'],
       submitLoading: loading['order/postOrder'],
       addresses: address.list,
+      cart: cart.cart,
     }),
     shallowEqual,
   );
@@ -137,7 +139,7 @@ const OrderContainer: FC = () => {
     const selectedItems = data.split(',');
     const selectedItemIds: string[] = [];
     selectedItems.forEach(item => selectedItemIds.push(item.split('-')[0]));
-    const cartItems = cartGenerator();
+    const cartItems = cartGenerator(cart);
     const updateItems: CartItem[] = [];
     cartItems.forEach(item => {
       if (!selectedItemIds.includes(item.id)) {
@@ -149,7 +151,7 @@ const OrderContainer: FC = () => {
       cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
     });
     cartItemsString = cartItemsString.substring(0, cartItemsString.length - 1);
-    localStorage.setItem('cart', cartItemsString);
+    dispatch({ type: setCart.type, payload: cartItemsString });
   };
 
   const onFocusOutPhone = () => {
