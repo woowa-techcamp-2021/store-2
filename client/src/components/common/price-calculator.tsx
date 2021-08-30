@@ -17,25 +17,24 @@ const Box = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  ${props => props.theme?.mobile} {
-    justify-content: center;
-  }
   align-items: center;
   border: 2px solid ${({ theme }) => theme?.colorLineLight};
   margin: 50px 0 30px;
-  gap: 24px;
+
+  .calc-icon {
+    margin: 0 24px;
+  }
 
   .column {
     display: flex;
     align-items: center;
-    gap: 24px;
   }
 
   ${({ theme }) => theme?.mobile} {
-    gap: 12px;
+    justify-content: center;
 
-    .column {
-      gap: 12px;
+    .calc-icon {
+      margin: 0 12px;
     }
   }
 `;
@@ -44,7 +43,10 @@ const BoxItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
+
+  div:first-child {
+    margin-bottom: 10px;
+  }
 
   .title {
     font-size: 16px;
@@ -78,13 +80,13 @@ const PriceCalculator: FC<PriceCalculatorProps> = ({ prices, totalCount }) => {
           <div className="title">총 {totalCount}개의 상품금액</div>
           <div className="money">{formatPrice(totalPrice)}원</div>
         </BoxItem>
-        <img src={plusIcon} alt="더하기" />
+        <img className="calc-icon" src={plusIcon} alt="더하기" />
         <BoxItem>
           <div className="title">배송비</div>
           <div className="money">0원</div>
         </BoxItem>
       </div>
-      <img src={sumIcon} alt="합계" />
+      <img className="calc-icon" src={sumIcon} alt="합계" />
       <BoxItem>
         <div className="title">합계</div>
         <div className="money">
