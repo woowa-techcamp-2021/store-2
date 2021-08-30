@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'lib/router';
+import { useParams, useHistory, useQuery } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
 
@@ -22,10 +22,10 @@ const ItemDetailContainer: FC = () => {
   const [file, setFile] = useState<null | File>(null);
   const [star, setStar] = useState(5);
   const [count, setCount] = useState(1);
-  const [pageId, setPageId] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const query = useQuery();
   const { id } = useParams();
 
   const {
@@ -80,9 +80,10 @@ const ItemDetailContainer: FC = () => {
   }, [reviews]);
 
   useEffect(() => {
+    const { pageId } = query;
     dispatch({ type: getItem.type, payload: { id } });
     dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
-  }, [id, dispatch, pageId]);
+  }, [query, id, dispatch]);
 
   useEffect(() => {
     setIsLiked(isLike);
@@ -175,8 +176,6 @@ const ItemDetailContainer: FC = () => {
         itemLoading={itemLoading}
         reviewLoading={reviewLoading}
         pageCount={pageCount}
-        pageId={pageId}
-        setPageId={setPageId}
       />
       <ReviewPost
         userId={userId}

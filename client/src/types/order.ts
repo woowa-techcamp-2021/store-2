@@ -1,4 +1,5 @@
 export interface IOrder {
+  itemId: number;
   createdAt: string;
   id: number;
   thumbnail: string;

@@ -1,9 +1,9 @@
-import React, { FC, Dispatch, SetStateAction } from 'react';
+import React, { FC } from 'react';
 import styled from 'lib/woowahan-components';
 
 import findIcon from 'assets/icons/find.png';
 
-import { IItem, ESortType } from 'types/item';
+import { IItem } from 'types/item';
 
 import { Pagination } from 'components';
 import ItemList from '../item-list';
@@ -13,11 +13,7 @@ interface SearchItemWrapperProps {
   items: IItem[];
   loading: boolean;
   pageCount: number;
-  pageId: number;
-  setPageId: Dispatch<SetStateAction<number>>;
   totalCount: number;
-  sortType: ESortType;
-  setSortType: Dispatch<SetStateAction<ESortType>>;
 }
 
 const Wrapper = styled.div`
@@ -72,23 +68,14 @@ const Empty = styled.div`
   }
 `;
 
-const SearchItemWrapper: FC<SearchItemWrapperProps> = ({
-  items,
-  loading,
-  pageCount,
-  pageId,
-  setPageId,
-  totalCount,
-  sortType,
-  setSortType,
-}) => {
+const SearchItemWrapper: FC<SearchItemWrapperProps> = ({ items, loading, pageCount, totalCount }) => {
   return (
     <Wrapper>
-      <Filter total={totalCount} sortType={sortType} setSortType={setSortType} />
+      <Filter total={totalCount} />
       {loading || totalCount ? (
         <>
           <ItemList items={items} isLoading={loading} />
-          <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+          <Pagination pageCount={pageCount} />
         </>
       ) : (
         <Empty>

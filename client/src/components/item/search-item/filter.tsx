@@ -1,14 +1,12 @@
-import React, { FC, Dispatch, SetStateAction, ReactNode, useCallback } from 'react';
+import React, { FC, ReactNode, useCallback } from 'react';
 import styled from 'lib/woowahan-components';
-
-import { ESortType } from 'types/item';
+import { useHistory, useQuery } from 'lib/router';
 
 import { SORT } from 'constants/index';
+import { ESortType } from 'types/item';
 
 interface FilterProps {
   total: number;
-  sortType: ESortType;
-  setSortType: Dispatch<SetStateAction<ESortType>>;
 }
 
 const Wrapper = styled.div`
@@ -58,12 +56,18 @@ const Sort = styled.div`
   }
 `;
 
-const Filter: FC<FilterProps> = ({ total, sortType, setSortType }) => {
+const Filter: FC<FilterProps> = ({ total }) => {
+  const history = useHistory();
+  const query = useQuery();
+
   const handleClickSort = useCallback(
     sortType => {
-      setSortType(sortType);
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('type', sortType);
+      searchParams.set('pageId', '1');
+      history.push(`${history.currentPath}?${searchParams.toString()}`);
     },
-    [setSortType],
+    [history],
   );
 
   return (
@@ -75,7 +79,7 @@ const Filter: FC<FilterProps> = ({ total, sortType, setSortType }) => {
             <button
               key={sort.type}
               type="button"
-              className={sortType === sort.type ? 'active' : ''}
+              className={(query.type || ESortType.RECOMMEND) === sort.type ? 'active' : ''}
               onClick={() => handleClickSort(sort.type)}
             >
               {sort.value}
