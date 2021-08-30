@@ -2,10 +2,12 @@ import React, { FC, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'lib/router';
 
-import SearchItemWrapper from 'components/item/search-item/search-item-wrapper';
+import { ESortType } from 'types/item';
 
 import { RootState } from 'store';
 import { getListItem } from 'store/item';
+
+import SearchItemWrapper from 'components/item/search-item/search-item-wrapper';
 
 const SearchItemContainer: FC = () => {
   const query = useQuery();
@@ -22,8 +24,8 @@ const SearchItemContainer: FC = () => {
   );
 
   useEffect(() => {
-    const { categoryId, search, pageId, type } = query;
-    if ((categoryId || search) && pageId) {
+    const { categoryId, search, pageId = 1, type = ESortType.RECOMMEND } = query;
+    if (categoryId || search) {
       dispatch({ type: getListItem.type, payload: { categoryId, pageId, type, search } });
       window.scrollTo(0, 0);
     }
