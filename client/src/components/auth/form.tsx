@@ -199,7 +199,7 @@ const AuthForm: FC<AuthFormProps> = ({
               ) : (
                 <>
                   <Image src={github} alt="github-icon" />
-                  깃-헙으로 로그인
+                  깃-헙으로 로그인
                 </>
               )}
             </BoxButton>
