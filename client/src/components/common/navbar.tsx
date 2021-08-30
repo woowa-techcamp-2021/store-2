@@ -10,6 +10,7 @@ import loginIcon from 'assets/icons/login.svg';
 import { MAIN_URL, CART_URL, SIGNIN_URL, ORDER_LIST_URL } from 'constants/urls';
 
 import { Logo } from 'components';
+import { cartGenerator } from 'utils/cart-generator';
 
 interface NavbarProps {
   displayMain: boolean;
@@ -25,6 +26,10 @@ const Wrapper = styled.nav`
   display: flex;
   justify-content: flex-end;
   position: relative;
+
+  b {
+    ${props => props.theme?.weightBold};
+  }
 
   .nav-link-list {
     display: flex;
@@ -69,6 +74,11 @@ const Wrapper = styled.nav`
   }
 `;
 
+const cartCount = (): number => {
+  const cartItems = cartGenerator();
+  return cartItems.length;
+};
+
 const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onLogout }) => {
   return (
     <Wrapper white={displayMain}>
@@ -84,7 +94,13 @@ const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onL
           </Link>
         )}
         <Link className="nav-link" to={CART_URL}>
-          {isMobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
+          {isMobile ? (
+            <img src={cartIcon} alt="cart" />
+          ) : (
+            <span>
+              장바구니 <b>{cartCount()}</b>
+            </span>
+          )}
         </Link>
         {userId ? (
           <button type="button" className="nav-link" onClick={onLogout}>
