@@ -28,7 +28,9 @@ const Wrapper = styled.nav`
   position: relative;
 
   b {
-    ${props => props.theme?.weightBold};
+    font-weight: ${props => props.theme?.weightBold};
+    color: ${props => props.theme?.colorPrimary};
+    margin-left: 3px;
   }
 
   .nav-link-list {
