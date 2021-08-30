@@ -26,6 +26,7 @@ const Modal = styled.div`
 
 const ModalInner = styled.div`
   width: 80%;
+  max-width: 600px;
   #__daum__layer_1 {
     border-radius: 10px;
   }
@@ -38,7 +39,7 @@ const AddressModal: FC<AddressModalProps> = ({ handleComplete, setModal }) => {
   return (
     <Modal onClick={modalClickHandler}>
       <ModalInner>
-        <DaumPostcode onComplete={handleComplete} animation width="90%" />
+        <DaumPostcode onComplete={handleComplete} animation />
       </ModalInner>
     </Modal>
   );
