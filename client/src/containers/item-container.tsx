@@ -23,7 +23,7 @@ const ItemContainer: FC<ItemContainerProps> = ({ item }) => {
     userId: auth.user.userId,
   }));
 
-  const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}`), [history]);
+  const goDetailPage = useCallback((id: number) => () => history.push(`${ITEM_URL}/${id}?pageId=1`), [history]);
 
   const toggleIsLiked = () => {
     if (!isLiked) {

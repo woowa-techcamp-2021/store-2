@@ -11,7 +11,6 @@ import { getListItem } from 'store/item';
 
 const SearchItemContainer: FC = () => {
   const query = useQuery();
-  const [pageId, setPageId] = useState(1);
   const [sortType, setSortType] = useState(ESortType.RECOMMEND);
   const dispatch = useDispatch();
 
@@ -30,24 +29,18 @@ const SearchItemContainer: FC = () => {
   }, [query]);
 
   useEffect(() => {
-    setPageId(1);
-  }, [query, sortType]);
-
-  useEffect(() => {
-    const { categoryId, search } = query;
+    const { categoryId, search, pageId } = query;
     if ((categoryId || search) && pageId) {
       dispatch({ type: getListItem.type, payload: { categoryId, pageId, type: sortType, search } });
       window.scrollTo(0, 0);
     }
-  }, [query, pageId, sortType, dispatch]);
+  }, [query, sortType, dispatch]);
 
   return (
     <SearchItemWrapper
       items={items}
       loading={loading}
       pageCount={pageCount}
-      pageId={pageId}
-      setPageId={setPageId}
       totalCount={totalCount}
       sortType={sortType}
       setSortType={setSortType}

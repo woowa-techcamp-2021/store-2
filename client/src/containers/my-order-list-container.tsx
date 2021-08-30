@@ -83,7 +83,7 @@ const MyOrderListContainer: FC = () => {
         select={select}
       />
       <MyOrderTable loading={loading} orders={orders} totalCount={totalCount} />
-      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+      <Pagination pageCount={pageCount} />
     </>
   );
 };

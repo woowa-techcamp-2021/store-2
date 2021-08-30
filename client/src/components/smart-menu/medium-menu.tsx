@@ -77,7 +77,7 @@ const Image = styled.img`
 const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, isMobile, setMediumId }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
-    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}&pageId=1`),
     [history],
   );
 
@@ -99,7 +99,7 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
                     setMediumId(mediumId);
                     e.stopPropagation();
                   } else {
-                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}`);
+                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}&pageId=1`);
                   }
                 }}
                 isSelected={selectedMediumId === mediumId}

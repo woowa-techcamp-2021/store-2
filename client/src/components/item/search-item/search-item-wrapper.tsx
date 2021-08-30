@@ -13,8 +13,6 @@ interface SearchItemWrapperProps {
   items: IItem[];
   loading: boolean;
   pageCount: number;
-  pageId: number;
-  setPageId: Dispatch<SetStateAction<number>>;
   totalCount: number;
   sortType: ESortType;
   setSortType: Dispatch<SetStateAction<ESortType>>;
@@ -76,8 +74,6 @@ const SearchItemWrapper: FC<SearchItemWrapperProps> = ({
   items,
   loading,
   pageCount,
-  pageId,
-  setPageId,
   totalCount,
   sortType,
   setSortType,
@@ -88,7 +84,7 @@ const SearchItemWrapper: FC<SearchItemWrapperProps> = ({
       {loading || totalCount ? (
         <>
           <ItemList items={items} isLoading={loading} />
-          <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+          <Pagination pageCount={pageCount} />
         </>
       ) : (
         <Empty>

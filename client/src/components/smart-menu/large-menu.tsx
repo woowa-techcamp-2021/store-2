@@ -102,7 +102,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
 }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
-    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
+    (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}&pageId=1`),
     [history],
   );
 
@@ -128,7 +128,7 @@ const LargeMenu: FC<LargeMenuProps> = ({
                   setLargeId(largeId);
                   e.stopPropagation();
                 } else {
-                  history.push(`${ITEM_LIST_URL}?categoryId=${large.code}`);
+                  history.push(`${ITEM_LIST_URL}?categoryId=${large.code}&pageId=1`);
                 }
               }}
               isSelected={selectedLargeId === largeId}
