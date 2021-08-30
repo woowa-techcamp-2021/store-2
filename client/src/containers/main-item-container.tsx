@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import MainItemWrapper from 'components/item/main-item/main-item-wrapper';
 
@@ -7,12 +7,15 @@ import { RootState } from 'store';
 import { getMainItem } from 'store/item';
 
 const MainItemContainer: FC = () => {
-  const { popularItems, newItems, recommendItems, loading } = useSelector(({ item, loading }: RootState) => ({
-    popularItems: item.main.popularItems,
-    newItems: item.main.newItems,
-    recommendItems: item.main.recommendItems,
-    loading: loading['item/getMainItem'],
-  }));
+  const { popularItems, newItems, recommendItems, loading } = useSelector(
+    ({ item, loading }: RootState) => ({
+      popularItems: item.main.popularItems,
+      newItems: item.main.newItems,
+      recommendItems: item.main.recommendItems,
+      loading: loading['item/getMainItem'],
+    }),
+    shallowEqual,
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: getMainItem.type });

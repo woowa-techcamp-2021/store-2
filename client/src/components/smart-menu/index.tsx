@@ -54,7 +54,7 @@ const MenuTitle = styled.div`
   }
 `;
 
-const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
+const SmartMenu: FC<SmartMenuProps> = React.memo(({ currentMenu, menu }) => {
   const [isOpen, setOpenStatus] = useState(false);
   const [selectedLargeId, setLargeId] = useState('');
   const [selectedMediumId, setMediumId] = useState('');
@@ -127,6 +127,8 @@ const SmartMenu: FC<SmartMenuProps> = ({ currentMenu, menu }) => {
       </MenuTitle>
     </MenuDiv>
   );
-};
+});
+
+SmartMenu.displayName = 'smartMenu';
 
 export default SmartMenu;

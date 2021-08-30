@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
@@ -44,24 +44,27 @@ const ItemDetailContainer: FC = () => {
     reviewSubmitLoading,
     itemLoading,
     isPaid,
-  } = useSelector(({ item, auth, review, loading }: RootState) => ({
-    thumbnail: item.item.thumbnail,
-    title: item.item.title,
-    price: item.item.price,
-    contents: item.item.contents,
-    salePercent: item.item.salePercent,
-    isLike: item.item.isLike,
-    isSoldOut: item.item.isSoldOut,
-    userId: auth.user.userId,
-    error: review.error,
-    reviews: review.list.reviews,
-    pageCount: review.list.pageCount,
-    totalCount: review.list.totalCount,
-    reviewLoading: loading['review/getReviews'],
-    reviewSubmitLoading: loading['review/postReview'],
-    itemLoading: loading['item/getItem'],
-    isPaid: item.item.isPaid,
-  }));
+  } = useSelector(
+    ({ item, auth, review, loading }: RootState) => ({
+      thumbnail: item.item.thumbnail,
+      title: item.item.title,
+      price: item.item.price,
+      contents: item.item.contents,
+      salePercent: item.item.salePercent,
+      isLike: item.item.isLike,
+      isSoldOut: item.item.isSoldOut,
+      userId: auth.user.userId,
+      error: review.error,
+      reviews: review.list.reviews,
+      pageCount: review.list.pageCount,
+      totalCount: review.list.totalCount,
+      reviewLoading: loading['review/getReviews'],
+      reviewSubmitLoading: loading['review/postReview'],
+      itemLoading: loading['item/getItem'],
+      isPaid: item.item.isPaid,
+    }),
+    shallowEqual,
+  );
   const [isLiked, setIsLiked] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 

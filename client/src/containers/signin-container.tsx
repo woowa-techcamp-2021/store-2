@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHistory } from 'lib/router';
 
 import useInputs from 'hooks/use-inputs';
@@ -17,12 +17,15 @@ const SigninContainer: FC = () => {
   const [{ id, password }, onChange] = useInputs({ id: '', password: '' });
   const [authError, setAuthError] = useState<null | string>(null);
 
-  const { loading, error, userId, userLoading } = useSelector(({ auth, loading }: RootState) => ({
-    loading: loading['auth/getLogin'],
-    error: auth.login.error,
-    userId: auth.user.userId,
-    userLoading: loading['auth/getUser'],
-  }));
+  const { loading, error, userId, userLoading } = useSelector(
+    ({ auth, loading }: RootState) => ({
+      loading: loading['auth/getLogin'],
+      error: auth.login.error,
+      userId: auth.user.userId,
+      userLoading: loading['auth/getUser'],
+    }),
+    shallowEqual,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

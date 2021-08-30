@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'lib/router';
 
 import { ESortType } from 'types/item';
@@ -15,12 +15,15 @@ const SearchItemContainer: FC = () => {
   const [sortType, setSortType] = useState(ESortType.RECOMMEND);
   const dispatch = useDispatch();
 
-  const { items, totalCount, pageCount, loading } = useSelector(({ item, loading }: RootState) => ({
-    items: item.list.items,
-    totalCount: item.list.totalCount,
-    pageCount: item.list.pageCount,
-    loading: loading['item/getListItem'],
-  }));
+  const { items, totalCount, pageCount, loading } = useSelector(
+    ({ item, loading }: RootState) => ({
+      items: item.list.items,
+      totalCount: item.list.totalCount,
+      pageCount: item.list.pageCount,
+      loading: loading['item/getListItem'],
+    }),
+    shallowEqual,
+  );
 
   useEffect(() => {
     setSortType(ESortType.RECOMMEND);
