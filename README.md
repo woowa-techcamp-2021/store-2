@@ -150,7 +150,7 @@ $ cd server && yarn deploy
 
 ### Mobile Also
 
-<img src="README_image/main-mobile.png" width="19%" alt="mobile" /> <img src="README_image/search-mobile.png" width="19%" alt="mobile" /> <img src="README_image/detail-mobile.png" width="19%" alt="mobile" /> <img src="README_image/address-mobile.png" width="19%" alt="mobile" /> <img src="README_image/login-mobile.png" width="19%" alt="mobile" />
+<img src="README_image/main-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/search-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/detail-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/address-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/login-mobile.PNG" width="19%" alt="mobile" />
 
 ## See Also
 
