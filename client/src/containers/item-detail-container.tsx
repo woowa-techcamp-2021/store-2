@@ -32,7 +32,9 @@ const ItemDetailContainer: FC = () => {
     thumbnail,
     title,
     price,
+    originalPrice,
     contents,
+    salePercent,
     isLike,
     isSoldOut,
     userId,
@@ -49,6 +51,7 @@ const ItemDetailContainer: FC = () => {
       thumbnail: item.item.thumbnail,
       title: item.item.title,
       price: item.item.price,
+      originalPrice: item.item.originalPrice,
       contents: item.item.contents,
       salePercent: item.item.salePercent,
       isLike: item.item.isLike,
@@ -155,6 +158,7 @@ const ItemDetailContainer: FC = () => {
         thumbnail={thumbnail}
         title={title}
         price={price}
+        originalPrice={originalPrice}
         likeShow={!!userId}
         isLiked={isLiked}
         setIsLiked={toggleIsLiked}
@@ -162,6 +166,7 @@ const ItemDetailContainer: FC = () => {
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
         setCount={setCount}
+        salePercent={salePercent}
       />
       <Detail
         contents={contents}

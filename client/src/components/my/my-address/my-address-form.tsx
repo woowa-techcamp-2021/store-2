@@ -58,7 +58,7 @@ const ButtonWrapper = styled.div`
   > div {
     font-size: 12px;
     color: ${({ theme }) => theme?.colorError};
-    margin-left: 10px;
+    margin-right: 10px;
   }
 `;
 

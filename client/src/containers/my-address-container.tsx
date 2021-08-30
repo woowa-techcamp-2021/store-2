@@ -49,14 +49,16 @@ const MyAddressContainer: FC = () => {
     setReceiverError('');
     setAddressError('');
     setAddError('');
+    setAddressDetailError('');
     if (!name) setNameError('배송지를 입력하세요');
     if (!receiver) setReceiverError('받는분을 입력하세요');
     if (!address) setAddressError('주소를 입력하세요');
     if (!addressDetail) setAddressDetailError('상세주소를 입력하세요');
     if (addressList.length >= 3) setAddError('배송지는 최대 3개까지 입력할 수 있습니다');
     if (name && receiver && addressDetail && addressList.length < 3) {
-      dispatch({ type: addAddress.type, payload: { name, receiver, address: `${address} ${addressDetail}` } });
+      dispatch({ type: addAddress.type, payload: { name, receiver, address, addressDetail } });
       reset();
+      setAddress('');
     }
   };
   const onRemove = (id: string) => {

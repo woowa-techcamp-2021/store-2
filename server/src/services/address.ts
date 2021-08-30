@@ -11,8 +11,9 @@ async function addAddress(
   name: string,
   receiver: string,
   address: string,
+  addressDetail: string,
 ): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> {
-  return addressRepisitory.addAddress(uid, name, receiver, address);
+  return addressRepisitory.addAddress(uid, name, receiver, address, addressDetail);
 }
 
 async function removeAddress(id: string, uid: string): Promise<Model<AddressAttribures, AddressCreationAttributes>[]> {

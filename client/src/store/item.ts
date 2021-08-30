@@ -26,6 +26,7 @@ const initialState: StateProps = {
   item: {
     thumbnail: '',
     title: '',
+    originalPrice: 0,
     price: 0,
     salePercent: 0,
     contents: [],

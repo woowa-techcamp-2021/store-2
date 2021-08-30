@@ -42,6 +42,7 @@ export interface IItemDetail {
   thumbnail: string;
   title: string;
   price: number;
+  originalPrice: number;
   contents: string[];
   salePercent: number;
   isSoldOut: boolean;

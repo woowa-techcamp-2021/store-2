@@ -1,6 +1,7 @@
-import React, { useState, FC, Dispatch, SetStateAction } from 'react';
+import React, { useState, FC, Dispatch, SetStateAction, useEffect } from 'react';
 import styled from 'lib/woowahan-components';
 
+import AddressModal from 'components/common/address-modal';
 import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
 import TableSection, { OrderItem } from './table-section';
 import RadioButton from './radio-button';
@@ -18,13 +19,20 @@ interface OrderProps {
   user: string;
   address: string;
   receiver: string;
-  onChange: (id: 'user' | 'receiver' | 'address') => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (id: 'user' | 'receiver' | 'address' | 'addressDetail') => (e: React.ChangeEvent<HTMLInputElement>) => void;
   getLoading: boolean;
   submitLoading: boolean;
   addresses: { name: string; address: string }[];
   pickAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addressChecked: string;
   onFocusOutPhone: () => void;
+  addressDetail: string;
+  addressDetailError: string;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface IAddressData {
+  roadAddress: string;
 }
 
 const SectionTitle = styled.h4`
@@ -115,7 +123,17 @@ const Order: FC<OrderProps> = ({
   pickAddress,
   addressChecked,
   onFocusOutPhone,
+  addressDetail,
+  addressDetailError,
+  setAddress,
 }) => {
+  const [modal, setModal] = useState(false);
+  const handleComplete = (data: IAddressData) => {
+    setAddress(data.roadAddress);
+  };
+  useEffect(() => {
+    if (address) setModal(false);
+  }, [address]);
   const [agreed, setAgreed] = useState(false);
   const isValid = agreed && user && phone && address && addresses;
 
@@ -141,7 +159,7 @@ const Order: FC<OrderProps> = ({
   const onAgree = () => {
     setAgreed(state => !state);
   };
-
+  const etc = addressChecked === '기타';
   return (
     <>
       <SectionTitle>주문상세내역</SectionTitle>
@@ -159,7 +177,7 @@ const Order: FC<OrderProps> = ({
           </InputWrapper>
         </GridForm>
         <SectionTitle>배송정보</SectionTitle>
-        <GridForm titles={['배송지 확인', '받는분', '주소 *']}>
+        <GridForm titles={['배송지 확인', '받는분', '주소 *', '상세주소 *']}>
           <InputWrapper>
             {addresses.map(address => {
               return (
@@ -188,19 +206,23 @@ const Order: FC<OrderProps> = ({
               name="receiver"
               value={receiver}
               onChange={onChange('receiver')}
-              readOnly={!!address}
+              readOnly={!etc}
             />
             <InputErrorMessage>{receiverError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input
-              placeholder="주소"
-              name="address"
-              value={address}
-              onChange={onChange('address')}
-              readOnly={!!address}
-            />
+            <input placeholder="주소" name="address" value={address} readOnly onClick={() => setModal(true)} />
             <InputErrorMessage>{addressError}</InputErrorMessage>
+          </InputWrapper>
+          <InputWrapper>
+            <input
+              placeholder="상세주소"
+              name="addressDetail"
+              value={addressDetail}
+              onChange={onChange('addressDetail')}
+              readOnly={!etc}
+            />
+            <InputErrorMessage>{addressDetailError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
         <SectionTitle>결제수단 선택 / 결제</SectionTitle>
@@ -224,6 +246,7 @@ const Order: FC<OrderProps> = ({
           <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
         </ButtonDiv>
       </Form>
+      {modal && <AddressModal handleComplete={handleComplete} setModal={setModal} />}
     </>
   );
 };

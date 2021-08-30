@@ -44,6 +44,16 @@ export const addAddressValidation = (
           'string.max': `주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
           'any.required': `주소를 입력해주세요.`,
         }),
+      addressDetail: Joi.string()
+        .min(ADDRESS.ADDRESS_MIN_LENGTH)
+        .max(ADDRESS.ADDRESS_MAX_LENGTH)
+        .required()
+        .empty('')
+        .messages({
+          'string.min': `상세주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
+          'string.max': `상세주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
+          'any.required': `상세주소를 입력해주세요.`,
+        }),
     });
 
     const validationResult = schema.validate(req.body);
