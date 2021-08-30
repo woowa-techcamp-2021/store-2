@@ -55,7 +55,6 @@ const SearchBox = styled.div`
   width: 430px;
   display: flex;
   align-items: center;
-  gap: 12px;
   position: relative;
 
   .search-input {

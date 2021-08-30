@@ -37,15 +37,23 @@ const ButtonDiv = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 50px;
+
   @media all and (max-width: 800px) {
-    gap: 14px;
     justify-content: center;
+
+    > button:first-child {
+      margin: 14px;
+      margin-top: 0;
+    }
   }
 `;
 
 const OrderButtonDiv = styled.div`
   display: flex;
-  gap: 10px;
+
+  button:first-child {
+    margin-right: 10px;
+  }
 `;
 
 const getCartItemIndexes = () => {
