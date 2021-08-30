@@ -15,6 +15,8 @@ import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
 import ReviewPost from 'components/item-detail/review-post';
 import LoginModal from 'components/auth/login-modal';
+import { Helmet } from 'react-helmet-async';
+import { TITLE } from 'constants/index';
 
 const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -155,6 +157,12 @@ const ItemDetailContainer: FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {TITLE}
+          {title}
+        </title>
+      </Helmet>
       <ItemInfo
         thumbnail={thumbnail}
         title={title}

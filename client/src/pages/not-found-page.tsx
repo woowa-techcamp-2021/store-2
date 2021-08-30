@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
+import { Helmet } from 'react-helmet-async';
 
 import useWindowSize from 'hooks/use-window-size';
 
@@ -43,6 +44,9 @@ const NotFoundPage = (): ReactElement => {
 
   return (
     <>
+      <Helmet>
+        <title>404</title>
+      </Helmet>
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
         <Text>

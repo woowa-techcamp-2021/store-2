@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { HelmetProvider } from 'react-helmet-async';
 import { getUser } from 'store/auth';
 import { getCategories } from 'store/category';
 import logger from 'redux-logger';
@@ -36,7 +37,9 @@ loadCategories();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </Provider>,
   document.getElementById('root'),
 );

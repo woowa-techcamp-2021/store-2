@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'lib/woowahan-components';
 import { useQuery } from 'lib/router';
+import { Helmet } from 'react-helmet-async';
 
 import useWindowSize from 'hooks/use-window-size';
 
@@ -23,6 +24,9 @@ const ItemListPage = (): ReactElement => {
 
   return (
     <>
+      <Helmet>
+        <title>배민문구사</title>
+      </Helmet>
       <NavbarContainer isMobile={isMobile} />
       <Layout isMobile={isMobile}>
         <SmartMenuContainer currentCode={query.categoryId} />

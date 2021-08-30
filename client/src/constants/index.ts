@@ -25,3 +25,5 @@ export const MY_PAGE_NAV = [
   { link: ORDER_LIST_URL, name: '주문목록 조회' },
   { link: ADDRESS_URL, name: '배송지 관리' },
 ];
+
+export const TITLE = '배민문구사 - ';
