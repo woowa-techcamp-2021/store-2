@@ -38,6 +38,15 @@ const InputWrapper = styled.div`
 const InputErrorMessage = styled.div`
   font-size: 12px;
   color: ${({ theme }) => theme?.colorError};
+  margin: 0 0 0 10px;
+  ${({ theme }) => theme?.tablet} {
+    @media all and (max-width: 741px) {
+      margin: 5px 40px 0 0;
+    }
+  }
+  ${({ theme }) => theme?.mobile} {
+    margin: 5px 0 0 0;
+  }
 `;
 
 const ButtonWrapper = styled.div`
