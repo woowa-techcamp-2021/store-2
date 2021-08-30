@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment, FC } from 'react';
+import React, { useState, useCallback, Fragment, FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
@@ -48,12 +48,19 @@ const OrderButtonDiv = styled.div`
   gap: 10px;
 `;
 
+const getCartItemIndexes = () => {
+  const cartItems = cartGenerator();
+  const indexes: number[] = [];
+  cartItems.forEach((item, index) => indexes.push(index));
+  return indexes;
+};
+
 const Cart: FC = () => {
   const [prices, setPrices] = useState([0]);
   const [totalCount, setTotalCount] = useState(0);
   const [cartItems, setCartItems] = useState(cartGenerator());
-  const [checkAll, setCheckAll] = useState(false);
-  const [checkedItems, setCheckedItems] = useState(new Set<number>());
+  const [checkAll, setCheckAll] = useState(true);
+  const [checkedItems, setCheckedItems] = useState(new Set<number>(getCartItemIndexes()));
   const [modalVisible, setModalVisible] = useState(false);
   const history = useHistory();
 
@@ -104,11 +111,36 @@ const Cart: FC = () => {
 
   const onClickOrder = (isAll: boolean) => () => {
     if (userId) {
+      localStorage.removeItem('select');
       orderCartItem(isAll);
     } else {
       setModalVisible(true);
     }
   };
+
+  const updatePrice = useCallback(
+    (set: Set<number>) => {
+      const cartItems = cartGenerator();
+      const prices = [] as number[];
+      let totalCount = 0;
+      Array.from(set).forEach(index => {
+        const item = cartItems[Number(index)];
+        prices.push(item.price * item.count);
+        totalCount += item.count;
+      });
+      if (prices.length === 0) {
+        prices.push(0);
+      }
+      setPrices(prices);
+      setTotalCount(totalCount);
+    },
+    [setPrices, setTotalCount],
+  );
+
+  useEffect(() => {
+    updatePrice(checkedItems);
+    localStorage.setItem('select', Array.from(checkedItems).join(','));
+  }, [updatePrice, checkedItems]);
 
   return (
     <>
@@ -117,8 +149,7 @@ const Cart: FC = () => {
         cartItems={cartItems}
         checkedItems={checkedItems}
         checkAll={checkAll}
-        setPrices={setPrices}
-        setTotalCount={setTotalCount}
+        updatePrice={updatePrice}
         setCheckAll={setCheckAll}
         setCheckedItems={setCheckedItems}
       />
