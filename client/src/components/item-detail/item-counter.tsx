@@ -45,6 +45,7 @@ const Counter = styled.div`
   align-items: center;
   .count {
     margin: 0 15px;
+    width: max-content;
   }
 
   ${({ theme }) => theme?.mobile} {
@@ -97,7 +98,6 @@ const ItemCounter: FC<ItenCounterProps> = ({ title, price, onChange }: ItenCount
             -
           </button>
         </Counter>
-        <div className="text price">{formatPrice(count * price)}원</div>
       </Flex>
     </Container>
   );
