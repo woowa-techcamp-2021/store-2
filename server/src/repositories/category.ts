@@ -5,8 +5,13 @@ import { CategoryAttributes, CategoryCreationAttributes } from 'models/category'
 
 import errorGenerator from 'utils/error/error-generator';
 
-export const getAllCategories = async (): Promise<Model<CategoryAttributes, CategoryCreationAttributes>[]> => {
-  const categorySnapshot = await db.Category.findAll();
+export type CategoryModel = Model<CategoryAttributes, CategoryCreationAttributes>[];
+
+const getCategories = async (): Promise<CategoryModel> => {
+  const categorySnapshot = await db.Category.findAll({
+    attributes: [['id', 'code'], 'name'],
+    raw: true,
+  });
 
   if (!categorySnapshot || categorySnapshot.length === 0) {
     throw errorGenerator({
@@ -17,3 +22,5 @@ export const getAllCategories = async (): Promise<Model<CategoryAttributes, Cate
 
   return categorySnapshot;
 };
+
+export default { getCategories };

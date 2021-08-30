@@ -1,5 +1,5 @@
-import React, { useState, useCallback, Fragment, FC } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useCallback, Fragment, FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'lib/woowahan-components';
 import { useHistory } from 'lib/router';
 
@@ -9,6 +9,7 @@ import { cartGenerator } from 'utils/cart-generator';
 import { RootState } from 'store';
 
 import { TextButton, PriceCalculator } from 'components';
+import { setCart } from 'store/cart';
 import LoginModal from 'components/auth/login-modal';
 import { TableSection, CartItem } from './table-section';
 
@@ -37,50 +38,67 @@ const ButtonDiv = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding-bottom: 50px;
+
   @media all and (max-width: 800px) {
-    gap: 14px;
     justify-content: center;
+
+    > button:first-child {
+      margin: 14px;
+      margin-top: 0;
+    }
   }
 `;
 
 const OrderButtonDiv = styled.div`
   display: flex;
-  gap: 10px;
-`;
 
+  button:first-child {
+    margin-right: 10px;
+  }
+`;
 const Cart: FC = () => {
+  const { userId, cart } = useSelector(({ auth, cart }: RootState) => ({
+    userId: auth.user.userId,
+    cart: cart.cart,
+  }));
+  const getCartItemIndexes = () => {
+    const cartItems = cartGenerator(cart);
+    const indexes: number[] = [];
+    cartItems.forEach((item, index) => indexes.push(index));
+    return indexes;
+  };
   const [prices, setPrices] = useState([0]);
   const [totalCount, setTotalCount] = useState(0);
-  const [cartItems, setCartItems] = useState(cartGenerator());
-  const [checkAll, setCheckAll] = useState(false);
-  const [checkedItems, setCheckedItems] = useState(new Set<number>());
+  const [cartItems, setCartItems] = useState(cartGenerator(cart));
+  const [checkAll, setCheckAll] = useState(true);
+  const [checkedItems, setCheckedItems] = useState(new Set<number>(getCartItemIndexes()));
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    setCartItems(cartGenerator(cart));
+  }, [cart]);
 
   const onClick = useCallback(() => history.goBack(), [history]);
 
-  const { userId } = useSelector(({ auth }: RootState) => ({
-    userId: auth.user.userId,
-  }));
-
-  const deleteSelectCartItem = () => {
+  const deleteSelectCartItem = useCallback(() => {
     const data = localStorage.getItem('select') as string;
     const select = data.split(',');
-    let cartItems = cartGenerator();
+    let cartItems = cartGenerator(cart);
     cartItems = cartItems.filter((item, index) => select.indexOf(index.toString()) < 0);
     let cartItemsString = '';
     cartItems.forEach(item => {
       cartItemsString += `${item.id},${item.thumbnail},${item.title},${item.count},${item.price},`;
     });
     cartItemsString = cartItemsString.slice(0, cartItemsString.length - 1);
-    localStorage.setItem('cart', cartItemsString);
+    dispatch({ type: setCart, payload: cartItemsString });
     localStorage.removeItem('select');
-    setCartItems(cartGenerator());
     setPrices([0]);
     setTotalCount(0);
     setCheckAll(false);
     setCheckedItems(new Set<number>());
-  };
+  }, [cart, dispatch]);
 
   const orderCartItem = (isAll: boolean) => {
     let selectCartItems: CartItem[] = [];
@@ -104,11 +122,36 @@ const Cart: FC = () => {
 
   const onClickOrder = (isAll: boolean) => () => {
     if (userId) {
+      localStorage.removeItem('select');
       orderCartItem(isAll);
     } else {
       setModalVisible(true);
     }
   };
+
+  const updatePrice = useCallback(
+    (set: Set<number>) => {
+      const cartItems = cartGenerator(cart);
+      const prices = [] as number[];
+      let totalCount = 0;
+      Array.from(set).forEach(index => {
+        const item = cartItems[Number(index)];
+        prices.push(item.price * item.count);
+        totalCount += item.count;
+      });
+      if (prices.length === 0) {
+        prices.push(0);
+      }
+      setPrices(prices);
+      setTotalCount(totalCount);
+    },
+    [setPrices, setTotalCount, cart],
+  );
+
+  useEffect(() => {
+    updatePrice(checkedItems);
+    localStorage.setItem('select', Array.from(checkedItems).join(','));
+  }, [updatePrice, checkedItems]);
 
   return (
     <>
@@ -117,8 +160,7 @@ const Cart: FC = () => {
         cartItems={cartItems}
         checkedItems={checkedItems}
         checkAll={checkAll}
-        setPrices={setPrices}
-        setTotalCount={setTotalCount}
+        updatePrice={updatePrice}
         setCheckAll={setCheckAll}
         setCheckedItems={setCheckedItems}
       />

@@ -13,8 +13,9 @@ interface LargeMenuProps {
   menu: IMenu;
   position: { x: number; y: number };
   selectedLargeId: string;
-  isLaptop: boolean;
+  isMobile: boolean;
   setLargeId: React.Dispatch<React.SetStateAction<string>>;
+  setMediumId: React.Dispatch<React.SetStateAction<string>>;
   setPosition: React.Dispatch<
     React.SetStateAction<{
       x: number;
@@ -90,7 +91,15 @@ const Image = styled.img`
   }
 `;
 
-const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLaptop, setLargeId, setPosition }) => {
+const LargeMenu: FC<LargeMenuProps> = ({
+  menu,
+  position,
+  selectedLargeId,
+  isMobile,
+  setLargeId,
+  setMediumId,
+  setPosition,
+}) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
     (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
@@ -106,6 +115,7 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
             <LargeItem
               key={largeId}
               onMouseMove={(e: React.MouseEvent) => {
+                setMediumId('');
                 setTimeout(() => {
                   if (e.clientX < position.x + 10) {
                     setLargeId(largeId);
@@ -113,12 +123,16 @@ const LargeMenu: FC<LargeMenuProps> = ({ menu, position, selectedLargeId, isLapt
                   setPosition({ x: e.clientX, y: e.clientY });
                 }, SMART_MENU_BLOCK_DELAY);
               }}
-              onClick={() => {
-                if (!isLaptop) {
+              onClick={(e: React.MouseEvent) => {
+                if (isMobile) {
                   setLargeId(largeId);
+                  e.stopPropagation();
+                } else {
+                  history.push(`${ITEM_LIST_URL}?categoryId=${large.code}`);
                 }
               }}
               isSelected={selectedLargeId === largeId}
+              isLaptop={isMobile}
             >
               <LargeTitle>{large.name}</LargeTitle>
               <GoCategoryButton isSelected={selectedLargeId === largeId} onClick={goCategoryPage(large.code)}>

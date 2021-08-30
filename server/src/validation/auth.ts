@@ -13,6 +13,7 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
         .min(USER.ID_MIN_LENGTH)
         .max(USER.ID_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `아이디는 ${USER.ID_MIN_LENGTH}자 이상 입력해야 합니다`,
           'string.max': `아이디는 ${USER.ID_MAX_LENGTH}자를 넘길 수 없습니다`,
@@ -22,6 +23,7 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
         .max(USER.PASSWORD_MAX_LENGTH)
         .min(USER.PASSWORD_MIN_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `비밀번호는 ${USER.PASSWORD_MIN_LENGTH}자 이상 입력해야 합니다`,
           'string.max': `비밀번호는 ${USER.PASSWORD_MAX_LENGTH}자를 넘길 수 없습니다`,

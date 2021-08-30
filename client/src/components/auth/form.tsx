@@ -59,6 +59,10 @@ const Form = styled.form`
   .auth-input {
     margin-bottom: 20px;
   }
+
+  .auth-check {
+    margin-bottom: 12px;
+  }
 `;
 
 const Image = styled.img`
@@ -158,7 +162,11 @@ const AuthForm: FC<AuthFormProps> = ({
             onChange={onChange}
             maxLength={20}
           />
-          {isSignup && <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />}
+          {isSignup && (
+            <div className="auth-check">
+              <CheckBox id="signup-agree" text="배민문방구 전체 동의" onChange={onCheckChange} />
+            </div>
+          )}
 
           <Error>{error}</Error>
           {!isSignup && (
@@ -191,7 +199,7 @@ const AuthForm: FC<AuthFormProps> = ({
               ) : (
                 <>
                   <Image src={github} alt="github-icon" />
-                  깃-헙으로 로그인
+                  깃-헙으로 로그인
                 </>
               )}
             </BoxButton>

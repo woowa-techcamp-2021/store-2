@@ -28,7 +28,6 @@ async function postReview(
     throw errorGenerator({
       code: 'reviews/user-not-paid',
       message: 'POST /api/reviews - need to buy item',
-      customMessage: '상품을 구매한 사용자만 후기를 작성할 수 있습니다',
     });
   }
 
@@ -53,7 +52,7 @@ async function postReview(
       score: review.getDataValue('score'),
       contents: review.getDataValue('contents'),
       imgUrl: review.getDataValue('imgUrl'),
-      userId: review.getDataValue('userId'),
+      userId: review.getDataValue('UserId'),
     };
   });
 
@@ -75,7 +74,7 @@ async function getReviews(itemId: number, pageId: number): Promise<IReview> {
       score: review.getDataValue('score'),
       contents: review.getDataValue('contents'),
       imgUrl: review.getDataValue('imgUrl'),
-      userId: review.getDataValue('userId'),
+      userId: review.getDataValue('UserId'),
     };
   });
 

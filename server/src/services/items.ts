@@ -17,6 +17,7 @@ export interface IGetItem {
   thumbnail: string;
   title: string;
   price: number;
+  originalPrice: number;
   contents: string[];
   salePercent: number;
   isSoldOut: boolean;
@@ -26,13 +27,27 @@ export interface IGetItem {
 }
 
 export interface IOrderItem {
-  id: string;
+  id: number;
   title: string;
   thumbnail: string;
   price: number;
 }
 
 export type ItemType = 'recommend' | 'popular' | 'recent' | 'cheap' | 'expensive' | undefined;
+
+export interface Item {
+  id: number;
+  title: string;
+  tumbnail: string;
+  originalPrice?: number;
+  price: number;
+  salePercent: number;
+  amount: number;
+  isGreen: boolean;
+  isBest: boolean;
+  updatedAt: string;
+  isLike: boolean;
+}
 
 async function mainItems(visited: string[]): Promise<IMainItems> {
   const [popularItems, newItems, recommendItems] = await Promise.all([
@@ -67,6 +82,7 @@ async function getItems(
   else if (type === 'recent') order.push(['updatedAt', 'DESC']);
   else if (type === 'cheap') order.push(['price', 'ASC']);
   else if (type === 'expensive') order.push(['price', 'DESC']);
+  order.push(['id', 'DESC']);
 
   let data: IItemsData;
   if (categoryId) {
@@ -105,6 +121,7 @@ async function getItem(id: string, userId?: string): Promise<IGetItem> {
     thumbnail: item.getDataValue('thumbnail'),
     title: item.getDataValue('title'),
     price: Number.parseInt(`${item.getDataValue('price')}`, 10),
+    originalPrice: Number.parseInt(`${item.getDataValue('originalPrice')}`, 10),
     salePercent: item.getDataValue('salePercent'),
     contents: JSON.parse(item.getDataValue('contents').replace(/^'|'$/g, '').replace(/'/g, '"')) as string[],
     isSoldOut: item.getDataValue('amount') < 1,
@@ -122,7 +139,7 @@ async function matchUserLikeItem(
 ): Promise<unknown[]> {
   const result = await Promise.all(
     itemList.map(async item => {
-      const itemId = parseInt(item.getDataValue('id'), 10);
+      const itemId = item.getDataValue('id');
       return {
         ...item.toJSON(),
         isLike: userId ? await likeService.isUserLikeItem(userId, itemId) : false,
@@ -132,25 +149,10 @@ async function matchUserLikeItem(
   return result;
 }
 
-async function getOrderItems(id: string): Promise<IOrderItem[]> {
+async function getOrderItems(id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> {
   const itemIDs = id.split(',');
   const items = await itemRepository.getOrderItems(itemIDs);
-
-  const itemData: IOrderItem[] = items.map(item => {
-    const salePercent = item.getDataValue('salePercent');
-    const price = Number(item.getDataValue('price'));
-
-    const saledPrice = Math.floor(price - (price * salePercent) / 100);
-
-    return {
-      id: item.getDataValue('id'),
-      title: item.getDataValue('title'),
-      thumbnail: item.getDataValue('thumbnail'),
-      price: saledPrice,
-    };
-  });
-
-  return itemData;
+  return items;
 }
 
 export default {

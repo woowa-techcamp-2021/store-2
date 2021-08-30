@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'lib/router';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory, useQuery } from 'lib/router';
 
 import { PAYMENT_URL } from 'constants/urls';
 
@@ -15,6 +15,9 @@ import ItemInfo from 'components/item-detail/item-info';
 import Detail from 'components/item-detail/detail';
 import ReviewPost from 'components/item-detail/review-post';
 import LoginModal from 'components/auth/login-modal';
+import { Helmet } from 'react-helmet-async';
+import { TITLE } from 'constants/index';
+import { setCart } from 'store/cart';
 
 const ItemDetailContainer: FC = () => {
   const [postTitle, setPostTitle] = useState('');
@@ -22,17 +25,19 @@ const ItemDetailContainer: FC = () => {
   const [file, setFile] = useState<null | File>(null);
   const [star, setStar] = useState(5);
   const [count, setCount] = useState(1);
-  const [pageId, setPageId] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const query = useQuery();
   const { id } = useParams();
 
   const {
     thumbnail,
     title,
     price,
+    originalPrice,
     contents,
+    salePercent,
     isLike,
     isSoldOut,
     userId,
@@ -44,24 +49,30 @@ const ItemDetailContainer: FC = () => {
     reviewSubmitLoading,
     itemLoading,
     isPaid,
-  } = useSelector(({ item, auth, review, loading }: RootState) => ({
-    thumbnail: item.item.thumbnail,
-    title: item.item.title,
-    price: item.item.price,
-    contents: item.item.contents,
-    salePercent: item.item.salePercent,
-    isLike: item.item.isLike,
-    isSoldOut: item.item.isSoldOut,
-    userId: auth.user.userId,
-    error: review.error,
-    reviews: review.list.reviews,
-    pageCount: review.list.pageCount,
-    totalCount: review.list.totalCount,
-    reviewLoading: loading['review/getReviews'],
-    reviewSubmitLoading: loading['review/postReview'],
-    itemLoading: loading['item/getItem'],
-    isPaid: item.item.isPaid,
-  }));
+    cart,
+  } = useSelector(
+    ({ item, auth, review, loading, cart }: RootState) => ({
+      thumbnail: item.item.thumbnail,
+      title: item.item.title,
+      price: item.item.price,
+      originalPrice: item.item.originalPrice,
+      contents: item.item.contents,
+      salePercent: item.item.salePercent,
+      isLike: item.item.isLike,
+      isSoldOut: item.item.isSoldOut,
+      userId: auth.user.userId,
+      error: review.error,
+      reviews: review.list.reviews,
+      pageCount: review.list.pageCount,
+      totalCount: review.list.totalCount,
+      reviewLoading: loading['review/getReviews'],
+      reviewSubmitLoading: loading['review/postReview'],
+      itemLoading: loading['item/getItem'],
+      isPaid: item.item.isPaid,
+      cart: cart.cart,
+    }),
+    shallowEqual,
+  );
   const [isLiked, setIsLiked] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -74,9 +85,10 @@ const ItemDetailContainer: FC = () => {
   }, [reviews]);
 
   useEffect(() => {
+    const { pageId } = query;
     dispatch({ type: getItem.type, payload: { id } });
     dispatch({ type: getReviews.type, payload: { itemId: id, pageId } });
-  }, [id, dispatch, pageId]);
+  }, [query, id, dispatch]);
 
   useEffect(() => {
     setIsLiked(isLike);
@@ -95,8 +107,8 @@ const ItemDetailContainer: FC = () => {
   const onSubmitCart = (count: number) => {
     let cartItemsString = '';
 
-    if (localStorage.getItem('cart') !== null) {
-      const cartItems = cartGenerator();
+    if (cart !== null) {
+      const cartItems = cartGenerator(cart);
 
       if (cartItems.some(item => item.id === id)) {
         cartItems.forEach((item, index) => {
@@ -120,7 +132,7 @@ const ItemDetailContainer: FC = () => {
     } else {
       cartItemsString += `${id},${thumbnail},${title},${count},${price}`;
     }
-    localStorage.setItem('cart', cartItemsString);
+    dispatch({ type: setCart.type, payload: cartItemsString });
   };
 
   const onBuy = () => {
@@ -148,10 +160,17 @@ const ItemDetailContainer: FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {TITLE}
+          {title}
+        </title>
+      </Helmet>
       <ItemInfo
         thumbnail={thumbnail}
         title={title}
         price={price}
+        originalPrice={originalPrice}
         likeShow={!!userId}
         isLiked={isLiked}
         setIsLiked={toggleIsLiked}
@@ -159,6 +178,7 @@ const ItemDetailContainer: FC = () => {
         onSubmitCart={onSubmitCart}
         onBuy={onBuy}
         setCount={setCount}
+        salePercent={salePercent}
       />
       <Detail
         contents={contents}
@@ -167,8 +187,6 @@ const ItemDetailContainer: FC = () => {
         itemLoading={itemLoading}
         reviewLoading={reviewLoading}
         pageCount={pageCount}
-        pageId={pageId}
-        setPageId={setPageId}
       />
       <ReviewPost
         userId={userId}

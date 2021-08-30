@@ -12,6 +12,7 @@ interface MediumMenuProps {
   menu: IMenu;
   selectedLargeId: string;
   selectedMediumId: string;
+  isMobile: boolean;
   setMediumId: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -73,7 +74,7 @@ const Image = styled.img`
   }
 `;
 
-const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, setMediumId }) => {
+const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMediumId, isMobile, setMediumId }) => {
   const history = useHistory();
   const goCategoryPage = useCallback(
     (code: string) => () => history.push(`${ITEM_LIST_URL}?categoryId=${code}`),
@@ -92,6 +93,14 @@ const MediumMenu: FC<MediumMenuProps> = ({ menu, selectedLargeId, selectedMedium
                 onMouseEnter={(e: React.MouseEvent) => {
                   setMediumId(mediumId);
                   e.stopPropagation();
+                }}
+                onClick={(e: React.MouseEvent) => {
+                  if (isMobile) {
+                    setMediumId(mediumId);
+                    e.stopPropagation();
+                  } else {
+                    history.push(`${ITEM_LIST_URL}?categoryId=${medium.code}`);
+                  }
                 }}
                 isSelected={selectedMediumId === mediumId}
               >

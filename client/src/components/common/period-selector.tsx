@@ -107,6 +107,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
     ['1개월', onClickThisMonth],
     ['3개월', onClickThreeMonth],
   ];
+  const prevMax = currentDate && new Date(currentDate) < new Date(today) ? currentDate : today;
   return (
     <Wrapper>
       <Form>
@@ -121,7 +122,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
         <DateFlex>
           <input
             type="date"
-            max={today}
+            max={prevMax}
             value={prevDate}
             onChange={e => {
               setPrevDate(e.target.value);
@@ -131,6 +132,7 @@ const PeriodSelector: FC<PeriodSelectorProps> = ({
           <span>~</span>
           <input
             type="date"
+            min={prevDate}
             max={today}
             value={currentDate}
             onChange={e => {

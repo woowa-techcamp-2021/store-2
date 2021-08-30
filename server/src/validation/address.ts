@@ -5,20 +5,10 @@ import { ADDRESS } from 'config/constants';
 import errorGenerator from 'utils/error/error-generator';
 import errorHandler from 'utils/error/error-handler';
 
-interface IAddReqBody {
-  name: string;
-  receiver: string;
-  address: string;
-}
-
-interface IRemoveReqBody {
-  data: {
-    id: string;
-  };
-}
+import { IAddReqBody, IRemoveReqBody } from 'types/address';
 
 export const addAddressValidation = (
-  req: Request<unknown, unknown, IAddReqBody, unknown>,
+  req: Request<unknown, unknown, IAddReqBody>,
   res: Response,
   next: NextFunction,
 ): void => {
@@ -28,6 +18,7 @@ export const addAddressValidation = (
         .min(ADDRESS.NAME_MIN_LENGTH)
         .max(ADDRESS.NAME_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `이름은 ${ADDRESS.NAME_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `이름은 ${ADDRESS.NAME_MAX_LENGTH}자를 넘길 수 없습니다.`,
@@ -37,6 +28,7 @@ export const addAddressValidation = (
         .min(ADDRESS.RECEIVER_MIN_LENGTH)
         .max(ADDRESS.RECEIVER_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `받는분은 ${ADDRESS.RECEIVER_MIN_LENGTH}자를 넘길 수 없습니다.`,
@@ -46,10 +38,21 @@ export const addAddressValidation = (
         .min(ADDRESS.ADDRESS_MIN_LENGTH)
         .max(ADDRESS.ADDRESS_MAX_LENGTH)
         .required()
+        .empty('')
         .messages({
           'string.min': `주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
           'string.max': `주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
           'any.required': `주소를 입력해주세요.`,
+        }),
+      addressDetail: Joi.string()
+        .min(ADDRESS.ADDRESS_MIN_LENGTH)
+        .max(ADDRESS.ADDRESS_MAX_LENGTH)
+        .required()
+        .empty('')
+        .messages({
+          'string.min': `상세주소는 ${ADDRESS.ADDRESS_MIN_LENGTH}자 이상 입력해야 합니다.`,
+          'string.max': `상세주소는 ${ADDRESS.ADDRESS_MAX_LENGTH}자를 넘길 수 없습니다.`,
+          'any.required': `상세주소를 입력해주세요.`,
         }),
     });
 
@@ -72,13 +75,13 @@ export const addAddressValidation = (
 };
 
 export const removeAddressValidation = (
-  req: Request<unknown, unknown, IRemoveReqBody, unknown>,
+  req: Request<unknown, unknown, IRemoveReqBody>,
   res: Response,
   next: NextFunction,
 ): void => {
   try {
     const schema = Joi.object({
-      id: Joi.number().min(1).required().messages({
+      id: Joi.number().min(1).required().empty('').messages({
         'any.required': '아이디를 입력해주세요.',
       }),
     });

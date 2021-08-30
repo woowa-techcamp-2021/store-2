@@ -27,6 +27,7 @@ const FormContainer = styled.div`
     input,
     textarea {
       width: 100%;
+      font-size: 12px;
     }
     textarea {
       height: 120px;
@@ -72,6 +73,7 @@ const RowHead = styled.div`
 const RowContent = styled.div`
   flex: 1;
   padding: 8px 16px;
+  font-size: 12px;
 `;
 
 const GridForm: FC<GridFormProps> = ({ titles, children }) => {

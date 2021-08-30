@@ -42,7 +42,9 @@ const TableRowText = styled.div`
 `;
 
 const ItemTitle = styled.div`
+  display: flex;
   font-size: 14px;
+  align-items: center;
 
   ${({ theme }) => theme?.mobile} {
     font-size: 12px;

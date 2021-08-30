@@ -35,7 +35,7 @@ export const getOrders = async (req: Request<unknown, unknown, unknown, IQuery>,
   }
 };
 
-export const postOrder = async (req: Request<unknown, unknown, PostOrder, unknown>, res: Response): Promise<void> => {
+export const postOrder = async (req: Request<unknown, unknown, PostOrder>, res: Response): Promise<void> => {
   try {
     const orderItems = req.body;
     const token = getAccessToken(req.headers.authorization);
@@ -43,7 +43,7 @@ export const postOrder = async (req: Request<unknown, unknown, PostOrder, unknow
 
     await ordersService.postOrder(uid, orderItems);
 
-    res.status(200).json({});
+    res.status(200).json();
   } catch (err) {
     console.log(err);
     const { statusCode, errorMessage } = errorHandler(err);

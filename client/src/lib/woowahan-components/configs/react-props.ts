@@ -26,6 +26,7 @@ const reactProps = [
   'maxLength',
   'onSubmit',
   'htmlFor',
+  'selected',
 ];
 
 export default reactProps;

@@ -1,6 +1,7 @@
-import React, { useState, Fragment, FC, Dispatch, SetStateAction } from 'react';
+import React, { useState, FC, Dispatch, SetStateAction, useEffect } from 'react';
 import styled from 'lib/woowahan-components';
 
+import AddressModal from 'components/common/address-modal';
 import { TextButton, CheckBox, GridForm, PriceCalculator } from 'components';
 import TableSection, { OrderItem } from './table-section';
 import RadioButton from './radio-button';
@@ -18,12 +19,20 @@ interface OrderProps {
   user: string;
   address: string;
   receiver: string;
-  onChange: (id: 'user' | 'receiver' | 'address') => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (id: 'user' | 'receiver' | 'address' | 'addressDetail') => (e: React.ChangeEvent<HTMLInputElement>) => void;
   getLoading: boolean;
   submitLoading: boolean;
   addresses: { name: string; address: string }[];
   pickAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
   addressChecked: string;
+  onFocusOutPhone: () => void;
+  addressDetail: string;
+  addressDetailError: string;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface IAddressData {
+  roadAddress: string;
 }
 
 const SectionTitle = styled.h4`
@@ -68,12 +77,20 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
 `;
 
 const InputErrorMessage = styled.div`
   font-size: 12px;
   color: ${({ theme }) => theme?.colorError};
+  margin: 0 0 0 10px;
+  ${({ theme }) => theme?.tablet} {
+    @media all and (max-width: 741px) {
+      margin: 5px 40px 0 0;
+    }
+  }
+  ${({ theme }) => theme?.mobile} {
+    margin: 5px 0 0 0;
+  }
 `;
 
 const SubmitErrorMessage = styled.div`
@@ -105,8 +122,20 @@ const Order: FC<OrderProps> = ({
   addresses,
   pickAddress,
   addressChecked,
+  onFocusOutPhone,
+  addressDetail,
+  addressDetailError,
+  setAddress,
 }) => {
+  const [modal, setModal] = useState(false);
+  const handleComplete = (data: IAddressData) => {
+    setAddress(data.roadAddress);
+  };
+  useEffect(() => {
+    if (address) setModal(false);
+  }, [address]);
   const [agreed, setAgreed] = useState(false);
+  const isValid = agreed && user && phone && address && addresses;
 
   const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -130,7 +159,7 @@ const Order: FC<OrderProps> = ({
   const onAgree = () => {
     setAgreed(state => !state);
   };
-
+  const etc = addressChecked === '기타';
   return (
     <>
       <SectionTitle>주문상세내역</SectionTitle>
@@ -143,12 +172,12 @@ const Order: FC<OrderProps> = ({
             <InputErrorMessage>{userError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input name="phone" value={phone} onChange={onChangePhone} maxLength={13} />
+            <input name="phone" value={phone} onChange={onChangePhone} maxLength={13} onBlur={onFocusOutPhone} />
             <InputErrorMessage>{phoneError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
         <SectionTitle>배송정보</SectionTitle>
-        <GridForm titles={['배송지 확인', '받는분', '받으실 곳 *']}>
+        <GridForm titles={['배송지 확인', '받는분', '주소 *', '상세주소 *']}>
           <InputWrapper>
             {addresses.map(address => {
               return (
@@ -162,14 +191,38 @@ const Order: FC<OrderProps> = ({
                 />
               );
             })}
+            <RadioButton
+              key="기타"
+              id="기타"
+              text="기타"
+              value="기타"
+              onChange={pickAddress}
+              checked={addressChecked}
+            />
           </InputWrapper>
           <InputWrapper>
-            <input name="receiver" value={receiver} onChange={onChange('receiver')} />
+            <input
+              placeholder="홍길동"
+              name="receiver"
+              value={receiver}
+              onChange={onChange('receiver')}
+              readOnly={!etc}
+            />
             <InputErrorMessage>{receiverError}</InputErrorMessage>
           </InputWrapper>
           <InputWrapper>
-            <input placeholder="주소" name="address" value={address} onChange={onChange('address')} />
+            <input placeholder="주소" name="address" value={address} readOnly onClick={() => setModal(true)} />
             <InputErrorMessage>{addressError}</InputErrorMessage>
+          </InputWrapper>
+          <InputWrapper>
+            <input
+              placeholder="상세주소"
+              name="addressDetail"
+              value={addressDetail}
+              onChange={onChange('addressDetail')}
+              readOnly={!etc}
+            />
+            <InputErrorMessage>{addressDetailError}</InputErrorMessage>
           </InputWrapper>
         </GridForm>
         <SectionTitle>결제수단 선택 / 결제</SectionTitle>
@@ -189,10 +242,11 @@ const Order: FC<OrderProps> = ({
           </CheckBoxDiv>
         </Agree>
         <ButtonDiv>
-          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agreed} isLoading={submitLoading} />
+          <TextButton title="결제하기" type="submit" styleType="black" disabled={!isValid} isLoading={submitLoading} />
           <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
         </ButtonDiv>
       </Form>
+      {modal && <AddressModal handleComplete={handleComplete} setModal={setModal} />}
     </>
   );
 };

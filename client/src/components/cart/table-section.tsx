@@ -13,8 +13,7 @@ interface TableSectionProps {
   cartItems: CartItem[];
   checkedItems: Set<number>;
   checkAll: boolean;
-  setPrices: React.Dispatch<React.SetStateAction<number[]>>;
-  setTotalCount: React.Dispatch<React.SetStateAction<number>>;
+  updatePrice: (set: Set<number>) => void;
   setCheckAll: React.Dispatch<React.SetStateAction<boolean>>;
   setCheckedItems: React.Dispatch<React.SetStateAction<Set<number>>>;
 }
@@ -72,26 +71,10 @@ const TableSection: FC<TableSectionProps> = ({
   cartItems,
   checkedItems,
   checkAll,
-  setPrices,
-  setTotalCount,
+  updatePrice,
   setCheckAll,
   setCheckedItems,
 }) => {
-  const updatePrice = (set: Set<number>) => {
-    const prices = [] as number[];
-    let totalCount = 0;
-    Array.from(set).forEach(index => {
-      const item = cartItems[Number(index)];
-      prices.push(item.price * item.count);
-      totalCount += item.count;
-    });
-    if (prices.length === 0) {
-      prices.push(0);
-    }
-    setPrices(prices);
-    setTotalCount(totalCount);
-  };
-
   const checkedItemHandler = (id: number) => () => {
     const checkedSet = new Set<number>(checkedItems);
     if (checkedSet.has(id)) {

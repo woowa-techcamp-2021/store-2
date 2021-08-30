@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'lib/router';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory, useQuery } from 'lib/router';
 
 import { RootState } from 'store';
 import { getOrders } from 'store/order';
@@ -17,8 +17,8 @@ const MyOrderListContainer: FC = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [select, setSelect] = useState<undefined | number>(undefined);
   const history = useHistory();
+  const query = useQuery();
   const dispatch = useDispatch();
-  const [pageId, setPageId] = useState(1);
 
   const { loading, user, orders, pageCount, totalCount, userLoading } = useSelector(
     ({ auth, loading, order }: RootState) => ({
@@ -29,12 +29,14 @@ const MyOrderListContainer: FC = () => {
       totalCount: order.list.totalCount,
       userLoading: loading['auth/getUser'],
     }),
+    shallowEqual,
   );
 
   useEffect(() => {
+    const { pageId } = query;
     if (prevDate && currentDate)
       dispatch({ type: getOrders.type, payload: { pageId, prevDate, currentDate: getNextDay(currentDate) } });
-  }, [dispatch, pageId, prevDate, currentDate]);
+  }, [query, dispatch, prevDate, currentDate]);
 
   useEffect(() => {
     if (!userLoading && !user) history.push('/');
@@ -82,9 +84,7 @@ const MyOrderListContainer: FC = () => {
         select={select}
       />
       <MyOrderTable loading={loading} orders={orders} totalCount={totalCount} />
-      {/* <MyStatusBar data={['주문일자', '상품명', '상품일금액/수량', '주문상태']} />
-      <MyOrderList loading={loading} orders={orders} totalCount={totalCount} /> */}
-      <Pagination pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+      <Pagination pageCount={pageCount} />
     </>
   );
 };

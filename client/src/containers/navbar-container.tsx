@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Navbar } from 'components';
@@ -11,17 +11,15 @@ interface NavbarProps {
   displayMain?: boolean;
   isMobile: boolean;
 }
-
 const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { userId } = useSelector(({ auth }: RootState) => ({
+  const { userId, cart } = useSelector(({ auth, cart }: RootState) => ({
     userId: auth.user.userId,
+    cart: cart.cart,
   }));
   const dispatch = useDispatch();
 
-  const onLogout = (): void => {
-    setModalVisible(true);
-  };
+  const onLogout = useCallback((): void => setModalVisible(true), []);
 
   const handleLogout = (): void => {
     dispatch({ type: logout.type });
@@ -29,8 +27,8 @@ const NavbarContainer: FC<NavbarProps> = ({ displayMain = false, isMobile }) => 
 
   return (
     <>
-      <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} />
-      <AuthLogoutModal visible={modalVisible} setVisible={setModalVisible} onConfirm={handleLogout} />
+      <Navbar displayMain={displayMain} isMobile={isMobile} userId={userId} onLogout={onLogout} cart={cart} />
+      {modalVisible && <AuthLogoutModal visible={modalVisible} setVisible={setModalVisible} onConfirm={handleLogout} />}
     </>
   );
 };

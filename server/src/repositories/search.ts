@@ -4,7 +4,7 @@ import { ItemAttributes, ItemCreationAttributes } from 'models/item';
 
 import errorGenerator from 'utils/error/error-generator';
 
-export const getAllKeywords = async (regExp: string): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
+const getAllKeywords = async (regExp: string): Promise<Model<ItemAttributes, ItemCreationAttributes>[]> => {
   const searchSnapshot = await db.Item.findAll({
     attributes: ['title'],
     where: {
@@ -24,3 +24,5 @@ export const getAllKeywords = async (regExp: string): Promise<Model<ItemAttribut
 
   return searchSnapshot;
 };
+
+export default { getAllKeywords };

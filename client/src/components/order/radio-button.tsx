@@ -13,6 +13,7 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   font-size: 14px;
+  margin-right: 5px;
 
   input[type='radio'] {
     width: 13px;

@@ -19,23 +19,20 @@ export interface IScore {
   score: number;
 }
 
+export interface Item {
+  id: number;
+  title: string;
+  thumbnail: string;
+  price: number;
+  salePercent: number;
+  amount: number;
+  isGreen: boolean;
+  isBest: boolean;
+  updatedAt: string;
+  isLike: boolean;
+}
+
 const LIMIT_COUNT = 12;
-
-const filterItems = (items: Model<ItemAttributes, ItemCreationAttributes>[]) => {
-  items.forEach(item => {
-    const standardDate = new Date();
-    standardDate.setMonth(standardDate.getMonth() - 6);
-    const itemDate = new Date(item.getDataValue('updatedAt'));
-    if (standardDate < itemDate) item.setDataValue('isNew', true);
-
-    const salePercent = item.getDataValue('salePercent');
-    const price = parseInt(item.getDataValue('price') as string, 10);
-    if (salePercent !== 0) {
-      item.setDataValue('price', Math.round((price * (100 - salePercent)) / 100));
-      item.setDataValue('originalPrice', price);
-    }
-  });
-};
 
 const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Promise<IItems> => {
   if (visited.length > 0) {
@@ -74,7 +71,13 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
         'id',
         'title',
         'thumbnail',
-        'price',
+        [
+          Sequelize.literal(
+            'CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END',
+          ),
+          'price',
+        ],
+        ['price', 'originalPrice'],
         'salePercent',
         'amount',
         'isGreen',
@@ -97,8 +100,6 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
       if (findItem) sortedItems.items.push(findItem);
     });
 
-    filterItems(sortedItems.items);
-
     return { items: sortedItems.items };
   }
 
@@ -108,7 +109,11 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
       'id',
       'title',
       'thumbnail',
-      'price',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
       'salePercent',
       'amount',
       'isGreen',
@@ -117,8 +122,6 @@ const getRecommendItems = async (visited: string[], isCategoryItem: boolean): Pr
     ],
     limit: LIMIT_COUNT,
   });
-
-  filterItems(items);
 
   return { items };
 };
@@ -129,7 +132,11 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
       'id',
       'title',
       'thumbnail',
-      'price',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
       'salePercent',
       'amount',
       'isGreen',
@@ -147,14 +154,24 @@ const getMainItems = async (order: string[][], limit: number): Promise<IItems> =
     });
   }
 
-  filterItems(items);
-
   return { items };
 };
 
 const getCategoryItems = async (pageId: number, order: string[][], categoryReg: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
+      'salePercent',
+      'amount',
+      'isGreen',
+    ],
     order: order as Order,
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     offset: (pageId - 1) * LIMIT_COUNT,
@@ -174,11 +191,9 @@ const getCategoryItems = async (pageId: number, order: string[][], categoryReg: 
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
-
-  filterItems(items);
 
   return { items, totalCount, pageCount };
 };
@@ -189,7 +204,19 @@ const getCategoryRecommendItems = async (
   visited: string[],
 ): Promise<IItemsData> => {
   let items = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
+      'salePercent',
+      'amount',
+      'isGreen',
+    ],
     where: { CategoryId: { [Op.regexp]: `^${categoryReg}` } },
     include: [
       {
@@ -216,18 +243,28 @@ const getCategoryRecommendItems = async (
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
-
-  filterItems(items);
 
   return { items, totalCount, pageCount };
 };
 
 const getSearchItems = async (pageId: number, order: string[][], regExp: string): Promise<IItemsData> => {
   const items = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
+      'salePercent',
+      'amount',
+      'isGreen',
+    ],
     order: order as Order,
     where: {
       title: {
@@ -257,18 +294,28 @@ const getSearchItems = async (pageId: number, order: string[][], regExp: string)
   if (!items) {
     throw errorGenerator({
       message: 'POST /api/items - items not found',
-      code: 'items/not-found',
+      code: 'items/items-not-found',
     });
   }
-
-  filterItems(items);
 
   return { items, totalCount, pageCount };
 };
 
 const getItem = async (id: string): Promise<Model<ItemAttributes, ItemCreationAttributes>> => {
   const item = await db.Item.findOne({
-    attributes: ['title', 'thumbnail', 'price', 'salePercent', 'amount', 'isGreen', 'contents'],
+    attributes: [
+      'title',
+      'thumbnail',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+      ['price', 'originalPrice'],
+      'salePercent',
+      'amount',
+      'isGreen',
+      'contents',
+    ],
     where: { id },
   });
 
@@ -288,7 +335,15 @@ const getOrderItems = async (itemIDs: string[]): Promise<Model<ItemAttributes, I
   });
 
   const orderItems = await db.Item.findAll({
-    attributes: ['id', 'title', 'thumbnail', 'price', 'salePercent'],
+    attributes: [
+      'id',
+      'title',
+      'thumbnail',
+      [
+        Sequelize.literal('CASE WHEN salePercent !=0 THEN ROUND(price - (price * salePercent /100),0) ELSE price END'),
+        'price',
+      ],
+    ],
     where: {
       [Op.or]: query,
     },
@@ -297,7 +352,7 @@ const getOrderItems = async (itemIDs: string[]): Promise<Model<ItemAttributes, I
   if (!orderItems) {
     throw errorGenerator({
       message: 'GET /api/items/order - item not found',
-      code: 'items/item-not-found',
+      code: 'items/items-not-found',
     });
   }
 

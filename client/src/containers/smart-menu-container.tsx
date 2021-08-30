@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { IMenu, IMenuChild, ICategory } from 'types/category';
@@ -44,8 +44,12 @@ const SmartMenuContainer: FC<SmartMenuContainerProps> = ({ currentCode }) => {
   const { data } = useSelector(({ category }: RootState) => ({
     data: category.categories.data,
   }));
-  const currentName = currentCode ? data.find(category => category.code === currentCode)?.name : '캇테고리';
-  return <SmartMenu currentMenu={currentName || '캇테고리'} menu={generateMenu(data)} />;
+  const currentName = useMemo(
+    () => (currentCode ? data.find(category => category.code === currentCode)?.name : '캇테고리'),
+    [currentCode, data],
+  );
+  const menu = useMemo(() => generateMenu(data), [data]);
+  return <SmartMenu currentMenu={currentName || '캇테고리'} menu={menu} />;
 };
 
 export default SmartMenuContainer;

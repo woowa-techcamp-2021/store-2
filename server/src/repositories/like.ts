@@ -1,30 +1,34 @@
 import { db } from 'models';
 
-export const createLike = async (userId: string, itemId: number): Promise<boolean> => {
-  try {
-    const createResult = await db.Like.create({
-      UserId: userId,
-      ItemId: itemId,
-    });
+import errorGenerator from 'utils/error/error-generator';
 
-    return createResult !== null;
-  } catch (err) {
-    return false;
+export const createLike = async (userId: string, itemId: number): Promise<void> => {
+  const createResult = await db.Like.create({
+    UserId: userId,
+    ItemId: itemId,
+  });
+
+  if (!createResult) {
+    throw errorGenerator({
+      message: 'POST /api/likes - create failed',
+      code: 'likes/fail-to-create',
+    });
   }
 };
 
-export const destroyLike = async (userId: string, itemId: number): Promise<boolean> => {
-  try {
-    const destroyResult = await db.Like.destroy({
-      where: {
-        UserId: userId,
-        ItemId: itemId,
-      },
-    });
+export const destroyLike = async (userId: string, itemId: number): Promise<void> => {
+  const destroyResult = await db.Like.destroy({
+    where: {
+      UserId: userId,
+      ItemId: itemId,
+    },
+  });
 
-    return destroyResult === 1;
-  } catch (err) {
-    return false;
+  if (destroyResult !== 1) {
+    throw errorGenerator({
+      message: 'DELETE /api/likes - delete failed',
+      code: 'likes/fail-to-delete',
+    });
   }
 };
 

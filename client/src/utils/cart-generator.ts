@@ -1,10 +1,10 @@
 import { CartItem } from 'types/cart';
 import { cartValidator } from './validation/cart-validator';
 
-const cartGenerator = (): CartItem[] => {
+const cartGenerator = (data: string): CartItem[] => {
   if (cartValidator()) {
     const cartItems: CartItem[] = [];
-    const data = localStorage.getItem('cart') as string;
+
     const cartData = data.split(',');
     cartData.forEach((value, idx) => {
       const num = Math.floor(idx / 5);

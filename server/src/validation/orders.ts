@@ -21,15 +21,15 @@ export const getOrdersValidation = (
 ): void => {
   try {
     const schema = Joi.object({
-      pageId: Joi.number().required().messages({
+      pageId: Joi.number().required().empty('').messages({
         'any.required': '페이지 아이디가 없습니다.',
       }),
-      prevDate: Joi.string().min(10).max(10).required().messages({
+      prevDate: Joi.string().min(10).max(10).required().empty('').messages({
         'string.min': `올바르지 않은 형식입니다`,
         'string.max': `올바르지 않은 형식입니다`,
         'any.required': `이전 날짜가 없습니다`,
       }),
-      currentDate: Joi.string().max(10).min(10).required().messages({
+      currentDate: Joi.string().max(10).min(10).required().empty('').messages({
         'string.min': `올바르지 않은 형식입니다`,
         'string.max': `올바르지 않은 형식입니다`,
         'any.required': `현재 날짜가 없습니다`,
@@ -40,8 +40,8 @@ export const getOrdersValidation = (
 
     if (validationResult.error) {
       throw errorGenerator({
-        message: 'validation/auth - invalid request body',
-        code: 'req/invalid-body',
+        message: 'validation/auth - invalid request query',
+        code: 'req/invalid-query',
         customMessage: validationResult.error.message,
       });
     }
@@ -55,7 +55,7 @@ export const getOrdersValidation = (
 };
 
 export const postOrderValidation = (
-  req: Request<unknown, unknown, PostOrder, unknown>,
+  req: Request<unknown, unknown, PostOrder>,
   res: Response,
   next: NextFunction,
 ): void => {

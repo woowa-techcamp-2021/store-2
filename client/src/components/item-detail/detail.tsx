@@ -1,4 +1,4 @@
-import React, { FC, useRef, Dispatch, SetStateAction } from 'react';
+import React, { FC, useRef } from 'react';
 import styled from 'lib/woowahan-components';
 
 import { IReview } from 'types/review';
@@ -14,8 +14,6 @@ interface DetailProps {
   itemLoading: boolean;
   reviewLoading: boolean;
   pageCount: number;
-  pageId: number;
-  setPageId: Dispatch<SetStateAction<number>>;
 }
 
 const Container = styled.section`
@@ -54,14 +52,14 @@ const DetailImageWrapper = styled.div`
   }
 `;
 
-const Detail: FC<DetailProps> = ({ contents, reviewCount, reviews, reviewLoading, pageCount, pageId, setPageId }) => {
+const Detail: FC<DetailProps> = ({ contents, reviewCount, reviews, reviewLoading, pageCount }) => {
   const detailRef = useRef<HTMLDivElement>(null);
   const detailExecuteScroll = () => {
-    if (detailRef.current) detailRef.current.scrollIntoView();
+    if (detailRef.current) detailRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const reviewRef = useRef<HTMLDivElement>(null);
   const reviewExecuteScroll = () => {
-    if (reviewRef.current) reviewRef.current.scrollIntoView();
+    if (reviewRef.current) reviewRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   return (
     <Container>
@@ -92,7 +90,7 @@ const Detail: FC<DetailProps> = ({ contents, reviewCount, reviews, reviewLoading
         reviewExecuteScroll={reviewExecuteScroll}
       >
         <ReviewList reviews={reviews} reviewLoading={reviewLoading} />
-        <Pagination className="review-pagination" pageCount={pageCount} activePage={pageId} setActivePage={setPageId} />
+        <Pagination className="review-pagination" pageCount={pageCount} />
       </DetailWrapper>
     </Container>
   );

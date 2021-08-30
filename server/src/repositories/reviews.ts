@@ -4,37 +4,34 @@ import { ReviewAttribures, ReviewCreationAttributes } from 'models/review';
 
 import errorGenerator from 'utils/error/error-generator';
 
-interface ReviewData extends ReviewAttribures {
-  userId: string;
-}
-
 const LIMIT_COUNT = 10;
 
 const getReviews = async (
   itemId: number,
   pageId: number,
-): Promise<{ reviewData: Model<ReviewData, ReviewCreationAttributes>[]; totalCount: number }> => {
-  const reviewData = (await db.Review.findAll({
-    attributes: ['title', 'contents', 'imgUrl', 'score', [Sequelize.col('User.userId'), 'userId']],
-    where: {
-      ItemId: itemId,
-    },
-    order: [['createdAt', 'DESC']],
-    limit: LIMIT_COUNT,
-    offset: (pageId - 1) * LIMIT_COUNT,
-    include: [
-      {
-        model: db.User,
-        attributes: ['userId'],
+): Promise<{ reviewData: Model<ReviewAttribures, ReviewCreationAttributes>[]; totalCount: number }> => {
+  const [reviewData, totalCount] = await Promise.all([
+    db.Review.findAll({
+      attributes: ['title', 'contents', 'imgUrl', 'score', [Sequelize.col('User.UserId'), 'UserId']],
+      where: {
+        ItemId: itemId,
       },
-    ],
-  })) as Model<ReviewData, ReviewCreationAttributes>[];
-
-  const totalCount = await db.Review.count({
-    where: {
-      ItemId: itemId,
-    },
-  });
+      order: [['createdAt', 'DESC']],
+      limit: LIMIT_COUNT,
+      offset: (pageId - 1) * LIMIT_COUNT,
+      include: [
+        {
+          model: db.User,
+          attributes: ['userId'],
+        },
+      ],
+    }),
+    db.Review.count({
+      where: {
+        ItemId: itemId,
+      },
+    }),
+  ]);
 
   if (!reviewData) {
     throw errorGenerator({
@@ -64,7 +61,7 @@ const postReview = async (
   contents: string,
   score: number,
   imgUrl: string,
-): Promise<{ reviewData: Model<ReviewData, ReviewCreationAttributes>[]; totalCount: number }> => {
+): Promise<{ reviewData: Model<ReviewAttribures, ReviewCreationAttributes>[]; totalCount: number }> => {
   await db.Review.create({
     title,
     contents,
@@ -73,6 +70,7 @@ const postReview = async (
     ItemId: itemId,
     UserId: uid,
   });
+
   return getReviews(itemId, 1);
 };
 

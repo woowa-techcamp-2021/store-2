@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Link } from 'lib/router';
 import styled from 'lib/woowahan-components';
 
@@ -10,21 +10,29 @@ import loginIcon from 'assets/icons/login.svg';
 import { MAIN_URL, CART_URL, SIGNIN_URL, ORDER_LIST_URL } from 'constants/urls';
 
 import { Logo } from 'components';
+import { cartGenerator } from 'utils/cart-generator';
 
 interface NavbarProps {
   displayMain: boolean;
   isMobile: boolean;
   userId: string | null | undefined;
   onLogout: () => void;
+  cart: string;
 }
 
 const Wrapper = styled.nav`
-  background-color: ${props => (props.white ? props.theme?.colorWhite : props.theme?.colorBg)};
+  background-color: ${props => props.theme?.colorBg};
   border-bottom: 1px solid ${props => props.theme?.colorLineLight};
   padding: 12px 10%;
   display: flex;
   justify-content: flex-end;
   position: relative;
+
+  b {
+    font-weight: ${props => props.theme?.weightBold};
+    color: ${props => props.theme?.colorPrimary};
+    margin-left: 3px;
+  }
 
   .nav-link-list {
     display: flex;
@@ -69,7 +77,11 @@ const Wrapper = styled.nav`
   }
 `;
 
-const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) => {
+const Navbar: FC<NavbarProps> = React.memo(({ displayMain, isMobile, userId, onLogout, cart }) => {
+  const cartCount = useCallback((): number => {
+    const cartItems = cartGenerator(cart);
+    return cartItems.length;
+  }, [cart]);
   return (
     <Wrapper white={displayMain}>
       {isMobile && (
@@ -84,7 +96,13 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
           </Link>
         )}
         <Link className="nav-link" to={CART_URL}>
-          {isMobile ? <img src={cartIcon} alt="cart" /> : '장바구니'}
+          {isMobile ? (
+            <img src={cartIcon} alt="cart" />
+          ) : (
+            <span>
+              장바구니 <b>{cartCount()}</b>
+            </span>
+          )}
         </Link>
         {userId ? (
           <button type="button" className="nav-link" onClick={onLogout}>
@@ -98,6 +116,8 @@ const Navbar: FC<NavbarProps> = ({ displayMain, isMobile, userId, onLogout }) =>
       </div>
     </Wrapper>
   );
-};
+});
+
+Navbar.displayName = 'navbar';
 
 export default Navbar;

@@ -97,7 +97,7 @@ const Info = styled.div`
   }
 `;
 
-const Footer: FC<FooterProps> = ({ isMobile }) => {
+const Footer: FC<FooterProps> = React.memo(({ isMobile }) => {
   return (
     <Wrapper>
       <Left>
@@ -150,6 +150,8 @@ const Footer: FC<FooterProps> = ({ isMobile }) => {
       </Right>
     </Wrapper>
   );
-};
+});
+
+Footer.displayName = 'footer';
 
 export default Footer;
