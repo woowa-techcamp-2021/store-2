@@ -108,7 +108,7 @@ const Order: FC<OrderProps> = ({
   onFocusOutPhone,
 }) => {
   const [agreed, setAgreed] = useState(false);
-  const agr = agreed && user && phone && address && addresses;
+  const isValid = agreed && user && phone && address && addresses;
 
   const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -211,7 +211,7 @@ const Order: FC<OrderProps> = ({
           </CheckBoxDiv>
         </Agree>
         <ButtonDiv>
-          <TextButton title="결제하기" type="submit" styleType="black" disabled={!agr} isLoading={submitLoading} />
+          <TextButton title="결제하기" type="submit" styleType="black" disabled={!isValid} isLoading={submitLoading} />
           <SubmitErrorMessage>{submitError}</SubmitErrorMessage>
         </ButtonDiv>
       </Form>
