@@ -10,7 +10,7 @@
 </h6>
 
 <h2 align="center">
-  <a href="http://52.78.235.192">🎁 배민 문구사 웹 어플리케이션</a>
+  <a href="http://woowa-mungusa.store/">🎁 배민 문구사 웹 어플리케이션</a>
 </h2>
   
 <p align="center">우아한 테크캠프 <b>마지막</b> 프로젝트 - 배민 문구사</p>
