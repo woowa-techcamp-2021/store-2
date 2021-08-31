@@ -2,7 +2,7 @@
 
 <h6 align="center">
 
-  <img alt="banner" src="https://user-images.githubusercontent.com/35324795/129211840-c90d2f8e-3c28-4d22-8edf-e6de6e4339f3.png">
+  <img alt="banner" src="README_image/team-title.png">
 
 ![License](https://img.shields.io/badge/License-MIT-red)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/woowa-techcamp-2021/store-2?color=green&label=Version)
@@ -10,19 +10,19 @@
 </h6>
 
 <h2 align="center">
-  <a href="http://52.78.235.192">🎁 배민 문구사 웹 어플리케이션</a>
+  <a href="http://woowa-mungusa.store/">🎁 배민 문구사 웹 어플리케이션</a>
 </h2>
   
 <p align="center">우아한 테크캠프 <b>마지막</b> 프로젝트 - 배민 문구사</p>
 
 ## Contributors
 
-| Contributor                              | Introduce        |
-| ---------------------------------------- | ---------------- |
-| [박기덕](https://github.com/edegiil)     | 개......발       |
-| [서그림](https://github.com/Seogeurim)   | 개발하다가 죽자! |
-| [손원우](https://github.com/negu63)      | 메멘토 모리      |
-| [윤민상](https://github.com/yoonminsang) | 올해 취직!!      |
+| Contributor                              | Nickname | Introduce        |
+| ---------------------------------------- | -------- | ---------------- |
+| [박기덕](https://github.com/edegiil)     | 침착맨   | 개......발       |
+| [서그림](https://github.com/Seogeurim)   | 매의눈   | 개발하다가 죽자! |
+| [손원우](https://github.com/negu63)      | 끝판왕   | 메멘토 모리      |
+| [윤민상](https://github.com/yoonminsang) | 강철체력 | 올해 취직!!      |
 
 ## Tech Stacks
 
@@ -39,7 +39,7 @@
 
 <h4 align="center">
 
-![structure](https://user-images.githubusercontent.com/35324795/129206538-29c3a985-7a0e-4427-a6c9-8391b3c53fc6.png)
+![structure](README_image/structure.png)
 
 </h3>
 
@@ -49,18 +49,19 @@
 │ ├─index.html (기본 HTML)
 │ └─favicon.ico (파비콘)
 ├─src
-│ ├─assets (이미지 등)
+│ ├─assets (이미지, 폰트 등)
+│ ├─constants (상수, 라우트 경로)
+│ ├─styles (글로벌 스타일)
+│ ├─lib (리액트 라우터, styled-components)
 │ ├─components (컴포넌트 like view)
 │ ├─containers (like vm)
 │ ├─pages (페이지)
-│ ├─constants (상수 - 라우트 경로, url)
-│ ├─styles (글로벌 스타일, reset)
-│ ├─lib (리액트 라우터, styled-components)
-│ ├─store (redux 모듈 🦆)
+│ ├─store (redux 모듈)
+│ ├─saga (saga 함수)
 │ ├─types (ts 공통 타입, 인터페이스)
-│ ├─hooks (커스텀 훅 래프트 훅 잽)
-│ ├─utils (공통, axios)
-│ │ └─api (api 요청보내고 데이터 받아오기)
+│ ├─hooks (커스텀 훅)
+│ ├─utils (공통 유틸 함수)
+│ │ └─api (api axios 요청)
 │ ├─index.tsx
 │ └─App.tsx
 ├─config
@@ -70,9 +71,7 @@
 ├─package.json
 ├─tsconfig.json
 ├─jest.config.js
-├─babel.config.js
-├─.env
-├─.eslintrc
+├─.eslintrc.json
 └─.prettierrc
 
 🔥 server🔥
@@ -88,13 +87,24 @@
 │ ├─validation (req.body query parameter 값 검증)
 │ ├─types (ts 공통 타입, 인터페이스)
 │ ├─utils (공통되는 작은 함수)
-│ │ └─error (에러 처리 파일)
+│ │ └─error (에러 처리)
 │ └─app.ts
 ├─package.json
-└─tsconfig.json
+├─tsconfig.json
+├─.eslintrc.json
+├─.prettierrc
+└─.env
 ```
 
+## Database ERD
+
+![ERD](README_image/ERD.png)
+
 ## Getting Started
+
+### Prerequisites
+
+`server` 디렉토리의 `.mock.env` 파일을 참고하여 `.env` 파일을 생성해주세요. (개발 모드 : `.env.dev`)
 
 ### 웹 어플리케이션
 
@@ -116,15 +126,37 @@ $ cd server && yarn start
 $ cd server && yarn deploy
 ```
 
-## See also
+## Preview
 
-### [팀 그라운드 룰](https://github.com/woowa-techcamp-2021/store-2/wiki/RULE.-Team)
+### Main Page & Login
 
-### [Why 애자일?](https://github.com/woowa-techcamp-2021/store-2/wiki/WHY.-Agile)
+<img src="README_image/main-pc.png" width="49%" alt="preview" /> <img src="README_image/login-pc.png" width="49%" alt="preview" />
 
-### [WiKi](https://github.com/woowa-techcamp-2021/store-2/wiki)
+### Item Search
 
-### [ERD](https://github.com/woowa-techcamp-2021/store-2/wiki/DOCS.-ERD)
+<img src="README_image/smartmenu-pc.png" width="49%" alt="preview" /> <img src="README_image/search-pc.png" width="49%" alt="preview" />
+
+### Item Detail
+
+<img src="README_image/detail-pc.png" width="32%" alt="preview" /> <img src="README_image/imageview-pc.png" width="32%" alt="preview" /> <img src="README_image/review-pc.png" width="32%" alt="preview" />
+
+### My Page
+
+<img src="README_image/address-pc.png" width="49%" alt="preview" /> <img src="README_image/orderlist-pc.png" width="49%" alt="preview" />
+
+### Cart & Order
+
+<img src="README_image/cart-pc.png" width="49%" alt="preview" /> <img src="README_image/order-pc.png" width="49%" alt="preview" />
+
+### Mobile Also
+
+<img src="README_image/main-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/search-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/detail-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/address-mobile.PNG" width="19%" alt="mobile" /> <img src="README_image/login-mobile.PNG" width="19%" alt="mobile" />
+
+## See Also
+
+- [WiKi](https://github.com/woowa-techcamp-2021/store-2/wiki)
+- [Project Kanban Board](https://github.com/woowa-techcamp-2021/store-2/projects/1)
+- [Figma](https://www.figma.com/file/MaID4DQs5auLz22DporlgL/%EB%B0%B0%EB%AF%BC-%EB%AC%B8%EB%B0%A9%EA%B5%AC?node-id=0%3A1)
 
 ## LICENSE
 
